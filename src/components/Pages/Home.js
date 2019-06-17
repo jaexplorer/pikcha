@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { fetchProducts } from '../../actions/productsAction';
 import ProductItem from '../Products/ProductItem';
-import Pagination from '../Base/Pagination';
-import Loading from '../Base/Loading';
-import Alert from '../Base/Alert';
+import { Spinner, Alert } from 'pikcha-frame';
 import Masonry from 'react-masonry-component';
 
 const imagesLoadedOptions = { backgroundColor: '#eee' }
@@ -23,7 +21,7 @@ class Home extends Component {
 		}
 
 		if (isFetchingProducts) {
-			return <Loading />;
+			return <Spinner />;
 		}
 
 		return (
@@ -41,7 +39,7 @@ class Home extends Component {
 					))}
 				</Masonry>
 
-				<Pagination />
+				{/* <Pagination /> */}
 			</div>
 		);
 	}

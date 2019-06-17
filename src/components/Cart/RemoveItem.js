@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { updateCart } from '../../actions/cartAction';
-import Button from '../Base/Button';
+import { Button } from 'pikcha-frame';
 import X from 'react-feather/dist/icons/x';
 
 class RemoveItem extends Component {

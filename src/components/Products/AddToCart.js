@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { updateCart } from '../../actions/cartAction';
-import Button from '../Base/Button';
-// import Modal from '../Base/Modal';
+import { Button } from 'pikcha-frame';
 
 class AddToCart extends Component {
 	state = {

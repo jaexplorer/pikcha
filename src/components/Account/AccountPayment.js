@@ -3,11 +3,10 @@
 // import { logoutUser, saveUser } from '../../actions/usersAction';
 // import { withRouter } from 'react-router-dom'
 // import PropTypes from 'prop-types';
-// import Button from '../Base/Button';
+// import { Button, Spinner } from 'pikcha-frame';
 // import SubNav from './SubNav';
-// import Loading from '../Base/Loading';
 // import { Link } from 'react-router-dom';
-// import { Formik, Form, Field, ErrorMessage } from 'formik';
+// import Formol, { Field } from 'formol'
 // import * as Yup from 'yup';
 
 // class AccountPayment extends Component {

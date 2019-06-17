@@ -14,16 +14,14 @@ export const {
 );
 
 export const fetchPage = slug => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(fetchPageStarted());
 
-        elementApi.get(`pages/${slug}`)
-            .then(response => {
-                dispatch(fetchPageSuccess(response.data));
-            })
-            .catch(err => {
-                dispatch(fetchPageFailure(err));
-            });
-
+        try {
+            const response = await elementApi.get(`pages/${slug}`)
+            dispatch(fetchPageSuccess(response.data));
+        } catch (error) {
+            dispatch(fetchPageFailure(error));
+        };
     };
 };

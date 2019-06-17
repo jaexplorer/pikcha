@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setPassword } from '../../actions/usersAction';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import Formol, { Field } from 'formol'
 import { withRouter } from 'react-router-dom'
 import * as Yup from 'yup';
-import Button from '../Base/Button';
-import Alert from '../Base/Alert';
+import { Button, Alert } from 'pikcha-frame';
 
 const SetPasswordSchema = Yup.object().shape({
 	newPassword: Yup.string()

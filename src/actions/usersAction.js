@@ -45,43 +45,33 @@ export const signIn = values => {
         password: values.password
     });
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(signInStarted());
 
-        clientApi.post('user/login', data)
-            .then(response => {
-                if (response.data.success) {
-                    dispatch(
-                        signInSuccess(response.data.id, response.data.duration)
-                    );
-                    dispatch(getIdentity(response.data.userId));
-                    dispatch(push('/'))
-                } else {
-                    dispatch(signInFailure(response.data.error));
-                }
-            })
-            .catch(err => {
-                dispatch(signInFailure(err));
-            });
+        try {
+            const response = await clientApi.post('user/login', data)
+            dispatch(
+                signInSuccess(response.data.id, response.data.duration)
+            );
+            dispatch(getIdentity(response.data.userId));
+            dispatch(push('/'))
+        } catch (error) {
+            dispatch(signInFailure(error));
+        };
     };
 };
 
 export const logout = () => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(push('/'))
         dispatch(logoutStarted());
 
-        clientApi.get('user/logout')
-            .then(response => {
-                if (response.data.success) {
-                    dispatch(logoutSuccess());
-                } else {
-                    dispatch(logoutFailure(response.data.error));
-                }
-            })
-            .catch(err => {
-                dispatch(logoutFailure(err));
-            });
+        try {
+            const response = await clientApi.get('user/logout')
+            dispatch(logoutSuccess());
+        } catch (error) {
+            dispatch(logoutFailure(error));
+        };
     };
 };
 
@@ -102,22 +92,17 @@ export const saveUser = (values, userId) => {
 
     data = JSON.stringify(data);
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(signInStarted());
 
-        clientApi.post('user/save-user', data)
-            .then(response => {
-                if (response.data.success) {
-                    dispatch(signInSuccess(response.data.userId, response.data.hash));
-                    dispatch(getIdentity(response.data.userId));
-                    dispatch(push('/'))
-                } else {
-                    dispatch(signInFailure(response.data.error));
-                }
-            })
-            .catch(err => {
-                dispatch(signInFailure(err));
-            });
+        try {
+            const response = await clientApi.post('user/save-user', data)
+            dispatch(signInSuccess(response.data.userId, response.data.hash));
+            dispatch(getIdentity(response.data.userId));
+            dispatch(push('/'))
+        } catch (error) {
+            dispatch(signInFailure(error));
+        };
     };
 };
 
@@ -126,20 +111,15 @@ export const forgotPassword = values => {
         loginName: values.email
     });
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(signInStarted());
 
-        clientApi.post('user/forgot-password', data)
-            .then(response => {
-                if (response.data.success) {
-                    dispatch(fetchUserSuccess(response.data));
-                } else {
-                    dispatch(fetchUserFailure(response.data.error));
-                }
-            })
-            .catch(err => {
-                dispatch(fetchUserFailure(err));
-            });
+        try {
+            const response = await clientApi.post('user/forgot-password', data)
+            dispatch(fetchUserSuccess(response.data));
+        } catch (error) {
+            dispatch(fetchUserFailure(error));
+        };
     };
 };
 
@@ -150,53 +130,42 @@ export const setPassword = (values, code, id) => {
         id: id
     });
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(signInStarted());
 
-        clientApi.post('user/set-password', data)
-            .then(response => {
-                if (response.data.success) {
-                    dispatch(fetchUserSuccess(response.data));
-                } else {
-                    dispatch(fetchUserFailure(response.data.error));
-                }
-            })
-            .catch(err => {
-                dispatch(fetchUserFailure(err));
-            });
+        try {
+            const response = await clientApi.post('user/set-password', data)
+            dispatch(fetchUserSuccess(response.data));
+        } catch (error) {
+            dispatch(fetchUserFailure(error));
+        };
     };
 };
 
 export const getIdentity = () => {
     let data = JSON.stringify({});
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(getIdentityStarted());
 
-        clientApi.post('user/get-identity', data)
-            .then(response => {
-                if (response.data.success) {
-                    dispatch(getIdentitySuccess(response.data.currentUser));
-                } else {
-                    dispatch(getIdentityFailure(response.data.error));
-                }
-            })
-            .catch(err => {
-                dispatch(getIdentityFailure(err));
-            });
+        try {
+            const response = await clientApi.post('user/get-identity', data)
+            dispatch(getIdentitySuccess(response.data.currentUser));
+        } catch (error) {
+            dispatch(getIdentityFailure(error));
+        };
     };
 };
 
 export const fetchUser = id => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(fetchUserStarted());
 
-        elementApi.get(`user/${id}`)
-            .then(response => {
-                dispatch(fetchUserSuccess(response.data));
-            })
-            .catch(err => {
-                dispatch(fetchUserFailure(err));
-            });
+        try {
+            const response = await elementApi.get(`user/${id}`)
+            dispatch(fetchUserSuccess(response.data));
+        } catch (error) {
+            dispatch(fetchUserFailure(error));
+        };
     };
 };

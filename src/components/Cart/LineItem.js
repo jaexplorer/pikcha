@@ -4,7 +4,7 @@ import accounting from 'accounting';
 import RemoveItem from './RemoveItem';
 import QtyInput from './QtyInput';
 import { Link } from 'react-router-dom';
-import Image from '../Base/Image';
+import { Image } from 'pikcha-frame';
 
 class LineItem extends Component {
 	render() {

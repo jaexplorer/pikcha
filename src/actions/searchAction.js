@@ -14,15 +14,14 @@ export const {
 );
 
 export const fetchSearch = query => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(fetchSearchStarted());
 
-        elementApi.get(`search?q=${query}`)
-            .then(response => {
-                dispatch(fetchSearchSuccess(response.data.data));
-            })
-            .catch(err => {
-                dispatch(fetchSearchFailure(err));
-            });
+        try {
+            const response = await elementApi.get(`search?q=${query}`)
+            dispatch(fetchSearchSuccess(response.data.data));
+        } catch (error) {
+            dispatch(fetchSearchFailure(error));
+        };
     };
 };

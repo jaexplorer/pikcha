@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signIn } from '../../actions/usersAction';
 import { withRouter } from 'react-router-dom'
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import Formol, { Field } from 'formol'
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import Button from '../Base/Button';
-import Alert from '../Base/Alert';
+import { Button, Alert } from 'pikcha-frame';
 
 const SignInSchema = Yup.object().shape({
 	email: Yup.string()

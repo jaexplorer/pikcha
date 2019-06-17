@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import accounting from 'accounting';
-import Image from '../Base/Image';
+import { Image } from 'pikcha-frame';
 
 export default class ProductItem extends Component {
 	render() {

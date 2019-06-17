@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { updateCart } from '../../actions/cartAction';
-import Button from '../Base/Button';
+import { Button } from 'pikcha-frame';
 import PlusIcon from 'react-feather/dist/icons/plus';
 import MinusIcon from 'react-feather/dist/icons/minus';
 

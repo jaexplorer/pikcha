@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { saveUser } from '../../actions/usersAction';
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
-import Button from '../Base/Button';
+import { Button, Alert } from 'pikcha-frame';
 import SubNav from './SubNav';
-import Alert from '../Base/Alert';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import Formol, { Field } from 'formol'
 import * as Yup from 'yup';
 
 const AccountSchema = Yup.object().shape({

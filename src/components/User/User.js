@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { fetchUser } from '../../actions/usersAction';
-import Loading from '../Base/Loading';
+import { Spinner } from 'pikcha-frame';
 
 class User extends Component {
 	componentDidMount() {
@@ -24,7 +24,7 @@ class User extends Component {
 		}
 
 		if (isFetchingUser) {
-			return <Loading />;
+			return <Spinner />;
 		}
 
 		return (

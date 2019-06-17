@@ -16,20 +16,15 @@ export const {
 export const getCart = () => {
     let data = JSON.stringify({});
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(getCartStarted());
 
-        clientApi.post('cart/get-cart', data)
-            .then(response => {
-                if (response.data.success) {
-                    dispatch(getCartSuccess(response.data.cart));
-                } else {
-                    dispatch(getCartFailure(response.data.error));
-                }
-            })
-            .catch(err => {
-                dispatch(getCartFailure(err));
-            });
+        try {
+            const response = await clientApi.post('cart/get-cart', data)
+            dispatch(getCartSuccess(response.data.cart));
+        } catch (error) {
+            dispatch(getCartFailure(error));
+        };
     };
 };
 
@@ -49,19 +44,14 @@ export const updateCart = (id, qty, isLineItem) => {
 
     data = JSON.stringify(data);
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(getCartStarted());
 
-        clientApi.post('cart/update-cart', data)
-            .then(response => {
-                if (response.data.success) {
-                    dispatch(getCartSuccess(response.data.cart));
-                } else {
-                    dispatch(getCartFailure(response.data.error));
-                }
-            })
-            .catch(err => {
-                dispatch(getCartFailure(err));
-            });
+        try {
+            const response = await clientApi.post('cart/update-cart', data)
+            dispatch(getCartSuccess(response.data.cart));
+        } catch (error) {
+            dispatch(getCartFailure(error));
+        };
     };
 };

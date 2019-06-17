@@ -28,19 +28,14 @@ export const uploadProduct = values => {
 
     data = JSON.stringify(data);
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(uploadProductStarted());
 
-        clientApi.post('products/save-product', data)
-            .then(response => {
-                if (response.data.success) {
-                    dispatch(uploadProductSuccess(response.data.cart));
-                } else {
-                    dispatch(uploadProductFailure(response.data.error));
-                }
-            })
-            .catch(err => {
-                dispatch(uploadProductFailure(err));
-            });
-    };
+        try {
+            const response = await clientApi.post('products/save-product', data)
+            dispatch(uploadProductSuccess(response.data.cart));
+        } catch (error) {
+            dispatch(uploadProductFailure(error));
+        };
+};
 };

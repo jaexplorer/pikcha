@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import Loading from '../Base/Loading';
+import { Spinner } from 'pikcha-frame';
 import Home from '../Pages/Home';
 import Page from '../Pages/Page';
 import Search from '../Pages/Search';
@@ -64,7 +64,7 @@ const Main = props => {
 	// if (props.signedIn === undefined) {
 	// 	return (
 	// 		<main className="container py-10">
-	// 			<Loading />
+	// 			<Spinner />
 	// 		</main>
 	// 	);
 	// }
@@ -72,7 +72,7 @@ const Main = props => {
 	// if (props.isFetching) {
 	// 	return (
 	// 		<main className="container py-10">
-	// 			<Loading />
+	// 			<Spinner />
 	// 		</main>
 	// 	);
 	// }

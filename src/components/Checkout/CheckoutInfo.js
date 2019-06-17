@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { updateCart } from '../../actions/cartAction';
 import { Link } from 'react-router-dom';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import Formol, { Field } from 'formol'
 import * as Yup from 'yup';
 import OrderSummary from './OrderSummary';
 import SubNav from './SubNav';
-import Button from '../Base/Button';
-import Alert from '../Base/Alert';
+import { Button, Alert } from 'pikcha-frame';
 
 const CheckoutInfoSchema = Yup.object().shape({
 	firstName: Yup.string()

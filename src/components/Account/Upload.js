@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import classNames from 'classnames'
 import Dropzone from 'react-dropzone'
-import Button from '../Base/Button';
+import { Button } from 'pikcha-frame';
 
 export default class Upload extends Component {
 	constructor(props) {

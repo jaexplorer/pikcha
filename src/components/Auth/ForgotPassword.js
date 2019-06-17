@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 import { forgotPassword } from '../../actions/usersAction';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import Formol, { Field } from 'formol'
 import * as Yup from 'yup';
-import Button from '../Base/Button';
-import Alert from '../Base/Alert';
+import { Button, Alert } from 'pikcha-frame';
 
 const ForgotPasswordSchema = Yup.object().shape({
 	email: Yup.string()

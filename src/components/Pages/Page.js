@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPage } from '../../actions/pagesAction';
-import Loading from '../Base/Loading';
+import { Spinner } from 'pikcha-frame';
 
 const Text = props => {
 	return <div className="text-lg mb-4 leading-normal" dangerouslySetInnerHTML={{ __html: props.content.text }} />;
@@ -79,7 +79,7 @@ class Page extends Component {
 		}
 
 		if (isFetchingPage) {
-			return <Loading />;
+			return <Spinner />;
 		}
 
 		return (

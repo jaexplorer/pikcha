@@ -5,9 +5,7 @@ import { Link } from 'react-router-dom';
 import accounting from 'accounting';
 import LineItem from './LineItem';
 import Adjustment from '../Checkout/Adjustment';
-import Button from '../Base/Button';
-import Alert from '../Base/Alert';
-import Loading from '../Base/Loading';
+import { Button, Alert, Spinner } from 'pikcha-frame';
 
 class Cart extends Component {
 	render() {
@@ -18,7 +16,7 @@ class Cart extends Component {
 		}
 
 		if (isFetchingCart && cart.length === 0) {
-			return <Loading />;
+			return <Spinner />;
 		}
 
 		let cartContent = (

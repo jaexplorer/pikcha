@@ -4,8 +4,8 @@ axios.defaults.withCredentials = true;
 
 // const apiVersion = 'v1';
 const clientApi = axios.create({
-    // baseURL: 'http://pikcha-server.test/actions/api-module/',
-    baseURL: 'https://pikcha-server.matthewblode.com/actions/api-module/',
+    baseURL: 'http://pikcha-server.test/actions/api-module/',
+    // baseURL: 'https://pikcha-server.matthewblode.com/actions/api-module/',
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

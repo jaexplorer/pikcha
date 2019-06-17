@@ -24,29 +24,27 @@ export const fetchProducts = (page) => {
         page = 1;
     }
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(fetchProductsStarted());
 
-        elementApi.get(`products?page=${page}`)
-            .then(response => {
-                dispatch(fetchProductsSuccess(response.data.data, response.data.meta.pagination));
-            })
-            .catch(err => {
-                dispatch(fetchProductsFailure(err));
-            });
+        try {
+            const response = await elementApi.get(`products?page=${page}`)
+            dispatch(fetchProductsSuccess(response.data.data, response.data.meta.pagination));
+        } catch (error) {
+            dispatch(fetchProductsFailure(error));
+        };
     };
 };
 
 export const fetchProduct = slug => {
-    return dispatch => {
+    return async dispatch => {
         dispatch(fetchProductStarted());
 
-        elementApi.get(`products/${slug}`)
-            .then(response => {
-                dispatch(fetchProductSuccess(response.data));
-            })
-            .catch(err => {
-                dispatch(fetchProductsFailure(err));
-            });
+        try {
+            const response = await elementApi.get(`products/${slug}`)
+            dispatch(fetchProductSuccess(response.data));
+        } catch (error) {
+            dispatch(fetchProductsFailure(error));
+        };
     };
 };

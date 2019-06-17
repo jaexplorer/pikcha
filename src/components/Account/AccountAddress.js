@@ -1,6 +1,6 @@
 // import React, { Component } from 'react';
 // import SubNav from './SubNav';
-// import Button from '../Base/Button';
+// import { Button } from 'pikcha-frame';
 
 // export default class AccountAddress extends Component {
 // 	render() {

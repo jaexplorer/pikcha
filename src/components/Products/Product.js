@@ -6,8 +6,7 @@ import PropTypes from 'prop-types';
 import accounting from 'accounting';
 import { fetchProduct } from '../../actions/productsAction';
 import AddToCart from './AddToCart';
-import Loading from '../Base/Loading';
-import Image from '../Base/Image';
+import { Spinner, Image } from 'pikcha-frame';
 import ChevronDown from 'react-feather/dist/icons/chevron-down';
 
 class Product extends Component {
@@ -69,7 +68,7 @@ class Product extends Component {
 		}
 
 		if (isFetchingProduct) {
-			return <Loading />;
+			return <Spinner />;
 		}
 
 		let price = (

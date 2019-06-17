@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import accounting from 'accounting';
 import OrderLineItem from './OrderLineItem';
 import Adjustment from './Adjustment';
-import Loading from '../Base/Loading';
-import Alert from '../Base/Alert';
+import { Spinner, Alert } from 'pikcha-frame';
 
 class OrderSummary extends Component {
 	render() {
@@ -17,7 +16,7 @@ class OrderSummary extends Component {
 		}
 
 		if (isFetchingCart) {
-			return <Loading />;
+			return <Spinner />;
 		}
 
 		let cartContent = (
