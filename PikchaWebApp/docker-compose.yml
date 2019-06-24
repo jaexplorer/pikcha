@@ -1,0 +1,41 @@
+﻿version: '3.7'
+
+networks:
+  pikcha-net:
+   driver: bridge
+
+services:
+  webapp:
+    container_name: web_c
+    image: pikchaweb:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:80
+    environment:
+      DB_CONNECTION_STRING: server=mysql_image;port=3306;database=pikcha_db;uid=root;pwd=MySecret;
+    depends_on:
+      - mysql_image
+    networks:
+      - pikcha-net
+   
+  mysql_image:
+    container_name: db_c
+    image: mysql/mysql-server:8.0  
+    ports:
+      - 3306:3306
+    restart: always
+    volumes:
+      - dbvol:/var/lib/mysql
+    networks:
+      - pikcha-net
+    environment:
+      MYSQL_ROOT_PASSWORD: MySecret      
+      MYSQL_USER: pikcha_user
+      MYSQL_PASSWORD: P!k19007
+      MYSQL_DATABASE: pikcha_db
+
+volumes:
+  dbvol:
+
