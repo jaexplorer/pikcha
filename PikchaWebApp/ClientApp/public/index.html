@@ -1,41 +1,60 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#000000">
-    <base href="%PUBLIC_URL%/" />
-    <!--
-      manifest.json provides metadata used when your web app is added to the
-      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <head>
+        <meta charset="utf-8"/>
+        <title>Pikcha</title>
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>PikchaWebApp</title>
-  </head>
-  <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png?v=3">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png?v=3">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png?v=3">
+        <link rel="manifest" href="/manifest.json">
+        <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg?v=3" color="#F68A30">
+        <link rel="shortcut icon" href="/favicons/favicon.ico?v=3">
+        <meta name="msapplication-TileColor" content="#F68A30">
+        <meta name="msapplication-TileImage" content="/mstile-144x144.png?v=3">
+        <meta name="theme-color" content="#fff">
+        <meta name="google-site-verification" content="xV6elbRAzTrCHGpyRllA2b9bnOHHJSAdj6tMr7tuQ0s" />
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+        <meta name="description" content="Pikcha is a social news website focusing on computer science and entrepreneurship. This HN client was crafted with love by Matthew Blode." />
+        <meta name="keywords" content="hacker, news, Pikcha, ycombinator, react, hnpwa">
+        <meta name="referrer" content="no-referrer-when-downgrade">
+        <meta content="en_AU" property="og:locale">
+        <meta content="Pikcha" property="og:site_name">
+        <meta content="website" property="og:type">
+        <meta content="https://pikcha.com/" property="og:url">
+        <meta content="Pikcha" property="og:title">
+        <meta content="Pikcha is a social news website focusing on computer science and entrepreneurship." property="og:description">
+        <meta content="/favicons/seo-img.png" property="og:image">
+        <meta content="1280" property="og:image:width">
+        <meta content="640" property="og:image:height">
+        <meta content="Pikcha is a social news website focusing on computer science and entrepreneurship." property="og:image:alt">
+        <link href="https://pikcha.com/" rel="canonical">
+        <link href="https://pikcha.com/" rel="home">
+        <link href="https://pikcha.com/" rel="alternate" hreflang="x-default">
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+        <link rel="stylesheet" href="https://use.typekit.net/ajc3yoa.css">
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-54745665-12"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-54745665-12');
+        </script>
+    </head>
+    <body style="background: #eceef1; overflow-y: scroll;">
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+        <!--
+            This HTML file is a template.
+            If you open it directly in the browser, you will see an empty page.
+            You can add webfonts, meta tags, or analytics to this file.
+            The build step will place the bundled scripts into the <body> tag.
+            To begin the development, run `npm start` or `yarn start`.
+            To create a production bundle, use `npm run build` or `yarn build`.
+        -->
+    </body>
 </html>

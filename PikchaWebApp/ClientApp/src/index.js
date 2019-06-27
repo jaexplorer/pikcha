@@ -1,25 +1,24 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-//import registerServiceWorker from './registerServiceWorker';
+import { render } from "react-snapshot";
+import { Provider, ReactReduxContext } from "react-redux";
+import { ConnectedRouter } from 'connected-react-router';
+import { history } from './store';
+import configureStore from "./store";
+import App from "./components/App";
+import * as serviceWorker from "./serviceWorker";
+import { ThemeProvider } from 'pikcha-frame';
 
-const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
-const rootElement = document.getElementById('root');
+const store = configureStore();
 
-ReactDOM.render(
-  <BrowserRouter basename={baseUrl}>
-    <App />
-  </BrowserRouter>,
-  rootElement);
+render(
+    <ThemeProvider>
+        <Provider store={store} context={ReactReduxContext}>
+            <ConnectedRouter history={history} context={ReactReduxContext}>
+                <App />
+            </ConnectedRouter>
+        </Provider>
+    </ThemeProvider>,
+    document.getElementById("root")
+);
 
-// Uncomment the line above that imports the registerServiceWorker function
-// and the line below to register the generated service worker.
-// By default create-react-app includes a service worker to improve the
-// performance of the application by caching static assets. This service
-// worker can interfere with the Identity UI, so it is
-// disabled by default when Identity is being used.
-//
-//registerServiceWorker();
-
+serviceWorker.register();
