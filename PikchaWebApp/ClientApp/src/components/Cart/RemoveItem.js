@@ -18,7 +18,7 @@ class RemoveItem extends Component {
 					size="sm"
 				>
 					<X size={16} />
-					<div className="sr-only">Remove item</div>
+					<div>Remove item</div>
 				</Button>
 			</div>
 		);

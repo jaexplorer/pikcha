@@ -61,21 +61,21 @@ const CheckoutRoute = ({ component: Component, authed, ...rest }) => (
 );
 
 const Main = props => {
-	if (props.signedIn === undefined) {
-		return (
-			<main>
-				<Spinner />
-			</main>
-		);
-	}
+	// if (props.signedIn === undefined) {
+	// 	return (
+	// 		<main>
+	// 			<Spinner />
+	// 		</main>
+	// 	);
+	// }
 
-	if (props.isFetching) {
-		return (
-			<main>
-				<Spinner />
-			</main>
-		);
-	}
+	// if (props.isFetching) {
+	// 	return (
+	// 		<main>
+	// 			<Spinner />
+	// 		</main>
+	// 	);
+	// }
 
 	return (
 		<main>

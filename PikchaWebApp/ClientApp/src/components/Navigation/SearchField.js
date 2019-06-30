@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Downshift from 'downshift';
 import { withRouter } from 'react-router-dom';
-// import { fetchSearch } from '../../actions/searchAction';
-import SearchIcon from 'react-feather/dist/icons/search';
+import { Search } from 'styled-icons/material/Search';
 
-class Search extends Component {
+class SearchField extends Component {
 	constructor(props) {
 		super(props);
 
@@ -42,21 +41,12 @@ class Search extends Component {
 					highlightedIndex,
 					selectedItem
 				}) => (
-						<div className="relative">
-							<div className="relative">
-								<label
-									{...getLabelProps()}
-									className="pointer-events-none absolute pin-y pin-l flex items-center px-2 text-grey-darker"
-								>
-									<SearchIcon size={16} />
-									<div className="sr-only">Search</div>
-								</label>
-
+						<div>
+							<div>
 								<input
 									type="search"
-									className="form-input form-search w-full"
 									{...getInputProps({
-										placeholder: 'Search for products...',
+										placeholder: 'Search',
 										onChange: this.inputOnChange
 									})}
 								/>
@@ -65,7 +55,7 @@ class Search extends Component {
 								style: {
 									border: isOpen ? null : 'none',
 								}
-							})} className="absolute list-reset shadow-lg border border-grey-light overflow-y-auto overflow-x-hidden rounded w-full cursor-pointer z-50 mt-3">
+							})}>
 								{isOpen && search.length !== 0 && !error
 									? search
 										.filter(
@@ -76,7 +66,6 @@ class Search extends Component {
 										.map((item, index) => (
 											<div
 												key={item.id}
-												className="relative w-full px-3 py-2 truncate bg-white text-sm"
 												{...getItemProps({
 													key: item.id,
 													index,
@@ -95,10 +84,10 @@ class Search extends Component {
 
 								{isOpen && search.length === 0 && !error
 									? (
-										<div className="relative w-full px-3 py-2 truncate bg-white text-sm">
+										<div>
 											No results for query "{inputValue}"
 										</div>
-									): null}
+									) : null}
 							</div>
 						</div>
 					)}
@@ -107,7 +96,7 @@ class Search extends Component {
 	}
 }
 
-Search.propTypes = {
+SearchField.propTypes = {
 	search: PropTypes.object
 };
 
@@ -115,4 +104,4 @@ const mapStateToProps = state => ({
 	...state
 });
 
-export default withRouter(connect(mapStateToProps)(Search));
+export default withRouter(connect(mapStateToProps)(SearchField));

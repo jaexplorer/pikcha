@@ -14,8 +14,8 @@ class SetPassword extends Component {
 		let id = null;
 
 		return (
-			<div className="flex -mx-2" style={{ opacity: isFetchingCurrent ? 0.5 : 1 }}>
-				<div className="w-1/2 px-2">
+			<div>
+				<div>
 					<Formol
 						initialValues={{ newPassword: '' }}
 						onSubmit={(values, actions) => {
@@ -23,19 +23,19 @@ class SetPassword extends Component {
 							// this.props.dispatch(setPassword(values, id, code));
 						}}
 					>
-						<h1 className="text-2xl mb-4">Set password</h1>
+						<h1 >Set password</h1>
 
 						{error &&
 							<Alert type="danger">Error: {error}</Alert>
 						}
 
-						<div className="form-group">
-							<label className="form-label">New password</label>
+						<div>
+							<label>New password</label>
 							<Field
 								type="password"
 								name="newPassword"
 								placeholder="e.g., ••••••••••••"
-								className="form-input"
+
 							/>
 						</div>
 

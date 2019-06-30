@@ -15,8 +15,8 @@ class CheckoutEmail extends Component {
 			<div>
 				<SubNav />
 
-				<div className="flex flex-wrap -mx-4">
-					<div className="w-full md:w-2/3 px-4 mb-6 md:mb-0">
+				<div>
+					<div>
 						<Formol
 							initialValues={{
 								email: '',
@@ -26,15 +26,15 @@ class CheckoutEmail extends Component {
 								// this.props.dispatch(updateCart(values));
 							}}
 						>
-							<h1 className="text-2xl mb-4">Let’s grab your email to get started</h1>
+							<h1 >Let’s grab your email to get started</h1>
 
-							<div className="form-group">
-								<label className="form-label">Email</label>
-								<Field name="email" placeholder="e.g., john.doe@gmail.com" className="form-input" />
+							<div>
+								<label>Email</label>
+								<Field name="email" placeholder="e.g., john.doe@gmail.com"  />
 							</div>
 
-							<div className="flex items-center justify-between">
-								<Link to="/cart" className="anchor">Return to cart</Link>
+							<div>
+								<Link to="/cart" >Return to cart</Link>
 
 								{/* <Button htmlType="submit" type="primary" disabled={isSubmitting}>
 									Continue
@@ -43,7 +43,7 @@ class CheckoutEmail extends Component {
 						</Formol>
 					</div>
 
-					<div className="w-full md:w-1/3 px-4">
+					<div>
 						<OrderSummary />
 					</div>
 				</div>

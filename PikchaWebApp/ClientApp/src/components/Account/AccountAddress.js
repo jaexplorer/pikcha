@@ -5,10 +5,10 @@
 // export default class AccountAddress extends Component {
 // 	render() {
 // 		return (
-// 			<div className="flex flex-wrap -mx-2">
-// 				<div className="w-full px-2">
+// 			<div>
+// 				<div>
 // 					<SubNav />
-// 					<h1 className="text-2xl">Manage your addresses</h1>
+// 					<h1>Manage your addresses</h1>
 // 					<Button to="/ac">Add new address</Button>
 
 // 					{% set customer = craft.commerce.customers.customer %}
@@ -16,18 +16,18 @@
 // 					{% set primaryShippingAddress = customer.getPrimaryShippingAddress() %}
 
 // 					{% if customer.addresses|length %}
-// 						<div className="flex justify-between items-center">
+// 						<div>
 // 							<h1>Manage your addresses</h1>
-// 							<a className="button button-primary right" href="{{ url('shop/customer/addresses/edit') }}">Add New Address</a>
+// 							<a href="{{ url('shop/customer/addresses/edit') }}">Add New Address</a>
 // 						</div>
 
-// 						<div className="grid-addresses mt-6">
+// 						<div>
 // 							{% for address in customer.addresses %}
-// 								<div className="address-card">
+// 								<div>
 // 									{% include 'shop/_includes/addresses/address' with {'address': address} %}
 
-// 									<div className="buttons mt-4">
-// 										<a className="button button-primary" href="{{ url('shop/customer/addresses/edit') }}?addressId={{ address.id }}">Edit</a>
+// 									<div>
+// 										<a href="{{ url('shop/customer/addresses/edit') }}?addressId={{ address.id }}">Edit</a>
 // 										<form method="POST">
 // 											<input type="hidden" name="action" value="commerce/customer-addresses/delete">
 // 											{{ csrfInput() }}
@@ -37,25 +37,25 @@
 // 									</div>
 
 // 									<div>
-// 										<strong>{% if primaryBillingAddress and primaryBillingAddress.id == address.id %}<i className="fa fa-check text-green"></i> Primary Billing{% endif %}</strong>
+// 										<strong>{% if primaryBillingAddress and primaryBillingAddress.id == address.id %}<i></i> Primary Billing{% endif %}</strong>
 // 									</div>
 // 									<div>
-// 										<strong>{% if primaryShippingAddress and primaryShippingAddress.id == address.id %}<i className="fa fa-check text-green"></i> Primary Shipping{% endif %}</strong>
+// 										<strong>{% if primaryShippingAddress and primaryShippingAddress.id == address.id %}<i></i> Primary Shipping{% endif %}</strong>
 // 									</div>
 // 								</div>
 // 							{% endfor %}
 // 						</div>
 // 					{% else %}
-// 						<h1 className="text-center">Manage your addresses</h1>
+// 						<h1>Manage your addresses</h1>
 
 // 						<hr>
 
-// 						<div className="empty-index">
-// 							<i className="fas fa-address-book"></i>
+// 						<div>
+// 							<i></i>
 // 							<div>
 // 								You don’t have any addresses yet.
-// 								<div className="mt-6">
-// 									<a className="button button-primary" href="{{ url('shop/customer/addresses/edit') }}">Add a new address</a>
+// 								<div>
+// 									<a href="{{ url('shop/customer/addresses/edit') }}">Add a new address</a>
 // 								</div>
 // 							</div>
 // 						</div>

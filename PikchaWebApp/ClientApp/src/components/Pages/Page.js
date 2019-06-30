@@ -68,10 +68,9 @@ class Page extends Component {
 		}
 
 		return (
-			<article className="flex justify-center -mx-4">
-				<div className="w-full md:w-2/3 px-4 mb-6 md:mb-0">
-					<h1 className="text-4xl mb-4">{page.title}</h1>
-
+			<article>
+				<div>
+					<h1>{page.title}</h1>
 					{this.createMatrix()}
 				</div>
 			</article>

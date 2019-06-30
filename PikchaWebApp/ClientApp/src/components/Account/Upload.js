@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import classNames from 'classnames'
 import Dropzone from 'react-dropzone'
 import { Button } from 'pikcha-frame';
 
@@ -36,12 +35,12 @@ export default class Upload extends Component {
 		};
 
 		return (
-			<div className="flex flex-wrap -mx-2">
-				<div className="w-full px-2">
-					<h1 className="text-2xl mb-4">Upload</h1>
+			<div>
+				<div>
+					<h1 >Upload</h1>
 
-					<div className="form-group">
-						<label htmlFor="price" className="form-label">Select photos for publishing</label>
+					<div>
+						<label htmlFor="price" >Select photos for publishing</label>
 
 						<Dropzone accept="image/*" onDrop={this.onPreviewDrop}>
 							{({ getRootProps, getInputProps, isDragActive }) => {
@@ -51,12 +50,11 @@ export default class Upload extends Component {
 											{...getRootProps({
 												onClick: event => event.stopPropagation(),
 											})}
-											className={classNames('dropzone', { 'active': isDragActive })}
 										>
 											<input {...getInputProps()} />
 											{
-												<div className="text-center">
-													<span className="mr-3">Drop your photos here or </span>
+												<div>
+													<span>Drop your photos here or </span>
 													<Button htmlType="button">
 														Browse
 													</Button>
@@ -82,20 +80,20 @@ export default class Upload extends Component {
 						}
 					</div>
 
-					<div className="form-group">
-						<label htmlFor="title" className="form-label">Title</label>
-						<input type="text" placeholder="Name of product" name="title" className="form-input" />
+					<div>
+						<label htmlFor="title" >Title</label>
+						<input type="text" placeholder="Name of product" name="title"  />
 					</div>
 
-					<div className="form-group">
-						<label htmlFor="price" className="form-label">Price</label>
-						<input type="text" placeholder="0+" name="price" className="form-input" />
+					<div>
+						<label htmlFor="price" >Price</label>
+						<input type="text" placeholder="0+" name="price"  />
 					</div>
 
-					<div className="form-group">
-						<label htmlFor="description" className="form-label">Description</label>
-						<textarea name="description" rows="4" placeholder="Describe your product&hellip;" className="form-input" onChange={this.handleWordCount.bind(this)} maxLength={this.state.maxLimit}></textarea>
-						<p className="form-text">{this.state.descriptionLimit} characters left</p>
+					<div>
+						<label htmlFor="description" >Description</label>
+						<textarea name="description" rows="4" placeholder="Describe your product&hellip;"  onChange={this.handleWordCount.bind(this)} maxLength={this.state.maxLimit}></textarea>
+						<p>{this.state.descriptionLimit} characters left</p>
 					</div>
 
 					<Button type="primary">Create product</Button>

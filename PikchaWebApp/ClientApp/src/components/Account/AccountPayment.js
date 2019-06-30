@@ -22,20 +22,20 @@
 // 		const { variant, variantId } = this.state;
 
 // 		return (
-// 			<div className="flex flex-wrap -mx-2">
-// 				<div className="w-full px-2">
+// 			<div>
+// 				<div>
 // 					<SubNav />
 
-// 					<h1 className="text-2xl">Manage Cards</h1>
+// 					<h1>Manage Cards</h1>
 
 // 					{% set paymentSources = craft.commerce.paymentSources.getAllPaymentSourcesByUserId(currentUser.id) %}
 
 // 					{% if paymentSources|length %}
 // 						{% for paymentSource in paymentSources %}
-// 							<div className="card flex justify-between">
+// 							<div>
 // 								<div>
 // 									<strong>{{ paymentSource.description }}</strong>
-// 									<div className="text-grey-dark">{{ paymentSource.gateway.name }}</div>
+// 									<div>{{ paymentSource.gateway.name }}</div>
 // 								</div>
 
 // 								<div>
@@ -51,14 +51,14 @@
 // 						{% endfor %}
 // 					{% endif %}
 
-// 					<h1 className="text-2xl">Add Card</h1>
+// 					<h1>Add Card</h1>
 
-// 					<div className="w-1/2 px-6">
+// 					<div>
 // 						<div>
-// 							<label htmlFor="gatewayId" className="form-label">Choose a payment type</label>
+// 							<label htmlFor="gatewayId" >Choose a payment type</label>
 
-// 							<div className="relative">
-// 								<select id="gatewayId" className="form-input form-select mb-4">
+// 							<div>
+// 								<select id="gatewayId">
 // 									<option value="">---</option>
 
 // 									{/* {% set gateways = craft.commerce.gateways.allCustomerEnabledGateways %} */}
@@ -73,7 +73,7 @@
 // 									))}
 // 								</select>
 
-// 								<div className="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
+// 								<div>
 // 									<ChevronDown size={16} />
 // 								</div>
 // 							</div>
@@ -97,45 +97,45 @@
 // 									<Form>
 // 										<h3>Edit your details</h3>
 
-// 										<div className="flex -mx-2">
-// 											<div className="w-1/2 mb-4 px-2">
-// 												<label className="form-label">First name</label>
-// 												<Field name="firstName" placeholder="e.g., Jane" className="form-input" />
-// 												<ErrorMessage name="firstName" component="div" className="invalid-feedback" />
+// 										<divs>
+// 											<div>
+// 												<label>First name</label>
+// 												<Field name="firstName" placeholder="e.g., Jane"  />
+// 												<ErrorMessage name="firstName" component="div" />
 // 											</div>
 
-// 											<div className="w-1/2 mb-4 px-2">
-// 												<label className="form-label">Last name</label>
-// 												<Field name="lastName" placeholder="e.g., Doe" className="form-input" />
-// 												<ErrorMessage name="lastName" component="div" className="invalid-feedback" />
+// 											<div>
+// 												<label>Last name</label>
+// 												<Field name="lastName" placeholder="e.g., Doe"  />
+// 												<ErrorMessage name="lastName" component="div" />
 // 											</div>
 // 										</div>
 
-// 										<div className="mb-4">
-// 											<label className="form-label">Email</label>
-// 											<Field name="email" placeholder="e.g., john.doe@gmail.com" className="form-input" />
-// 											<ErrorMessage name="email" component="div" className="invalid-feedback" />
+// 										<div>
+// 											<label>Email</label>
+// 											<Field name="email" placeholder="e.g., john.doe@gmail.com"  />
+// 											<ErrorMessage name="email" component="div" />
 // 										</div>
 
 // 										<h3>Update password</h3>
 
-// 										<div className="flex -mx-2">
-// 											<div className="w-1/2 mb-4 px-2">
-// 												<label className="form-label">Current password</label>
-// 												<Field name="password" placeholder="e.g., ••••••••••••" className="form-input" />
-// 												<ErrorMessage name="password" component="div" className="invalid-feedback" />
+// 										<divs>
+// 											<div>
+// 												<label>Current password</label>
+// 												<Field name="password" placeholder="e.g., ••••••••••••"  />
+// 												<ErrorMessage name="password" component="div" />
 // 												<p>Required when changing password or email.</p>
 // 											</div>
 
-// 											<div className="w-1/2 mb-4 px-2">
-// 												<label className="form-label">New password</label>
-// 												<Field name="newPassword" placeholder="e.g., ••••••••••••" className="form-input" />
-// 												<ErrorMessage name="newPassword" component="div" className="invalid-feedback" />
+// 											<div>
+// 												<label>New password</label>
+// 												<Field name="newPassword" placeholder="e.g., ••••••••••••"  />
+// 												<ErrorMessage name="newPassword" component="div" />
 // 												<p>Leave blank if you don't want to change.</p>
 // 											</div>
 // 										</div>
 
-// 										<div className="flex items-center justify-between">
+// 										<div>
 // 											<Button htmlType="submit" type="primary" disabled={isSubmitting}>
 // 												Update info
 // 											</Button>
@@ -146,8 +146,8 @@
 
 // 							{/* {% for gateway in gateways %}
 // 								{% if gateway.supportsPaymentSources() %}
-// 									<div id="fields-{{ gateway.id }}" className="gateway-fields hidden">
-// 										<form method="POST" className="form-horizontal paymentSource-form max-w-md" id="gateway-{{ gateway.id }}">
+// 									<div id="fields-{{ gateway.id }}">
+// 										<form method="POST" id="gateway-{{ gateway.id }}">
 // 											<input type="hidden" name="action" value="commerce/payment-sources/add"/>
 // 											<input type="hidden" name="gatewayId" value="{{ gateway.id }}"/>
 // 											<input type="hidden" name="cancelUrl" value="{{ '/shop/customer/cards'|hash }}"/>
@@ -156,12 +156,12 @@
 
 // 											{{ gateway.getPaymentFormHtml({})|raw }}
 
-// 											<div className="field" data-colspan="1">
-// 												<input className="text description w-full" type="text" name="description" value="" maxlength="70" autocomplete="off" placeholder="Card description">
+// 											<div data-colspan="1">
+// 												<input type="text" name="description" value="" maxlength="70" autocomplete="off" placeholder="Card description">
 // 											</div>
 
-// 											<div className="buttons">
-// 												<button className="button button-primary" type="submit">Add card</button>
+// 											<div>
+// 												<button type="submit">Add card</button>
 // 											</div>
 // 										</form>
 // 									</div>

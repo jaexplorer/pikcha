@@ -12,7 +12,7 @@
     "jquery": "3.4.1",
     "merge": "^1.2.1",
     "oidc-client": "^1.6.1",
-    "pikcha-frame": "^1.0.15",
+    "pikcha-frame": "^1.0.17",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
     "react-helmet": "^5.2.1",

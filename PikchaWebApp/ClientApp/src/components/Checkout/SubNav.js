@@ -7,22 +7,22 @@ export default class SubNav extends Component {
 			<div>
 				<ul>
 					<li>
-						<NavLink to="/checkout-email" activeClassName="active">
+						<NavLink to="/checkout-email" >
 							Email
 						</NavLink>
 					</li>
 					<li>
-						<NavLink to="/checkout-info" activeClassName="active">
+						<NavLink to="/checkout-info" >
 							Account
 						</NavLink>
 					</li>
 					<li>
-						<NavLink to="/checkout-shipping" activeClassName="active">
+						<NavLink to="/checkout-shipping" >
 							Address
 						</NavLink>
 					</li>
 					<li>
-						<NavLink to="/checkout-payment" activeClassName="active">
+						<NavLink to="/checkout-payment" >
 							Payment Method
 						</NavLink>
 					</li>

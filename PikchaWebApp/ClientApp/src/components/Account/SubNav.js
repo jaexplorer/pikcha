@@ -17,31 +17,31 @@ class SubNav extends Component {
 
 	render() {
 		return (
-			<div className="w-full mb-6">
-				<ul className="list-reset flex sub-nav">
-					<li className="sub-nav-item">
-						<NavLink to="/account" className="sub-nav-link" activeClassName="active">
+			<div>
+				<ul>
+					<li>
+						<NavLink to="/account">
 							General
 						</NavLink>
 					</li>
-					<li className="sub-nav-item">
-						<NavLink to="/account-orders" className="sub-nav-link" activeClassName="active">
+					<li>
+						<NavLink to="/account-orders">
 							Orders
 						</NavLink>
 					</li>
-					<li className="sub-nav-item">
-						<NavLink to="/account-address" className="sub-nav-link" activeClassName="active">
+					<li>
+						<NavLink to="/account-address">
 							Address
 						</NavLink>
 					</li>
-					<li className="sub-nav-item">
-						<NavLink to="/account-payment" className="sub-nav-link" activeClassName="active">
+					<li>
+						<NavLink to="/account-payment">
 							Payment
 						</NavLink>
 					</li>
 
-					<li className="sub-nav-item">
-						<span onClick={this.handleClick.bind(this)} className="sub-nav-link cursor-pointer">
+					<li>
+						<span onClick={this.handleClick.bind(this)}>
 							Sign out
 						</span>
 					</li>

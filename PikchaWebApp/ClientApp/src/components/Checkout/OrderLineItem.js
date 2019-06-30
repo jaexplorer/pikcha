@@ -7,21 +7,20 @@ class LineItem extends Component {
 		const { lineItem } = this.props;
 
 		return (
-			<div className="py-2 border-t border-grey-light">
-				<div className="flex items-center">
-					<div className="relative mr-4">
+			<div>
+				<div>
+					<div>
 						<img
-							className="rounded w-16"
 							src={lineItem.snapshot.fields.featuredImage.url}
 							alt={lineItem.snapshot.title}
 						/>
 
-						<span className="absolute pin-t pin-r text-white bg-blue text-xs rounded-full flex items-center px-1 text-center justify-center font-semibold -mt-1 -mr-1">{lineItem.qty}</span>
+						<span>{lineItem.qty}</span>
 					</div>
 
-					<h3 className="text-base flex-grow">{lineItem.snapshot.title}</h3>
+					<h3>{lineItem.snapshot.title}</h3>
 
-					<div className="ml-4 text-right">
+					<div>
 						<div>{accounting.formatMoney(lineItem.total)}</div>
 					</div>
 				</div>

@@ -122,7 +122,7 @@ class Product extends Component {
 
 						<label htmlFor="purchasableId">Choose your frame</label>
 
-						<div className="relative">
+						<div>
 							<select
 								name="purchasableId"
 								onChange={this.handleChange}

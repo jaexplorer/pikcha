@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import PrimaryNav from './Navigation/PrimaryNav';
+import TopBar from './Navigation/TopBar';
 import Main from './Navigation/Main';
 import Footer from './Navigation/Footer';
 // import { getCart } from '../actions/cartAction';
 // import { getIdentity } from '../actions/usersAction';
 
 const AppWrap = styled.div`
-    background-color: #eceef1;
+    background-color: #f9fafb;
 `
 
 const MainSection = styled.section`
-    padding: 12px 0 16px;
+    /* padding: 12px 0 16px; */
 `
 
 class App extends Component {
@@ -26,7 +26,7 @@ class App extends Component {
 		return (
 			<AppWrap>
 				<MainSection>
-					<PrimaryNav />
+					<TopBar />
 					<Main />
 				</MainSection>
 

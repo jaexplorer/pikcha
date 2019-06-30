@@ -21,24 +21,24 @@ class Cart extends Component {
 
 		let cartContent = (
 			<p>
-				You have no items in your cart, add some on the <Link to="/" className="anchor">shop</Link> page.
+				You have no items in your cart, add some on the <Link to="/" >shop</Link> page.
 			</p>
 		);
 
 		if (Object.keys(cart.lineItems).length > 0) {
 			cartContent = (
 				<div>
-					<div className="bg-white rounded shadow mb-6 py-2">
+					<div>
 						{Object.keys(cart.lineItems).map((key, index) => (
 							<LineItem key={index} lineItem={cart.lineItems[key]} />
 						))}
 					</div>
 
-					<div className="flex items-center">
-						<div className="flex-grow">
+					<div>
+						<div>
 							<div>
-								<span className="text-lg font-semibold">Subtotal: </span>
-								<span className="text-lg">{accounting.formatMoney(cart.itemSubtotal)}</span>
+								<span>Subtotal: </span>
+								<span>{accounting.formatMoney(cart.itemSubtotal)}</span>
 							</div>
 
 							{Object.keys(cart.adjustments).map((key, index) => (
@@ -57,8 +57,8 @@ class Cart extends Component {
 		}
 
 		return (
-			<div style={{ opacity: isFetchingCart ? 0.5 : 1 }} className="max-w-md mx-auto">
-				<h1 className="text-2xl mb-5">Shopping cart</h1>
+			<div>
+				<h1>Shopping cart</h1>
 
 				{cartContent}
 			</div>

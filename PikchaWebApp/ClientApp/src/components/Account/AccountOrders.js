@@ -4,16 +4,16 @@
 // export default class AccountOrders extends Component {
 // 	render() {
 // 		return (
-// 			<div className="flex flex-wrap -mx-2">
-// 				<div className="w-full px-2">
+// 			<div>
+// 				<div>
 // 					<SubNav />
-// 					<h1 className="text-2xl">Account orders</h1>
+// 					<h1>Account orders</h1>
 
-// 					<div className="flex -mx-6">
-// 						<div className="w-1/3 mx-6">
+// 					<div>
+// 						<div>
 // 							<h3>Details</h3>
 
-// 							<ul className="list-reset">
+// 							<ul>
 // 								<li><strong>{{ "Customer"|t }}:</strong> {{ order.customer.email }}<br></li>
 // 								<li><strong>{{ "Total"|t }}:</strong> {{ order.totalPrice|commerceaccounting.formatMoney(cart.accounting) }}<br></li>
 // 								<li><strong>{{ "Amount Paid"|t }}:</strong> {{ order.totalPaid|commerceaccounting.formatMoney(cart.accounting) }}<br></li>
@@ -23,14 +23,14 @@
 // 								{% endif %}
 // 							</ul>
 // 						</div>
-// 						<div className="w-1/3 order-address mx-6">
+// 						<div>
 // 							<h3>Shipping Address</h3>
 
 // 							{% if order.shippingAddress %}
 // 							{% include 'shop/_includes/addresses/address' with { address: order.shippingAddress } %}
 // 							{% endif %}
 // 						</div>
-// 						<div className="w-1/3 order-address mx-6">
+// 						<div>
 // 							<h3>Billing Address</h3>
 // 							{% if order.billingAddress %}
 // 							{% include 'shop/_includes/addresses/address' with { address: order.billingAddress } %}
@@ -38,13 +38,13 @@
 // 						</div>
 // 					</div>
 
-// 					<table className="w-full">
+// 					<table>
 // 						<thead>
 // 						<tr>
 // 							<th>Item</th>
 // 							<th>Unit Price</th>
 // 							<th>Quantity</th>
-// 							<th className="text-right">Total</th>
+// 							<th>Total</th>
 // 						</tr>
 // 						</thead>
 // 						<tbody>
@@ -62,7 +62,7 @@
 // 									{% endif %}
 // 								</td>
 // 								<td>{{ item.qty }}</td>
-// 								<td className="text-right">{{ item.subtotal|commerceaccounting.formatMoney(cart.accounting) }}</td>
+// 								<td>{{ item.subtotal|commerceaccounting.formatMoney(cart.accounting) }}</td>
 // 							</tr>
 // 						{% endfor %}
 
@@ -70,12 +70,12 @@
 // 							<tr>
 // 								<td>{{ adjustment.type }}</td>
 // 								<td colspan="2"><strong>{{ adjustment.name }}</strong><br>({{ adjustment.description }})</td>
-// 								<td className="text-right">{{ adjustment.amount|commerceaccounting.formatMoney(cart.accounting) }}</td>
+// 								<td>{{ adjustment.amount|commerceaccounting.formatMoney(cart.accounting) }}</td>
 // 							</tr>
 // 						{% endfor %}
 
 // 						<tr>
-// 							<td colspan="4" className="text-right">
+// 							<td colspan="4">
 // 								Item Total: {{ order.itemTotal|commerceaccounting.formatMoney(cart.accounting) }}<br>
 // 								<h4>Total: {{ order.totalPrice|commerceaccounting.formatMoney(cart.accounting) }}</h4>
 // 							</td>

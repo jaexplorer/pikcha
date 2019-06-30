@@ -16,8 +16,8 @@ export default class ProductItem extends Component {
 		if (variant.length && variant[0].onSale) {
 			price = (
 				<div>
-					<h4 className="font-normal inline-block mr-2 mb-0">{accounting.formatMoney(variant[0].salePrice)}</h4>
-					<h4 className="font-normal line-through inline-block text-grey-dark mb-0">
+					<h4>{accounting.formatMoney(variant[0].salePrice)}</h4>
+					<h4>
 						{accounting.formatMoney(product.defaultPrice)}
 					</h4>
 				</div>

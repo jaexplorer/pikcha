@@ -9,10 +9,10 @@ import MinusIcon from 'react-feather/dist/icons/minus';
 
 class QtyInput extends Component {
 	render() {
-		const { lineItem, className } = this.props;
+		const { lineItem } = this.props;
 
 		return (
-			<div className={`flex items-center ${className}`}>
+			<div>
 				<Button
 					// onClick={() => {
 					// 	this.props.dispatch(updateCart(lineItem.id, parseInt(lineItem.qty) - 1, true));
@@ -21,10 +21,10 @@ class QtyInput extends Component {
 					size="sm"
 				>
 					<MinusIcon size={16} />
-					<div className="sr-only">Decrease item</div>
+					<div>Decrease item</div>
 				</Button>
 
-				<div className="w-8 text-center">{lineItem.qty}</div>
+				<div>{lineItem.qty}</div>
 
 				<Button
 					// onClick={() => {
@@ -34,7 +34,7 @@ class QtyInput extends Component {
 					size="sm"
 				>
 					<PlusIcon size={16} />
-					<div className="sr-only">Increase item</div>
+					<div>Increase item</div>
 				</Button>
 			</div>
 		);
@@ -43,7 +43,6 @@ class QtyInput extends Component {
 
 QtyInput.propTypes = {
 	lineItem: PropTypes.object.isRequired,
-	className: PropTypes.string
 };
 
 export default withRouter(connect()(QtyInput));

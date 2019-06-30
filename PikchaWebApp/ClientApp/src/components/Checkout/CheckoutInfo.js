@@ -21,8 +21,8 @@ class CheckoutInfo extends Component {
 			<div>
 				<SubNav />
 
-				<div className="flex flex-wrap -mx-4">
-					<div className="w-full md:w-2/3 px-4 mb-6 md:mb-0">
+				<div>
+					<div>
 						<Formol
 							initialValues={{
 								firstName: currentUser.firstName,
@@ -39,62 +39,62 @@ class CheckoutInfo extends Component {
 								// this.props.dispatch(updateCart(values));
 							}}
 						>
-							<h1 className="text-2xl mb-4">Checkout information</h1>
+							<h1 >Checkout information</h1>
 
 							{error &&
 								<Alert type="danger">Error: {error}</Alert>
 							}
 
-							<div className="flex -mx-2">
-								<div className="w-1/2 px-2 form-group">
-									<label className="form-label">First name</label>
-									<Field name="firstName" placeholder="e.g., Jane" className="form-input" />
+							<div>
+								<div>
+									<label>First name</label>
+									<Field name="firstName" placeholder="e.g., Jane"  />
 								</div>
 
-								<div className="w-1/2 px-2 form-group">
-									<label className="form-label">Last name</label>
-									<Field name="lastName" placeholder="e.g., Doe" className="form-input" />
+								<div>
+									<label>Last name</label>
+									<Field name="lastName" placeholder="e.g., Doe"  />
 								</div>
 							</div>
 
-							<div className="form-group">
-								<label className="form-label">Address</label>
-								<Field name="address" placeholder="e.g., 123 Fake Street" className="form-input" />
+							<div>
+								<label>Address</label>
+								<Field name="address" placeholder="e.g., 123 Fake Street"  />
 							</div>
 
-							<div className="form-group">
-								<label className="form-label">Apartment</label>
+							<div>
+								<label>Apartment</label>
 								<Field
 									name="address"
 									placeholder="e.g., Apartment, Suite, etc."
-									className="form-input"
+
 								/>
 							</div>
 
-							<div className="form-group">
-								<label className="form-label">City</label>
-								<Field name="city" placeholder="e.g., Melbourne" className="form-input" />
+							<div>
+								<label>City</label>
+								<Field name="city" placeholder="e.g., Melbourne"  />
 							</div>
 
-							<div className="flex -mx-2">
-								<div className="w-1/3 px-2 form-group">
-									<label className="form-label">Country</label>
-									<Field name="country" placeholder="e.g., Australia" className="form-input" />
+							<div>
+								<div>
+									<label>Country</label>
+									<Field name="country" placeholder="e.g., Australia"  />
 								</div>
 
-								<div className="w-1/3 px-2 form-group">
-									<label className="form-label">State/territory</label>
-									<Field name="country" placeholder="e.g., VIC" className="form-input" />
+								<div>
+									<label>State/territory</label>
+									<Field name="country" placeholder="e.g., VIC"  />
 								</div>
 
-								<div className="w-1/3 px-2 form-group">
-									<label className="form-label">Postcode</label>
-									<Field name="postcode" placeholder="e.g., 3161" className="form-input" />
+								<div>
+									<label>Postcode</label>
+									<Field name="postcode" placeholder="e.g., 3161"  />
 								</div>
 							</div>
 
-							<div className="flex items-center justify-between">
-								<Link to="/cart" className="anchor">Return to cart</Link>
+							<div>
+								<Link to="/cart" >Return to cart</Link>
 
 								{/* <Button htmlType="submit" type="primary" disabled={isSubmitting}>
 									Continue
@@ -103,7 +103,7 @@ class CheckoutInfo extends Component {
 						</Formol>
 					</div>
 
-					<div className="w-full md:w-1/3 px-4">
+					<div>
 						<OrderSummary />
 					</div>
 				</div>

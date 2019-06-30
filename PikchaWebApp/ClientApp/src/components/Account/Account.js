@@ -13,7 +13,7 @@ class Account extends Component {
 		const { error, isFetchingCurrent, currentUser } = this.props.users;
 
 		return (
-			<div style={{ opacity: isFetchingCurrent ? 0.5 : 1 }}>
+			<div>
 				<div>
 					<SubNav />
 
@@ -75,7 +75,7 @@ class Account extends Component {
 							</div>
 						</div>
 
-						<div className="flex items-center justify-between">
+						<div>
 							{/* <Button htmlType="submit" type="primary" disabled={isSubmitting}>
 								Update info
 							</Button> */}

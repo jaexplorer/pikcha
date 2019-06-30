@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Search from '../Navigation/Search';
+import SearchField from '../Navigation/SearchField';
 import { Heading, Box } from 'pikcha-frame';
 
 export default class Shipping extends Component {
@@ -8,7 +8,7 @@ export default class Shipping extends Component {
 			<Box>
 				<Box>
 					<Heading as="h1">Search</Heading>
-					<Search />
+					<SearchField />
 				</Box>
 			</Box>
 		);
