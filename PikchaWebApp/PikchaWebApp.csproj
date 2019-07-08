@@ -19,7 +19,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0-preview6.19307.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0-preview6.19304.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0-preview6.19304.10" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0-preview6.19304.6" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0-preview6-19319-03" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +29,11 @@
     <Content Remove="$(SpaRoot)**" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20190708054642_adding-user-profile.cs" />
+    <Compile Remove="Data\Migrations\20190708054642_adding-user-profile.Designer.cs" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

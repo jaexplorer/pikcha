@@ -26,15 +26,15 @@ namespace PikchaWebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<PikchaDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<PikchaUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<PikchaDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<PikchaUser, ApplicationDbContext>();
+                .AddApiAuthorization<PikchaUser, PikchaDbContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
@@ -85,6 +85,12 @@ namespace PikchaWebApp
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<PikchaDbContext>();
+                context.Database.Migrate();
+            }
         }
     }
 }
