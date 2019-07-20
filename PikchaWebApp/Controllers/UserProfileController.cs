@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using PikchaWebApp.Data;
+using PikchaWebApp.Managers;
 using PikchaWebApp.Models;
 
 namespace PikchaWebApp.Controllers
@@ -19,17 +22,22 @@ namespace PikchaWebApp.Controllers
         protected readonly IWebHostEnvironment _hostingEnvironment;
         protected readonly IConfiguration _configuration;
         protected readonly UserManager<PikchaUser> _userManager;
+        protected readonly PikchaDbContext _pikchDbContext;
 
-        public UserProfileController(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
+        public UserProfileController(IWebHostEnvironment hostingEnvironment, IConfiguration configuration, UserManager<PikchaUser> userManager, PikchaDbContext pikchDbContext)
         {
             _hostingEnvironment = hostingEnvironment;
+            _configuration = configuration;
+            _userManager = userManager;
+            _pikchDbContext = pikchDbContext;
         }
 
         // GET: api/UserProfile
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ReturnDataModel> Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = _userManager.Users; 
+            return new ReturnDataModel() { Data = await users.ToListAsync() };
         }
 
         // GET: api/UserProfile/5
@@ -47,8 +55,17 @@ namespace PikchaWebApp.Controllers
 
         // PUT: api/UserProfile/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ReturnDataModel> Put(int id, [FromBody] ProfileViewModel profModel)
         {
+            PikchaUser pikchaUser = _userManager.FindByIdAsync(profModel.Id).Result;
+            pikchaUser.CopyPropertiesFrom(profModel);
+
+            IdentityResult result = await _userManager.UpdateAsync(pikchaUser);
+            if (result.Succeeded)
+            {
+                return new ReturnDataModel() { Data = profModel };
+            }
+            return new ReturnDataModel() { Status="Error", Statuscode="401" };                       
         }
 
         // DELETE: api/ApiWithActions/5
@@ -59,23 +76,56 @@ namespace PikchaWebApp.Controllers
 
         // POST: api/UserProfile/avatar
         [HttpPost("avatar")]
-        public void UploadAvatarImage(IFormFile avatarFile)
+        public async Task<ReturnDataModel> UploadAvatarImage(IFormFile avatarFile)
         {
 
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, _configuration["UploadDirectories.Avatar"]);
-            var filePath = Path.Combine(uploads, avatarFile.FileName);
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                avatarFile.CopyToAsync(fileStream);
-            }
+            StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
+            string filePath = "";
+            Task copyTask = manager.UploadToLocalDirectory(avatarFile, StorageManager.FileCategory.Avatar, ref filePath);
+                        
             // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
-            PikchaUser loggedinUser = _userManager.GetUserAsync(this.User).Result;
+            Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
+
+            await Task.WhenAll(copyTask, loggedinUserTask);
+
+            PikchaUser loggedinUser = loggedinUserTask.Result;
+            if(copyTask.IsCompleted)
+            {
+                loggedinUser.AvatarFileName = filePath;
+                await _pikchDbContext.SaveChangesAsync();
+            }
+
+            return new ReturnDataModel();
+        }
+
+        // POST: api/UserProfile/signature
+        [HttpPost("signature")]
+        public async Task<ReturnDataModel> UploadSignatureImage(IFormFile signatureFile)
+        {
+
+            StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
+            string filePath = "";
+            Task copyTask = manager.UploadToLocalDirectory(signatureFile, StorageManager.FileCategory.Signature, ref filePath);
+
+            // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
+            Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
+
+            await Task.WhenAll(copyTask, loggedinUserTask);
+
+            PikchaUser loggedinUser = loggedinUserTask.Result;
+            if (copyTask.IsCompleted)
+            {
+                loggedinUser.SignatureFileName = filePath;
+                await _pikchDbContext.SaveChangesAsync();
+            }
+            
+            return new ReturnDataModel();
         }
     }
 
     public class ProfileViewModel
     {
+        public string Id;
         public string FirstName;
         public string LastName;
 
@@ -84,6 +134,5 @@ namespace PikchaWebApp.Controllers
         public string City;
         public string PostalCode;
         public string Country;
-
     }
 }
