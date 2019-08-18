@@ -36,8 +36,9 @@ namespace PikchaWebApp.Controllers
         [HttpGet]
         public async Task<ReturnDataModel> Get()
         {
-            var users = _userManager.Users; 
-            return new ReturnDataModel() { Data = await users.ToListAsync() };
+            //var users = await _userManager.Users.ToListAsync();
+            var users = await Task.FromResult(_userManager.Users.ToList());
+            return new ReturnDataModel() { Data = users };
         }
 
         // GET: api/UserProfile/5

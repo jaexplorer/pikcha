@@ -36,6 +36,8 @@ namespace PikchaWebApp
             services.AddIdentityServer()
                 .AddApiAuthorization<PikchaUser, PikchaDbContext>();
 
+            // identity options
+            // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.2&tabs=visual-studio
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddMvc(options => options.EnableEndpointRouting = false);

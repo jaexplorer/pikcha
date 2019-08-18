@@ -47,7 +47,7 @@ namespace PikchaWebApp.Managers
                 }
                 return uploadDirectory;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return "/uploads/default";
             }
