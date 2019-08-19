@@ -43,9 +43,10 @@ namespace PikchaWebApp.Controllers
 
         // GET: api/UserProfile/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<ReturnDataModel> Get(string userId)
         {
-            return "value";
+            var user = await _userManager.FindByIdAsync(userId);
+            return new ReturnDataModel() { Data = user };
         }
 
         // POST: api/UserProfile
@@ -71,8 +72,12 @@ namespace PikchaWebApp.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async void Delete(string userId)
         {
+            PikchaUser pikchaUser = _userManager.FindByIdAsync(userId).Result;
+
+            await _userManager.DeleteAsync(pikchaUser);
+
         }
 
         // POST: api/UserProfile/avatar
@@ -96,7 +101,7 @@ namespace PikchaWebApp.Controllers
                 await _pikchDbContext.SaveChangesAsync();
             }
 
-            return new ReturnDataModel();
+            return new ReturnDataModel() { Data = filePath };
         }
 
         // POST: api/UserProfile/signature
@@ -120,20 +125,20 @@ namespace PikchaWebApp.Controllers
                 await _pikchDbContext.SaveChangesAsync();
             }
             
-            return new ReturnDataModel();
+            return new ReturnDataModel() { Data = filePath };
         }
     }
 
     public class ProfileViewModel
     {
-        public string Id;
-        public string FirstName;
-        public string LastName;
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
-        public string Address_1;
-        public string Address_2;
-        public string City;
-        public string PostalCode;
-        public string Country;
+        public string Address_1 { get; set; }
+        public string Address_2 { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
+        public string Country { get; set; }
     }
 }

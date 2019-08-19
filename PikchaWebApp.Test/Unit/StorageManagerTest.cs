@@ -15,7 +15,7 @@ namespace PikchaWebApp.Test.Unit
     public class StorageManagerTest
     {
         [Fact]
-        public async Task UploadToLocalDirectory()
+        public async Task UploadToLocalDirectory_Success()
         {
             var mockRepoWebHost = new Mock<IWebHostEnvironment>();
             mockRepoWebHost.Setup(x => x.WebRootPath)

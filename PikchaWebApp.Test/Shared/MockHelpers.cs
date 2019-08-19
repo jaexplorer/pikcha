@@ -149,7 +149,7 @@ namespace PikchaWebApp.Test.Shared
             return users;
         }
 
-        public static async Task CreateNewUser(string userId, string userName, string password, SqliteInMemoryFixture fixture)
+        public static async Task<PikchaUser> CreateNewUser(string userId, string userName, string password, SqliteInMemoryFixture fixture)
         {
             // Arrange
             //var userId = "TestUserA";
@@ -157,11 +157,28 @@ namespace PikchaWebApp.Test.Shared
             //var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, userId) };
 
             var userManager = fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
+
+            var user = new PikchaUser { Id = userId, UserName = userName, Email = userName, TwoFactorEnabled = true };
             
-            await userManager.CreateAsync(
-                new PikchaUser { Id = userId, UserName = userName, Email= userName, TwoFactorEnabled = true },
-                password);
+            await userManager.CreateAsync(user, password);
+            return user;           
 
         }
+
+        public static async Task<PikchaUser> FindUserById(string userId, SqliteInMemoryFixture fixture)
+        {
+            var userManager = fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
+            var task = await userManager.FindByIdAsync(userId);
+            return task;
+        }
+
+        public static async Task DeleteUser(PikchaUser user, SqliteInMemoryFixture fixture)
+        {
+            var userManager = fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
+
+            await userManager.DeleteAsync(user);
+
+        }
+
     }
 }

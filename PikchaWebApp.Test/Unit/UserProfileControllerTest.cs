@@ -19,29 +19,28 @@ namespace PikchaWebApp.Test.Unit
     {
         protected readonly UserManager<PikchaUser> _userManager;
         private readonly SqliteInMemoryFixture _fixture;
+        Mock<IWebHostEnvironment> _webHostEnvironment;
+        Mock<IConfiguration> _configurationManager;
 
         public UserProfileControllerTest(SqliteInMemoryFixture fixture)
         {
             _fixture = fixture;
             _fixture.CreateDatabase();
-            //_userManager = new UserManager<PikchaUser>();
+            _webHostEnvironment = new Mock<IWebHostEnvironment>();
+            _configurationManager = new Mock<IConfiguration>();
         }
 
         [Fact]
-        public async Task Get_ReturnsJsonAListofUsers()
+        public async Task Get_ReturnsJson_ListofUsers()
         {
-            // Arrange
-            var mockRepoWebHost = new Mock<IWebHostEnvironment>();
-            var mockRepoConfig = new Mock<IConfiguration>();
-            var mockRepoUserMan =  MockHelpers.MockUserManager<PikchaUser>();
-            
+            // Arrange            
             // create two test users
-            Task user1Result =  MockHelpers.CreateNewUser("testuser1", "testuser1@test.thananji.com", "Test@123", _fixture);
-            Task user2Result =  MockHelpers.CreateNewUser("testuser2", "testuser2@test.thananji.com", "Test@123", _fixture);
+            Task<PikchaUser> user1Result =  MockHelpers.CreateNewUser("testuser1", "testuser1@test.thananji.com", "Test@123", _fixture);
+            Task<PikchaUser> user2Result =  MockHelpers.CreateNewUser("testuser2", "testuser2@test.thananji.com", "Test@123", _fixture);
             Task.WaitAll(user1Result, user2Result);
             
             var userManager = _fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
-            var controller = new UserProfileController(mockRepoWebHost.Object, mockRepoConfig.Object, userManager, _fixture.Context);
+            var controller = new UserProfileController(_webHostEnvironment.Object, _configurationManager.Object, userManager, _fixture.Context);
 
             // Act
             var result = await controller.Get();
@@ -55,7 +54,77 @@ namespace PikchaWebApp.Test.Unit
             Assert.NotNull(viewResult.Data);
             var users = Assert.IsType<List<PikchaUser>>(viewResult.Data);
 
-            Assert.Equal(2, users.Count); 
+            Assert.Equal(2, users.Count);
+
+            // delete the user
+            await MockHelpers.DeleteUser(user1Result.Result, _fixture);
+            await MockHelpers.DeleteUser(user2Result.Result, _fixture);
+        }
+
+        [Fact]
+        public async Task Get_ReturnAUser()
+        {
+            // Arrange
+            string email = "testuser3@test.thananji.com";
+            // create two test users
+            Task<PikchaUser> user1Result = MockHelpers.CreateNewUser("testuser1", email, "Test@123", _fixture);
+            if(user1Result.IsCompleted)
+            {
+                var userManager = _fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
+                var controller = new UserProfileController(_webHostEnvironment.Object, _configurationManager.Object, userManager, _fixture.Context);
+
+                // Act
+                var result = await controller.Get(user1Result.Result.Id);
+
+                var viewResult = Assert.IsType<ReturnDataModel>(result);
+                Assert.NotNull(viewResult.Data);
+                var user = Assert.IsType<PikchaUser>(viewResult.Data);
+
+                Assert.Equal(email, user.Email);
+                // delete the user
+                await MockHelpers.DeleteUser(user, _fixture);
+            }            
+        }
+
+        [Fact]
+        public async Task Put_UpdateAUser()
+        {
+            // Arrange
+            string userId = "testuser4";
+            string email = "testuser4@test.thananji.com";
+            string fName = "Fname";
+            // create two test users
+            Task<PikchaUser> user1Result = MockHelpers.CreateNewUser(userId, email, "Test@123", _fixture);
+            if (user1Result.IsCompleted)
+            {
+                ProfileViewModel profVM = new ProfileViewModel() { Id = user1Result.Result.Id, Address_1 = "Address 1", FirstName = fName, LastName = "LName", PostalCode = "1234" };
+
+                var userManager = _fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
+                var controller = new UserProfileController(_webHostEnvironment.Object, _configurationManager.Object, userManager, _fixture.Context);
+
+                // Act
+                var result = await controller.Put(1, profVM);
+
+                var viewResult = Assert.IsType<ReturnDataModel>(result);
+                Assert.NotNull(viewResult.Data);
+                var user = Assert.IsType<ProfileViewModel>(viewResult.Data);
+
+               Assert.Equal(fName, user.FirstName);
+
+                // get the user from DB and check whether it is updated
+                PikchaUser dUser = _fixture.Context.Users.Find(userId);
+                Assert.Equal(fName, dUser.FirstName);
+
+
+
+                // get the PikchUser (get it from user manager and make sure it is updated in user manager as well
+                PikchaUser pUser = MockHelpers.FindUserById(userId, _fixture).Result;
+
+                Assert.Equal(fName, pUser.FirstName);
+
+                // delete the user
+                await MockHelpers.DeleteUser(pUser, _fixture);
+            }
         }
 
     }
