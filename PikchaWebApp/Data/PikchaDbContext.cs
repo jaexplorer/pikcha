@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace PikchaWebApp.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<PikchaUser>
+    public class PikchaDbContext : ApiAuthorizationDbContext<PikchaUser>
     {
-        public ApplicationDbContext(
+        public PikchaDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {

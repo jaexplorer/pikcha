@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29006.145
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "PikchaWebApp", "PikchaWebApp\PikchaWebApp.csproj", "{08195A0A-BB8B-464E-AC98-9C9240367E2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PikchaWebApp", "PikchaWebApp\PikchaWebApp.csproj", "{34E604F9-8050-4A79-8E64-45B56549E232}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PikchaWebApp.Test", "PikchaWebApp.Test\PikchaWebApp.Test.csproj", "{65C9AD65-F584-4A56-98BF-F045A35F4D50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{08195A0A-BB8B-464E-AC98-9C9240367E2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08195A0A-BB8B-464E-AC98-9C9240367E2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08195A0A-BB8B-464E-AC98-9C9240367E2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08195A0A-BB8B-464E-AC98-9C9240367E2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34E604F9-8050-4A79-8E64-45B56549E232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E604F9-8050-4A79-8E64-45B56549E232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E604F9-8050-4A79-8E64-45B56549E232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E604F9-8050-4A79-8E64-45B56549E232}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65C9AD65-F584-4A56-98BF-F045A35F4D50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65C9AD65-F584-4A56-98BF-F045A35F4D50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65C9AD65-F584-4A56-98BF-F045A35F4D50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65C9AD65-F584-4A56-98BF-F045A35F4D50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
