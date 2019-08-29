@@ -15,6 +15,8 @@ using PikchaWebApp.Models;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
+using System.Drawing;
+using System.Net.Http;
 
 namespace PikchaWebApp.Test.Shared
 {
@@ -102,23 +104,38 @@ namespace PikchaWebApp.Test.Shared
                 null);
         }
 
-        public static Mock<IFormFile> CreateNewFile(string content, string fileName)
+        public static IFormFile CreateNewImageFile(string fileUri, string fileName, string name)
         {
             //Arrange
-            var fileMock = new Mock<IFormFile>();
+            // var fileMock = new Mock<IFormFile>();
             //Setup mock file using a memory stream
             //var content = "Hello World from a Fake File";
             //var fileName = "test.pdf";
-            var ms = new MemoryStream();
-            var writer = new StreamWriter(ms);
-            writer.Write(content);
-            writer.Flush();
-            ms.Position = 0;
-            fileMock.Setup(_ => _.OpenReadStream()).Returns(ms);
-            fileMock.Setup(_ => _.FileName).Returns(fileName);
-            fileMock.Setup(_ => _.Length).Returns(ms.Length);
+            try
+            {
+                var imageFile = File.OpenRead(fileUri);
+                
+                IFormFile file = new FormFile(imageFile, 0, imageFile.Length, name, fileName);
+                return file;
+                
+            }
+            catch(Exception ex)
+            {
+                var cc = ex;
+                return null;
+            }
+           
 
-            return fileMock;
+            //    var ms = new MemoryStream();
+            //var writer = new StreamWriter(ms);
+            //writer.Write(content);
+            //writer.Flush();
+            //ms.Position = 0;
+            //fileMock.Setup(_ => _.OpenReadStream()).Returns(ms);
+            //fileMock.Setup(_ => _.FileName).Returns(fileName);
+            //fileMock.Setup(_ => _.Length).Returns(ms.Length);
+
+            //return fileMock;
         }
 
 

@@ -20,15 +20,18 @@ namespace PikchaWebApp.Managers
             _hostingEnvironment = hostingEnvironment;
             _configuration = configuration;
         }
-        public Task UploadToLocalDirectory(IFormFile formFileInfo, FileCategory fileCategory, ref string filePath)
+        public async Task<string> UploadToLocalDirectory(IFormFile formFileInfo, FileCategory fileCategory)
         {
-            var uploads = Path.Combine(_hostingEnvironment.WebRootPath, GetDirectory(fileCategory));
-            filePath = Path.Combine(uploads, formFileInfo.FileName);
+            var uploadPath = Path.Combine(_hostingEnvironment.WebRootPath, GetDirectory(fileCategory));
 
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                return formFileInfo.CopyToAsync(fileStream);
-            }
+            ValidateDirectory(uploadPath);
+            string filePath = Path.Combine(uploadPath, formFileInfo.FileName);
+
+            var fileStream = new FileStream(filePath, FileMode.Create);
+            fileStream.Position = 0;
+            await formFileInfo.CopyToAsync(fileStream);
+            return filePath;
+            
         }
 
         private string GetDirectory(FileCategory fileCategory)
@@ -51,9 +54,25 @@ namespace PikchaWebApp.Managers
             {
                 return "/uploads/default";
             }
-            
+        }
+
+        private bool ValidateDirectory(string directoryPath)
+        {
+            if (!Directory.Exists(directoryPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(directoryPath);
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
 
 
+            return true;
         }
     }
 }

@@ -9,6 +9,7 @@ using Xunit;
 using Microsoft.Extensions.Configuration;
 using PikchaWebApp.Test.Shared;
 using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace PikchaWebApp.Test.Unit
 {
@@ -19,21 +20,24 @@ namespace PikchaWebApp.Test.Unit
         {
             var mockRepoWebHost = new Mock<IWebHostEnvironment>();
             mockRepoWebHost.Setup(x => x.WebRootPath)
-                  .Returns("./");
+                  .Returns(@"C:\Users\tshanmuganat\Documents\Projects\pikcha\dev\PikchaWebApp\PikchaWebApp.Test");
 
             var mockRepoConfig = new Mock<IConfiguration>();
             var configurationSection = new Mock<IConfigurationSection>();
-            configurationSection.Setup(a => a.Value).Returns("/uploads/avatars");
+            configurationSection.Setup(a => a.Value).Returns("uploads/avatars");
             mockRepoConfig.Setup(a => a.GetSection("UploadDirectories.Avatar")).Returns(configurationSection.Object);
 
             StorageManager manager = new StorageManager(mockRepoWebHost.Object, mockRepoConfig.Object);
 
-            Mock<IFormFile> mockFile = MockHelpers.CreateNewFile("This is test file", "test.txt");
+            IFormFile mockFile = MockHelpers.CreateNewImageFile("TestPhotos/profile-photo.jpg", "profile-photo.jpg", "profile-photo");
 
             string filePath = string.Empty;
-            await manager.UploadToLocalDirectory(mockFile.Object, StorageManager.FileCategory.Avatar, ref filePath);
-            
+            var fileUploadTask = manager.UploadToLocalDirectory(mockFile, StorageManager.FileCategory.Avatar);
+            filePath = fileUploadTask.Result;
+            Assert.True(File.Exists(filePath));
+
             Assert.Contains("uploads/avatars", filePath);
+            //Assert.Equal(2, 3);
         }
 
     }

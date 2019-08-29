@@ -86,9 +86,9 @@ namespace PikchaWebApp.Controllers
         {
 
             StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
-            string filePath = "";
-            Task copyTask = manager.UploadToLocalDirectory(avatarFile, StorageManager.FileCategory.Avatar, ref filePath);
-                        
+            // = "";
+            Task<string> copyTask = manager.UploadToLocalDirectory(avatarFile, StorageManager.FileCategory.Avatar);
+            string filePath = copyTask.Result;            
             // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
             Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
 
@@ -110,8 +110,8 @@ namespace PikchaWebApp.Controllers
         {
 
             StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
-            string filePath = "";
-            Task copyTask = manager.UploadToLocalDirectory(signatureFile, StorageManager.FileCategory.Signature, ref filePath);
+            Task<string> copyTask = manager.UploadToLocalDirectory(signatureFile, StorageManager.FileCategory.Signature);
+            string filePath = copyTask.Result;
 
             // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
             Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
