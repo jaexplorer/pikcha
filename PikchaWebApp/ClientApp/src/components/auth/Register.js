@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { register, clearErrors } from "../../actions/auth";
+import { setAlert } from "../../actions/alert";
 
-const Register = () => {
+const Register = ({ auth, register, clearErrors, setAlert }) => {
   // Component State
   const [user, setUser] = useState({
     name: "",
@@ -15,16 +19,36 @@ const Register = () => {
   // Update Component State on change
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
+  useEffect(() => {
+    if (auth.error === "User already exists") {
+      setAlert(auth.error, "danger");
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [auth.error]);
+
   const onSubmit = e => {
     e.preventDefault();
     if (name === "" || email === "" || password === "") {
-      console.log("Please enter all fields");
+      setAlert("Please enter all fields", "danger");
     } else if (password !== password2) {
-      console.log("Passwords do not match");
+      setAlert("Passwords do not match", "danger");
     } else {
-      console.log("Registered");
+      register({
+        name,
+        email,
+        password
+      });
     }
   };
+
+  if (auth.loading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (auth.isAuthenticated) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <div>
@@ -39,7 +63,7 @@ const Register = () => {
             name='name'
             value={name}
             onChange={onChange}
-            required
+            // required
           />
         </div>
         <div>
@@ -49,7 +73,7 @@ const Register = () => {
             name='email'
             value={email}
             onChange={onChange}
-            required
+            // required
           />
         </div>
         <div>
@@ -59,8 +83,8 @@ const Register = () => {
             name='password'
             value={password}
             onChange={onChange}
-            required
-            minLength='6'
+            // required
+            // minLength='6'
           />
         </div>
         <div>
@@ -70,14 +94,24 @@ const Register = () => {
             name='password2'
             value={password2}
             onChange={onChange}
-            required
-            minLength='6'
+            // required
+            // minLength='6'
           />
         </div>
         <input type='submit' value='Register' />
       </form>
+      <p>
+        Already have an account? <Link to='/login'>Login</Link>
+      </p>
     </div>
   );
 };
 
-export default Register;
+const mapStateToProps = state => ({
+  auth: state.authReducer
+});
+
+export default connect(
+  mapStateToProps,
+  { register, clearErrors, setAlert }
+)(Register);

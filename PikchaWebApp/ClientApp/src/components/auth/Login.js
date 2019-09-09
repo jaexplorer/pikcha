@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { login, clearErrors } from "../../actions/auth";
+import { setAlert } from "../../actions/alert";
 
-const Login = () => {
+const Login = ({ login, auth, clearErrors, setAlert }) => {
   // Component State
   const [user, setUser] = useState({
     email: "",
@@ -13,14 +17,30 @@ const Login = () => {
   // Update Component State on change
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
+  useEffect(() => {
+    if (auth.error === "Invalid Credentials") {
+      setAlert(auth.error, "danger");
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [auth.error]);
+
   const onSubmit = e => {
     e.preventDefault();
     if (email === "" || password === "") {
-      console.log("Please fill in all fields");
+      setAlert("Please fill in all fields", "danger");
     } else {
-      console.log("Logged in");
+      login({ email, password });
     }
   };
+
+  if (auth.loading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (auth.isAuthenticated) {
+    return <Redirect to='/' />;
+  }
 
   return (
     <div>
@@ -35,7 +55,7 @@ const Login = () => {
             name='email'
             value={email}
             onChange={onChange}
-            required
+            // required
           />
         </div>
         <div>
@@ -45,13 +65,23 @@ const Login = () => {
             name='password'
             value={password}
             onChange={onChange}
-            required
+            // required
           />
         </div>
         <input type='submit' value='Login' />
       </form>
+      <p>
+        Don't have an account? <Link to='/register'>Register</Link>
+      </p>
     </div>
   );
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  auth: state.authReducer
+});
+
+export default connect(
+  mapStateToProps,
+  { login, clearErrors, setAlert }
+)(Login);
