@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Data.Sqlite;
+using PikchWebApp.Data;
+using PikchWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Data.Sqlite;
-using PikchaWebApp.Data;
 using Microsoft.EntityFrameworkCore;
-using PikchaWebApp.Models;
 
 namespace PikchaWebApp.Test.Shared
 {
@@ -23,12 +23,12 @@ namespace PikchaWebApp.Test.Shared
         }
 
         public virtual IServiceCollection ConfigureServices(IServiceCollection services)
-        { 
+        {
             services
                 .AddMemoryCache()
                 .AddLogging()
                 .AddDbContext<PikchaDbContext>(b => b.UseSqlite(_connection));
-            
+
             services.AddDefaultIdentity<PikchaUser>()
                 .AddEntityFrameworkStores<PikchaDbContext>();
 
@@ -37,7 +37,7 @@ namespace PikchaWebApp.Test.Shared
 
             return services;
         }
-        
+
         public virtual IServiceProvider ServiceProvider
         {
             get
@@ -46,7 +46,7 @@ namespace PikchaWebApp.Test.Shared
                 {
                     _serviceScope = ConfigureServices(new ServiceCollection()).BuildServiceProvider().CreateScope();
 
-                    
+
                 }
 
                 return _serviceScope.ServiceProvider;
