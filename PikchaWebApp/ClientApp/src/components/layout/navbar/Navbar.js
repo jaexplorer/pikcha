@@ -1,21 +1,20 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../../../actions/auth";
 import Logo from "../../../assets/images/logo-white.png";
-import SearchIcon from "../../../assets/images/search.png";
-import CartIcon from "../../../assets/images/cart.png";
-import PeopleIcon from "../../../assets/images/people.png";
+import SearchIcon from "../../../assets/images/search-black.png";
+import CartIcon from "../../../assets/images/cart-black.png";
+import PeopleIcon from "../../../assets/images/people-black.png";
 import PlaceHolder from "../../../assets/images/placeholder.png";
 
-const Navbar = ({ logout, auth }) => {
+const Navbar = ({ auth }) => {
   const authLinks = (
     <div className='navbar-right'>
       <div className='navbar-icons'>
         <img src={CartIcon} alt='' /> <img src={PeopleIcon} alt='' />
       </div>
       <div id='navbar-display-pic'>
-        <img onClick={logout} src={PlaceHolder} alt='' />
+        <img onClick={""} src={PlaceHolder} alt='' />
       </div>
     </div>
   );
@@ -62,7 +61,4 @@ const mapStateToProps = state => ({
   auth: state.authReducer
 });
 
-export default connect(
-  mapStateToProps,
-  { logout }
-)(Navbar);
+export default connect(mapStateToProps)(Navbar);

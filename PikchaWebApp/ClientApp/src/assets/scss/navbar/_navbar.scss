@@ -5,8 +5,14 @@
   grid-auto-flow: column;
   grid-template-columns: 20% 80%;
   height: 5rem;
-  background-color: #9370db;
-  // background-image: linear-gradient(90deg, #5271c4 0%, #b19fff 16%, rgba(236, 161, 254, 0.5) 30%, rgba(255, 255, 255, 0) 70%);
+  // background-color: #9370db;
+  background-image: linear-gradient(
+    120deg,
+    #5271c4 0%,
+    #b19fff 16%,
+    rgba(236, 161, 254, 0.5) 30%,
+    rgba(255, 255, 255, 0) 70%
+  );
 
   #navbar-logo {
     a {
@@ -33,7 +39,7 @@
         a {
           font-family: "Montserrat";
           font-size: 16pt;
-          color: white;
+          color: #1a1a1a;
           text-decoration: none;
         }
         &:nth-child(2) {
@@ -74,8 +80,8 @@
           list-style-type: none;
           a {
             font-family: "Montserrat";
-            color: white;
-            font-size: 14pt;
+            color: #1a1a1a;
+            font-size: 12pt;
             text-decoration: none;
             text-transform: uppercase;
           }

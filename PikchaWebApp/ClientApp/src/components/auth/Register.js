@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { register, clearErrors } from "../../actions/auth";
 import { setAlert } from "../../actions/alert";
+import Logo from "../../assets/images/logo-coloured.png";
 
 const Register = ({ auth, register, clearErrors, setAlert }) => {
   // Component State
@@ -54,7 +55,10 @@ const Register = ({ auth, register, clearErrors, setAlert }) => {
     <div className='auth-container'>
       <div className='auth-wrapper'>
         <form className='auth-form' onSubmit={onSubmit}>
-          <div className='form-title'>Signup</div>
+          <div class='form-logo'>
+            <img src={Logo} alt='' />
+          </div>
+          <div className='form-title'>Sign up</div>
           <div className='input-wrapper'>
             <input
               type='text'

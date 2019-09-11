@@ -16,6 +16,7 @@ body {
 
   .frame-container {
     height: 100vh;
+    background: #fafafa;
     .main-container {
       position: fixed;
       top: 5rem;
@@ -36,4 +37,4 @@ body {
 
 @import "../navbar/navbar";
 @import "../sidebar/sidebar";
-@import "../auth/login";
+@import "../auth/auth";
