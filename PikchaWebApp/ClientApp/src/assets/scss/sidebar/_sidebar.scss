@@ -1,0 +1,52 @@
+// Sidebar
+// ------------------------------------------------------------------- //
+#sidebar {
+  display: flex;
+  height: calc(100% - 5rem);
+  width: 20%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 2rem;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+
+  .line {
+    position: relative;
+    width: 2px;
+    height: 80%;
+    background: black;
+    left: 0.5rem;
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: -4px;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: black;
+      border-radius: 50%;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      left: -4px;
+      bottom: 0;
+      display: block;
+      width: 10px;
+      height: 10px;
+      background: black;
+      border-radius: 50%;
+    }
+  }
+
+  a {
+    position: relative;
+    font-family: "Montserrat";
+    font-size: 16pt;
+    color: #1a1a1a;
+    text-decoration: none;
+    writing-mode: vertical-lr;
+  }
+}

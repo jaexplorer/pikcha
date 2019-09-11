@@ -1,0 +1,102 @@
+// Navbar
+// ------------------------------------------------------------------- //
+#top-navbar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 20% 80%;
+  height: 5rem;
+  background-color: #9370db;
+  // background-image: linear-gradient(90deg, #5271c4 0%, #b19fff 16%, rgba(236, 161, 254, 0.5) 30%, rgba(255, 255, 255, 0) 70%);
+
+  #navbar-logo {
+    a {
+      display: grid;
+      height: 100%;
+      align-items: center;
+      padding-left: 2rem;
+      img {
+        max-height: 55%;
+      }
+    }
+  }
+
+  #navbar {
+    display: grid;
+    grid-auto-flow: column;
+
+    #navbar-left {
+      display: flex;
+      align-items: center;
+
+      li {
+        list-style-type: none;
+        a {
+          font-family: "Montserrat";
+          font-size: 16pt;
+          color: white;
+          text-decoration: none;
+        }
+        &:nth-child(2) {
+          margin-left: 3rem;
+        }
+      }
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      justify-self: right;
+
+      .navbar-icons {
+        display: grid;
+        height: 100%;
+        align-items: center;
+        justify-items: center;
+        grid-auto-flow: column;
+        cursor: pointer;
+        img {
+          max-height: 25%;
+          margin-right: 3rem;
+
+          &:last-child {
+            margin-right: 2rem;
+          }
+        }
+      }
+
+      #navbar-right-links {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        padding-right: 5rem;
+
+        li {
+          list-style-type: none;
+          a {
+            font-family: "Montserrat";
+            color: white;
+            font-size: 14pt;
+            text-decoration: none;
+            text-transform: uppercase;
+          }
+          :first-child {
+            margin-right: 3rem;
+          }
+        }
+      }
+
+      #navbar-display-pic {
+        display: grid;
+        height: 100%;
+        align-items: center;
+        justify-items: right;
+        grid-auto-flow: column;
+        cursor: pointer;
+        img {
+          max-height: 45%;
+          margin-right: 2rem;
+        }
+      }
+    }
+  }
+}
