@@ -43,7 +43,7 @@ const Register = ({ auth, register, clearErrors, setAlert }) => {
   };
 
   if (auth.loading) {
-    return <h2>Loading...</h2>;
+    return <h2 className='loading'>Loading...</h2>;
   }
 
   if (auth.isAuthenticated) {
@@ -51,58 +51,57 @@ const Register = ({ auth, register, clearErrors, setAlert }) => {
   }
 
   return (
-    <div>
-      <h1>
-        Account <span>Register</span>
-      </h1>
-      <form onSubmit={onSubmit}>
-        <div>
-          <label htmlFor='name'>Name</label>
-          <input
-            type='text'
-            name='name'
-            value={name}
-            onChange={onChange}
-            // required
-          />
-        </div>
-        <div>
-          <label htmlFor='email'>Email Address</label>
-          <input
-            type='email'
-            name='email'
-            value={email}
-            onChange={onChange}
-            // required
-          />
-        </div>
-        <div>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={onChange}
-            // required
-            // minLength='6'
-          />
-        </div>
-        <div>
-          <label htmlFor='password2'>Confirm Password</label>
-          <input
-            type='password'
-            name='password2'
-            value={password2}
-            onChange={onChange}
-            // required
-            // minLength='6'
-          />
-        </div>
-        <input type='submit' value='Register' />
-      </form>
-      <p>
-        Already have an account? <Link to='/login'>Login</Link>
-      </p>
+    <div className='auth-container'>
+      <div className='auth-wrapper'>
+        <form className='auth-form' onSubmit={onSubmit}>
+          <div className='form-title'>Signup</div>
+          <div className='input-wrapper'>
+            <input
+              type='text'
+              name='name'
+              value={name}
+              onChange={onChange}
+              placeholder='Name'
+            />
+          </div>
+          <div className='input-wrapper'>
+            <input
+              type='email'
+              name='email'
+              value={email}
+              onChange={onChange}
+              placeholder='Email'
+            />
+          </div>
+
+          <div className='input-wrapper'>
+            <input
+              type='password'
+              name='password'
+              value={password}
+              onChange={onChange}
+              placeholder='Password'
+            />
+          </div>
+          <div className='input-wrapper'>
+            <input
+              type='password'
+              name='password2'
+              value={password2}
+              onChange={onChange}
+              placeholder='Confirm Password'
+            />
+          </div>
+
+          <div className='form-btn'>
+            <input type='submit' value='Register' />
+          </div>
+
+          <div className='text-center'>
+            <Link to='/login'>Already have an account?</Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

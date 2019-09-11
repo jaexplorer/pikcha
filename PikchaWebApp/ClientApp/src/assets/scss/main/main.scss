@@ -1,0 +1,39 @@
+@font-face {
+  font-family: Montserrat;
+  src: url("../../fonts/Montserrat-Regular.otf") format("opentype");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+
+  .frame-container {
+    height: 100vh;
+    .main-container {
+      position: fixed;
+      top: 5rem;
+      left: 20%;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  color: #9370db;
+  font-family: "Montserrat";
+  font-size: 16pt;
+  margin-top: 3rem;
+}
+
+@import "../navbar/navbar";
+@import "../sidebar/sidebar";
+@import "../auth/login";

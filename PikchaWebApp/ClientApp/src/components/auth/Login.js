@@ -3,6 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { login, clearErrors } from "../../actions/auth";
 import { setAlert } from "../../actions/alert";
+import Logo from "../../assets/images/logo-coloured.png";
 
 const Login = ({ login, auth, clearErrors, setAlert }) => {
   // Component State
@@ -35,7 +36,7 @@ const Login = ({ login, auth, clearErrors, setAlert }) => {
   };
 
   if (auth.loading) {
-    return <h2>Loading...</h2>;
+    return <h2 className='loading'>Loading...</h2>;
   }
 
   if (auth.isAuthenticated) {
@@ -43,36 +44,38 @@ const Login = ({ login, auth, clearErrors, setAlert }) => {
   }
 
   return (
-    <div>
-      <h1>
-        Account <span>Login</span>
-      </h1>
-      <form onSubmit={onSubmit}>
-        <div>
-          <label htmlFor='email'>Email Address</label>
-          <input
-            type='email'
-            name='email'
-            value={email}
-            onChange={onChange}
-            // required
-          />
-        </div>
-        <div>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={onChange}
-            // required
-          />
-        </div>
-        <input type='submit' value='Login' />
-      </form>
-      <p>
-        Don't have an account? <Link to='/register'>Register</Link>
-      </p>
+    <div className='auth-container'>
+      <div className='auth-wrapper'>
+        <form className='auth-form' onSubmit={onSubmit}>
+          <div className='form-title'>Log in</div>
+          <div className='input-wrapper'>
+            <input
+              type='email'
+              name='email'
+              value={email}
+              onChange={onChange}
+              placeholder='Email'
+            />
+          </div>
+          <div className='input-wrapper'>
+            <input
+              type='password'
+              name='password'
+              value={password}
+              onChange={onChange}
+              placeholder='Password'
+            />
+          </div>
+
+          <div className='form-btn'>
+            <input type='submit' value='Login' />
+          </div>
+
+          <div className='text-center'>
+            <Link to='/register'>Don't have an account?</Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
