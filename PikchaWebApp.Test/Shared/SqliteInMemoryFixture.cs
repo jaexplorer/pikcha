@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Sqlite;
-using PikchWebApp.Data;
-using PikchWebApp.Models;
+using PikchaWebApp.Data;
+using PikchaWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

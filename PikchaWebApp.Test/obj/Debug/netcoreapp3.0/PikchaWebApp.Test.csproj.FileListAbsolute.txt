@@ -238,3 +238,6 @@ C:\Users\tshanmuganat\Documents\Projects\pikcha\PikchWebApp\PikchaWebApp.Test\ob
 C:\Users\tshanmuganat\Documents\Projects\pikcha\PikchWebApp\PikchaWebApp.Test\obj\Debug\netcoreapp3.0\PikchaWebApp.Test.csproj.CopyComplete
 C:\Users\tshanmuganat\Documents\Projects\pikcha\PikchWebApp\PikchaWebApp.Test\obj\Debug\netcoreapp3.0\PikchaWebApp.Test.dll
 C:\Users\tshanmuganat\Documents\Projects\pikcha\PikchWebApp\PikchaWebApp.Test\obj\Debug\netcoreapp3.0\PikchaWebApp.Test.pdb
+C:\Users\tshanmuganat\Documents\Projects\pikcha\dev\PikchaWebApp\PikchaWebApp.Test\obj\Debug\netcoreapp3.0\PikchaWebApp.Test.csprojAssemblyReference.cache
+C:\Users\tshanmuganat\Documents\Projects\pikcha\dev\PikchaWebApp\PikchaWebApp.Test\obj\Debug\netcoreapp3.0\PikchaWebApp.Test.AssemblyInfoInputs.cache
+C:\Users\tshanmuganat\Documents\Projects\pikcha\dev\PikchaWebApp\PikchaWebApp.Test\obj\Debug\netcoreapp3.0\PikchaWebApp.Test.AssemblyInfo.cs
