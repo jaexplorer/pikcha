@@ -1,14 +1,22 @@
 import { CREATE_DROPDOWN, REMOVE_DROPDOWN } from "../actions/types";
 
-const initialState = {};
+const initialState = {
+  dropDown: false
+};
 
-export default (state = initialState, { type, payload }) => {
+export default (state = initialState, { type }) => {
   switch (type) {
     case CREATE_DROPDOWN:
-      return { ...state, ...payload };
+      return {
+        ...state,
+        dropDown: true
+      };
 
     case REMOVE_DROPDOWN:
-      return { ...state, ...payload };
+      return {
+        ...state,
+        dropDown: false
+      };
 
     default:
       return state;

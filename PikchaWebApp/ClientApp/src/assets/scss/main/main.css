@@ -168,6 +168,58 @@ body .frame-container .main-container {
   margin-right: 2rem;
 }
 
+#nav-dropdown {
+  position: absolute;
+  top: 5rem;
+  right: 2rem;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  z-index: 40;
+}
+
+#nav-dropdown .dropdown-item {
+  background: #1a1a1a;
+  color: white;
+  font-family: "Montserrat";
+  font-size: 14pt;
+  padding: 1rem;
+  display: -ms-grid;
+  display: grid;
+  grid-auto-flow: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#nav-dropdown .dropdown-item:first-child {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#nav-dropdown .dropdown-item:first-child::before {
+  content: "";
+}
+
+#nav-dropdown .dropdown-item:nth-child(2n) {
+  border-top: rgba(147, 112, 216, 0.2) 1px solid;
+}
+
+#nav-dropdown .dropdown-item:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+#nav-dropdown .dropdown-item:hover {
+  color: mediumpurple;
+  cursor: pointer;
+}
+
+#nav-dropdown .dropdown-item img {
+  height: 25px;
+  margin-left: 2rem;
+}
+
 #sidebar {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -1,21 +1,24 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { createDropdown } from "../../../actions/nav";
 import Logo from "../../../assets/images/logo-white.png";
 import SearchIcon from "../../../assets/images/search-black.png";
 import CartIcon from "../../../assets/images/cart-black.png";
 import PeopleIcon from "../../../assets/images/people-black.png";
 import PlaceHolder from "../../../assets/images/placeholder.png";
+import Dropdown from "./Dropdown";
 
-const Navbar = ({ auth }) => {
+const Navbar = ({ auth, nav, createDropdown }) => {
   const authLinks = (
     <div className='navbar-right'>
       <div className='navbar-icons'>
         <img src={CartIcon} alt='' /> <img src={PeopleIcon} alt='' />
       </div>
       <div id='navbar-display-pic'>
-        <img onClick={""} src={PlaceHolder} alt='' />
+        <img onClick={createDropdown} src={PlaceHolder} alt='' />
       </div>
+      {nav.dropDown ? <Dropdown /> : ""}
     </div>
   );
 
@@ -58,7 +61,11 @@ const Navbar = ({ auth }) => {
 };
 
 const mapStateToProps = state => ({
-  auth: state.authReducer
+  auth: state.authReducer,
+  nav: state.navReducer
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(
+  mapStateToProps,
+  { createDropdown }
+)(Navbar);

@@ -47,7 +47,7 @@ const Login = ({ login, auth, clearErrors, setAlert }) => {
     <div className='auth-container'>
       <div className='auth-wrapper'>
         <form className='auth-form' onSubmit={onSubmit}>
-          <div class='form-logo'>
+          <div className='form-logo'>
             <img src={Logo} alt='' />
           </div>
           <div className='form-title'>Log in</div>
