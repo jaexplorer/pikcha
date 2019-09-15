@@ -10,6 +10,7 @@ import Register from "./auth/Register";
 import Login from "./auth/Login";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Profile from "./pages/Profile";
 import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./layout/Alerts";
 import { loadUser, logout } from "../actions/auth";
@@ -44,6 +45,7 @@ const App = () => {
             <Route exact path='/artist100' component={Artist100} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
+            <Route exact path='/profile/:userid' component={Profile} />
             <Route exact path='/about' component={About} />
             <Route exact path='/contact' component={Contact} />
           </Switch>
