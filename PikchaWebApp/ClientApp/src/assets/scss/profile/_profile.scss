@@ -1,11 +1,31 @@
 // Profile
 // ------------------------------------------------------------------- //
+.back-arrow {
+  position: absolute;
+  top: -3rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  img {
+    height: 30px;
+  }
+  span {
+    font-family: "Montserrat";
+    font-size: 12pt;
+    margin-left: 1rem;
+
+    &:hover {
+      color: mediumpurple;
+    }
+  }
+}
+
 #profile-container {
   display: grid;
-  grid-template-columns: 2;
-  grid-template-rows: 2;
+  grid-template-columns: 25% 75%;
+  grid-template-rows: 55% max-content;
   font-family: "Montserrat";
-  padding-bottom: 1rem;
+  padding-bottom: 2rem;
   border-bottom: 2px solid rgba(147, 112, 219, 0.24);
 
   #profile-basic {
@@ -26,6 +46,7 @@
       font-weight: bold;
       justify-self: center;
       margin-top: 1.2rem;
+      text-align: center;
     }
     #profile-location {
       font-size: 8.5pt;
@@ -46,7 +67,7 @@
       }
     }
     #profile-button {
-      margin-top: 2rem;
+      margin-top: 1rem;
       justify-self: center;
       width: 100%;
 
@@ -58,6 +79,8 @@
         width: 100%;
         border-radius: 50px;
         padding: 0.5rem;
+        padding-top: 0.8rem;
+        padding-bottom: 0.8rem;
 
         background-image: linear-gradient(
           120deg,
@@ -112,44 +135,44 @@
     justify-content: space-between;
 
     #profile-views {
-      grid-row: 2 / 3;
+      grid-row: 1 / 2;
       font-size: 12pt;
       position: relative;
-      top: 1.8rem;
+      margin-top: 1.5rem;
     }
     #profile-followers {
-      grid-row: 2 / 3;
+      grid-row: 1 / 2;
       font-size: 12pt;
       justify-self: center;
       position: relative;
-      top: 1.8rem;
+      margin-top: 1.5rem;
     }
     #profile-photos-sold {
-      grid-row: 2 / 3;
+      grid-row: 1 / 2;
       font-size: 12pt;
       justify-self: center;
       position: relative;
-      top: 1.8rem;
+      margin-top: 1.5rem;
     }
     #profile-average-price {
-      grid-row: 2 / 3;
+      grid-row: 1 / 2;
       font-size: 12pt;
       justify-self: end;
       position: relative;
-      top: 1.8rem;
-
+      margin-top: 1.5rem;
       span {
         color: mediumseagreen;
       }
     }
     #profile-following {
-      grid-row: 1 / 2;
+      grid-row: 2 / 3;
       grid-column: 1 / 5;
       font-size: 12pt;
       text-transform: uppercase;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      margin-top: 2.5rem;
 
       span {
         padding-right: 2rem;
