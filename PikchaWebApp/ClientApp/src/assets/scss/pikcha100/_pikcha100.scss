@@ -1,0 +1,86 @@
+// Profile
+// ------------------------------------------------------------------- //
+#pikcha100-container {
+  font-family: "Montserrat";
+  background-image: linear-gradient(
+    -120deg,
+    #5271c4 0%,
+    #b19fff 10%,
+    rgba(236, 161, 254, 0.5) 25%,
+    #fafafa 50%
+  );
+
+  .pikcha-container {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+    height: 180px;
+
+    .pikcha-rank {
+      font-weight: bold;
+      font-size: 18pt;
+    }
+
+    .pikcha-photo {
+      display: block;
+      width: 12rem;
+      height: 100%;
+      background: #1a1a1a;
+    }
+
+    .pikcha-photo-information {
+      .pikcha-photo-name {
+        font-weight: bold;
+        font-size: 12pt;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+      .pikcha-photo-views {
+        font-size: 10pt;
+      }
+      .pikcha-photo-turnover {
+        font-size: 10pt;
+      }
+      .pikcha-photo-avg-price {
+        font-size: 10pt;
+      }
+      .pikcha-photo-location {
+        font-size: 10pt;
+      }
+    }
+
+    .pikcha-photo-graph {
+      display: block;
+      width: 5rem;
+      height: 50%;
+      background: mediumpurple;
+    }
+
+    .divider {
+      width: 2px;
+      height: 60px;
+      background: mediumpurple;
+    }
+
+    .artist-picture {
+      img {
+        height: 120px;
+      }
+    }
+
+    .artist-information {
+      .artist-name {
+        font-size: 18pt;
+        font-weight: bold;
+        margin-bottom: 0.3rem;
+      }
+      .artist-location {
+        font-size: 8pt;
+        text-transform: uppercase;
+      }
+    }
+  }
+}
