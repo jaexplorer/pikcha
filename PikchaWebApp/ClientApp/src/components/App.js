@@ -18,14 +18,12 @@ import { loadUser, logout } from "../actions/auth";
 // import LocomotiveScroll from "locomotive-scroll";
 
 const App = () => {
-  // useEffect(() => {
-  //   // eslint-disable-next-line
-  //   const scroll = new LocomotiveScroll({
-  //     el: document.querySelector("#js-scroll"),
-  //     smooth: true
-  //   });
-  // });
   useEffect(() => {
+    // eslint-disable-next-line
+    // const scroll = new LocomotiveScroll({
+    //   el: document.querySelector("#js-scroll"),
+    //   smooth: true
+    // });
     if (localStorage.token) {
       store.dispatch(loadUser());
     } else {

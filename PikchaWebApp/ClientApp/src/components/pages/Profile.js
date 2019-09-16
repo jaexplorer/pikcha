@@ -9,8 +9,6 @@ import MoreIcon from "../../assets/images/more-white.png";
 import BackArrowIcon from "../../assets/images/left-arrow-black.png";
 
 const Profile = ({ auth }) => {
-  const { user } = auth;
-
   if (auth.loading) {
     return <h2 className='loading'>Loading...</h2>;
   }
