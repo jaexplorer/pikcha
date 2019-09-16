@@ -12,3 +12,7 @@ export const SET_LOADING = "SET_LOADING";
 // Alert Types
 export const SET_ALERT = "SET_ALERT";
 export const REMOVE_ALERT = "REMOVE_ALERT";
+
+// Dropdown Types
+export const CREATE_DROPDOWN = "CREATE_DROPDOWN";
+export const REMOVE_DROPDOWN = "REMOVE_DROPDOWN";
