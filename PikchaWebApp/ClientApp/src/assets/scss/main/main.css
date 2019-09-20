@@ -1,5 +1,12 @@
 @font-face {
   font-family: Montserrat;
+  font-weight: 300;
+  src: url("../../fonts/Montserrat-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: Montserrat;
+  font-weight: normal;
   src: url("../../fonts/Montserrat-Regular.otf") format("opentype");
 }
 
@@ -508,7 +515,7 @@ body .frame-container .main-container .main-content-container {
   line-height: 1.5;
 }
 
-.back-arrow {
+.profile-back-arrow {
   position: absolute;
   top: -3rem;
   display: -webkit-box;
@@ -520,17 +527,17 @@ body .frame-container .main-container .main-content-container {
   cursor: pointer;
 }
 
-.back-arrow img {
+.profile-back-arrow img {
   height: 30px;
 }
 
-.back-arrow span {
+.profile-back-arrow span {
   font-family: "Montserrat";
   font-size: 12pt;
   margin-left: 1rem;
 }
 
-.back-arrow span:hover {
+.profile-back-arrow span:hover {
   color: mediumpurple;
 }
 
@@ -545,6 +552,7 @@ body .frame-container .main-container .main-content-container {
   font-family: "Montserrat";
   padding-bottom: 2rem;
   border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
 }
 
 #profile-container #profile-basic {
@@ -1199,5 +1207,205 @@ body .frame-container .main-container .main-content-container {
   font-family: "Montserrat";
   font-size: 16px;
   color: #ffffff;
+}
+
+.masonry {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+}
+
+.masonry .masonry-col {
+  margin: 0.1rem;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: none;
+  -webkit-transition: all 0.8s ease;
+  transition: all 0.8s ease;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.masonry .masonry-col .masonry-item {
+  margin-bottom: 0.2rem;
+  background-color: #1a1a1a;
+  -webkit-transition: all 0.8s ease;
+  transition: all 0.8s ease;
+}
+
+.masonry-item .itemInfo-back-arrow {
+  position: absolute;
+  margin-top: 3rem;
+  margin-left: 2rem;
+  cursor: pointer;
+}
+
+.masonry-item .itemInfo-back-arrow img {
+  height: 18px;
+}
+
+.masonry-item .itemInfo-info-button {
+  position: relative;
+  top: 100%;
+}
+
+.masonry-item .itemInfo-info-button img {
+  height: 25px;
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  cursor: pointer;
+}
+
+.masonry-item .itemInfo-popup {
+  background: #fafafa;
+  position: relative;
+  top: 100%;
+  left: 100%;
+  -webkit-transform: translate(calc(-100% + 0.5px), -100%);
+          transform: translate(calc(-100% + 0.5px), -100%);
+  width: 70%;
+  height: 450px;
+}
+
+.masonry-item .itemInfo-popup::before {
+  content: "";
+  position: absolute;
+  left: calc(2rem - 8px);
+  top: -38px;
+  width: 76px;
+  height: 76px;
+  background: #fafafa;
+  border-radius: 50%;
+}
+
+.masonry-item .itemInfo-popup .popup-artist {
+  position: absolute;
+  left: 2rem;
+  top: -30px;
+}
+
+.masonry-item .itemInfo-popup .popup-artist img {
+  height: 60px;
+  cursor: pointer;
+}
+
+.masonry-item .itemInfo-popup .popup-artist-name {
+  position: absolute;
+  left: 1.6rem;
+  top: 2.5rem;
+  font-family: "Montserrat";
+  font-size: 12pt;
+  cursor: pointer;
+}
+
+.masonry-item .itemInfo-popup .popup-socials {
+  position: absolute;
+  left: -3.5rem;
+  top: 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 25%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.masonry-item .itemInfo-popup .popup-socials img {
+  height: 30px;
+  cursor: pointer;
+}
+
+.masonry-item .itemInfo-popup .popup-content-container {
+  position: relative;
+  width: 83%;
+  height: 60%;
+  margin: auto;
+  top: 5rem;
+  font-family: "Montserrat";
+}
+
+.masonry-item .itemInfo-popup .popup-content-container .popup-photo-name {
+  font-size: 18pt;
+}
+
+.masonry-item .itemInfo-popup .popup-content-container .popup-photo-stats {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 0.5rem;
+}
+
+.masonry-item .itemInfo-popup .popup-content-container .popup-photo-stats span {
+  margin-right: 1rem;
+  font-size: 12pt;
+}
+
+.masonry-item .itemInfo-popup .popup-content-container .popup-photo-description {
+  margin-top: 1rem;
+  font-weight: 300;
+  line-height: 1.5;
+  font-size: 12pt;
+  opacity: 0.5;
+}
+
+.masonry-item .itemInfo-popup .popup-content-container .popup-photo-action {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.masonry-item .itemInfo-popup .popup-content-container .popup-photo-action .photo-purchase {
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: #1a1a1a;
+  color: white;
+  font-size: 10pt;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.masonry-item .itemInfo-popup .popup-content-container .popup-photo-action span {
+  margin-left: 2rem;
+  font-size: 12pt;
+}
+
+.masonry-item .itemInfo-popup .popup-delete {
+  position: absolute;
+  bottom: 1rem;
+  left: 1.6rem;
+  cursor: pointer;
+}
+
+.masonry-item .itemInfo-popup .popup-delete img {
+  height: 15px;
+  opacity: 0.5;
 }
 /*# sourceMappingURL=main.css.map */

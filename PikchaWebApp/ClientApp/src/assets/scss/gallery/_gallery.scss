@@ -1,0 +1,171 @@
+// Gallery
+// ------------------------------------------------------------------- //
+.masonry {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  .masonry-col {
+    margin: 0.1rem;
+    flex: 1;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: none;
+    transition: all 0.8s ease;
+    display: flex;
+    flex-direction: column;
+
+    .masonry-item {
+      margin-bottom: 0.2rem;
+      background-color: #1a1a1a;
+      transition: all 0.8s ease;
+    }
+  }
+}
+
+// Masonry Item Info
+// ---------------------------------------- //
+.masonry-item {
+  .itemInfo-back-arrow {
+    position: absolute;
+    margin-top: 3rem;
+    margin-left: 2rem;
+    cursor: pointer;
+
+    img {
+      height: 18px;
+    }
+  }
+  .itemInfo-info-button {
+    position: relative;
+    top: 100%;
+
+    img {
+      height: 25px;
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      cursor: pointer;
+    }
+  }
+
+  .itemInfo-popup {
+    background: #fafafa;
+    position: relative;
+    top: 100%;
+    left: 100%;
+    transform: translate(calc(-100% + 0.5px), -100%);
+    width: 70%;
+    height: 450px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: calc(2rem - 8px);
+      top: -38px;
+      width: 76px;
+      height: 76px;
+      background: #fafafa;
+      border-radius: 50%;
+    }
+
+    .popup-artist {
+      position: absolute;
+      left: 2rem;
+      top: -30px;
+      img {
+        height: 60px;
+        cursor: pointer;
+      }
+    }
+
+    .popup-artist-name {
+      position: absolute;
+      left: 1.6rem;
+      top: 2.5rem;
+      font-family: "Montserrat";
+      font-size: 12pt;
+      cursor: pointer;
+    }
+
+    .popup-socials {
+      position: absolute;
+      left: -3.5rem;
+      top: 4rem;
+      display: flex;
+      flex-direction: column;
+      height: 25%;
+      justify-content: space-between;
+      img {
+        height: 30px;
+        cursor: pointer;
+      }
+    }
+
+    .popup-content-container {
+      position: relative;
+      width: 83%;
+      height: 60%;
+      margin: auto;
+      top: 5rem;
+      font-family: "Montserrat";
+
+      .popup-photo-name {
+        font-size: 18pt;
+      }
+
+      .popup-photo-stats {
+        display: flex;
+        margin-top: 0.5rem;
+        span {
+          margin-right: 1rem;
+          font-size: 12pt;
+        }
+      }
+
+      .popup-photo-description {
+        margin-top: 1rem;
+        font-weight: 300;
+        line-height: 1.5;
+        font-size: 12pt;
+        opacity: 0.5;
+      }
+
+      .popup-photo-action {
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        align-items: center;
+
+        .photo-purchase {
+          padding: 0.5rem;
+          padding-left: 1rem;
+          padding-right: 1rem;
+          background: #1a1a1a;
+          color: white;
+          font-size: 10pt;
+          text-transform: uppercase;
+          cursor: pointer;
+        }
+        span {
+          margin-left: 2rem;
+          font-size: 12pt;
+        }
+      }
+    }
+
+    .popup-delete {
+      position: absolute;
+      bottom: 1rem;
+      left: 1.6rem;
+      cursor: pointer;
+      img {
+        height: 15px;
+        opacity: 0.5;
+      }
+    }
+  }
+}

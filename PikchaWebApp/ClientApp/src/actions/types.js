@@ -16,3 +16,7 @@ export const REMOVE_ALERT = "REMOVE_ALERT";
 // Dropdown Types
 export const CREATE_DROPDOWN = "CREATE_DROPDOWN";
 export const REMOVE_DROPDOWN = "REMOVE_DROPDOWN";
+
+// Gallery Types
+export const PHOTO_SELECTED = "PHOTO_SELECTED";
+export const PHOTO_DESELECTED = "PHOTO_DESELECTED";

@@ -1,5 +1,14 @@
+// Main
+// ------------------------------------------------------------------- //
+
 @font-face {
   font-family: Montserrat;
+  font-weight: 300;
+  src: url("../../fonts/Montserrat-Light.otf") format("opentype");
+}
+@font-face {
+  font-family: Montserrat;
+  font-weight: normal;
   src: url("../../fonts/Montserrat-Regular.otf") format("opentype");
 }
 @font-face {
@@ -91,3 +100,4 @@ body {
 @import "../pikcha100/pikcha100";
 @import "../about/about";
 @import "../contact/contact";
+@import "../gallery/gallery";
