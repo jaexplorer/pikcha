@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace PikchaWebApp.Models
 {
+    [Table("PikchaImages")]
     public class PikchaImage
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,9 +15,9 @@ namespace PikchaWebApp.Models
         public uint Id { get; set; }
 
         [Key]
-        [Column("ImageId")]
+        [Column("PikchaImageId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string ImageId { get; set; }
+        public string PikchaImageId { get; set; }
 
         [Column("Title")]
         public string Title { get; set; }
@@ -53,11 +54,12 @@ namespace PikchaWebApp.Models
 
         [Column("Artist")]
         public PikchaUser Artist { get; set; }
+        
+        public IEnumerable<PikchaImageTag> PikchaImageTags { get; set; }
 
-
-        public IEnumerable<ImageTag> Tags { get; set; }
     }
 
+    [Table("ImageTags")]
     public class ImageTag
     {
         [Key]
@@ -67,7 +69,25 @@ namespace PikchaWebApp.Models
 
         [Column("Name")]
         public string Name { get; set; }
+
+        public IEnumerable<PikchaImageTag> PikchaImageTags { get; set; }
     }
 
-  
+    [Table("PikchaImageTags")]
+    public class PikchaImageTag
+    {
+        [Key]
+        [Column("PikchaImageTagId")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public uint PikchaImageTagId { get; set; }
+        public uint ImageTagId { get; set; }
+        public ImageTag ImageTag { get; set; }
+
+
+        public uint PikchaImageId { get; set; }
+        public PikchaImage PikchaImage { get; set; }
+
+    }
+
+
 }

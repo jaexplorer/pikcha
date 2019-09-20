@@ -31,9 +31,8 @@ namespace PikchaWebApp.Controllers
             _pikchDbContext = pikchDbContext;
         }
 
-        // POST: api/profile/avatar
+        // POST: api/image/upload
         [HttpPost("/upload")]
-        //[Authorize]
         public async Task<ReturnDataModel> UploadImage(ImageViewModel imgViewModel)
         {
             try
@@ -42,7 +41,7 @@ namespace PikchaWebApp.Controllers
                 PikchaImage pkImg = new PikchaImage();
                 pkImg.CopyPropertiesFrom(imgViewModel);
 
-                pkImg.ImageId = imageId;
+                pkImg.PikchaImageId = imageId;
                 ImageProcessingManager imgManager = new ImageProcessingManager(_hostingEnvironment, _configuration);
 
                 bool status = imgManager.ResizeImage(imageId, imgViewModel.ImageFile, ref pkImg);
@@ -77,6 +76,12 @@ namespace PikchaWebApp.Controllers
             }
 
             return new ReturnDataModel() { Statuscode="1901", Status="Error Occured", Data = "" };
+        }
+
+
+        private void AddImageTags()
+        {
+            // get all tags from 
         }
 
 

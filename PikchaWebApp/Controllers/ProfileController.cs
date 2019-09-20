@@ -36,6 +36,7 @@ namespace PikchaWebApp.Controllers
         public async Task<ReturnDataModel> List()
         {
             //var users = await _userManager.Users.ToListAsync();
+            var count = _userManager.Users.Count();
             var users = await Task.FromResult(_userManager.Users.ToList());
             return new ReturnDataModel() { Data = users };
         }

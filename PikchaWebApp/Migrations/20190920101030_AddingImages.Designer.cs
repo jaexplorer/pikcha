@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PikchaWebApp.Data;
 
 namespace PikchaWebApp.Migrations
 {
     [DbContext(typeof(PikchaDbContext))]
-    partial class PikchaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190920101030_AddingImages")]
+    partial class AddingImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
