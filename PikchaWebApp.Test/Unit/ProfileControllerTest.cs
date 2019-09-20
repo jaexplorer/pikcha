@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace PikchaWebApp.Test.Unit
 {
-    public class ProfileControllerTest
+    public class ProfileControllerTest : IClassFixture<SqliteInMemoryFixture>
     {
 
         protected readonly UserManager<PikchaUser> _userManager;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -32,27 +33,50 @@ namespace PikchaWebApp.Controllers
 
         // POST: api/profile/avatar
         [HttpPost("/upload")]
+        //[Authorize]
         public async Task<ReturnDataModel> UploadImage(ImageViewModel imgViewModel)
         {
-            Guid imageId = Guid.NewGuid();
-
-            ImageProcessingManager imgManager = new ImageProcessingManager(_hostingEnvironment, _configuration);
-
-            string fileName = imgManager.ResizeImage(imageId.ToString(), imgViewModel.ImageFile);
-                       
-            Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
-
-            await Task.WhenAll(loggedinUserTask);
-
-            PikchaUser loggedinUser = loggedinUserTask.Result;
-            if (loggedinUserTask.IsCompleted)
+            try
             {
+                string imageId = Guid.NewGuid().ToString();
                 PikchaImage pkImg = new PikchaImage();
                 pkImg.CopyPropertiesFrom(imgViewModel);
-                //pkImg. = filePath;
-                await _pikchDbContext.AddAsync(pkImg);
+
+                pkImg.ImageId = imageId;
+                ImageProcessingManager imgManager = new ImageProcessingManager(_hostingEnvironment, _configuration);
+
+                bool status = imgManager.ResizeImage(imageId, imgViewModel.ImageFile, ref pkImg);
+                if (status)
+                {
+                    try
+                    {
+                        Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
+
+                        await Task.WhenAll(loggedinUserTask);
+
+                        PikchaUser loggedinUser = loggedinUserTask.Result;
+                        if (loggedinUserTask.IsCompleted)
+                        {
+                            await _pikchDbContext.AddAsync(pkImg);
+                            return new ReturnDataModel() { Data = pkImg };
+
+                        }
+                    }
+                    catch(Exception e)
+                    {
+                        return new ReturnDataModel() { Statuscode = "1901", Status = "Error Occured", Data = e.Message };
+
+                    }
+
+                }
             }
-            return new ReturnDataModel() { Data = "" };
+            catch(Exception e)
+            {
+                return new ReturnDataModel() { Statuscode = "1901", Status = "Error Occured", Data = e.Message };
+
+            }
+
+            return new ReturnDataModel() { Statuscode="1901", Status="Error Occured", Data = "" };
         }
 
 

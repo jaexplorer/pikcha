@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace PikchaWebApp.Test.Shared
 {
@@ -29,8 +30,9 @@ namespace PikchaWebApp.Test.Shared
                 .AddLogging()
                 .AddDbContext<PikchaDbContext>(b => b.UseSqlite(_connection));
 
-            services.AddDefaultIdentity<PikchaUser>()
-                .AddEntityFrameworkStores<PikchaDbContext>();
+            // services.AddDefaultIdentity<PikchaUser>()
+            //.AddEntityFrameworkStores<PikchaDbContext>();
+            services.AddIdentity<PikchaUser, IdentityRole>().AddEntityFrameworkStores<PikchaDbContext>().AddDefaultTokenProviders();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<PikchaUser, PikchaDbContext>();

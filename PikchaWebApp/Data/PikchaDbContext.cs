@@ -19,6 +19,8 @@ namespace PikchaWebApp.Data
         {
         }
 
+        public IEnumerable<PikchaUser> PikchaUsers;
+        public IEnumerable<PikchaImage> PikchaImages;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -30,6 +32,14 @@ namespace PikchaWebApp.Data
             builder.Entity<IdentityUserLogin<string>>().ToTable("PikchaUserLogins");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("PikchaRoleClaims");
             builder.Entity<IdentityUserToken<string>>().ToTable("PikchaUserTokens");
+
+            builder.Entity<PikchaImage>()
+            .Property(b => b.UploadedAt)
+            .HasDefaultValueSql("getdate()");
+
+            builder.Entity<PikchaImage>()
+            .Property(b => b.ModifiedAt)
+            .HasDefaultValueSql("getdate()");
         }
 
     }

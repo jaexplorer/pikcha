@@ -21,4 +21,10 @@
     <ProjectReference Include="..\PikchaWebApp\PikchaWebApp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestPhotos\beach-jaffna.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
