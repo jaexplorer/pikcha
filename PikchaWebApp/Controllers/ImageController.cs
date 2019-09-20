@@ -32,7 +32,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // POST: api/image/upload
-        [HttpPost("/upload")]
+        [HttpPost("upload")]
         public async Task<ReturnDataModel> UploadImage(ImageViewModel imgViewModel)
         {
             try

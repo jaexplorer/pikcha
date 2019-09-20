@@ -21,7 +21,7 @@ namespace PikchaWebApp.Controllers
 
         }
 
-        [HttpGet("/images")]
+        [HttpGet("images")]
         public async Task<ReturnDataModel> Images(ImageFilterModel flterModel)
         {
             try
@@ -48,7 +48,7 @@ namespace PikchaWebApp.Controllers
 
         }
 
-        [HttpGet("/image/{imageId}")]
+        [HttpGet("image/{imageId}")]
         public async Task<ReturnDataModel> Image(string imageId)
         {
             try
@@ -65,7 +65,7 @@ namespace PikchaWebApp.Controllers
         }
 
 
-        [HttpGet("/artists")]
+        [HttpGet("artists")]
         public async Task<ReturnDataModel> Artists(ImageFilterModel flterModel)
         {
             try
@@ -91,7 +91,7 @@ namespace PikchaWebApp.Controllers
 
         }
 
-        [HttpGet("/artist/{artistId}")]
+        [HttpGet("artist/{artistId}")]
         public async Task<ReturnDataModel> Artist(string artistId)
         {
             try

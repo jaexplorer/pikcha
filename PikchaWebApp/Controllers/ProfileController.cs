@@ -32,7 +32,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // GET: api/profile/list
-        [HttpGet("/list")]
+        [HttpGet("list")]
         public async Task<ReturnDataModel> List()
         {
             //var users = await _userManager.Users.ToListAsync();
@@ -76,7 +76,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // POST: api/profile/avatar
-        [HttpPost("/avatar")]
+        [HttpPost("avatar")]
         public async Task<ReturnDataModel> UploadAvatarImage(IFormFile avatarFile)
         {
 
@@ -99,7 +99,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // POST: api/profile/signature
-        [HttpPost("/signature")]
+        [HttpPost("signature")]
         public async Task<ReturnDataModel> UploadSignatureImage(IFormFile signatureFile)
         {
 
