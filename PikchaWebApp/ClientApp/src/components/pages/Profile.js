@@ -7,6 +7,7 @@ import InstagramIcon from "../../assets/images/instagram-black.png";
 import TwitterIcon from "../../assets/images/twitter-black.png";
 import MoreIcon from "../../assets/images/more-white.png";
 import BackArrowIcon from "../../assets/images/left-arrow-black.png";
+import MasonryGallery from "../layout/gallery/MasonryGallery";
 
 const Profile = ({ auth }) => {
   if (auth.loading) {
@@ -18,7 +19,10 @@ const Profile = ({ auth }) => {
       <SideBar />
       <div className='main-container'>
         <div className='main-content-container'>
-          <div onClick={() => window.history.back()} className='back-arrow'>
+          <div
+            onClick={() => window.history.back()}
+            className='profile-back-arrow'
+          >
             <img src={BackArrowIcon} alt='' />
             <span>BACK</span>
           </div>
@@ -77,6 +81,7 @@ const Profile = ({ auth }) => {
               </div>
             </div>
           </div>
+          <MasonryGallery />
         </div>
       </div>
     </Fragment>
