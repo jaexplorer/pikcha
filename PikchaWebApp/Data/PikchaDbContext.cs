@@ -19,8 +19,9 @@ namespace PikchaWebApp.Data
         {
         }
 
-        public IEnumerable<PikchaUser> PikchaUsers;
-        public IEnumerable<PikchaImage> PikchaImages;
+        public DbSet<PikchaUser> PikchaUsers { get; set; }
+        public DbSet<PikchaImage> PikchaImages { get; set; }
+        public DbSet<ImageTag> ImageTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

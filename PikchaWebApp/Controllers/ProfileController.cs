@@ -36,13 +36,12 @@ namespace PikchaWebApp.Controllers
         public async Task<ReturnDataModel> List()
         {
             //var users = await _userManager.Users.ToListAsync();
-            var count = _userManager.Users.Count();
             var users = await Task.FromResult(_userManager.Users.ToList());
             return new ReturnDataModel() { Data = users };
         }
 
         // GET: api/profile/5
-        [HttpGet("{id}")]
+        [HttpGet("{userId}")]
         public async Task<ReturnDataModel> Get(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -51,7 +50,7 @@ namespace PikchaWebApp.Controllers
                
 
         // PUT: api/profile/5
-        [HttpPut("{id}")]
+        [HttpPut("{userId}")]
         public async Task<ReturnDataModel> Put(int id, [FromBody] ProfileViewModel profModel)
         {
             PikchaUser pikchaUser = _userManager.FindByIdAsync(profModel.Id).Result;
@@ -66,7 +65,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // DELETE: api/profile/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{userId}")]
         public async void Delete(string userId)
         {
             PikchaUser pikchaUser = _userManager.FindByIdAsync(userId).Result;

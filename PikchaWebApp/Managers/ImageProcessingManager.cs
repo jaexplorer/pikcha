@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using PikchaWebApp.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,39 +28,45 @@ namespace PikchaWebApp.Managers
         {
             try
             {
-                using (MagickImage image = new MagickImage(formFileInfo.FileName))
+                using (var memoryStream = new MemoryStream())
                 {
-                    pkImage.Width = image.Width;
-                    pkImage.Height = image.Height;
+                    //await formFileInfo.CopyToAsync(memoryStream);
+                    formFileInfo.CopyTo(memoryStream);
 
-                    MagickImage waterImage = (MagickImage)image.Clone();
-
-                    if (image.Width > image.Height)
+                    using (MagickImage image = new MagickImage(memoryStream.ToArray()))
                     {
+                        pkImage.Width = image.Width;
+                        pkImage.Height = image.Height;
 
-                        image.Resize(300, 0);
-                        waterImage.Resize(600, 0);
+                        MagickImage waterImage = (MagickImage)image.Clone();
+
+                        if (image.Width > image.Height)
+                        {
+
+                            image.Resize(300, 0);
+                            waterImage.Resize(600, 0);
+                        }
+                        else
+                        {
+                            image.Resize(0, 300);
+                            waterImage.Resize(0, 600);
+
+                        }
+
+                        StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
+                        pkImage.ThumbnailFile = manager.UploadThumbnail(image, imageId, StorageManager.FileCategory.PikchaImage);
+
+                        // Read the watermark that will be put on top of the image
+                        using (MagickImage watermark = new MagickImage(_watermark_img))
+                        {
+                            watermark.Resize(100, 0);
+                            // Draw the watermark in the center
+                            waterImage.Composite(watermark, Gravity.Center, CompositeOperator.Over);
+                            pkImage.WatermarkedFile = manager.UploadWaterMark(waterImage, imageId, StorageManager.FileCategory.PikchaImage);
+
+                        }
+                        return true;
                     }
-                    else
-                    {
-                        image.Resize(0, 300);
-                        waterImage.Resize(0, 600);
-
-                    }
-
-                    StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
-                    pkImage.ThumbnailFile = manager.UploadThumbnail(image, imageId, StorageManager.FileCategory.PikchaImage);
-
-                    // Read the watermark that will be put on top of the image
-                    using (MagickImage watermark = new MagickImage(_watermark_img))
-                    {
-                        watermark.Resize(100, 0);
-                        // Draw the watermark in the center
-                        waterImage.Composite(watermark, Gravity.Center, CompositeOperator.Over);
-                        pkImage.WatermarkedFile = manager.UploadWaterMark(waterImage, imageId, StorageManager.FileCategory.PikchaImage);
-
-                    }
-                    return true;
                 }
              }
             catch(Exception e)
