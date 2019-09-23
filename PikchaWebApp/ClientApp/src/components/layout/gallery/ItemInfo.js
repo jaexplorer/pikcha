@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from "react";
+import { Link } from "react-router-dom";
 import BackArrow from "../../../assets/images/backArrow-white.png";
 import InfoButton from "../../../assets/images/info-white.png";
 import InstagramIcon from "../../../assets/images/instagram-white.png";
@@ -48,7 +49,9 @@ const ItemInfo = ({ deselectPhoto }) => {
               incidunt ipsa, odit error, nulla totam facere.
             </div>
             <div className='popup-photo-action'>
-              <div className='photo-purchase'>Purchase</div>
+              <div className='photo-purchase'>
+                <Link to={`/product/1`}>View</Link>
+              </div>
               <span>$143</span>
             </div>
           </div>

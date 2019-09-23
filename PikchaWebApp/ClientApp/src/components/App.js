@@ -11,6 +11,8 @@ import Login from "./auth/Login";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
+import Product from "./pages/Product";
+import Customise from "./pages/Customise";
 import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./layout/Alerts";
 import { loadUser, logout } from "../actions/auth";
@@ -44,6 +46,8 @@ const App = () => {
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/profile/:userid' component={Profile} />
+            <Route exact path='/product/:productid' component={Product} />
+            <Route exact path='/customise/:productid' component={Customise} />
             <Route exact path='/about' component={About} />
             <Route exact path='/contact' component={Contact} />
           </Switch>
