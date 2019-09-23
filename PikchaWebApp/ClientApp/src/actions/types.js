@@ -20,3 +20,11 @@ export const REMOVE_DROPDOWN = "REMOVE_DROPDOWN";
 // Gallery Types
 export const PHOTO_SELECTED = "PHOTO_SELECTED";
 export const PHOTO_DESELECTED = "PHOTO_DESELECTED";
+
+// Product
+export const SET_SIZE = "SET_SIZE";
+export const SET_MATERIAL = "SET_MATERIAL";
+export const SET_FRAME = "SET_FRAME";
+export const SET_BORDER = "SET_BORDER";
+export const SET_FINISH = "SET_FINISH";
+export const CLEAR_CUSTOMISATIONS = "CLEAR_CUSTOMISATIONS";

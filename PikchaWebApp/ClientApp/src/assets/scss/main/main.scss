@@ -57,41 +57,6 @@ body {
   margin-top: 3rem;
 }
 
-.title-header {
-  position: absolute;
-  top: -3rem;
-  display: flex;
-  align-items: center;
-
-  .header-subtitle {
-    font-family: "Montserrat";
-    font-size: 10pt;
-    text-transform: uppercase;
-  }
-  .header-line {
-    height: 1px;
-    width: 50px;
-    background: #1a1a1a;
-    margin-left: 2rem;
-
-    &::after {
-      content: "";
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      background: #1a1a1a;
-      margin-top: -3px;
-      margin-left: 50px;
-      border-radius: 50%;
-    }
-  }
-  .header-title {
-    font-family: "Montserrat";
-    font-size: 18pt;
-    margin-left: 2rem;
-  }
-}
-
 @import "../navbar/navbar";
 @import "../sidebar/sidebar";
 @import "../auth/auth";
@@ -101,3 +66,6 @@ body {
 @import "../about/about";
 @import "../contact/contact";
 @import "../gallery/gallery";
+@import "../header/header";
+@import "../product/product";
+@import "../customise/customise";

@@ -20,8 +20,8 @@ const Profile = ({ auth }) => {
       <div className='main-container'>
         <div className='main-content-container'>
           <div
+            className='header-back-arrow'
             onClick={() => window.history.back()}
-            className='profile-back-arrow'
           >
             <img src={BackArrowIcon} alt='' />
             <span>BACK</span>

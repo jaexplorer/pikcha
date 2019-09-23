@@ -1,0 +1,132 @@
+// Customise
+// ------------------------------------------------------------------- //
+.customise-container {
+  display: flex;
+  flex-direction: column;
+  font-family: "Montserrat";
+}
+
+// Customise Product
+// ---------------------------------------- //
+.customiseProduct-container {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
+  .customiseProduct-header {
+    display: flex;
+    justify-content: space-between;
+    .customiseProduct-title {
+      font-size: 20pt;
+    }
+    .customiseProduct-number {
+      font-size: 20pt;
+    }
+  }
+
+  .customiseProduct-dropdown-containers {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .break {
+      width: 1px;
+      height: 60px;
+      background: rgba(147, 112, 216, 0.5);
+    }
+  }
+}
+
+// Customise Summary
+// ---------------------------------------- //
+.customiseSummary-container {
+  display: flex;
+  justify-content: space-between;
+
+  .customiseSummary-content {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .customiseSummary-title {
+      font-size: 20pt;
+    }
+
+    .customiseSummary-summary {
+      display: flex;
+      flex-direction: column;
+
+      .summary-photo-details {
+        display: flex;
+        justify-content: space-between;
+        .photo-name {
+          font-size: 15pt;
+          text-transform: uppercase;
+          font-weight: bold;
+        }
+
+        .photo-number {
+          font-size: 15pt;
+          font-weight: bold;
+        }
+      }
+
+      .summary-subtitle {
+        margin-top: 1rem;
+        font-size: 12pt;
+        text-transform: uppercase;
+      }
+
+      .summary-subtext {
+        margin-top: 0.2rem;
+        font-size: 12pt;
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+    }
+    .customiseSummary-addToCart {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 1rem;
+      border-top: 2px solid rgba(147, 112, 219, 0.24);
+      align-items: center;
+
+      .addToCart-total {
+        margin-right: 3rem;
+        text-align: right;
+        font-size: 16pt;
+      }
+
+      .addToCart-button {
+        background: #1a1a1a;
+        padding: 1rem;
+        width: 9rem;
+        text-align: center;
+        color: white;
+        text-transform: uppercase;
+        font-size: 12pt;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .customiseSummary-photo {
+    position: relative;
+    background: #1a1a1a;
+    margin-left: 2rem;
+    min-width: 550px;
+    height: 550px;
+    .fullscreen-icon {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      img {
+        height: 30px;
+        cursor: pointer;
+      }
+    }
+  }
+}
