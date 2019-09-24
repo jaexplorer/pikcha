@@ -31,19 +31,19 @@ Image properties
 
 
 ### Filter Images
-ENDPOINT : api/filter/images 
-METHOD : get
-AUTHENTICATED : false
-QUERY_PARAMS : Type [string, Optional], Start [int, Optional], Count [int, Optional]
+- ENDPOINT : api/filter/images 
+- METHOD : get
+- AUTHENTICATED : false
+- QUERY_PARAMS : Type [string, Optional], Start [int, Optional], Count [int, Optional]
 	{{Type} = random,... }
-RESULTS : images[]
+- RESULTS : images[]
 
 ### Get an Image
-ENDPOINT : api/image/{imageId} 
-METHOD : get
-AUTHENTICATED : false
+- ENDPOINT : api/image/{imageId} 
+- METHOD : get
+- AUTHENTICATED : false
 
-RESULTS : image
+- RESULTS : image
 
 
 
