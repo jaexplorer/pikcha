@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PikchaWebApp.Data;
 using PikchaWebApp.Managers;
@@ -42,6 +43,9 @@ namespace PikchaWebApp.Controllers
                 pkImg.CopyPropertiesFrom(imgViewModel);
                 pkImg.Id = 19; // TO DO : id should be auto generated
                 pkImg.PikchaImageId = imageId;
+                pkImg.UploadedAt = DateTime.Now;
+                pkImg.ModifiedAt = DateTime.Now;
+                
                 ImageProcessingManager imgManager = new ImageProcessingManager(_hostingEnvironment, _configuration);
 
                 bool status = imgManager.ResizeImage(imageId, imgViewModel.ImageFile, ref pkImg);
@@ -95,7 +99,7 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                var image = _pikchDbContext.PikchaImages.First(i => i.PikchaImageId == imageId);
+                var image = _pikchDbContext.PikchaImages.Include(img => img.Artist).First(i => i.PikchaImageId == imageId);
 
                 return new ReturnDataModel() { Statuscode = STATUS_CODES.Success.ToString(), Status = "Success", Data = image };
             }

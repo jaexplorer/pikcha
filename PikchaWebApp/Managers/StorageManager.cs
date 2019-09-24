@@ -37,10 +37,10 @@ namespace PikchaWebApp.Managers
 
         public string UploadThumbnail(MagickImage image, string imageId, FileCategory fileCategory)
         {
-            var uploadPath = Path.Combine(_hostingEnvironment.WebRootPath, GetDirectory(fileCategory), "Thumbnail") ;
+            var uploadPath = Path.Combine(GetDirectory(fileCategory), "Thumbnail") ;
 
             ValidateDirectory(uploadPath);
-            string filePath = Path.Combine(uploadPath, imageId)  + ".jpeg";
+            string filePath = Path.Combine(uploadPath, imageId)  + ".jpg";
 
             image.Write(filePath);
 
@@ -49,10 +49,10 @@ namespace PikchaWebApp.Managers
 
         public string UploadWaterMark(MagickImage image, string imageId, FileCategory fileCategory)
         {
-            var uploadPath = Path.Combine(_hostingEnvironment.WebRootPath, GetDirectory(fileCategory), "Watermarks") ;
+            var uploadPath = Path.Combine(GetDirectory(fileCategory), "Watermarks") ;
 
             ValidateDirectory(uploadPath);
-            string filePath = Path.Combine(uploadPath, imageId) + ".jpeg";
+            string filePath = Path.Combine(uploadPath, imageId) + ".jpg";
 
             image.Write(filePath);
 
@@ -61,12 +61,12 @@ namespace PikchaWebApp.Managers
 
         private string GetDirectory(FileCategory fileCategory)
         {
-            string uploadDirectory = @"\Uploads\Default";
+            string uploadDirectory = @"Uploads\Default";
             switch (fileCategory)
             {
-                case FileCategory.Avatar: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.Avatar"]) ? @"\Uploads\Avatars" : _configuration["UploadDirectories.Avatar"]; break;
-                case FileCategory.Signature: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.Signature"]) ? @"\Uploads\Signatures" : _configuration["UploadDirectories.Signature"]; break;
-                case FileCategory.PikchaImage: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.PikchaImage"]) ? @"\Uploads\Images" : _configuration["UploadDirectories.PikchaImage"]; break;
+                case FileCategory.Avatar: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.Avatar"]) ? @"Public\Uploads\Avatars" : _configuration["UploadDirectories.Avatar"]; break;
+                case FileCategory.Signature: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.Signature"]) ? @"Public\Uploads\Signatures" : _configuration["UploadDirectories.Signature"]; break;
+                case FileCategory.PikchaImage: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.PikchaImage"]) ? @"Public\Uploads\Images" : _configuration["UploadDirectories.PikchaImage"]; break;
             }
             try
             {

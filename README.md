@@ -1,27 +1,64 @@
 
 
 
-API Documentation
+# API Documentation
 
 Other than the authentication endpoints, output of all other endpoints have the following structure
-Statuscode
-Status
-Data
+[ Statuscode="", Status="", Data=""]
+for eg. successfull query [ Statuscode="200", Status="Success", Data= {Results Set}]
+failure query [ Statuscode="1222", Status="Null Exception Occured", Data= ""]
+
+
+* isauthenticated means whether the user needs to login to access the end point
 
 
 
-------
-Images
--------
+# Images
 
----upload --
+Image properties
+- PikchaImageId
+- Title
+- Caption
+- Location
+- NumberOfPrint
+- Width
+- Height
+- ThumbnailFile
+- WatermarkedFile
+- UploadedAt
+- Artist
+
+
+
+### Filter Images
+ENDPOINT : api/filter/images 
+METHOD : get
+AUTHENTICATED : false
+QUERY_PARAMS : Type [string, Optional], Start [int, Optional], Count [int, Optional]
+	{{Type} = random,... }
+RESULTS : images[]
+
+### Get an Image
+ENDPOINT : api/image/{imageId} 
+METHOD : get
+AUTHENTICATED : false
+
+RESULTS : image
+
+
+
+
+# TO DO : following
+
+
+### upload
 endpoint : api/image/upload
 method : post
 authenticated : true
 params : Title [string], Caption [text], Location [string], NumberOfPrint [int], ImageFile [file]
 
 
---- filter----
+### filter
 endpoint : api/filter/images 
 method : get
 authenticated : false
@@ -29,7 +66,7 @@ authenticated : false
 params : Type [string], Start [int], Count [int]
 	{{Type} = random,... }
 
--- single image----
+### single image
 endpoint : api/image/{imageId} 
 	{{imageId} is PikchaImageId property of the image }
 method : get
@@ -37,7 +74,7 @@ authenticated : false
 
 params : {imageId}
 
--- tags--
+### tags
 endpoint : api/image/tags
 method : get
 authenticated : false

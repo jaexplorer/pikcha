@@ -28,7 +28,7 @@ namespace PikchaWebApp.Controllers
             try
             {
                 
-                List<PikchaImage> images = _pikchDbContext.PikchaImages.Skip(Start).Take(Count).OrderBy(r => Guid.NewGuid()).ToList();
+                List<PikchaImage> images = _pikchDbContext.PikchaImages.Include(img => img.Artist).Skip(Start).Take(Count).OrderBy(r => Guid.NewGuid()).ToList();
                 return new ReturnDataModel() { Statuscode = STATUS_CODES.Success.ToString(), Status = "Error Occured", Data = images };
             }
             catch(Exception ex)
