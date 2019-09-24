@@ -112,7 +112,7 @@ namespace PikchaWebApp.Test
             {
                 var imageFile = File.OpenRead(fileUri);
 
-                IFormFile file = new FormFile(imageFile, 0, imageFile.Length, name, fileName);
+                IFormFile file = new FormFile(imageFile, 0, imageFile.Length, name, fileUri);
                 return file;
 
             }

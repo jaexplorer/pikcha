@@ -234,6 +234,113 @@ namespace PikchaWebApp.Migrations
                     b.ToTable("PikchaUserTokens");
                 });
 
+            modelBuilder.Entity("PikchaWebApp.Models.ImageTag", b =>
+                {
+                    b.Property<long>("ImageTagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("ImageTagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnName("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ImageTagId");
+
+                    b.ToTable("ImageTags");
+                });
+
+            modelBuilder.Entity("PikchaWebApp.Models.PikchaImage", b =>
+                {
+                    b.Property<string>("PikchaImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("PikchaImageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ArtistId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Caption")
+                        .HasColumnName("Caption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Height")
+                        .HasColumnName("Height")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Location")
+                        .HasColumnName("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("ModifiedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnName("ModifiedAt")
+                        .HasColumnType("datetimeoffset")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<int>("NumberOfPrint")
+                        .HasColumnName("NoOfPrint")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ThumbnailFile")
+                        .HasColumnName("ThumbFile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnName("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("UploadedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("UploadedAt")
+                        .HasColumnType("datetimeoffset")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.Property<string>("WatermarkedFile")
+                        .HasColumnName("WaterFile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Width")
+                        .HasColumnName("Width")
+                        .HasColumnType("int");
+
+                    b.HasKey("PikchaImageId");
+
+                    b.HasIndex("ArtistId");
+
+                    b.ToTable("PikchaImages");
+                });
+
+            modelBuilder.Entity("PikchaWebApp.Models.PikchaImageTag", b =>
+                {
+                    b.Property<long>("PikchaImageTagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("PikchaImageTagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ImageTagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PikchaImageId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PikchaImageId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("PikchaImageTagId");
+
+                    b.HasIndex("ImageTagId");
+
+                    b.HasIndex("PikchaImageId1");
+
+                    b.ToTable("PikchaImageTags");
+                });
+
             modelBuilder.Entity("PikchaWebApp.Models.PikchaUser", b =>
                 {
                     b.Property<string>("Id")
@@ -420,6 +527,26 @@ namespace PikchaWebApp.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PikchaWebApp.Models.PikchaImage", b =>
+                {
+                    b.HasOne("PikchaWebApp.Models.PikchaUser", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistId");
+                });
+
+            modelBuilder.Entity("PikchaWebApp.Models.PikchaImageTag", b =>
+                {
+                    b.HasOne("PikchaWebApp.Models.ImageTag", "ImageTag")
+                        .WithMany("PikchaImageTags")
+                        .HasForeignKey("ImageTagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PikchaWebApp.Models.PikchaImage", "PikchaImage")
+                        .WithMany("PikchaImageTags")
+                        .HasForeignKey("PikchaImageId1");
                 });
 #pragma warning restore 612, 618
         }

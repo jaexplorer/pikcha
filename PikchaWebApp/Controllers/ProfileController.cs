@@ -32,7 +32,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // GET: api/profile/list
-        [HttpGet("/list")]
+        [HttpGet("list")]
         public async Task<ReturnDataModel> List()
         {
             //var users = await _userManager.Users.ToListAsync();
@@ -41,7 +41,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // GET: api/profile/5
-        [HttpGet("{id}")]
+        [HttpGet("{userId}")]
         public async Task<ReturnDataModel> Get(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -50,7 +50,7 @@ namespace PikchaWebApp.Controllers
                
 
         // PUT: api/profile/5
-        [HttpPut("{id}")]
+        [HttpPut("{userId}")]
         public async Task<ReturnDataModel> Put(int id, [FromBody] ProfileViewModel profModel)
         {
             PikchaUser pikchaUser = _userManager.FindByIdAsync(profModel.Id).Result;
@@ -65,7 +65,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // DELETE: api/profile/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{userId}")]
         public async void Delete(string userId)
         {
             PikchaUser pikchaUser = _userManager.FindByIdAsync(userId).Result;
@@ -75,7 +75,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // POST: api/profile/avatar
-        [HttpPost("/avatar")]
+        [HttpPost("avatar")]
         public async Task<ReturnDataModel> UploadAvatarImage(IFormFile avatarFile)
         {
 
@@ -98,7 +98,7 @@ namespace PikchaWebApp.Controllers
         }
 
         // POST: api/profile/signature
-        [HttpPost("/signature")]
+        [HttpPost("signature")]
         public async Task<ReturnDataModel> UploadSignatureImage(IFormFile signatureFile)
         {
 
