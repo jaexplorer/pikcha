@@ -12,6 +12,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
 import Product from "./pages/Product";
+import PrivateRoute from "./layout/routing/PrivateRoute";
 import Customise from "./pages/Customise";
 import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./layout/Alerts";
@@ -41,15 +42,19 @@ const App = () => {
           <Alerts />
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route exact path='/about' component={About} />
+            <Route exact path='/contact' component={Contact} />
             <Route exact path='/pikcha100' component={Pikcha100} />
             <Route exact path='/artist100' component={Artist100} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/profile/:userid' component={Profile} />
             <Route exact path='/product/:productid' component={Product} />
-            <Route exact path='/customise/:productid' component={Customise} />
-            <Route exact path='/about' component={About} />
-            <Route exact path='/contact' component={Contact} />
+            <PrivateRoute
+              exact
+              path='/customise/:productid'
+              component={Customise}
+            />
           </Switch>
         </div>
       </Router>

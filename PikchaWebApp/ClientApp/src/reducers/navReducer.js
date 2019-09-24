@@ -1,21 +1,39 @@
-import { CREATE_DROPDOWN, REMOVE_DROPDOWN } from "../actions/types";
+import {
+  CREATE_PROFILE_DROPDOWN,
+  REMOVE_PROFILE_DROPDOWN,
+  CREATE_CART_DROPDOWN,
+  REMOVE_CART_DROPDOWN
+} from "../actions/types";
 
 const initialState = {
-  dropDown: false
+  profileDropdown: false,
+  cartDropdown: false
 };
 
 export default (state = initialState, { type }) => {
   switch (type) {
-    case CREATE_DROPDOWN:
+    case CREATE_PROFILE_DROPDOWN:
       return {
         ...state,
-        dropDown: true
+        profileDropdown: true
       };
 
-    case REMOVE_DROPDOWN:
+    case REMOVE_PROFILE_DROPDOWN:
       return {
         ...state,
-        dropDown: false
+        profileDropdown: false
+      };
+
+    case CREATE_CART_DROPDOWN:
+      return {
+        ...state,
+        cartDropdown: true
+      };
+
+    case REMOVE_CART_DROPDOWN:
+      return {
+        ...state,
+        cartDropdown: false
       };
 
     default:

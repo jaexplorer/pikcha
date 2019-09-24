@@ -1,24 +1,37 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { createDropdown } from "../../../actions/nav";
+import {
+  createProfileDropdown,
+  createCartDropdown
+} from "../../../actions/nav";
 import Logo from "../../../assets/images/logo-white.png";
 import SearchIcon from "../../../assets/images/search-black.png";
 import CartIcon from "../../../assets/images/cart-black.png";
 import PeopleIcon from "../../../assets/images/people-black.png";
 import PlaceHolder from "../../../assets/images/placeholder.png";
-import Dropdown from "./Dropdown";
+import ProfileDropdown from "./ProfileDropdown";
+import CartDropdown from "./CartDropdown";
 
-const Navbar = ({ auth, nav, createDropdown }) => {
+const Navbar = ({
+  auth,
+  nav,
+  cart,
+  createProfileDropdown,
+  createCartDropdown
+}) => {
   const authLinks = (
     <div className='navbar-right'>
       <div className='navbar-icons'>
-        <img src={CartIcon} alt='' /> <img src={PeopleIcon} alt='' />
+        <img onClick={createCartDropdown} src={CartIcon} alt='' />
+        {cart.products.length !== 0 && <div className='notication'></div>}
+        <img src={PeopleIcon} alt='' />
       </div>
       <div id='navbar-display-pic'>
-        <img onClick={createDropdown} src={PlaceHolder} alt='' />
+        <img onClick={createProfileDropdown} src={PlaceHolder} alt='' />
       </div>
-      {nav.dropDown ? <Dropdown /> : ""}
+      {nav.profileDropdown ? <ProfileDropdown /> : ""}
+      {nav.cartDropdown ? <CartDropdown /> : ""}
     </div>
   );
 
@@ -62,10 +75,11 @@ const Navbar = ({ auth, nav, createDropdown }) => {
 
 const mapStateToProps = state => ({
   auth: state.authReducer,
-  nav: state.navReducer
+  nav: state.navReducer,
+  cart: state.cartReducer
 });
 
 export default connect(
   mapStateToProps,
-  { createDropdown }
+  { createProfileDropdown, createCartDropdown }
 )(Navbar);

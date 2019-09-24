@@ -2,11 +2,11 @@ import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../../../actions/auth";
-import { removeDropdown } from "../../../actions/nav";
+import { removeProfileDropdown } from "../../../actions/nav";
 import LogoutIcon from "../../../assets/images/logout-white.png";
 import ProfileIcon from "../../../assets/images/profile-white.png";
 
-const Dropdown = ({ auth, logout, removeDropdown }) => {
+const ProfileDropdown = ({ auth, logout, removeProfileDropdown }) => {
   // Detect Clicks outside of container
   const dropdownContainer = useRef(null);
   useEffect(() => {
@@ -15,23 +15,23 @@ const Dropdown = ({ auth, logout, removeDropdown }) => {
         dropdownContainer.current &&
         !dropdownContainer.current.contains(e.target)
       ) {
-        removeDropdown();
+        removeProfileDropdown();
       }
     });
   });
 
   return (
-    <div id='nav-dropdown' ref={dropdownContainer}>
-      <div onClick={removeDropdown} className='dropdown-item'>
+    <div id='profile-dropdown' ref={dropdownContainer}>
+      <div onClick={removeProfileDropdown} className='profile-dropdown-item'>
         <Link to={`/profile/${auth.user._id}`}>Profile</Link>
         <img src={ProfileIcon} alt='' />
       </div>
       <div
         onClick={() => {
           logout();
-          removeDropdown();
+          removeProfileDropdown();
         }}
-        className='dropdown-item'
+        className='profile-dropdown-item'
       >
         <span>Logout</span>
         <img src={LogoutIcon} alt='' />
@@ -46,5 +46,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logout, removeDropdown }
-)(Dropdown);
+  { logout, removeProfileDropdown }
+)(ProfileDropdown);

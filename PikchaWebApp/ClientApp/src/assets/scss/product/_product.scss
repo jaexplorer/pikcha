@@ -66,6 +66,7 @@
       display: flex;
 
       .productItem-artist-pic {
+        cursor: pointer;
         img {
           height: 50px;
           padding-right: 1rem;
@@ -107,11 +108,14 @@
     margin-left: 2rem;
     min-width: 500px;
     height: 500px;
+    position: relative;
 
     .fullscreen-icon {
       position: absolute;
       right: 1rem;
       top: 1rem;
+      cursor: pointer;
+
       img {
         height: 30px;
       }
@@ -185,6 +189,8 @@
       color: white;
       text-transform: uppercase;
       font-size: 12pt;
+      text-decoration: none;
+      cursor: pointer;
     }
   }
 }
@@ -198,8 +204,6 @@
   }
   .sellerList-content {
     position: relative;
-    max-height: 30rem;
-    overflow: scroll;
   }
 }
 
@@ -250,5 +254,6 @@
     color: white;
     text-transform: uppercase;
     font-size: 12pt;
+    cursor: pointer;
   }
 }
