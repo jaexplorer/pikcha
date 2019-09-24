@@ -24,7 +24,7 @@ const CustomiseProduct = ({
         <div className='customiseProduct-number'>#11</div>
       </div>
       <div className='customiseProduct-dropdown-containers'>
-        <div className='dropdown-item'>
+        <div className='customise-dropdown-item'>
           <Select
             placeholder='Size'
             styles={customDropdownCSS}
@@ -39,7 +39,7 @@ const CustomiseProduct = ({
 
         <div className='break'></div>
 
-        <div className='dropdown-item'>
+        <div className='customise-dropdown-item'>
           <Select
             placeholder='Material'
             styles={customDropdownCSS}
@@ -54,7 +54,7 @@ const CustomiseProduct = ({
 
         <div className='break'></div>
 
-        <div className='dropdown-item'>
+        <div className='customise-dropdown-item'>
           <Select
             placeholder='Frame'
             styles={customDropdownCSS}
@@ -69,7 +69,7 @@ const CustomiseProduct = ({
 
         <div className='break'></div>
 
-        <div className='dropdown-item'>
+        <div className='customise-dropdown-item'>
           <Select
             placeholder='Border'
             styles={customDropdownCSS}
@@ -84,7 +84,7 @@ const CustomiseProduct = ({
 
         <div className='break'></div>
 
-        <div className='dropdown-item'>
+        <div className='customise-dropdown-item'>
           <Select
             placeholder='Finish'
             styles={customDropdownCSS}

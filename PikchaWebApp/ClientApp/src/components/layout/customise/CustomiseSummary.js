@@ -2,8 +2,26 @@ import React from "react";
 import FullscreenIcon from "../../../assets/images/fullscreen-white.png";
 import { connect } from "react-redux";
 import { clearCustomisations } from "../../../actions/product";
+import { addToCart } from "../../../actions/cart";
 
-const CustomiseSummary = ({ product, clearCustomisations }) => {
+const CustomiseSummary = ({ product, clearCustomisations, addToCart }) => {
+  const { size, material, frame, border, finish } = product;
+
+  const onSubmit = () => {
+    const productToAdd = {
+      productName: "Wild Charm",
+      productNumber: "#11",
+      size,
+      material,
+      frame,
+      border,
+      finish,
+      productPrice: 430
+    };
+    addToCart(productToAdd);
+    clearCustomisations();
+  };
+
   return (
     <div className='customiseSummary-container'>
       <div className='customiseSummary-content'>
@@ -15,23 +33,25 @@ const CustomiseSummary = ({ product, clearCustomisations }) => {
           </div>
 
           <div className='summary-subtitle'>Size</div>
-          <div className='summary-subtext'>{product.size}</div>
+          <div className='summary-subtext'>{size}</div>
 
           <div className='summary-subtitle'>Material</div>
-          <div className='summary-subtext'>{product.material}</div>
+          <div className='summary-subtext'>{material}</div>
 
           <div className='summary-subtitle'>Frame</div>
-          <div className='summary-subtext'>{product.frame}</div>
+          <div className='summary-subtext'>{frame}</div>
 
           <div className='summary-subtitle'>Border</div>
-          <div className='summary-subtext'>{product.border}</div>
+          <div className='summary-subtext'>{border}</div>
 
           <div className='summary-subtitle'>Finish</div>
-          <div className='summary-subtext'>{product.finish}</div>
+          <div className='summary-subtext'>{finish}</div>
         </div>
         <div className='customiseSummary-addToCart'>
           <div className='addToCart-total'>$430</div>
-          <div className='addToCart-button'>Add To Cart</div>
+          <div onClick={onSubmit} className='addToCart-button'>
+            Add To Cart
+          </div>
         </div>
       </div>
       <div className='customiseSummary-photo'>
@@ -49,5 +69,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { clearCustomisations }
+  { clearCustomisations, addToCart }
 )(CustomiseSummary);

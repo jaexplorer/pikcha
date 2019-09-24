@@ -54,6 +54,7 @@
       justify-self: right;
 
       .navbar-icons {
+        position: relative;
         display: grid;
         height: 100%;
         align-items: center;
@@ -67,6 +68,15 @@
           &:last-child {
             margin-right: 2rem;
           }
+        }
+        .notication {
+          position: absolute;
+          top: 1.4rem;
+          left: 2.6rem;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: rgb(235, 59, 71);
         }
       }
 

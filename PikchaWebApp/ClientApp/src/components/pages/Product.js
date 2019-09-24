@@ -25,7 +25,7 @@ const Product = ({ auth }) => {
           </div>
           <div className='product-container'>
             <ProductItem />
-            <MainSeller />
+            <MainSeller auth={auth} />
             <SellerList />
             <div className='more-content-heading'>More from this Artist</div>
             <MasonryGallery />
