@@ -23,7 +23,7 @@
       }
     }
     #profile-name {
-      font-size: 18pt;
+      font-size: 1.8rem;
       font-weight: bold;
       justify-self: center;
       margin-top: 1.2rem;
@@ -54,7 +54,7 @@
 
       button {
         font-family: "Montserrat";
-        font-size: 12pt;
+        font-size: 1.2rem;
         color: #ffffff;
         text-transform: uppercase;
         width: 100%;
@@ -87,7 +87,7 @@
     display: flex;
 
     #profile-bio {
-      font-size: 12pt;
+      font-size: 1.2rem;
       width: 70%;
       opacity: 0.5;
       align-self: center;
@@ -117,27 +117,27 @@
 
     #profile-views {
       grid-row: 1 / 2;
-      font-size: 12pt;
+      font-size: 1.2rem;
       position: relative;
       margin-top: 1.5rem;
     }
     #profile-followers {
       grid-row: 1 / 2;
-      font-size: 12pt;
+      font-size: 1.2rem;
       justify-self: center;
       position: relative;
       margin-top: 1.5rem;
     }
     #profile-photos-sold {
       grid-row: 1 / 2;
-      font-size: 12pt;
+      font-size: 1.2rem;
       justify-self: center;
       position: relative;
       margin-top: 1.5rem;
     }
     #profile-average-price {
       grid-row: 1 / 2;
-      font-size: 12pt;
+      font-size: 1.2rem;
       justify-self: end;
       position: relative;
       margin-top: 1.5rem;
@@ -148,7 +148,7 @@
     #profile-following {
       grid-row: 2 / 3;
       grid-column: 1 / 5;
-      font-size: 12pt;
+      font-size: 1.2rem;
       text-transform: uppercase;
       display: flex;
       align-items: center;

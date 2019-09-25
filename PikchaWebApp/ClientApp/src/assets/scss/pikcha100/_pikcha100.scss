@@ -2,13 +2,13 @@
 // ------------------------------------------------------------------- //
 #pikcha100-container {
   font-family: "Montserrat";
-  background-image: linear-gradient(
-    -120deg,
-    #5271c4 0%,
-    #b19fff 10%,
-    rgba(236, 161, 254, 0.5) 25%,
-    #fafafa 50%
-  );
+  // background-image: linear-gradient(
+  //   -120deg,
+  //   #5271c4 0%,
+  //   #b19fff 10%,
+  //   rgba(236, 161, 254, 0.5) 25%,
+  //   #fafafa 50%
+  // );
 
   .pikcha-container {
     display: grid;
@@ -21,7 +21,7 @@
 
     .pikcha-rank {
       font-weight: bold;
-      font-size: 18pt;
+      font-size: 1.8rem;
     }
 
     .pikcha-photo {
@@ -34,21 +34,21 @@
     .pikcha-photo-information {
       .pikcha-photo-name {
         font-weight: bold;
-        font-size: 12pt;
+        font-size: 1.2rem;
         text-transform: uppercase;
         margin-bottom: 0.5rem;
       }
       .pikcha-photo-views {
-        font-size: 10pt;
+        font-size: 1rem;
       }
       .pikcha-photo-turnover {
-        font-size: 10pt;
+        font-size: 1rem;
       }
       .pikcha-photo-avg-price {
-        font-size: 10pt;
+        font-size: 1rem;
       }
       .pikcha-photo-location {
-        font-size: 10pt;
+        font-size: 1rem;
       }
     }
 
@@ -73,7 +73,7 @@
 
     .artist-information {
       .artist-name {
-        font-size: 18pt;
+        font-size: 1.8rem;
         font-weight: bold;
         margin-bottom: 0.3rem;
       }
