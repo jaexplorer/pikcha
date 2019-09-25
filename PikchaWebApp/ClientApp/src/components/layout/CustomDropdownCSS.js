@@ -1,8 +1,8 @@
 export const customDropdownCSS = {
   control: (base, state) => ({
     ...base,
-    width: "9rem",
-    height: "3rem",
+    width: "100%",
+    height: "4rem",
     background: "#1a1a1a",
     borderRadius: state.isFocused ? "0" : "0",
     borderColor: state.isFocused ? "none" : "none",
@@ -12,14 +12,17 @@ export const customDropdownCSS = {
     },
     cursor: "pointer"
   }),
-  placeholder: (base, state) => ({
-    ...base,
-    color: "white",
-    fontSize: "12pt",
-    textTransform: "uppercase",
-    paddingLeft: "1rem"
+  input: base => ({
+    position: "absolute"
   }),
-  indicatorSeparator: (base, state) => ({
+  placeholder: () => ({
+    color: "white",
+    fontSize: "1.2rem",
+    textTransform: "uppercase",
+    paddingLeft: "1rem",
+    position: "relative"
+  }),
+  indicatorSeparator: base => ({
     ...base,
     display: "none"
   }),
@@ -44,7 +47,7 @@ export const customDropdownCSS = {
     ...base,
     background: "#1a1a1a",
     color: state.isFocused ? "mediumPurple" : "white",
-    fontSize: "12pt",
+    fontSize: "1.2rem",
     textTransform: "uppercase",
     padding: "1rem",
     cursor: "pointer",
@@ -53,7 +56,7 @@ export const customDropdownCSS = {
   singleValue: (base, state) => ({
     ...base,
     color: "white",
-    fontSize: "12pt",
+    fontSize: "1.2rem",
     textTransform: "uppercase",
     paddingLeft: "1rem"
   })

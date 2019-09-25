@@ -1,6 +1,9 @@
 // Main
 // ------------------------------------------------------------------- //
+// By Andrew Sabato
 
+// Fonts
+// ---------------------------------------- //
 @font-face {
   font-family: Montserrat;
   font-weight: 300;
@@ -17,6 +20,8 @@
   src: url("../../fonts/Montserrat-Bold.otf") format("opentype");
 }
 
+// Setup
+// ---------------------------------------- //
 * {
   box-sizing: border-box;
   margin: 0;
@@ -27,21 +32,22 @@ html,
 body {
   height: 100%;
   margin: 0;
+  font-size: 12px;
 
   .frame-container {
     height: 100vh;
     background: #fafafa;
     .main-container {
       position: fixed;
-      top: 5rem;
+      top: 6rem;
       left: 20%;
-      height: calc(100% - 5rem);
+      height: calc(100% - 6rem);
       width: calc(100% - 20%);
       overflow: scroll;
 
       .main-content-container {
-        margin-top: 5rem;
-        margin-right: 5rem;
+        margin-top: 6rem;
+        margin-right: 6rem;
         position: relative;
         height: 100%;
       }
@@ -49,14 +55,56 @@ body {
   }
 }
 
+// Mobile Font Queries
+// ---------------------------------------- //
+@media (min-height: 599px) and (min-width: 600px) {
+  html {
+    font-size: 12px;
+  }
+}
+@media (min-height: 699px) and (min-width: 800px) {
+  html {
+    font-size: 12px;
+  }
+}
+@media (min-height: 899px) and (min-width: 1000px) {
+  html {
+    font-size: 13px;
+  }
+}
+@media (min-height: 999px) and (min-width: 1200px) {
+  html {
+    font-size: 13px;
+  }
+}
+@media (min-height: 1099px) and (min-width: 1600px) {
+  html {
+    font-size: 14px;
+  }
+}
+@media (min-height: 1299px) and (min-width: 2000px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-height: 1399px) and (min-width: 2400px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+// Preloader (Temp)
+// ---------------------------------------- //
 .loading {
   text-align: center;
   color: #9370db;
   font-family: "Montserrat";
-  font-size: 16pt;
+  font-size: 1.6rem;
   margin-top: 3rem;
 }
 
+// Everything Else
+// ---------------------------------------- //
 @import "../navbar/navbar";
 @import "../sidebar/sidebar";
 @import "../auth/auth";

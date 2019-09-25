@@ -2,13 +2,13 @@
 // ------------------------------------------------------------------- //
 .title-header {
   position: absolute;
-  top: -3rem;
+  top: -4rem;
   display: flex;
   align-items: center;
 
   .header-subtitle {
     font-family: "Montserrat";
-    font-size: 10pt;
+    font-size: 1rem;
     text-transform: uppercase;
   }
   .header-line {
@@ -30,24 +30,24 @@
   }
   .header-title {
     font-family: "Montserrat";
-    font-size: 18pt;
+    font-size: 1.8rem;
     margin-left: 2rem;
   }
 }
 
 .header-back-arrow {
   position: absolute;
-  top: -3rem;
+  top: -4rem;
   display: flex;
   align-items: center;
   cursor: pointer;
   img {
-    height: 30px;
+    height: 2rem;
   }
   span {
     font-family: "Montserrat";
-    font-size: 12pt;
-    margin-left: 1rem;
+    font-size: 1.2rem;
+    margin-left: 2rem;
 
     &:hover {
       color: mediumpurple;

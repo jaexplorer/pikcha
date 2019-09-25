@@ -10,8 +10,8 @@ const MasonryItem = ({ gallery, selectPhoto }) => {
   useEffect(() => {
     setSelected(gallery.selected === photo);
     isSelected
-      ? (photo.current.style.height = "700px")
-      : (photo.current.style.height = "300px");
+      ? (photo.current.style.height = "50rem")
+      : (photo.current.style.height = "30rem");
   }, [gallery.selected, isSelected]);
 
   return (

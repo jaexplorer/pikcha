@@ -18,10 +18,10 @@
     display: flex;
     justify-content: space-between;
     .customiseProduct-title {
-      font-size: 20pt;
+      font-size: 2rem;
     }
     .customiseProduct-number {
-      font-size: 20pt;
+      font-size: 2rem;
     }
   }
 
@@ -30,6 +30,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .customise-dropdown-item {
+      width: 100%;
+      margin-right: 2rem;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
 
     .break {
       width: 1px;
@@ -52,7 +60,7 @@
     justify-content: space-between;
 
     .customiseSummary-title {
-      font-size: 20pt;
+      font-size: 2rem;
     }
 
     .customiseSummary-summary {
@@ -63,26 +71,26 @@
         display: flex;
         justify-content: space-between;
         .photo-name {
-          font-size: 15pt;
+          font-size: 1.5rem;
           text-transform: uppercase;
           font-weight: bold;
         }
 
         .photo-number {
-          font-size: 15pt;
+          font-size: 1.5rem;
           font-weight: bold;
         }
       }
 
       .summary-subtitle {
         margin-top: 1rem;
-        font-size: 12pt;
+        font-size: 1.2rem;
         text-transform: uppercase;
       }
 
       .summary-subtext {
         margin-top: 0.2rem;
-        font-size: 12pt;
+        font-size: 1.2rem;
         font-weight: bold;
         text-transform: capitalize;
       }
@@ -97,17 +105,17 @@
       .addToCart-total {
         margin-right: 3rem;
         text-align: right;
-        font-size: 16pt;
+        font-size: 1.6rem;
       }
 
       .addToCart-button {
         background: #1a1a1a;
         padding: 1rem;
-        width: 9rem;
+        width: 12rem;
         text-align: center;
         color: white;
         text-transform: uppercase;
-        font-size: 12pt;
+        font-size: 1.2rem;
         cursor: pointer;
       }
     }
@@ -117,14 +125,14 @@
     position: relative;
     background: #1a1a1a;
     margin-left: 2rem;
-    min-width: 550px;
-    height: 550px;
+    min-width: 45rem;
+    height: 45rem;
     .fullscreen-icon {
       position: absolute;
-      right: 1rem;
-      top: 1rem;
+      right: 2rem;
+      top: 2rem;
       img {
-        height: 30px;
+        height: 2.5rem;
         cursor: pointer;
       }
     }

@@ -27,6 +27,7 @@ html,
 body {
   height: 100%;
   margin: 0;
+  font-size: 12px;
 }
 
 html .frame-container,
@@ -38,26 +39,68 @@ body .frame-container {
 html .frame-container .main-container,
 body .frame-container .main-container {
   position: fixed;
-  top: 5rem;
+  top: 6rem;
   left: 20%;
-  height: calc(100% - 5rem);
+  height: calc(100% - 6rem);
   width: calc(100% - 20%);
   overflow: scroll;
 }
 
 html .frame-container .main-container .main-content-container,
 body .frame-container .main-container .main-content-container {
-  margin-top: 5rem;
-  margin-right: 5rem;
+  margin-top: 6rem;
+  margin-right: 6rem;
   position: relative;
   height: 100%;
+}
+
+@media (min-height: 599px) and (min-width: 600px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (min-height: 699px) and (min-width: 800px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (min-height: 899px) and (min-width: 1000px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+@media (min-height: 999px) and (min-width: 1200px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+@media (min-height: 1099px) and (min-width: 1600px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-height: 1299px) and (min-width: 2000px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-height: 1399px) and (min-width: 2400px) {
+  html {
+    font-size: 18px;
+  }
 }
 
 .loading {
   text-align: center;
   color: #9370db;
   font-family: "Montserrat";
-  font-size: 16pt;
+  font-size: 1.6rem;
   margin-top: 3rem;
 }
 
@@ -67,7 +110,7 @@ body .frame-container .main-container .main-content-container {
   grid-auto-flow: column;
   -ms-grid-columns: 20% 80%;
       grid-template-columns: 20% 80%;
-  height: 5rem;
+  height: 6rem;
   background-image: linear-gradient(120deg, #5271c4 0%, #b19fff 16%, rgba(236, 161, 254, 0.5) 30%, rgba(255, 255, 255, 0) 70%);
 }
 
@@ -82,7 +125,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #top-navbar #navbar-logo a img {
-  max-height: 55%;
+  height: 3rem;
 }
 
 #top-navbar #navbar {
@@ -106,7 +149,7 @@ body .frame-container .main-container .main-content-container {
 
 #top-navbar #navbar #navbar-left li a {
   font-family: "Montserrat";
-  font-size: 16pt;
+  font-size: 1.6rem;
   color: #1a1a1a;
   text-decoration: none;
 }
@@ -139,18 +182,18 @@ body .frame-container .main-container .main-content-container {
 }
 
 #top-navbar #navbar .navbar-right .navbar-icons img {
-  max-height: 25%;
-  margin-right: 3rem;
+  height: 1.6rem;
+  margin-right: 5rem;
 }
 
 #top-navbar #navbar .navbar-right .navbar-icons img:last-child {
-  margin-right: 2rem;
+  margin-right: 4rem;
 }
 
 #top-navbar #navbar .navbar-right .navbar-icons .notication {
   position: absolute;
   top: 1.4rem;
-  left: 2.6rem;
+  left: 2rem;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -175,7 +218,7 @@ body .frame-container .main-container .main-content-container {
 #top-navbar #navbar .navbar-right #navbar-right-links li a {
   font-family: "Montserrat";
   color: #1a1a1a;
-  font-size: 12pt;
+  font-size: 1.2rem;
   text-decoration: none;
   text-transform: uppercase;
 }
@@ -197,14 +240,14 @@ body .frame-container .main-container .main-content-container {
 }
 
 #top-navbar #navbar .navbar-right #navbar-display-pic img {
-  max-height: 45%;
-  margin-right: 2rem;
+  height: 3rem;
+  margin-right: 1.5rem;
 }
 
 #profile-dropdown {
   position: absolute;
-  top: 5rem;
-  right: 2rem;
+  top: 6rem;
+  right: 1.6rem;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
@@ -217,7 +260,7 @@ body .frame-container .main-container .main-content-container {
   background: #1a1a1a;
   color: white;
   font-family: "Montserrat";
-  font-size: 14pt;
+  font-size: 1.4rem;
   padding: 1rem;
   display: -ms-grid;
   display: grid;
@@ -262,8 +305,8 @@ body .frame-container .main-container .main-content-container {
 
 #cart-dropdown {
   position: absolute;
-  top: 5rem;
-  right: 17rem;
+  top: 6rem;
+  right: 15.7rem;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
@@ -276,7 +319,7 @@ body .frame-container .main-container .main-content-container {
   background: #1a1a1a;
   color: white;
   font-family: "Montserrat";
-  font-size: 14pt;
+  font-size: 1.4rem;
   padding: 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -287,7 +330,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #cart-dropdown .cart-dropdown-item .cart-product-name {
-  font-size: 12pt;
+  font-size: 1.2rem;
   text-transform: uppercase;
 }
 
@@ -322,7 +365,7 @@ body .frame-container .main-container .main-content-container {
 
 #cart-dropdown .cart-dropdown-item .cart-total {
   margin-left: auto;
-  font-size: 12pt;
+  font-size: 1.2rem;
 }
 
 #cart-dropdown .cart-dropdown-item .cart-checkout {
@@ -333,7 +376,7 @@ body .frame-container .main-container .main-content-container {
   border-radius: 5px;
   color: black;
   margin-left: 1rem;
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
@@ -352,8 +395,8 @@ body .frame-container .main-container .main-content-container {
 }
 
 #cart-dropdown .cart-dropdown-item img {
-  height: 25px;
-  margin-left: 2rem;
+  height: 2rem;
+  margin-left: 2.5rem;
 }
 
 #sidebar {
@@ -408,7 +451,7 @@ body .frame-container .main-container .main-content-container {
 #sidebar a {
   position: relative;
   font-family: "Montserrat";
-  font-size: 16pt;
+  font-size: 1.6rem;
   color: #1a1a1a;
   text-decoration: none;
   -webkit-writing-mode: vertical-lr;
@@ -467,7 +510,7 @@ body .frame-container .main-container .main-content-container {
 
 .auth-container .auth-wrapper .auth-form .form-title {
   font-family: "Montserrat";
-  font-size: 24pt;
+  font-size: 2.4rem;
   color: #1a1a1a;
   line-height: 1.2;
   text-align: center;
@@ -620,7 +663,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #profile-container #profile-basic #profile-name {
-  font-size: 18pt;
+  font-size: 1.8rem;
   font-weight: bold;
   -ms-grid-column-align: center;
       justify-self: center;
@@ -661,7 +704,7 @@ body .frame-container .main-container .main-content-container {
 
 #profile-container #profile-basic #profile-button button {
   font-family: "Montserrat";
-  font-size: 12pt;
+  font-size: 1.2rem;
   color: #ffffff;
   text-transform: uppercase;
   width: 100%;
@@ -687,7 +730,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #profile-container #profile-background #profile-bio {
-  font-size: 12pt;
+  font-size: 1.2rem;
   width: 70%;
   opacity: 0.5;
   -ms-flex-item-align: center;
@@ -731,7 +774,7 @@ body .frame-container .main-container .main-content-container {
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1 / 2;
-  font-size: 12pt;
+  font-size: 1.2rem;
   position: relative;
   margin-top: 1.5rem;
 }
@@ -740,7 +783,7 @@ body .frame-container .main-container .main-content-container {
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1 / 2;
-  font-size: 12pt;
+  font-size: 1.2rem;
   -ms-grid-column-align: center;
       justify-self: center;
   position: relative;
@@ -751,7 +794,7 @@ body .frame-container .main-container .main-content-container {
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1 / 2;
-  font-size: 12pt;
+  font-size: 1.2rem;
   -ms-grid-column-align: center;
       justify-self: center;
   position: relative;
@@ -762,7 +805,7 @@ body .frame-container .main-container .main-content-container {
   -ms-grid-row: 1;
   -ms-grid-row-span: 1;
   grid-row: 1 / 2;
-  font-size: 12pt;
+  font-size: 1.2rem;
   -ms-grid-column-align: end;
       justify-self: end;
   position: relative;
@@ -780,7 +823,7 @@ body .frame-container .main-container .main-content-container {
   -ms-grid-column: 1;
   -ms-grid-column-span: 4;
   grid-column: 1 / 5;
-  font-size: 12pt;
+  font-size: 1.2rem;
   text-transform: uppercase;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -807,7 +850,6 @@ body .frame-container .main-container .main-content-container {
 
 #artist100-container {
   font-family: "Montserrat";
-  background-image: linear-gradient(-120deg, #5271c4 0%, #b19fff 10%, rgba(236, 161, 254, 0.5) 25%, #fafafa 50%);
 }
 
 #artist100-container .artist-container {
@@ -828,7 +870,7 @@ body .frame-container .main-container .main-content-container {
 
 #artist100-container .artist-container .artist-rank {
   font-weight: bold;
-  font-size: 18pt;
+  font-size: 1.8rem;
 }
 
 #artist100-container .artist-container .artist-picture img {
@@ -836,7 +878,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #artist100-container .artist-container .artist-information .artist-name {
-  font-size: 18pt;
+  font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 0.3rem;
 }
@@ -847,11 +889,11 @@ body .frame-container .main-container .main-content-container {
 }
 
 #artist100-container .artist-container .artist-stats .artist-photos-sold {
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #artist100-container .artist-container .artist-stats .artist-photo-views {
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #artist100-container .artist-container .divider {
@@ -862,21 +904,21 @@ body .frame-container .main-container .main-content-container {
 
 #artist100-container .artist-container .top-photo-information .top-photo-name {
   font-weight: bold;
-  font-size: 12pt;
+  font-size: 1.2rem;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
 
 #artist100-container .artist-container .top-photo-information .top-photo-views {
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #artist100-container .artist-container .top-photo-information .top-photo-avg-price {
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #artist100-container .artist-container .top-photo-information .top-photo-location {
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #artist100-container .artist-container .artist-top-photo {
@@ -888,7 +930,6 @@ body .frame-container .main-container .main-content-container {
 
 #pikcha100-container {
   font-family: "Montserrat";
-  background-image: linear-gradient(-120deg, #5271c4 0%, #b19fff 10%, rgba(236, 161, 254, 0.5) 25%, #fafafa 50%);
 }
 
 #pikcha100-container .pikcha-container {
@@ -906,7 +947,7 @@ body .frame-container .main-container .main-content-container {
 
 #pikcha100-container .pikcha-container .pikcha-rank {
   font-weight: bold;
-  font-size: 18pt;
+  font-size: 1.8rem;
 }
 
 #pikcha100-container .pikcha-container .pikcha-photo {
@@ -918,25 +959,25 @@ body .frame-container .main-container .main-content-container {
 
 #pikcha100-container .pikcha-container .pikcha-photo-information .pikcha-photo-name {
   font-weight: bold;
-  font-size: 12pt;
+  font-size: 1.2rem;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
 
 #pikcha100-container .pikcha-container .pikcha-photo-information .pikcha-photo-views {
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #pikcha100-container .pikcha-container .pikcha-photo-information .pikcha-photo-turnover {
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #pikcha100-container .pikcha-container .pikcha-photo-information .pikcha-photo-avg-price {
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #pikcha100-container .pikcha-container .pikcha-photo-information .pikcha-photo-location {
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #pikcha100-container .pikcha-container .pikcha-photo-graph {
@@ -957,7 +998,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #pikcha100-container .pikcha-container .artist-information .artist-name {
-  font-size: 18pt;
+  font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 0.3rem;
 }
@@ -992,12 +1033,12 @@ body .frame-container .main-container .main-content-container {
 }
 
 #about-container .about-item .about-title {
-  font-size: 18pt;
+  font-size: 1.8rem;
 }
 
 #about-container .about-item .about-text {
   margin-top: 2rem;
-  font-size: 12pt;
+  font-size: 1.2rem;
 }
 
 #about-container .about-link {
@@ -1010,7 +1051,7 @@ body .frame-container .main-container .main-content-container {
   padding-right: 1.5rem;
   border: #1a1a1a 2px solid;
   text-transform: uppercase;
-  font-size: 10pt;
+  font-size: 1rem;
 }
 
 #contact-container {
@@ -1043,42 +1084,42 @@ body .frame-container .main-container .main-content-container {
 }
 
 #contact-container .contact-details-container .phone-contact .phone-contact-title {
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
 #contact-container .contact-details-container .phone-contact .phone-contact-text {
-  font-size: 16pt;
+  font-size: 1.6rem;
   margin-top: 0.5rem;
 }
 
 #contact-container .contact-details-container .fax-contact .fax-contact-title {
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
 #contact-container .contact-details-container .fax-contact .fax-contact-text {
-  font-size: 16pt;
+  font-size: 1.6rem;
   margin-top: 0.5rem;
 }
 
 #contact-container .contact-details-container .address-contact .address-contact-title {
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
 #contact-container .contact-details-container .address-contact .address-contact-text {
-  font-size: 16pt;
+  font-size: 1.6rem;
   margin-top: 0.5rem;
 }
 
 #contact-container .contact-details-container .email-contact .email-contact-title {
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
 #contact-container .contact-details-container .email-contact .email-contact-text {
-  font-size: 16pt;
+  font-size: 1.6rem;
   margin-top: 0.5rem;
 }
 
@@ -1090,7 +1131,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #contact-container .contact-details-container .socials-contact .socials-contact-title {
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
@@ -1130,7 +1171,7 @@ body .frame-container .main-container .main-content-container {
 
 #contact-container .contact-form-container .contact-form-title {
   font-family: "Montserrat";
-  font-size: 20pt;
+  font-size: 2rem;
   color: #1a1a1a;
   line-height: 1.2;
   text-align: center;
@@ -1140,7 +1181,7 @@ body .frame-container .main-container .main-content-container {
 
 #contact-container .contact-form-container .contact-form-subtext {
   font-family: "Montserrat";
-  font-size: 12pt;
+  font-size: 1.2rem;
   color: #1a1a1a;
   opacity: 0.5;
   line-height: 1.2;
@@ -1292,12 +1333,12 @@ body .frame-container .main-container .main-content-container {
 .masonry-item .itemInfo-back-arrow {
   position: absolute;
   margin-top: 3rem;
-  margin-left: 2rem;
+  margin-left: 3rem;
   cursor: pointer;
 }
 
 .masonry-item .itemInfo-back-arrow img {
-  height: 18px;
+  height: 1.4rem;
 }
 
 .masonry-item .itemInfo-info-button {
@@ -1306,7 +1347,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 .masonry-item .itemInfo-info-button img {
-  height: 25px;
+  height: 2rem;
   position: absolute;
   bottom: -1px;
   left: 0;
@@ -1323,43 +1364,43 @@ body .frame-container .main-container .main-content-container {
   -webkit-transform: translate(calc(-100% + 0.5px), -100%);
           transform: translate(calc(-100% + 0.5px), -100%);
   width: 70%;
-  height: 450px;
+  height: 35rem;
 }
 
 .masonry-item .itemInfo-popup::before {
   content: "";
   position: absolute;
-  left: calc(2rem - 8px);
-  top: -38px;
-  width: 76px;
-  height: 76px;
+  left: 2.5rem;
+  top: -3rem;
+  width: 6rem;
+  height: 6rem;
   background: #fafafa;
   border-radius: 50%;
 }
 
 .masonry-item .itemInfo-popup .popup-artist {
   position: absolute;
-  left: 2rem;
-  top: -30px;
+  left: 3rem;
+  top: -2.5rem;
 }
 
 .masonry-item .itemInfo-popup .popup-artist img {
-  height: 60px;
+  height: 5rem;
   cursor: pointer;
 }
 
 .masonry-item .itemInfo-popup .popup-artist-name {
   position: absolute;
-  left: 1.6rem;
-  top: 2.5rem;
+  left: 2.5rem;
+  top: 3.5rem;
   font-family: "Montserrat";
-  font-size: 12pt;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
 .masonry-item .itemInfo-popup .popup-socials {
   position: absolute;
-  left: -3.5rem;
+  left: -5rem;
   top: 4rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1375,21 +1416,21 @@ body .frame-container .main-container .main-content-container {
 }
 
 .masonry-item .itemInfo-popup .popup-socials img {
-  height: 30px;
+  height: 2.5rem;
   cursor: pointer;
 }
 
 .masonry-item .itemInfo-popup .popup-content-container {
   position: relative;
   width: 83%;
-  height: 60%;
+  height: 22rem;
   margin: auto;
-  top: 5rem;
+  top: 7rem;
   font-family: "Montserrat";
 }
 
 .masonry-item .itemInfo-popup .popup-content-container .popup-photo-name {
-  font-size: 18pt;
+  font-size: 1.8rem;
 }
 
 .masonry-item .itemInfo-popup .popup-content-container .popup-photo-stats {
@@ -1401,14 +1442,14 @@ body .frame-container .main-container .main-content-container {
 
 .masonry-item .itemInfo-popup .popup-content-container .popup-photo-stats span {
   margin-right: 1rem;
-  font-size: 12pt;
+  font-size: 1.2rem;
 }
 
 .masonry-item .itemInfo-popup .popup-content-container .popup-photo-description {
   margin-top: 1rem;
   font-weight: 300;
   line-height: 1.5;
-  font-size: 12pt;
+  font-size: 1.2rem;
   opacity: 0.5;
 }
 
@@ -1424,40 +1465,41 @@ body .frame-container .main-container .main-content-container {
 }
 
 .masonry-item .itemInfo-popup .popup-content-container .popup-photo-action .photo-purchase {
-  padding: 0.5rem;
-  width: 6rem;
+  padding: 1rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
   text-align: center;
   background: #1a1a1a;
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
-  cursor: pointer;
 }
 
 .masonry-item .itemInfo-popup .popup-content-container .popup-photo-action .photo-purchase a {
   color: white;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .masonry-item .itemInfo-popup .popup-content-container .popup-photo-action span {
   margin-left: 2rem;
-  font-size: 12pt;
+  font-size: 1.2rem;
 }
 
 .masonry-item .itemInfo-popup .popup-delete {
   position: absolute;
-  bottom: 1rem;
-  left: 1.6rem;
+  bottom: 2rem;
+  left: 2.5rem;
   cursor: pointer;
 }
 
 .masonry-item .itemInfo-popup .popup-delete img {
-  height: 15px;
+  height: 1rem;
   opacity: 0.5;
 }
 
 .title-header {
   position: absolute;
-  top: -3rem;
+  top: -4rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1468,7 +1510,7 @@ body .frame-container .main-container .main-content-container {
 
 .title-header .header-subtitle {
   font-family: "Montserrat";
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
@@ -1492,13 +1534,13 @@ body .frame-container .main-container .main-content-container {
 
 .title-header .header-title {
   font-family: "Montserrat";
-  font-size: 18pt;
+  font-size: 1.8rem;
   margin-left: 2rem;
 }
 
 .header-back-arrow {
   position: absolute;
-  top: -3rem;
+  top: -4rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1509,13 +1551,13 @@ body .frame-container .main-container .main-content-container {
 }
 
 .header-back-arrow img {
-  height: 30px;
+  height: 2rem;
 }
 
 .header-back-arrow span {
   font-family: "Montserrat";
-  font-size: 12pt;
-  margin-left: 1rem;
+  font-size: 1.2rem;
+  margin-left: 2rem;
 }
 
 .header-back-arrow span:hover {
@@ -1527,7 +1569,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 .product-container .more-content-heading {
-  font-size: 20pt;
+  font-size: 2rem;
   padding-bottom: 2rem;
   border-bottom: 2px solid rgba(147, 112, 219, 0.24);
   margin-bottom: 2rem;
@@ -1566,16 +1608,16 @@ body .frame-container .main-container .main-content-container {
 }
 
 .productItem-container .productItem-content .productItem-heading .product-title {
-  font-size: 20pt;
+  font-size: 2rem;
 }
 
 .productItem-container .productItem-content .productItem-heading .product-number {
-  font-size: 20pt;
+  font-size: 2rem;
 }
 
 .productItem-container .productItem-content .productItem-stats {
   margin-top: 1rem;
-  font-size: 12pt;
+  font-size: 1.2rem;
 }
 
 .productItem-container .productItem-content .productItem-stats div {
@@ -1584,7 +1626,7 @@ body .frame-container .main-container .main-content-container {
 
 .productItem-container .productItem-content .productItem-description {
   margin-top: 1rem;
-  font-size: 12pt;
+  font-size: 1.2rem;
   font-weight: 300;
   opacity: 0.5;
 }
@@ -1594,7 +1636,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 .productItem-container .productItem-content .product-subtext {
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -1611,15 +1653,15 @@ body .frame-container .main-container .main-content-container {
 }
 
 .productItem-container .productItem-content .productItem-origins .productItem-artist-pic img {
-  height: 50px;
+  height: 3.5rem;
   padding-right: 1rem;
 }
 
 .productItem-container .productItem-content .productItem-origins .product-artist-info {
-  font-size: 12pt;
+  font-size: 1.2rem;
   display: -ms-grid;
   display: grid;
-  font-size: 12pt;
+  font-size: 1.2rem;
   height: 50px;
   -ms-grid-rows: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
@@ -1627,7 +1669,7 @@ body .frame-container .main-container .main-content-container {
 
 .productItem-container .productItem-content .productItem-origins .product-location {
   margin-left: 3rem;
-  font-size: 12pt;
+  font-size: 1.2rem;
   height: 50px;
   display: -ms-grid;
   display: grid;
@@ -1636,13 +1678,13 @@ body .frame-container .main-container .main-content-container {
 }
 
 .productItem-container .productItem-content .productItem-about-artist {
-  font-size: 12pt;
+  font-size: 1.2rem;
   margin-top: auto;
 }
 
 .productItem-container .productItem-content .productItem-about-artist .productItem-artist-description {
   margin-top: 0.5rem;
-  font-size: 12pt;
+  font-size: 1.2rem;
   font-weight: 300;
   opacity: 0.5;
 }
@@ -1650,20 +1692,20 @@ body .frame-container .main-container .main-content-container {
 .productItem-container .productItem-photo {
   background: #1a1a1a;
   margin-left: 2rem;
-  min-width: 500px;
-  height: 500px;
+  min-width: 40rem;
+  height: 40rem;
   position: relative;
 }
 
 .productItem-container .productItem-photo .fullscreen-icon {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  right: 2rem;
+  top: 2rem;
   cursor: pointer;
 }
 
 .productItem-container .productItem-photo .fullscreen-icon img {
-  height: 30px;
+  height: 2.5rem;
 }
 
 .mainSeller-container {
@@ -1673,7 +1715,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 .mainSeller-container .mainSeller-heading {
-  font-size: 20pt;
+  font-size: 2rem;
 }
 
 .mainSeller-container .mainSeller-content {
@@ -1702,7 +1744,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 .mainSeller-container .mainSeller-content .mainSeller-seller .mainSeller-artist img {
-  height: 100px;
+  height: 7rem;
 }
 
 .mainSeller-container .mainSeller-content .mainSeller-seller .mainSeller-artist .mainSeller-info {
@@ -1710,13 +1752,13 @@ body .frame-container .main-container .main-content-container {
 }
 
 .mainSeller-container .mainSeller-content .mainSeller-seller .mainSeller-artist .mainSeller-info .mainSeller-artist-name {
-  font-size: 16pt;
+  font-size: 1.6rem;
   font-weight: bold;
 }
 
 .mainSeller-container .mainSeller-content .mainSeller-seller .mainSeller-artist .mainSeller-info .mainSeller-artist-location {
   margin-top: 0.2rem;
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
@@ -1727,18 +1769,18 @@ body .frame-container .main-container .main-content-container {
 }
 
 .mainSeller-container .mainSeller-content .mainSeller-price {
-  font-size: 18pt;
+  font-size: 1.8rem;
 }
 
 .mainSeller-container .mainSeller-content .mainSeller-action {
   background: #1a1a1a;
   padding: 1rem;
-  width: 9rem;
+  width: 10rem;
   text-align: center;
   margin-right: 3rem;
   color: white;
   text-transform: uppercase;
-  font-size: 12pt;
+  font-size: 1.2rem;
   text-decoration: none;
   cursor: pointer;
 }
@@ -1748,7 +1790,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 .sellerList-container .sellerList-heading {
-  font-size: 20pt;
+  font-size: 2rem;
 }
 
 .sellerList-container .sellerList-content {
@@ -1775,16 +1817,16 @@ body .frame-container .main-container .main-content-container {
 }
 
 .sellerItem-container .sellerItem-print-number {
-  font-size: 16pt;
+  font-size: 1.6rem;
   font-weight: bold;
 }
 
 .sellerItem-container .sellerItem-print-dimensions {
-  font-size: 12pt;
+  font-size: 1.2rem;
 }
 
 .sellerItem-container .sellerItem-print-materials {
-  font-size: 10pt;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 
@@ -1795,18 +1837,18 @@ body .frame-container .main-container .main-content-container {
 }
 
 .sellerItem-container .sellerItem-price {
-  font-size: 18pt;
+  font-size: 1.8rem;
 }
 
 .sellerItem-container .sellerItem-action {
   background: #1a1a1a;
   padding: 1rem;
-  width: 9rem;
+  width: 10rem;
   text-align: center;
   margin-right: 3rem;
   color: white;
   text-transform: uppercase;
-  font-size: 12pt;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
@@ -1844,11 +1886,11 @@ body .frame-container .main-container .main-content-container {
 }
 
 .customiseProduct-container .customiseProduct-header .customiseProduct-title {
-  font-size: 20pt;
+  font-size: 2rem;
 }
 
 .customiseProduct-container .customiseProduct-header .customiseProduct-number {
-  font-size: 20pt;
+  font-size: 2rem;
 }
 
 .customiseProduct-container .customiseProduct-dropdown-containers {
@@ -1862,6 +1904,15 @@ body .frame-container .main-container .main-content-container {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.customiseProduct-container .customiseProduct-dropdown-containers .customise-dropdown-item {
+  width: 100%;
+  margin-right: 2rem;
+}
+
+.customiseProduct-container .customiseProduct-dropdown-containers .customise-dropdown-item:last-child {
+  margin-right: 0;
 }
 
 .customiseProduct-container .customiseProduct-dropdown-containers .break {
@@ -1894,7 +1945,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 .customiseSummary-container .customiseSummary-content .customiseSummary-title {
-  font-size: 20pt;
+  font-size: 2rem;
 }
 
 .customiseSummary-container .customiseSummary-content .customiseSummary-summary {
@@ -1917,25 +1968,25 @@ body .frame-container .main-container .main-content-container {
 }
 
 .customiseSummary-container .customiseSummary-content .customiseSummary-summary .summary-photo-details .photo-name {
-  font-size: 15pt;
+  font-size: 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
 }
 
 .customiseSummary-container .customiseSummary-content .customiseSummary-summary .summary-photo-details .photo-number {
-  font-size: 15pt;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
 .customiseSummary-container .customiseSummary-content .customiseSummary-summary .summary-subtitle {
   margin-top: 1rem;
-  font-size: 12pt;
+  font-size: 1.2rem;
   text-transform: uppercase;
 }
 
 .customiseSummary-container .customiseSummary-content .customiseSummary-summary .summary-subtext {
   margin-top: 0.2rem;
-  font-size: 12pt;
+  font-size: 1.2rem;
   font-weight: bold;
   text-transform: capitalize;
 }
@@ -1957,17 +2008,17 @@ body .frame-container .main-container .main-content-container {
 .customiseSummary-container .customiseSummary-content .customiseSummary-addToCart .addToCart-total {
   margin-right: 3rem;
   text-align: right;
-  font-size: 16pt;
+  font-size: 1.6rem;
 }
 
 .customiseSummary-container .customiseSummary-content .customiseSummary-addToCart .addToCart-button {
   background: #1a1a1a;
   padding: 1rem;
-  width: 9rem;
+  width: 12rem;
   text-align: center;
   color: white;
   text-transform: uppercase;
-  font-size: 12pt;
+  font-size: 1.2rem;
   cursor: pointer;
 }
 
@@ -1975,18 +2026,18 @@ body .frame-container .main-container .main-content-container {
   position: relative;
   background: #1a1a1a;
   margin-left: 2rem;
-  min-width: 550px;
-  height: 550px;
+  min-width: 45rem;
+  height: 45rem;
 }
 
 .customiseSummary-container .customiseSummary-photo .fullscreen-icon {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  right: 2rem;
+  top: 2rem;
 }
 
 .customiseSummary-container .customiseSummary-photo .fullscreen-icon img {
-  height: 30px;
+  height: 2.5rem;
   cursor: pointer;
 }
 /*# sourceMappingURL=main.css.map */
