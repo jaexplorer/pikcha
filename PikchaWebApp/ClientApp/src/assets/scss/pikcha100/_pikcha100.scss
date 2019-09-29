@@ -2,22 +2,15 @@
 // ------------------------------------------------------------------- //
 #pikcha100-container {
   font-family: "Montserrat";
-  // background-image: linear-gradient(
-  //   -120deg,
-  //   #5271c4 0%,
-  //   #b19fff 10%,
-  //   rgba(236, 161, 254, 0.5) 25%,
-  //   #fafafa 50%
-  // );
 
   .pikcha-container {
-    display: grid;
-    grid-auto-flow: column;
+    display: flex;
     align-items: center;
+    // justify-content: space-between;
     padding-bottom: 0.5rem;
     margin-bottom: 0.5rem;
     border-bottom: 2px solid rgba(147, 112, 219, 0.24);
-    height: 180px;
+    height: 16rem;
 
     .pikcha-rank {
       font-weight: bold;
@@ -25,13 +18,16 @@
     }
 
     .pikcha-photo {
+      margin-left: 2rem;
       display: block;
       width: 12rem;
-      height: 100%;
+      height: 12rem;
       background: #1a1a1a;
     }
 
     .pikcha-photo-information {
+      margin-left: 2rem;
+
       .pikcha-photo-name {
         font-weight: bold;
         font-size: 1.2rem;
@@ -53,33 +49,65 @@
     }
 
     .pikcha-photo-graph {
+      margin-left: auto;
       display: block;
-      width: 5rem;
-      height: 50%;
+      width: 8rem;
+      height: 8rem;
       background: mediumpurple;
     }
 
     .divider {
-      width: 2px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 1px;
       height: 60px;
       background: mediumpurple;
     }
 
     .artist-picture {
       img {
-        height: 120px;
+        height: 6rem;
       }
     }
 
     .artist-information {
+      margin-left: 1rem;
       .artist-name {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
         font-weight: bold;
         margin-bottom: 0.3rem;
       }
       .artist-location {
-        font-size: 8pt;
+        font-size: 0.8rem;
         text-transform: uppercase;
+      }
+    }
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 899px) {
+  #pikcha100-container {
+    .pikcha-container {
+      .pikcha-photo-graph {
+        display: none;
+      }
+    }
+  }
+}
+@media screen and (max-width: 699px) {
+  #pikcha100-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media screen and (max-width: 559px) {
+  #pikcha100-container {
+    .pikcha-container {
+      .artist-information {
+        display: none;
       }
     }
   }

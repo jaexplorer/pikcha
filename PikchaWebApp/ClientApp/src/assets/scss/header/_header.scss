@@ -2,7 +2,8 @@
 // ------------------------------------------------------------------- //
 .title-header {
   position: absolute;
-  top: -4rem;
+  top: 8rem;
+  left: 20%;
   display: flex;
   align-items: center;
 
@@ -37,7 +38,8 @@
 
 .header-back-arrow {
   position: absolute;
-  top: -4rem;
+  top: 8rem;
+  left: 20%;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -51,6 +53,55 @@
 
     &:hover {
       color: mediumpurple;
+    }
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  .title-header {
+    position: absolute;
+    top: 9.5rem;
+    left: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 6rem;
+
+    .header-subtitle {
+      font-size: 1.2rem;
+      // font-weight: 300;
+    }
+    .header-line {
+      display: none;
+    }
+    .header-title {
+      margin-left: 0;
+      font-size: 2rem;
+      font-weight: 300;
+    }
+  }
+
+  .header-back-arrow {
+    position: absolute;
+    top: 10rem;
+    left: 3rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    img {
+      height: 2rem;
+    }
+    span {
+      font-family: "Montserrat";
+      font-size: 1.2rem;
+      margin-left: 2rem;
+
+      &:hover {
+        color: mediumpurple;
+      }
     }
   }
 }

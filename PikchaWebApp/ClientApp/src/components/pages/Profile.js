@@ -17,15 +17,12 @@ const Profile = ({ auth }) => {
   return (
     <Fragment>
       <SideBar />
+      <div className='header-back-arrow' onClick={() => window.history.back()}>
+        <img src={BackArrowIcon} alt='' />
+        <span>BACK</span>
+      </div>
       <div className='main-container'>
         <div className='main-content-container'>
-          <div
-            className='header-back-arrow'
-            onClick={() => window.history.back()}
-          >
-            <img src={BackArrowIcon} alt='' />
-            <span>BACK</span>
-          </div>
           <div id='profile-container'>
             <div id='profile-basic'>
               <div id='profile-picture'>

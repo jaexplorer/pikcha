@@ -10,11 +10,12 @@ const MasonryGallery = () => {
         setColumns(4);
       } else if (window.innerWidth >= 1200) {
         setColumns(3);
-      } else if (window.innerWidth >= 900) {
-        setColumns(2);
       } else {
-        setColumns(1);
+        setColumns(2);
       }
+      // else {
+      //   setColumns(1);
+      // }
       // setColumns(
       //   Math.floor(window.innerWidth / 300) - 2 < 1
       //     ? 1

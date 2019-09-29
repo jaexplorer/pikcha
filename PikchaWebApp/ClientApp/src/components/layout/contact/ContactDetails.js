@@ -24,14 +24,6 @@ const ContactDetails = () => {
         <div className='email-contact-title'>Email</div>
         <div className='email-contact-text'>contactpikcha@gmail.com</div>
       </div>
-      <div className='socials-contact'>
-        <div className='socials-contact-title'>Socials</div>
-        <div className='socials-contact-links'>
-          <img src={FacebookIcon} alt='' />
-          <img src={InstagramIcon} alt='' />
-          <img src={TwitterIcon} alt='' />
-        </div>
-      </div>
     </div>
   );
 };

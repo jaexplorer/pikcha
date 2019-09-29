@@ -34,15 +34,24 @@
     .customise-dropdown-item {
       width: 100%;
       margin-right: 2rem;
+      margin-bottom: 2rem;
       &:last-child {
         margin-right: 0;
       }
     }
+  }
+}
 
-    .break {
-      width: 1px;
-      height: 60px;
-      background: rgba(147, 112, 216, 0.5);
+@media screen and (max-width: 1099px) {
+  .customiseProduct-container {
+    .customiseProduct-dropdown-containers {
+      flex-direction: column;
+
+      .customise-dropdown-item {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 2rem;
+      }
     }
   }
 }
@@ -110,7 +119,7 @@
 
       .addToCart-button {
         background: #1a1a1a;
-        padding: 1rem;
+        padding: 1.5rem;
         width: 12rem;
         text-align: center;
         color: white;
@@ -136,5 +145,40 @@
         cursor: pointer;
       }
     }
+  }
+}
+
+@media screen and (max-width: 1099px) {
+  .customiseSummary-container {
+    flex-direction: column-reverse;
+    .customiseSummary-content {
+      height: 40rem;
+    }
+    .customiseSummary-photo {
+      width: 100%;
+      height: calc(80vw - 6rem);
+      margin-left: 0rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 699px) {
+  .customiseSummary-container {
+    .customiseSummary-photo {
+      width: 100%;
+      height: calc(100vw - 6rem);
+      margin-left: 0rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  .customise-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 }

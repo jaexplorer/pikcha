@@ -11,11 +11,12 @@ const ArtistItem = () => {
       <div className='artist-information'>
         <div className='artist-name'>Andrew Davis</div>
         <div className='artist-location'>Melbourne, Australia</div>
+        <div className='artist-stats'>
+          <div className='artist-photos-sold'>15,780 Photos Sold</div>
+          <div className='artist-photo-views'>240k Photo Views</div>
+        </div>
       </div>
-      <div className='artist-stats'>
-        <div className='artist-photos-sold'>15,780 Photos Sold</div>
-        <div className='artist-photo-views'>240k Photo Views</div>
-      </div>
+
       <div className='divider'></div>
       <div className='top-photo-information'>
         <div className='top-photo-name'>Wild Charm</div>
