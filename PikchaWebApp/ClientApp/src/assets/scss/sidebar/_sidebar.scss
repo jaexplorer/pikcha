@@ -50,3 +50,11 @@
     writing-mode: vertical-lr;
   }
 }
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  #sidebar {
+    display: none;
+  }
+}

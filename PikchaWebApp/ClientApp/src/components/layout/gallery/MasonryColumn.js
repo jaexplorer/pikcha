@@ -8,8 +8,8 @@ const MasonryColumn = ({ gallery }) => {
   useEffect(() => {
     gallery.selected !== null &&
     column.current.contains(gallery.selected.current)
-      ? (column.current.style.flex = "2")
-      : (column.current.style.flex = "1");
+      ? column.current.classList.add("selected")
+      : column.current.classList.remove("selected");
   });
 
   return (

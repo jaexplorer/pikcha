@@ -12,9 +12,9 @@ const Artist100 = ({ auth }) => {
   return (
     <Fragment>
       <SideBar />
+      <Header subtitle='Top 100' title='Artist 100' />
       <div className='main-container'>
         <div className='main-content-container'>
-          <Header subtitle='Top 100' title='Artist 100' />
           <div id='artist100-container'>
             <ArtistItem />
             <ArtistItem />
