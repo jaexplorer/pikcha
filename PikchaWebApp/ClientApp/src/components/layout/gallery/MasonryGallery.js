@@ -47,7 +47,10 @@ const MasonryGallery = ({ getPhotos, gallery }) => {
           {separate()}
         </InfiniteScroll>
       )} */}
-      {gallery.photos.length > 0 && separate()}
+      {/* {gallery.photos.length > 0 && separate()} */}
+      {[...Array(columns)].map((column, index) => (
+        <MasonryColumn key={index + 1} />
+      ))}
     </div>
   );
 };

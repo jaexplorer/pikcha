@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { selectPhoto } from "../../../actions/gallery";
 import ItemInfo from "./ItemInfo";
 
-const MasonryItem = ({ gallery, selectPhoto, photo }) => {
+const MasonryItem = ({ gallery, selectPhoto }) => {
   const thisPhoto = useRef(null);
   const [isSelected, setSelected] = useState(false);
 
@@ -22,7 +22,7 @@ const MasonryItem = ({ gallery, selectPhoto, photo }) => {
         !isSelected && selectPhoto(thisPhoto);
       }}
     >
-      <img src={photo.watermarkedFile} alt='' />
+      {/* <img src={photo.watermarkedFile} alt='' /> */}
       {isSelected && <ItemInfo />}
     </div>
   );

@@ -14,9 +14,14 @@ const MasonryColumn = ({ gallery, photos }) => {
 
   return (
     <div className='masonry-col' ref={column}>
-      {photos.map((photo, index) => (
+      {/* {photos.map((photo, index) => (
         <MasonryItem key={index} photo={photo} />
-      ))}
+      ))} */}
+      <MasonryItem />
+      <MasonryItem />
+      <MasonryItem />
+      <MasonryItem />
+      <MasonryItem />
     </div>
   );
 };
