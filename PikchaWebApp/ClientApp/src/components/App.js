@@ -44,6 +44,7 @@ const App = () => {
             <Route exact path='/login' component={Login} />
             <Route exact path='/profile/:userid' component={Profile} />
             <Route exact path='/product/:productid' component={Product} />
+            {/* <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} /> */}
             <PrivateRoute
               exact
               path='/customise/:productid'

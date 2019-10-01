@@ -46,56 +46,36 @@ Image properties
 - RESULTS : image
 
 
-
-
-# TO DO : following
-
-
 ### upload
-endpoint : api/image/upload
-method : post
-authenticated : true
-params : Title [string], Caption [text], Location [string], NumberOfPrint [int], ImageFile [file]
+- ENDPOINT : api/image/upload
+- METHOD : post
+- AUTHENTICATED : true
+- PARAMS : Title [string], Caption [text], Location [string], NumberOfPrint [int], ImageFile [file]
+- RESULTS : image
 
-
-### filter
-endpoint : api/filter/images 
-method : get
-authenticated : false
-
-params : Type [string], Start [int], Count [int]
-	{{Type} = random,... }
-
-### single image
-endpoint : api/image/{imageId} 
-	{{imageId} is PikchaImageId property of the image }
-method : get
-authenticated : false
-
-params : {imageId}
 
 ### tags
-endpoint : api/image/tags
-method : get
-authenticated : false
+- ENDPOINT : api/image/tags
+- METHOD : get
+- AUTHENTICATED : false
+- RESULTS : tags[]
 
 
-------
-Artists
---------
---- filter----
-endpoint : api/filter/artists 
-method : get
-authenticated : false
 
-params : Type [string], Start [int], Count [int]
+# Artists
+
+### Filter Images
+- ENDPOINT : api/filter/artists 
+- METHOD : get
+- AUTHENTICATED : false
+- QUERY_PARAMS : Type [string, Optional], Start [int, Optional], Count [int, Optional]
 	{{Type} = random,... }
+- RESULTS : artists[]
 
 
--- single artist
-endpoint : api/profile/{userId} 
-	{ {userId} is userId property of the artists }
-method : get
-authenticated : false
+### Get an Artist
+- ENDPOINT : api/profile/{userId} 
+- METHOD : get
+- AUTHENTICATED : false
 
-params : {userId}
+- RESULTS : artist

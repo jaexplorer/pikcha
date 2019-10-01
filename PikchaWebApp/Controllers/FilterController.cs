@@ -29,7 +29,7 @@ namespace PikchaWebApp.Controllers
             {
                 
                 List<PikchaImage> images = _pikchDbContext.PikchaImages.Include(img => img.Artist).Skip(Start).Take(Count).OrderBy(r => Guid.NewGuid()).ToList();
-                return new ReturnDataModel() { Statuscode = STATUS_CODES.Success.ToString(), Status = "Error Occured", Data = images };
+                return new ReturnDataModel() { Data = images };
             }
             catch(Exception ex)
             {
@@ -47,7 +47,7 @@ namespace PikchaWebApp.Controllers
             try
             {                
                var artists = _pikchDbContext.PikchaUsers.Skip(Start).Take(Count).OrderBy(r => Guid.NewGuid()).ToList();
-               return new ReturnDataModel() { Statuscode = STATUS_CODES.Success.ToString(), Status = "Success", Data = artists };
+               return new ReturnDataModel() { Data = artists };
             }
             catch (Exception ex)
             {
