@@ -1,0 +1,120 @@
+// Navbar
+// ------------------------------------------------------------------- //
+#top-navbar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 20% 80%;
+  height: 6rem;
+  // background-color: #9370db;
+  background-image: linear-gradient(
+    120deg,
+    #5271c4 0%,
+    #b19fff 16%,
+    rgba(236, 161, 254, 0.5) 30%,
+    rgba(255, 255, 255, 0) 70%
+  );
+
+  #navbar-logo {
+    a {
+      display: grid;
+      height: 100%;
+      align-items: center;
+      padding-left: 2rem;
+      img {
+        height: 3rem;
+      }
+    }
+  }
+
+  #navbar {
+    display: grid;
+    grid-auto-flow: column;
+
+    #navbar-left {
+      display: flex;
+      align-items: center;
+
+      li {
+        list-style-type: none;
+        a {
+          font-family: "Montserrat";
+          font-size: 1.6rem;
+          color: #1a1a1a;
+          text-decoration: none;
+        }
+        &:nth-child(2) {
+          margin-left: 3rem;
+        }
+      }
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      justify-self: right;
+
+      .navbar-icons {
+        position: relative;
+        display: grid;
+        height: 100%;
+        align-items: center;
+        justify-items: center;
+        grid-auto-flow: column;
+        cursor: pointer;
+        img {
+          height: 1.6rem;
+          margin-right: 5rem;
+
+          &:last-child {
+            margin-right: 4rem;
+          }
+        }
+        .notication {
+          position: absolute;
+          top: 1.4rem;
+          left: 2rem;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: rgb(235, 59, 71);
+        }
+      }
+
+      #navbar-right-links {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        padding-right: 5rem;
+
+        li {
+          list-style-type: none;
+          a {
+            font-family: "Montserrat";
+            color: #1a1a1a;
+            font-size: 1.2rem;
+            text-decoration: none;
+            text-transform: uppercase;
+          }
+          :first-child {
+            margin-right: 3rem;
+          }
+        }
+      }
+
+      #navbar-display-pic {
+        display: grid;
+        height: 100%;
+        align-items: center;
+        justify-items: right;
+        grid-auto-flow: column;
+        cursor: pointer;
+        img {
+          height: 3rem;
+          margin-right: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+@import "./dropdown";
