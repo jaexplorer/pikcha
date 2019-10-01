@@ -1,0 +1,40 @@
+// Main
+// ------------------------------------------------------------------- //
+// By Andrew Sabato
+
+// Fonts
+// ---------------------------------------- //
+@import "../fonts/fonts";
+
+// Setup
+// ---------------------------------------- //
+@import "../setup/setup";
+
+// Mobile Font Queries
+// ---------------------------------------- //
+@import "../scaling/scaling";
+
+// Preloader (Temp)
+// ---------------------------------------- //
+.loading {
+  text-align: center;
+  color: #9370db;
+  font-family: "Montserrat";
+  font-size: 1.6rem;
+  margin-top: 3rem;
+}
+
+// Everything Else
+// ---------------------------------------- //
+@import "../navbar/navbar";
+@import "../sidebar/sidebar";
+@import "../auth/auth";
+@import "../profile/profile";
+@import "../artist100/artist100";
+@import "../pikcha100/pikcha100";
+@import "../about/about";
+@import "../contact/contact";
+@import "../gallery/gallery";
+@import "../header/header";
+@import "../product/product";
+@import "../customise/customise";
