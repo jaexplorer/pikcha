@@ -14,19 +14,13 @@ import Profile from "./pages/Profile";
 import Product from "./pages/Product";
 import PrivateRoute from "./layout/routing/PrivateRoute";
 import Customise from "./pages/Customise";
+import NotFound from "./pages/NotFound";
 import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./layout/Alerts";
 import { loadUser, logout } from "../actions/auth";
 
-// import LocomotiveScroll from "locomotive-scroll";
-
 const App = () => {
   useEffect(() => {
-    // eslint-disable-next-line
-    // const scroll = new LocomotiveScroll({
-    //   el: document.querySelector("#js-scroll"),
-    //   smooth: true
-    // });
     if (localStorage.token) {
       store.dispatch(loadUser());
     } else {
@@ -55,6 +49,7 @@ const App = () => {
               path='/customise/:productid'
               component={Customise}
             />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </Router>

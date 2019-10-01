@@ -42,7 +42,7 @@ const MobileNavbar = ({
       </div>
       <div id='navbar-right-links'>
         <li>
-          <Link to='/register'>Signup </Link>
+          <Link to='/register'>Signup</Link>
         </li>
         <li>
           <Link to='/login'>Login</Link>

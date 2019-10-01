@@ -4,21 +4,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
+using PikchaWebApp.Test.Shared;
 using PikchaWebApp.Data;
+using PikchaWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.InMemory;
-using PikchaWebApp.Models;
-using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-using System.Security.Claims;
-using System.Drawing;
-using System.Net.Http;
 
-namespace PikchaWebApp.Test.Shared
+namespace PikchaWebApp.Test
 {
     public static class MockHelpers
     {
@@ -114,17 +111,17 @@ namespace PikchaWebApp.Test.Shared
             try
             {
                 var imageFile = File.OpenRead(fileUri);
-                
-                IFormFile file = new FormFile(imageFile, 0, imageFile.Length, name, fileName);
+
+                IFormFile file = new FormFile(imageFile, 0, imageFile.Length, name, fileUri);
                 return file;
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var cc = ex;
                 return null;
             }
-           
+
 
             //    var ms = new MemoryStream();
             //var writer = new StreamWriter(ms);
@@ -143,7 +140,7 @@ namespace PikchaWebApp.Test.Shared
         {
             var optionsBuilder = new DbContextOptionsBuilder<PikchaDbContext>();
             optionsBuilder.UseInMemoryDatabase(databaseName: "Add_writes_to_database");
-            var _dbContext = new PikchaDbContext(optionsBuilder.Options,null);
+            var _dbContext = new PikchaDbContext(optionsBuilder.Options, null);
 
             return _dbContext;
             // https://docs.microsoft.com/en-us/ef/core/miscellaneous/testing/in-memory
@@ -152,13 +149,13 @@ namespace PikchaWebApp.Test.Shared
         public static IEnumerable<PikchaUser> CreateUsersinDB(int numberOfUsers, DbContext dbContext)
         {
             //PasswordHasher<PikchaUser> hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<PikchaUser>();
-            
+
             var users = Enumerable.Range(1, numberOfUsers).Select(n =>
                  new PikchaUser
                  {
                      UserName = "test_user" + n + "@test.thananji.com",
                      Email = "test_user" + n + "@test.thananji.com"
-                    
+
                  });
 
             dbContext.AddRange(users);
@@ -176,9 +173,9 @@ namespace PikchaWebApp.Test.Shared
             var userManager = fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
 
             var user = new PikchaUser { Id = userId, UserName = userName, Email = userName, TwoFactorEnabled = true };
-            
+
             await userManager.CreateAsync(user, password);
-            return user;           
+            return user;
 
         }
 

@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import MasonryItem from "./MasonryItem";
 
-const MasonryColumn = ({ gallery }) => {
+const MasonryColumn = ({ gallery, photos }) => {
   const column = useRef(null);
 
   useEffect(() => {
@@ -14,9 +14,9 @@ const MasonryColumn = ({ gallery }) => {
 
   return (
     <div className='masonry-col' ref={column}>
-      <MasonryItem />
-      <MasonryItem />
-      <MasonryItem />
+      {photos.map((photo, index) => (
+        <MasonryItem key={index} photo={photo} />
+      ))}
     </div>
   );
 };

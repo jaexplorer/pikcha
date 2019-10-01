@@ -1511,6 +1511,7 @@ body .frame-container .main-container .main-content-container {
   background-color: #1a1a1a;
   -webkit-transition: all 0.8s ease;
   transition: all 0.8s ease;
+  position: relative;
 }
 
 @media screen and (max-width: 699px) {
@@ -1534,11 +1535,6 @@ body .frame-container .main-container .main-content-container {
 
 .masonry-item .itemInfo-back-arrow img {
   height: 1.4rem;
-}
-
-.masonry-item .itemInfo-info-button {
-  position: relative;
-  top: 100%;
 }
 
 .masonry-item .itemInfo-info-button img {
@@ -2392,6 +2388,26 @@ body .frame-container .main-container .main-content-container {
 
 @media screen and (max-width: 699px) {
   .customise-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.notFound-container {
+  font-family: "Montserrat";
+}
+
+.notFound-container h1 {
+  font-size: 2rem;
+}
+
+.notFound-container p {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+}
+
+@media screen and (max-width: 699px) {
+  .notFound-container {
     padding-left: 3rem;
     padding-right: 3rem;
   }

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { getPhotos } from "../../../actions/gallery";
 import MasonryColumn from "./MasonryColumn";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-const MasonryGallery = () => {
+const MasonryGallery = ({ getPhotos, gallery }) => {
   const [columns, setColumns] = useState(4);
 
   useEffect(() => {
@@ -13,17 +16,9 @@ const MasonryGallery = () => {
       } else {
         setColumns(2);
       }
-      // else {
-      //   setColumns(1);
-      // }
-      // setColumns(
-      //   Math.floor(window.innerWidth / 300) - 2 < 1
-      //     ? 1
-      //     : Math.floor(window.innerWidth / 300) - 2
-      // );
     };
     handleResize();
-
+    getPhotos(gallery.count, gallery.start);
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -31,13 +26,37 @@ const MasonryGallery = () => {
     };
   }, []);
 
+  const separate = () => {
+    var res = [...Array(columns).keys()].map(c =>
+      gallery.photos.data.filter((_, i) => i % columns === c)
+    );
+    return [...Array(columns)].map((column, index) => (
+      <MasonryColumn key={index + 1} photos={res[index]} />
+    ));
+  };
+
   return (
     <div className='masonry'>
-      {[...Array(columns)].map((column, index) => (
-        <MasonryColumn key={index + 1} />
-      ))}
+      {/* {gallery.photos !== null && (
+        <InfiniteScroll
+          dataLength={gallery.photos.data.length}
+          next={() => getPhotos(gallery.count, gallery.start)}
+          hasMore={true}
+          loader={<h4>Loading...</h4>}
+        >
+          {separate()}
+        </InfiniteScroll>
+      )} */}
+      {gallery.photos.length > 0 && separate()}
     </div>
   );
 };
 
-export default MasonryGallery;
+const mapStateToProps = state => ({
+  gallery: state.galleryReducer
+});
+
+export default connect(
+  mapStateToProps,
+  { getPhotos }
+)(MasonryGallery);

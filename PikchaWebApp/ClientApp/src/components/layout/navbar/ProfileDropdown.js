@@ -34,6 +34,7 @@ const ProfileDropdown = ({ auth, logout, removeProfileDropdown }) => {
         className='profile-dropdown-item'
       >
         <span>Logout</span>
+
         <img src={LogoutIcon} alt='' />
       </div>
     </div>
