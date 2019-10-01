@@ -24,11 +24,7 @@
       margin-bottom: 0.2rem;
       background-color: #1a1a1a;
       transition: all 0.8s ease;
-
-      img {
-        height: 50rem;
-        width: 50rem;
-      }
+      position: relative;
     }
   }
 }
@@ -59,9 +55,6 @@
     }
   }
   .itemInfo-info-button {
-    position: relative;
-    top: 100%;
-
     img {
       height: 2rem;
       position: absolute;

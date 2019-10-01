@@ -7,7 +7,9 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  photos: null,
+  photos: [],
+  count: 5,
+  start: 1,
   selected: null,
   loading: true,
   error: null
@@ -18,8 +20,9 @@ export default (state = initialState, { type, payload }) => {
     case GET_PHOTOS:
       return {
         ...state,
-        photos: payload,
-        loading: false
+        photos: [...state.photos, payload],
+        loading: false,
+        start: state.start + state.count
       };
     case PHOTO_SELECTED:
       return {

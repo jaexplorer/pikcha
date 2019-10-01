@@ -1,0 +1,21 @@
+// Not Found
+// ------------------------------------------------------------------- //
+.notFound-container {
+  font-family: "Montserrat";
+  h1 {
+    font-size: 2rem;
+  }
+  p {
+    font-size: 1.4rem;
+    margin-top: 2rem;
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  .notFound-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
