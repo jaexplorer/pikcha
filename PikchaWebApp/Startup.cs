@@ -441,6 +441,14 @@ namespace PikchaWebApp
 
         private void SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
         {
+
+
+            // clear images
+             var imgs =  dbContext.PikchaImages.ToListAsync().Result;
+            dbContext.RemoveRange(imgs);
+            dbContext.SaveChanges();
+          
+
             Random rnd = new Random();
 
             List<string> locations = new List<string>();
