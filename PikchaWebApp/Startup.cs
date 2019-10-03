@@ -51,6 +51,18 @@ namespace PikchaWebApp
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+
+                        builder.WithOrigins("http://localhost.com",
+                                            "http://localhost").AllowAnyHeader().AllowAnyMethod(); 
+                    });
+
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,7 +95,10 @@ namespace PikchaWebApp
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapControllers().RequireCors("DefaultPolicy");
             });
+
 
             app.UseSpa(spa =>
             {
@@ -133,8 +148,7 @@ namespace PikchaWebApp
             // clear images
              var imgs =  dbContext.PikchaImages.ToListAsync().Result;
             dbContext.RemoveRange(imgs);
-            dbContext.SaveChanges();
-          
+            dbContext.SaveChanges();                     
 
             Random rnd = new Random();
 

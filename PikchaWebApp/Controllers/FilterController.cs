@@ -39,8 +39,6 @@ namespace PikchaWebApp.Controllers
         }
 
         
-
-
         [HttpGet("artists")]
         public async Task<ReturnDataModel> Artists(string Type = "random", int Start = 0, int Count = 20)
         {

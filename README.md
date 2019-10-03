@@ -46,7 +46,7 @@ Image properties
 - RESULTS : image
 
 
-### upload
+### Upload
 - ENDPOINT : api/image/upload
 - METHOD : post
 - AUTHENTICATED : true
@@ -54,7 +54,7 @@ Image properties
 - RESULTS : image
 
 
-### tags
+### Tags
 - ENDPOINT : api/image/tags
 - METHOD : get
 - AUTHENTICATED : false
@@ -64,7 +64,7 @@ Image properties
 
 # Artists
 
-### Filter Images
+### Filter Artists
 - ENDPOINT : api/filter/artists 
 - METHOD : get
 - AUTHENTICATED : false
@@ -79,3 +79,4 @@ Image properties
 - AUTHENTICATED : false
 
 - RESULTS : artist
+
