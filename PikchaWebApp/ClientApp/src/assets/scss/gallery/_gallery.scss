@@ -1,9 +1,14 @@
 // Gallery
 // ------------------------------------------------------------------- //
+.infinite-scroll-component {
+  margin-bottom: 6rem;
+}
+
 .masonry {
   display: flex;
   flex-direction: row;
   width: 100%;
+  overflow: auto;
 
   .masonry-col {
     margin: 0.1rem;
@@ -15,16 +20,31 @@
     transition: all 0.8s ease;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 
     &.selected {
       flex: 2;
     }
 
     .masonry-item {
-      margin-bottom: 0.2rem;
-      background-color: #1a1a1a;
       transition: all 0.8s ease;
+      background-color: #1a1a1a;
       position: relative;
+      margin-bottom: 0.1rem;
+
+      &.selected {
+        & > img {
+          opacity: 0.6;
+        }
+      }
+
+      & > img {
+        transition: all 0.8s ease;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: 50% 50%;
+      }
     }
   }
 }
@@ -46,8 +66,8 @@
 .masonry-item {
   .itemInfo-back-arrow {
     position: absolute;
-    margin-top: 3rem;
-    margin-left: 3rem;
+    top: 3rem;
+    left: 3rem;
     cursor: pointer;
 
     img {
@@ -68,7 +88,7 @@
 
   .itemInfo-popup {
     background: #fafafa;
-    position: relative;
+    position: absolute;
     top: 100%;
     left: 100%;
     transform: translate(calc(-100% + 0.5px), -100%);
@@ -114,7 +134,7 @@
       height: 25%;
       justify-content: space-between;
       img {
-        height: 2.5rem;
+        height: 2rem;
         cursor: pointer;
       }
     }

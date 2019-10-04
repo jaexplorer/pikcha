@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getPhotos } from "../../../actions/gallery";
 import MasonryColumn from "./MasonryColumn";
@@ -24,6 +24,7 @@ const MasonryGallery = ({ getPhotos, gallery }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
+    // eslint-disable-next-line
   }, []);
 
   const separate = () => {
@@ -36,22 +37,20 @@ const MasonryGallery = ({ getPhotos, gallery }) => {
   };
 
   return (
-    <div className='masonry'>
-      {/* {gallery.photos !== null && (
+    <Fragment>
+      {gallery.photos !== null && (
         <InfiniteScroll
           dataLength={gallery.photos.data.length}
           next={() => getPhotos(gallery.count, gallery.start)}
-          hasMore={true}
-          loader={<h4>Loading...</h4>}
+          hasMore={gallery.hasMore}
+          loader={<h4 className='loading'>Loading...</h4>}
+          endMessage={<h4 className='loading'>Yay! You have seen it all</h4>}
+          scrollableTarget={document.querySelector(".main-container")}
         >
-          {separate()}
+          <div className='masonry'>{separate()}</div>
         </InfiniteScroll>
-      )} */}
-      {/* {gallery.photos.length > 0 && separate()} */}
-      {[...Array(columns)].map((column, index) => (
-        <MasonryColumn key={index + 1} />
-      ))}
-    </div>
+      )}
+    </Fragment>
   );
 };
 
