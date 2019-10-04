@@ -1602,7 +1602,7 @@ body .frame-container .main-container .main-content-container {
   top: -2.5rem;
 }
 
-.masonry-item .itemInfo-popup .popup-artist img {
+.masonry-item .itemInfo-popup .popup-artist a img {
   height: 5rem;
   cursor: pointer;
 }
@@ -1613,7 +1613,6 @@ body .frame-container .main-container .main-content-container {
   top: 3.5rem;
   font-family: "Montserrat";
   font-size: 1.2rem;
-  cursor: pointer;
 }
 
 .masonry-item .itemInfo-popup .popup-socials {
@@ -1971,6 +1970,15 @@ body .frame-container .main-container .main-content-container {
   min-width: 40rem;
   height: 40rem;
   position: relative;
+}
+
+.productItem-container .productItem-photo > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 50% 50%;
+     object-position: 50% 50%;
 }
 
 .productItem-container .productItem-photo .fullscreen-icon {

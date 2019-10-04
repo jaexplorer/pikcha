@@ -16,7 +16,8 @@ const MasonryItem = ({ gallery, selectPhoto, photo }) => {
       thisPhoto.current.classList.remove("selected");
       thisPhoto.current.style.height = photo.height + "rem";
     }
-  }, [gallery.selected, isSelected]);
+  }, [gallery.selected, isSelected, photo.height]);
+
   return (
     <div
       className='masonry-item'
@@ -26,7 +27,7 @@ const MasonryItem = ({ gallery, selectPhoto, photo }) => {
       }}
     >
       <img src={"http://localhost:8000/" + photo.watermarkedFile} alt='' />
-      {isSelected && <ItemInfo />}
+      {isSelected && <ItemInfo photo={photo} />}
     </div>
   );
 };
