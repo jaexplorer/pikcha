@@ -1,13 +1,18 @@
+// TODO: Add missing information, somehow figure out who to map artist or second hand seller
+
 import React from "react";
+import { connect } from "react-redux";
 import Placeholder from "../../../assets/images/placeholder.png";
 import FullscreenIcon from "../../../assets/images/fullscreen-white.png";
 
-const ProductItem = () => {
+const ProductItem = ({ product }) => {
+  const { data } = product.product;
+
   return (
     <div className='productItem-container'>
       <div className='productItem-content'>
         <div className='productItem-heading'>
-          <div className='product-title'>Wild Charm</div>
+          <div className='product-title'>{data.title}</div>
           <div className='product-number'>#11</div>
         </div>
         <div className='productItem-stats'>
@@ -27,11 +32,13 @@ const ProductItem = () => {
           </div>
           <div className='product-artist-info'>
             <div className='product-subtitle'>Artist</div>
-            <div className='product-subtext'>John Topica</div>
+            <div className='product-subtext'>
+              {data.artist.firstName + " " + data.artist.lastName}
+            </div>
           </div>
           <div className='product-location'>
             <div className='product-subtitle'>Location</div>
-            <div className='product-subtext'>Melbourne, Australia</div>
+            <div className='product-subtext'>{data.location}</div>
           </div>
         </div>
         <div className='productItem-about-artist'>
@@ -46,6 +53,7 @@ const ProductItem = () => {
       </div>
 
       <div className='productItem-photo'>
+        <img src={"http://localhost:8000/" + data.watermarkedFile} alt='' />
         <div className='fullscreen-icon'>
           <img src={FullscreenIcon} alt='' />
         </div>
@@ -54,4 +62,8 @@ const ProductItem = () => {
   );
 };
 
-export default ProductItem;
+const mapStateToProps = state => ({
+  product: state.productReducer
+});
+
+export default connect(mapStateToProps)(ProductItem);

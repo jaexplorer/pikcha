@@ -11,9 +11,9 @@ const About = ({ auth }) => {
   return (
     <Fragment>
       <SideBar />
+      <Header subtitle='Find Out More' title='About Us' />
       <div className='main-container'>
         <div className='main-content-container'>
-          <Header subtitle='Find Out More' title='About Us' />
           <div id='about-container'>
             <div className='about-item'>
               <span className='about-title'>How Pikcha Works</span>

@@ -3,26 +3,31 @@ import { connect } from "react-redux";
 import { selectPhoto } from "../../../actions/gallery";
 import ItemInfo from "./ItemInfo";
 
-const MasonryItem = ({ gallery, selectPhoto }) => {
-  const photo = useRef(null);
+const MasonryItem = ({ gallery, selectPhoto, photo }) => {
+  const thisPhoto = useRef(null);
   const [isSelected, setSelected] = useState(false);
 
   useEffect(() => {
-    setSelected(gallery.selected === photo);
-    isSelected
-      ? (photo.current.style.height = "50rem")
-      : (photo.current.style.height = "30rem");
-  }, [gallery.selected, isSelected]);
+    setSelected(gallery.selected === thisPhoto);
+    if (isSelected) {
+      thisPhoto.current.classList.add("selected");
+      thisPhoto.current.style.height = "45rem";
+    } else {
+      thisPhoto.current.classList.remove("selected");
+      thisPhoto.current.style.height = photo.height + "rem";
+    }
+  }, [gallery.selected, isSelected, photo.height]);
 
   return (
     <div
       className='masonry-item'
-      ref={photo}
+      ref={thisPhoto}
       onClick={e => {
-        !isSelected && selectPhoto(photo);
+        !isSelected && selectPhoto(thisPhoto);
       }}
     >
-      {isSelected && <ItemInfo />}
+      <img src={"http://localhost:8000/" + photo.watermarkedFile} alt='' />
+      {isSelected && <ItemInfo photo={photo} />}
     </div>
   );
 };

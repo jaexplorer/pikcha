@@ -37,8 +37,6 @@ const CustomiseProduct = ({
           />
         </div>
 
-        <div className='break'></div>
-
         <div className='customise-dropdown-item'>
           <Select
             placeholder='Material'
@@ -51,8 +49,6 @@ const CustomiseProduct = ({
             onChange={e => setMaterial(e.value)}
           />
         </div>
-
-        <div className='break'></div>
 
         <div className='customise-dropdown-item'>
           <Select
@@ -67,8 +63,6 @@ const CustomiseProduct = ({
           />
         </div>
 
-        <div className='break'></div>
-
         <div className='customise-dropdown-item'>
           <Select
             placeholder='Border'
@@ -81,8 +75,6 @@ const CustomiseProduct = ({
             onChange={e => setBorder(e.value)}
           />
         </div>
-
-        <div className='break'></div>
 
         <div className='customise-dropdown-item'>
           <Select

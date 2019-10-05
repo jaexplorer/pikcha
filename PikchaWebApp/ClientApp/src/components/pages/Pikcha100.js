@@ -12,9 +12,9 @@ const Pikcha100 = ({ auth }) => {
   return (
     <Fragment>
       <SideBar />
+      <Header subtitle='Top 100' title='Pikcha 100' />
       <div className='main-container'>
         <div className='main-content-container'>
-          <Header subtitle='Top 100' title='Pikcha 100' />
           <div id='pikcha100-container'>
             <PikchaItem />
             <PikchaItem />

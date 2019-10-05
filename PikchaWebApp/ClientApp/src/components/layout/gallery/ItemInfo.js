@@ -1,3 +1,5 @@
+// TODO: Integrate Stats, photo description(short), socials, expand image and price
+
 import React, { useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import BackArrow from "../../../assets/images/backArrow-white.png";
@@ -10,8 +12,9 @@ import ArtistPlaceholder from "../../../assets/images/placeholder.png";
 import { connect } from "react-redux";
 import { deselectPhoto } from "../../../actions/gallery";
 
-const ItemInfo = ({ deselectPhoto }) => {
+const ItemInfo = ({ deselectPhoto, photo }) => {
   const [popup, setPopup] = useState(false);
+  const { artist } = photo;
 
   return (
     <Fragment>
@@ -30,15 +33,19 @@ const ItemInfo = ({ deselectPhoto }) => {
       {popup && (
         <div className='itemInfo-popup'>
           <div className='popup-artist'>
-            <img src={ArtistPlaceholder} alt='' />
+            <Link to={`/profile/${artist.id}`}>
+              <img src={ArtistPlaceholder} alt='' />
+            </Link>
           </div>
-          <div className='popup-artist-name'>Adon Higgins</div>
+          <div className='popup-artist-name'>
+            {artist.firstName} {artist.lastName}
+          </div>
           <div className='popup-socials'>
             <img src={TwitterIcon} alt='' />
             <img src={InstagramIcon} alt='' />
           </div>
           <div className='popup-content-container'>
-            <div className='popup-photo-name'>Staring at the light</div>
+            <div className='popup-photo-name'>{photo.title}</div>
             <div className='popup-photo-stats'>
               <span>Up 3.42%</span>
               <span>87 Sold</span>
@@ -50,7 +57,7 @@ const ItemInfo = ({ deselectPhoto }) => {
             </div>
             <div className='popup-photo-action'>
               <div className='photo-purchase'>
-                <Link to={`/product/1`}>View</Link>
+                <Link to={`/product/${photo.pikchaImageId}`}>View</Link>
               </div>
               <span>$143</span>
             </div>

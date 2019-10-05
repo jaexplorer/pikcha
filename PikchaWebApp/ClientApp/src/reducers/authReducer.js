@@ -7,7 +7,7 @@ import {
   LOGIN_FAIL,
   LOGGED_OUT,
   CLEAR_ERRORS,
-  SET_LOADING
+  AUTH_LOADING
 } from "../actions/types";
 
 const initialState = {
@@ -49,7 +49,7 @@ export default (state = initialState, { type, payload }) => {
         user: null,
         error: payload
       };
-    case SET_LOADING:
+    case AUTH_LOADING:
       return {
         ...state,
         loading: true

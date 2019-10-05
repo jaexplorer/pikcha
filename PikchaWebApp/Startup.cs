@@ -46,6 +46,13 @@ namespace PikchaWebApp
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -77,6 +84,7 @@ namespace PikchaWebApp
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+            app.UseCors("MyPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
