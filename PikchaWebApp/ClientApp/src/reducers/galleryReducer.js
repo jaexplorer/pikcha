@@ -7,22 +7,35 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  photos: [],
+  photos: null,
   count: 5,
   start: 1,
   selected: null,
   loading: true,
-  error: null
+  error: null,
+  hasMore: true
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_PHOTOS:
+      payload.data.forEach(d => {
+        const randomised = Math.random() * (30 - 15) + 15;
+        d.height = randomised;
+      });
       return {
         ...state,
-        photos: [...state.photos, payload],
+        photos:
+          state.photos == null
+            ? payload
+            : {
+                status: state.photos.status,
+                statuscode: state.photos.statuscode,
+                data: [...state.photos.data, ...payload.data]
+              },
         loading: false,
-        start: state.start + state.count
+        start: state.start + state.count,
+        hasMore: payload.data.length ? true : false
       };
     case PHOTO_SELECTED:
       return {

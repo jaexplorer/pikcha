@@ -47,12 +47,18 @@ body .frame-container .main-container {
   overflow: scroll;
 }
 
+html .frame-container .main-container::-webkit-scrollbar,
+body .frame-container .main-container::-webkit-scrollbar {
+  width: 0px;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+}
+
 html .frame-container .main-container .main-content-container,
 body .frame-container .main-container .main-content-container {
   position: relative;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
+  height: 100%;
   margin-bottom: 6rem;
 }
 
@@ -129,7 +135,7 @@ body .frame-container .main-container .main-content-container {
   color: #9370db;
   font-family: "Montserrat";
   font-size: 1.6rem;
-  margin-top: 3rem;
+  margin-top: 6rem;
 }
 
 #top-navbar {
@@ -1469,6 +1475,10 @@ body .frame-container .main-container .main-content-container {
   }
 }
 
+.infinite-scroll-component {
+  margin-bottom: 6rem;
+}
+
 .masonry {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1478,6 +1488,7 @@ body .frame-container .main-container .main-content-container {
       -ms-flex-direction: row;
           flex-direction: row;
   width: 100%;
+  overflow: auto;
 }
 
 .masonry .masonry-col {
@@ -1498,6 +1509,7 @@ body .frame-container .main-container .main-content-container {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  overflow: hidden;
 }
 
 .masonry .masonry-col.selected {
@@ -1507,11 +1519,26 @@ body .frame-container .main-container .main-content-container {
 }
 
 .masonry .masonry-col .masonry-item {
-  margin-bottom: 0.2rem;
-  background-color: #1a1a1a;
   -webkit-transition: all 0.8s ease;
   transition: all 0.8s ease;
+  background-color: #1a1a1a;
   position: relative;
+  margin-bottom: 0.1rem;
+}
+
+.masonry .masonry-col .masonry-item.selected > img {
+  opacity: 0.6;
+}
+
+.masonry .masonry-col .masonry-item > img {
+  -webkit-transition: all 0.8s ease;
+  transition: all 0.8s ease;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 50% 50%;
+     object-position: 50% 50%;
 }
 
 @media screen and (max-width: 699px) {
@@ -1528,8 +1555,8 @@ body .frame-container .main-container .main-content-container {
 
 .masonry-item .itemInfo-back-arrow {
   position: absolute;
-  margin-top: 3rem;
-  margin-left: 3rem;
+  top: 3rem;
+  left: 3rem;
   cursor: pointer;
 }
 
@@ -1549,7 +1576,7 @@ body .frame-container .main-container .main-content-container {
 
 .masonry-item .itemInfo-popup {
   background: #fafafa;
-  position: relative;
+  position: absolute;
   top: 100%;
   left: 100%;
   -webkit-transform: translate(calc(-100% + 0.5px), -100%);
@@ -1575,7 +1602,7 @@ body .frame-container .main-container .main-content-container {
   top: -2.5rem;
 }
 
-.masonry-item .itemInfo-popup .popup-artist img {
+.masonry-item .itemInfo-popup .popup-artist a img {
   height: 5rem;
   cursor: pointer;
 }
@@ -1586,7 +1613,6 @@ body .frame-container .main-container .main-content-container {
   top: 3.5rem;
   font-family: "Montserrat";
   font-size: 1.2rem;
-  cursor: pointer;
 }
 
 .masonry-item .itemInfo-popup .popup-socials {
@@ -1607,7 +1633,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 .masonry-item .itemInfo-popup .popup-socials img {
-  height: 2.5rem;
+  height: 2rem;
   cursor: pointer;
 }
 
@@ -1944,6 +1970,15 @@ body .frame-container .main-container .main-content-container {
   min-width: 40rem;
   height: 40rem;
   position: relative;
+}
+
+.productItem-container .productItem-photo > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 50% 50%;
+     object-position: 50% 50%;
 }
 
 .productItem-container .productItem-photo .fullscreen-icon {

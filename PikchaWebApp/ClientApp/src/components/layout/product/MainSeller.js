@@ -1,8 +1,13 @@
+// TODO: Add Location, Customise depending on who the seller is
+
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import Placeholder from "../../../assets/images/placeholder.png";
 
-const MainSeller = ({ auth }) => {
+const MainSeller = ({ auth, product }) => {
+  const { data } = product.product;
+
   return (
     <div className='mainSeller-container'>
       <div className='mainSeller-heading'>
@@ -13,7 +18,9 @@ const MainSeller = ({ auth }) => {
           <div className='mainSeller-artist'>
             <img src={Placeholder} alt='' />
             <div className='mainSeller-info'>
-              <div className='mainSeller-artist-name'>John Topica</div>
+              <div className='mainSeller-artist-name'>
+                {data.artist.firstName + " " + data.artist.lastName}
+              </div>
               <div className='mainSeller-artist-location'>
                 Melbourne, Australia
               </div>
@@ -33,4 +40,8 @@ const MainSeller = ({ auth }) => {
   );
 };
 
-export default MainSeller;
+const mapStateToProps = state => ({
+  product: state.productReducer
+});
+
+export default connect(mapStateToProps)(MainSeller);

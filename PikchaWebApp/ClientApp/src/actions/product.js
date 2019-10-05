@@ -1,4 +1,9 @@
+import axios from "axios";
+
 import {
+  GET_PRODUCT,
+  PRODUCT_ERROR,
+  PRODUCT_LOADING,
   SET_SIZE,
   SET_MATERIAL,
   SET_FRAME,
@@ -6,6 +11,22 @@ import {
   SET_FINISH,
   CLEAR_CUSTOMISATIONS
 } from "./types";
+
+// Get Product
+export const getProduct = id => {
+  return async dispatch => {
+    try {
+      dispatch(setLoading());
+      const res = await axios.get(`http://localhost:8000/api/image/${id}`);
+      dispatch({
+        type: GET_PRODUCT,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: PRODUCT_ERROR });
+    }
+  };
+};
 
 // Set Size
 export const setSize = size => {
@@ -64,4 +85,9 @@ export const clearCustomisations = () => {
       type: CLEAR_CUSTOMISATIONS
     });
   };
+};
+
+// SET LOADING
+export const setLoading = () => {
+  return { type: PRODUCT_LOADING };
 };

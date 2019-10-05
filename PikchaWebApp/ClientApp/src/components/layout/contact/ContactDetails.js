@@ -1,7 +1,4 @@
 import React from "react";
-import FacebookIcon from "../../../assets/images/facebook-black.png";
-import InstagramIcon from "../../../assets/images/instagram-black.png";
-import TwitterIcon from "../../../assets/images/twitter-black.png";
 
 const ContactDetails = () => {
   return (

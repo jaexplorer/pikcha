@@ -16,7 +16,6 @@ export const getPhotos = (count, start) => {
       const res = await axios.get(
         `http://localhost:8000/api/filter/images?count=${count}&start=${start}`
       );
-
       dispatch({
         type: GET_PHOTOS,
         payload: res.data

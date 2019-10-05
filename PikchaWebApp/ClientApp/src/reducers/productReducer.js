@@ -1,4 +1,7 @@
 import {
+  GET_PRODUCT,
+  PRODUCT_ERROR,
+  PRODUCT_LOADING,
   SET_SIZE,
   SET_MATERIAL,
   SET_FRAME,
@@ -13,11 +16,19 @@ const initialState = {
   material: "paper",
   frame: "none",
   border: "none",
-  finish: "none"
+  finish: "none",
+  loading: true,
+  error: null
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case GET_PRODUCT:
+      return {
+        ...state,
+        product: payload,
+        loading: false
+      };
     case SET_SIZE:
       return {
         ...state,
@@ -43,6 +54,13 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         finish: payload
       };
+    case PRODUCT_ERROR:
+      console.error(payload);
+      return {
+        ...state,
+        error: payload,
+        loading: false
+      };
     case CLEAR_CUSTOMISATIONS:
       return {
         ...state,
@@ -51,6 +69,11 @@ export default (state = initialState, { type, payload }) => {
         frame: "none",
         border: "none",
         finish: "none"
+      };
+    case PRODUCT_LOADING:
+      return {
+        ...state,
+        loading: true
       };
 
     default:
