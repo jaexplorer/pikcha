@@ -20,6 +20,12 @@ namespace PikchaWebApp.Models
             this.Status = status;
             this.Statuscode = statusCode;
         }
+    }
+
+    public enum STATUS_CODES
+    {
+        Success = 200,
+        ExceptionThrown = 1901
 
     }
 }

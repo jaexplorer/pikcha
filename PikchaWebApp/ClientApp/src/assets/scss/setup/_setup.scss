@@ -1,0 +1,59 @@
+// Setup
+// ------------------------------------------------------------------- /
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-size: 12px;
+  overflow: hidden;
+
+  .frame-container {
+    height: 100vh;
+    background: #fafafa;
+    .main-container {
+      position: fixed;
+      top: 12rem;
+      left: 20%;
+      height: calc(100% - 12rem);
+      width: calc(100% - 20% - 6rem);
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        width: 0px; /* Remove scrollbar space */
+        background: transparent; /* Optional: just make scrollbar invisible */
+      }
+
+      .main-content-container {
+        position: relative;
+        height: 100%;
+        margin-bottom: 6rem;
+      }
+    }
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  html,
+  body {
+    .frame-container {
+      .main-container {
+        left: 0;
+        width: 100%;
+        top: 18rem;
+        height: calc(100% - 18rem);
+
+        .main-content-container {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

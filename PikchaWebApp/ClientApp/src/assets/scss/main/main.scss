@@ -1,53 +1,41 @@
-@font-face {
-  font-family: Montserrat;
-  src: url("../../fonts/Montserrat-Regular.otf") format("opentype");
-}
-@font-face {
-  font-family: Montserrat;
-  font-weight: bold;
-  src: url("../../fonts/Montserrat-Bold.otf") format("opentype");
-}
+// Main
+// ------------------------------------------------------------------- //
+// By Andrew Sabato
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+// Fonts
+// ---------------------------------------- //
+@import "../fonts/fonts";
 
-html,
-body {
-  height: 100%;
-  margin: 0;
+// Setup
+// ---------------------------------------- //
+@import "../setup/setup";
 
-  .frame-container {
-    height: 100vh;
-    background: #fafafa;
-    .main-container {
-      position: fixed;
-      top: 5rem;
-      left: 20%;
-      height: 100%;
-      width: calc(100% - 20%);
+// Mobile Font Queries
+// ---------------------------------------- //
+@import "../scaling/scaling";
 
-      .main-content-container {
-        margin-top: 5rem;
-        margin-right: 5rem;
-        position: relative;
-        height: 100%;
-      }
-    }
-  }
-}
-
+// Preloader (Temp)
+// ---------------------------------------- //
 .loading {
   text-align: center;
   color: #9370db;
   font-family: "Montserrat";
-  font-size: 16pt;
-  margin-top: 3rem;
+  font-size: 1.6rem;
+  margin-top: 6rem;
 }
 
+// Everything Else
+// ---------------------------------------- //
 @import "../navbar/navbar";
 @import "../sidebar/sidebar";
 @import "../auth/auth";
 @import "../profile/profile";
+@import "../artist100/artist100";
+@import "../pikcha100/pikcha100";
+@import "../about/about";
+@import "../contact/contact";
+@import "../gallery/gallery";
+@import "../header/header";
+@import "../product/product";
+@import "../customise/customise";
+@import "../notFound/notFound";

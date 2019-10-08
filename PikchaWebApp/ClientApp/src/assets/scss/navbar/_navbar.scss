@@ -4,7 +4,7 @@
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 20% 80%;
-  height: 5rem;
+  height: 6rem;
   // background-color: #9370db;
   background-image: linear-gradient(
     120deg,
@@ -21,7 +21,7 @@
       align-items: center;
       padding-left: 2rem;
       img {
-        max-height: 55%;
+        height: 3rem;
       }
     }
   }
@@ -38,7 +38,7 @@
         list-style-type: none;
         a {
           font-family: "Montserrat";
-          font-size: 16pt;
+          font-size: 1.6rem;
           color: #1a1a1a;
           text-decoration: none;
         }
@@ -54,6 +54,7 @@
       justify-self: right;
 
       .navbar-icons {
+        position: relative;
         display: grid;
         height: 100%;
         align-items: center;
@@ -61,12 +62,21 @@
         grid-auto-flow: column;
         cursor: pointer;
         img {
-          max-height: 25%;
-          margin-right: 3rem;
+          height: 1.6rem;
+          margin-right: 5rem;
 
           &:last-child {
-            margin-right: 2rem;
+            margin-right: 4rem;
           }
+        }
+        .notication {
+          position: absolute;
+          top: 1.4rem;
+          left: 2rem;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: rgb(235, 59, 71);
         }
       }
 
@@ -81,7 +91,7 @@
           a {
             font-family: "Montserrat";
             color: #1a1a1a;
-            font-size: 12pt;
+            font-size: 1.2rem;
             text-decoration: none;
             text-transform: uppercase;
           }
@@ -99,9 +109,142 @@
         grid-auto-flow: column;
         cursor: pointer;
         img {
-          max-height: 45%;
-          margin-right: 2rem;
+          height: 3rem;
+          margin-right: 1.5rem;
         }
+      }
+    }
+  }
+}
+
+// Mobile
+// ---------------------------------------- //
+#mobile-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 8rem;
+  .nav-menu-closed {
+    margin-left: 3rem;
+    img {
+      height: 2rem;
+      cursor: pointer;
+    }
+  }
+
+  .nav-menu-open {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: #1a1a1a;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8rem;
+    padding-bottom: 12rem;
+
+    .nav-menu-logo {
+      a {
+        img {
+          height: 6rem;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .nav-menu-list {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      a {
+        margin-top: 3rem;
+        font-family: "Montserrat";
+        font-size: 1.8rem;
+        font-weight: 300;
+        text-decoration: none;
+        color: #fafafa;
+        text-transform: uppercase;
+
+        &:hover {
+          color: mediumpurple;
+          transition: 0.3s cubic-bezier(0.4, 0, 0, 1);
+        }
+      }
+    }
+
+    .nav-menu-exit {
+      position: relative;
+      img {
+        height: 1.5rem;
+        cursor: pointer;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 5.5rem;
+        height: 5.5rem;
+        background: white;
+        border-radius: 50%;
+        top: -2rem;
+        left: -2rem;
+        z-index: -2;
+      }
+
+      &::before {
+        transform: scale(0);
+        content: "";
+        position: absolute;
+        width: 6.5rem;
+        height: 6.5rem;
+        background: mediumpurple;
+        border-radius: 50%;
+        top: -2.5rem;
+        left: -2.5rem;
+        z-index: -1;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0, 1);
+      }
+
+      &:hover::before {
+        transform: scale(1);
+        transition: transform 0.45s cubic-bezier(0.6, 0.01, 0, 1.38);
+      }
+    }
+  }
+
+  .nav-icons {
+    margin-right: 3rem;
+    display: flex;
+    align-items: center;
+
+    .nav-icon {
+      margin-left: 6rem;
+      position: relative;
+      img {
+        height: 2rem;
+        cursor: pointer;
+      }
+
+      &.profile-pic {
+        img {
+          height: 3.8rem;
+          cursor: pointer;
+        }
+      }
+      .notication {
+        position: absolute;
+        top: -1rem;
+        left: 2.3rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgb(235, 59, 71);
       }
     }
   }

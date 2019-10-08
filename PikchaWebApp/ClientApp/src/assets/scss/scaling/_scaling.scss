@@ -1,0 +1,47 @@
+// Scaling
+// ------------------------------------------------------------------- /
+@media (max-height: 598px) {
+  html {
+    font-size: 9px;
+  }
+}
+@media (max-width: 599px) {
+  html {
+    font-size: 10px;
+  }
+}
+@media (min-height: 599px) and (min-width: 600px) {
+  html {
+    font-size: 10px;
+  }
+}
+@media (min-height: 699px) and (min-width: 800px) {
+  html {
+    font-size: 11px;
+  }
+}
+@media (min-height: 899px) and (min-width: 1000px) {
+  html {
+    font-size: 12px;
+  }
+}
+@media (min-height: 999px) and (min-width: 1200px) {
+  html {
+    font-size: 13px;
+  }
+}
+@media (min-height: 1099px) and (min-width: 1600px) {
+  html {
+    font-size: 14px;
+  }
+}
+@media (min-height: 1299px) and (min-width: 2000px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media (min-height: 1399px) and (min-width: 2400px) {
+  html {
+    font-size: 18px;
+  }
+}

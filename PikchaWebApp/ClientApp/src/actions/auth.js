@@ -1,3 +1,4 @@
+// TODO: Clean up Dispatch for consistency, link to backend
 import setAuthToken from "../utils/setAuthToken";
 import axios from "axios";
 
@@ -10,7 +11,7 @@ import {
   LOGIN_FAIL,
   LOGGED_OUT,
   CLEAR_ERRORS,
-  SET_LOADING
+  AUTH_LOADING
 } from "./types";
 
 // LOAD USER
@@ -107,5 +108,5 @@ export const clearErrors = () => {
 
 // SET LOADING
 export const setLoading = () => {
-  return { type: SET_LOADING };
+  return { type: AUTH_LOADING };
 };

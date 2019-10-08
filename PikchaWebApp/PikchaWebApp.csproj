@@ -1,31 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <ContainerDevelopmentMode>Regular</ContainerDevelopmentMode>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-    <UserSecretsId>e173b989-92f8-46d8-9eb9-b0bb97457105</UserSecretsId>
+    <UserSecretsId>a8414a2f-7cad-41d9-a35f-6c5e30201288</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0-preview7.19365.7" />
-    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0-preview7.19365.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0-preview7.19365.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0-preview7.19365.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0-preview7.19365.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0-preview7.19362.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0-preview7.19362.6">
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.14.3" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Data.SQLite" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0-preview7.19362.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0-preview6-19319-03" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,8 +41,75 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20190708054642_adding-user-profile.cs" />
-    <Compile Remove="Data\Migrations\20190708054642_adding-user-profile.Designer.cs" />
+    <Compile Remove="Migrations\20190910235358_InitialCreate.cs" />
+    <Compile Remove="Migrations\20190910235358_InitialCreate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Uploads\Images\Thumbnail\00407b73-f27b-4e70-96b2-c38834de6b91.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\01d7bc34-afae-4fa6-b3ec-8767dba1f256.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\1185454b-ae2b-4700-9abb-d5e6b3ee3503.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\18e5bbff-53b3-43bd-9f79-9063f853ecf3.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\1d956190-1e93-4e9a-b910-e680291dc23f.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\3488c522-e9c4-4e99-b4f5-b6f0745be342.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\4e60c9d7-5bd6-4f4f-90f2-92c2f738a27f.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\51082402-2bd4-441f-8271-751df7d0993d.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\7110a629-0a3e-4a69-be0e-630e5d9f51d1.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\7ad336a1-d2e4-44b6-8250-b45abbfa2674.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\7c8ad81f-4151-4b90-b7e6-6780993818dc.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\95285bd7-bb07-4299-aef0-3b421f3a8fee.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\9f44ab01-436d-4229-be6d-e1e45ac92b11.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\a2a6297b-73fe-43dc-a142-508e739e99f9.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\b50aa243-70a4-4003-8c00-16256f66b813.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\bc3a3067-ddf8-45a4-a612-1a9c16dd0e6d.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\c2a5dc7e-c973-48fe-a50c-158966fcffbf.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\cc2096d6-ed36-4446-9b02-7f42454124c4.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\d873bdb6-c994-4876-94a5-2b1f8c676642.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\daaa2209-719c-424d-88f5-2ad5be3790b3.jpg" />
+    <None Include="wwwroot\Uploads\Images\Thumbnail\f466feff-5e42-44bd-8418-3902a05e797f.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\00407b73-f27b-4e70-96b2-c38834de6b91.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\01d7bc34-afae-4fa6-b3ec-8767dba1f256.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\1185454b-ae2b-4700-9abb-d5e6b3ee3503.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\18e5bbff-53b3-43bd-9f79-9063f853ecf3.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\1d956190-1e93-4e9a-b910-e680291dc23f.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\3488c522-e9c4-4e99-b4f5-b6f0745be342.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\4e60c9d7-5bd6-4f4f-90f2-92c2f738a27f.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\51082402-2bd4-441f-8271-751df7d0993d.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\7110a629-0a3e-4a69-be0e-630e5d9f51d1.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\7ad336a1-d2e4-44b6-8250-b45abbfa2674.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\7c8ad81f-4151-4b90-b7e6-6780993818dc.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\95285bd7-bb07-4299-aef0-3b421f3a8fee.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\9f44ab01-436d-4229-be6d-e1e45ac92b11.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\a2a6297b-73fe-43dc-a142-508e739e99f9.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\b50aa243-70a4-4003-8c00-16256f66b813.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\bc3a3067-ddf8-45a4-a612-1a9c16dd0e6d.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\c2a5dc7e-c973-48fe-a50c-158966fcffbf.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\cc2096d6-ed36-4446-9b02-7f42454124c4.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\d873bdb6-c994-4876-94a5-2b1f8c676642.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\daaa2209-719c-424d-88f5-2ad5be3790b3.jpg" />
+    <None Include="wwwroot\Uploads\Images\Watermarks\f466feff-5e42-44bd-8418-3902a05e797f.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\fonts\Montserrat-Bold.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\fonts\Montserrat-Light.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\fonts\Montserrat-Regular.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\Img\watermark-logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

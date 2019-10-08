@@ -1,17 +1,18 @@
-// Dropdown
+// Profile Dropdown
 // ------------------------------------------------------------------- //
-#nav-dropdown {
+#profile-dropdown {
   position: absolute;
-  top: 5rem;
-  right: 2rem;
+  top: 6rem;
+  right: 1.6rem;
   width: max-content;
   z-index: 40;
+  box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
 
-  .dropdown-item {
+  .profile-dropdown-item {
     background: #1a1a1a;
     color: white;
     font-family: "Montserrat";
-    font-size: 14pt;
+    font-size: 1.4rem;
     padding: 1rem;
     display: grid;
     grid-auto-flow: column;
@@ -48,6 +49,173 @@
     img {
       height: 25px;
       margin-left: 2rem;
+    }
+  }
+}
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  #profile-dropdown {
+    top: 7rem;
+    right: 3rem;
+
+    .profile-dropdown-item {
+      font-size: 1.6rem;
+      padding: 2rem;
+    }
+  }
+}
+
+// Cart Dropdown
+// ------------------------------------------------------------------- //
+#cart-dropdown {
+  position: absolute;
+  top: 6rem;
+  right: 15.7rem;
+  width: max-content;
+  z-index: 40;
+  box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
+
+  .cart-dropdown-item {
+    background: #1a1a1a;
+    color: white;
+    font-family: "Montserrat";
+    font-size: 1.4rem;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+
+    .cart-product-name {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .cart-product-price {
+      margin-left: 6rem;
+    }
+
+    .cart-product-remove {
+      display: flex;
+      position: relative;
+      img {
+        position: relative;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        background: mediumpurple;
+        height: 30px;
+        width: 1px;
+        top: -2px;
+        left: 1.5rem;
+      }
+    }
+
+    .cart-total {
+      margin-left: auto;
+      font-size: 1.2rem;
+    }
+
+    .cart-checkout {
+      padding: 0.5rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      background: white;
+      border-radius: 5px;
+      color: black;
+      margin-left: 1rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    &:first-child {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    &:nth-child(1n) {
+      border-top: rgba(147, 112, 216, 0.2) 1px solid;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    img {
+      height: 2rem;
+      margin-left: 2.5rem;
+    }
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  #cart-dropdown {
+    top: 7rem;
+    right: 5rem;
+
+    .cart-dropdown-item {
+      font-size: 1.6rem;
+      padding: 2rem;
+
+      .cart-product-name {
+        font-size: 1.6rem;
+      }
+
+      .cart-product-price {
+        margin-left: 8rem;
+      }
+
+      .cart-product-remove {
+        display: flex;
+        align-items: center;
+        position: relative;
+        margin-left: 1rem;
+        img {
+          height: 2.5rem;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          background: mediumpurple;
+          height: 30px;
+          width: 1px;
+          top: -2px;
+          left: 1rem;
+        }
+      }
+
+      .cart-total {
+        margin-left: auto;
+        font-size: 1.6rem;
+      }
+
+      .cart-checkout {
+        padding: 1rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        background: white;
+        border-radius: 5px;
+        color: black;
+        margin-left: 2rem;
+        font-size: 1.4rem;
+        text-transform: uppercase;
+      }
+
+      img {
+        height: 2rem;
+        margin-left: 2.5rem;
+      }
     }
   }
 }

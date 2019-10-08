@@ -11,20 +11,15 @@ import Login from "./auth/Login";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
+import Product from "./pages/Product";
+import PrivateRoute from "./layout/routing/PrivateRoute";
+import Customise from "./pages/Customise";
+import NotFound from "./pages/NotFound";
 import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./layout/Alerts";
 import { loadUser, logout } from "../actions/auth";
 
-// import LocomotiveScroll from "locomotive-scroll";
-
 const App = () => {
-  // useEffect(() => {
-  //   // eslint-disable-next-line
-  //   const scroll = new LocomotiveScroll({
-  //     el: document.querySelector("#js-scroll"),
-  //     smooth: true
-  //   });
-  // });
   useEffect(() => {
     if (localStorage.token) {
       store.dispatch(loadUser());
@@ -41,13 +36,21 @@ const App = () => {
           <Alerts />
           <Switch>
             <Route exact path='/' component={Home} />
+            <Route exact path='/about' component={About} />
+            <Route exact path='/contact' component={Contact} />
             <Route exact path='/pikcha100' component={Pikcha100} />
             <Route exact path='/artist100' component={Artist100} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/profile/:userid' component={Profile} />
-            <Route exact path='/about' component={About} />
-            <Route exact path='/contact' component={Contact} />
+            <Route exact path='/product/:productid' component={Product} />
+            {/* <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} /> */}
+            <PrivateRoute
+              exact
+              path='/customise/:productid'
+              component={Customise}
+            />
+            <Route component={NotFound} />
           </Switch>
         </div>
       </Router>

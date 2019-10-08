@@ -33,6 +33,7 @@ const Login = ({ login, auth, clearErrors, setAlert }) => {
     } else {
       login({ email, password });
     }
+    window.history.back();
   };
 
   if (auth.loading) {
