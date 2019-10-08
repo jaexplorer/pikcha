@@ -25,6 +25,18 @@ namespace PikchaWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ImageTags",
+                columns: table => new
+                {
+                    ImageTagId = table.Column<long>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImageTags", x => x.ImageTagId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersistedGrants",
                 columns: table => new
                 {
@@ -120,6 +132,35 @@ namespace PikchaWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PikchaImages",
+                columns: table => new
+                {
+                    PikchaImageId = table.Column<string>(nullable: false),
+                    Id = table.Column<long>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Caption = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    NoOfPrint = table.Column<int>(nullable: false),
+                    Width = table.Column<int>(nullable: false),
+                    Height = table.Column<int>(nullable: false),
+                    ThumbFile = table.Column<string>(nullable: true),
+                    WaterFile = table.Column<string>(nullable: true),
+                    UploadedAt = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "getdate()"),
+                    ModifiedAt = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "getdate()"),
+                    ArtistId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PikchaImages", x => x.PikchaImageId);
+                    table.ForeignKey(
+                        name: "FK_PikchaImages_PikchaUsers_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "PikchaUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PikchaUserClaims",
                 columns: table => new
                 {
@@ -204,6 +245,51 @@ namespace PikchaWebApp.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "PikchaImageTags",
+                columns: table => new
+                {
+                    PikchaImageTagId = table.Column<long>(nullable: false),
+                    ImageTagId = table.Column<long>(nullable: true),
+                    PikchaImageId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PikchaImageTags", x => x.PikchaImageTagId);
+                    table.ForeignKey(
+                        name: "FK_PikchaImageTags_ImageTags_ImageTagId",
+                        column: x => x.ImageTagId,
+                        principalTable: "ImageTags",
+                        principalColumn: "ImageTagId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PikchaImageTags_PikchaImages_PikchaImageId",
+                        column: x => x.PikchaImageId,
+                        principalTable: "PikchaImages",
+                        principalColumn: "PikchaImageId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PikchaImageViews",
+                columns: table => new
+                {
+                    PikchaImageViewId = table.Column<long>(nullable: false),
+                    Date = table.Column<DateTime>(type: "Date", nullable: false),
+                    Count = table.Column<long>(nullable: false),
+                    PikchaImageId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PikchaImageViews", x => x.PikchaImageViewId);
+                    table.ForeignKey(
+                        name: "FK_PikchaImageViews_PikchaImages_PikchaImageId",
+                        column: x => x.PikchaImageId,
+                        principalTable: "PikchaImages",
+                        principalColumn: "PikchaImageId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
                 table: "DeviceCodes",
@@ -216,9 +302,34 @@ namespace PikchaWebApp.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersistedGrants_SubjectId_ClientId_Type_Expiration",
+                name: "IX_PersistedGrants_Expiration",
                 table: "PersistedGrants",
-                columns: new[] { "SubjectId", "ClientId", "Type", "Expiration" });
+                column: "Expiration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersistedGrants_SubjectId_ClientId_Type",
+                table: "PersistedGrants",
+                columns: new[] { "SubjectId", "ClientId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PikchaImages_ArtistId",
+                table: "PikchaImages",
+                column: "ArtistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PikchaImageTags_ImageTagId",
+                table: "PikchaImageTags",
+                column: "ImageTagId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PikchaImageTags_PikchaImageId",
+                table: "PikchaImageTags",
+                column: "PikchaImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PikchaImageViews_PikchaImageId",
+                table: "PikchaImageViews",
+                column: "PikchaImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PikchaRoleClaims_RoleId",
@@ -269,6 +380,12 @@ namespace PikchaWebApp.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "PikchaImageTags");
+
+            migrationBuilder.DropTable(
+                name: "PikchaImageViews");
+
+            migrationBuilder.DropTable(
                 name: "PikchaRoleClaims");
 
             migrationBuilder.DropTable(
@@ -282,6 +399,12 @@ namespace PikchaWebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "PikchaUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "ImageTags");
+
+            migrationBuilder.DropTable(
+                name: "PikchaImages");
 
             migrationBuilder.DropTable(
                 name: "PikchaRoles");

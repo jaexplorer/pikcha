@@ -79,7 +79,7 @@ namespace PikchaWebApp.Controllers
                     }
                     catch(Exception e)
                     {
-                        return new ReturnDataModel() { Statuscode = "1901", Status = "Error Occured", Data = e.Message };
+                        return new ReturnDataModel() { Statuscode = (int) STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = e.Message };
 
                     }
 
@@ -87,11 +87,11 @@ namespace PikchaWebApp.Controllers
             }
             catch(Exception e)
             {
-                return new ReturnDataModel() { Statuscode = "1901", Status = "Error Occured", Data = e.Message };
+                return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = e.Message };
 
             }
 
-            return new ReturnDataModel() { Statuscode="1901", Status="Error Occured", Data = "" };
+            return new ReturnDataModel() { Statuscode= (int)STATUS_CODES.ExceptionThrown, Status="Error Occured", Data = "" };
         }
 
         [HttpGet("{imageId}")]
@@ -101,11 +101,11 @@ namespace PikchaWebApp.Controllers
             {
                 var image = _pikchDbContext.PikchaImages.Include(img => img.Artist).First(i => i.PikchaImageId == imageId);
 
-                return new ReturnDataModel() { Statuscode = STATUS_CODES.Success.ToString(), Status = "Success", Data = image };
+                return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Success", Data = image };
             }
             catch (Exception ex)
             {
-                return new ReturnDataModel() { Statuscode = STATUS_CODES.ExceptionThrown.ToString(), Status = "Error Occured", Data = ex.Message };
+                return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = ex.Message };
             }
 
         }
@@ -118,11 +118,11 @@ namespace PikchaWebApp.Controllers
             {
 
                 List<ImageTag> tags = _pikchDbContext.ImageTags.OrderBy(t => t.Name).ToList();
-                return new ReturnDataModel() { Statuscode = STATUS_CODES.Success.ToString(), Status = "Error Occured", Data = tags };
+                return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = tags };
             }
             catch (Exception ex)
             {
-                return new ReturnDataModel() { Statuscode = STATUS_CODES.ExceptionThrown.ToString(), Status = "Error Occured", Data = ex.Message };
+                return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = ex.Message };
 
             }
         }
@@ -165,7 +165,43 @@ namespace PikchaWebApp.Controllers
             
         }
 
-        
+
+        [HttpPost("incrementviewcount")]
+        public async Task<ReturnDataModel> IncrementViewCount(uint imageId)
+        {
+            try
+            {
+                var imgVwTsk = _pikchDbContext.ImageViews.FirstAsync(i => i.PikchaImage.Id == imageId && i.Date == DateTime.Today.Date);
+                await imgVwTsk;
+                var imgVw = imgVwTsk.Result;
+                if ( imgVw == null)
+                {
+                    PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
+                    if(pImg != null)
+                    {
+                        _pikchDbContext.ImageViews.Add(new ImageView() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
+                    }
+                }
+                else
+                {
+                    imgVw.Count = imgVw.Count + 1;
+                }
+
+                await _pikchDbContext.SaveChangesAsync();
+
+                return new ReturnDataModel();
+
+            }
+            catch(Exception e)
+            {
+
+            }
+
+            return new ReturnDataModel();
+
+        }
+
+
 
     }
 

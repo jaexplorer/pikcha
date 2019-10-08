@@ -61,7 +61,7 @@ namespace PikchaWebApp.Controllers
             {
                 return new ReturnDataModel() { Data = profModel };
             }
-            return new ReturnDataModel() { Status = "Error", Statuscode = "401" };
+            return new ReturnDataModel() { Status = "Error", Statuscode = (int)STATUS_CODES.UnsuccesfulUpdate };
         }
 
         // DELETE: api/profile/5

@@ -22,6 +22,7 @@ namespace PikchaWebApp.Data
         public DbSet<PikchaUser> PikchaUsers { get; set; }
         public DbSet<PikchaImage> PikchaImages { get; set; }
         public DbSet<ImageTag> ImageTags { get; set; }
+        public DbSet<ImageView> ImageViews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

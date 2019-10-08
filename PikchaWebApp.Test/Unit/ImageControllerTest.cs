@@ -52,7 +52,7 @@ namespace PikchaWebApp.Test.Unit
             // Act
             var result = await controller.UploadImage(vmImage);
 
-            Assert.Equal("200", result.Statuscode);
+            Assert.Equal(200, result.Statuscode);
 
         }
     }

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using AutoMapper;
 
 namespace PikchaWebApp
 {
@@ -63,6 +64,17 @@ namespace PikchaWebApp
                     });
 
             });
+
+            // Auto Mapper Configurations
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new PikchaDTOProfiles());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -132,7 +144,7 @@ namespace PikchaWebApp
                     SeedData(userManager, env, context);
 
                 }
-                catch
+                catch(Exception ex)
                 {
 
                 }
@@ -144,11 +156,20 @@ namespace PikchaWebApp
         private void SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
         {
 
+            // clear image views
+            var imgvws = dbContext.ImageViews.ToListAsync().Result;
+            dbContext.RemoveRange(imgvws);
+            dbContext.SaveChanges();
 
             // clear images
-             var imgs =  dbContext.PikchaImages.ToListAsync().Result;
+            var imgs =  dbContext.PikchaImages.ToListAsync().Result;
             dbContext.RemoveRange(imgs);
-            dbContext.SaveChanges();                     
+            dbContext.SaveChanges();
+
+            // clear users
+            var usrs = dbContext.PikchaUsers.ToListAsync().Result;
+            dbContext.RemoveRange(usrs);
+            dbContext.SaveChanges();
 
             Random rnd = new Random();
 
@@ -191,7 +212,9 @@ namespace PikchaWebApp
                     Email = "testuser" + i + "@pikcha.com",
                     BioInfo = "test user" + i + " bio info",
                     FirstName = "test " + i + " FName",
-                    LastName = "test " + i + " LName"
+                    LastName = "test " + i + " LName",
+                    AvatarFileName = "Uploads/Avatars/Test/profile" + i + ".jpg",
+                    PerCountry = locations[rnd.Next(locations.Count)]
                 };
                 var exUsr = userManager.FindByEmailAsync(user.Email).Result;
                 if(exUsr == null)
@@ -210,6 +233,12 @@ namespace PikchaWebApp
             for (int i = 0; i < imageIds.Count; i++)
             {
                 string imgId = imageIds[i];
+
+                int daysSince = rnd.Next(20);
+                //List<ImageView> imgViews = new List<ImageView>();
+
+                
+
                 var img = new PikchaImage()
                 {
                     Artist = lstUsers[rnd.Next(lstUsers.Count)],
@@ -220,14 +249,20 @@ namespace PikchaWebApp
                     PikchaImageId = imgId,
                     WatermarkedFile = "Uploads/Images/Watermarks/" + imgId + ".jpg",
                     ThumbnailFile = "Uploads/Images/Thumbnail/" + imgId + ".jpg",
-                    UploadedAt = DateTime.Now.AddDays(-rnd.Next(20) ).AddHours(-5).AddSeconds(rnd.Next(10) * 100)
-
+                    UploadedAt = DateTime.Now.AddDays(-daysSince).AddHours(-5).AddSeconds(rnd.Next(10) * 100),
                 };
-
                 dbContext.PikchaImages.Add(img);
+                dbContext.SaveChanges();
+
+                for (int j = 0; j < daysSince; j++)
+                {
+                    var imgv = new ImageView() { PikchaImageViewId = (uint) (img.Id * 100 + j + 1), Date = DateTime.Now.AddDays(-j), Count = (uint)rnd.Next(100), PikchaImage= img };
+                    dbContext.ImageViews.Add(imgv);
+                }
+                dbContext.SaveChanges();
+
             }
 
-            dbContext.SaveChanges();
         }
 
 
