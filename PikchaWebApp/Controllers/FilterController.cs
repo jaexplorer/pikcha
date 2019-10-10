@@ -101,8 +101,8 @@ namespace PikchaWebApp.Controllers
                 // DONT DELETE - This query is required to make sure that pikchaimageviews are included 
                 var art2 = _pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews").ToList();
 
-                var artists100 = await _mapper.ProjectTo<Pikcha100ArtistDTO>(_pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews")).OrderByDescending(im => im.FirstName).Skip(Start).Take(Count).ToListAsync();
-                return ReturnOkOrNotFound(artists100);
+                var artists = await _mapper.ProjectTo<Pikcha100ArtistDTO>(_pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews")).OrderByDescending(im => im.FirstName).Skip(Start).Take(Count).ToListAsync();
+                return ReturnOkOrNotFound(artists);
 
                // var artists = await _pikchDbContext.PikchaUsers.Skip(Start).Take(Count).OrderBy(r => Guid.NewGuid()).ToListAsync();
                // return ReturnOkOrNotFound(artists);
