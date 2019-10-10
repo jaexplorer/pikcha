@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import Product from "./pages/Product";
 import PrivateRoute from "./layout/routing/PrivateRoute";
 import Customise from "./pages/Customise";
+import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./layout/Alerts";
@@ -50,6 +51,7 @@ const App = () => {
               path='/customise/:productid'
               component={Customise}
             />
+            <Route strict path='/account' component={Account} />
             <Route component={NotFound} />
           </Switch>
         </div>
