@@ -18,7 +18,7 @@ namespace PikchaWebApp.Data
 
         private void InitImageDTOS()
         {
-            CreateMap<PikchaImage, PikchaImageDTO>()
+            CreateMap<PikchaImage, PikchaRandomImageDTO>()
                 .ForMember(
                 dest => dest.TotalViews,
                 opt => opt.MapFrom(src =>
@@ -39,12 +39,12 @@ namespace PikchaWebApp.Data
                 dest => dest.TotalImageViews,
                 opt => opt.MapFrom(src =>
                     //src.PikchaImages.Select(y => y.PikchaImageViews.Sum( p => p.Count)).Sum()))
-                    src.BestImage.PikchaImageViews.Sum(p => p.Count)))
+                    src.TopImage.PikchaImageViews.Sum(p => p.Count)))
 
                 .ForMember(
                 dest => dest.BestImageTotalViews,
                 opt => opt.MapFrom(src =>
-                    src.BestImage.PikchaImageViews.Sum(p => p.Count))) */
+                    src.TopImage.PikchaImageViews.Sum(p => p.Count))) */
                 ;
         }
 

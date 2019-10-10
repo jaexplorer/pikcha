@@ -76,7 +76,7 @@ namespace PikchaWebApp.Models
         public List<PikchaImage> PikchaImages { get; set; }
 
         [NotMapped]
-        public PikchaImage BestImage
+        public PikchaImage TopImage
         {
             get
             {

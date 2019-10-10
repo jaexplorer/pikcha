@@ -97,7 +97,7 @@ namespace PikchaWebApp.Test.Unit
             Task<PikchaUser> user1Result = MockHelpers.CreateNewUser(userId, email, "Test@123", _fixture);
             if (user1Result.IsCompleted)
             {
-                ProfileViewModel profVM = new ProfileViewModel() { Id = user1Result.Result.Id, Address_1 = "Address 1", FirstName = fName, LastName = "LName", PostalCode = "1234" };
+                ProfileViewModel profVM = new ProfileViewModel() { PerAddress1 = "Address 1", FirstName = fName, LastName = "LName", PerPostalCode = "1234" };
 
                 var userManager = _fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
                 var controller = new ProfileController(_webHostEnvironment.Object, _configurationManager.Object, userManager, _fixture.Context);

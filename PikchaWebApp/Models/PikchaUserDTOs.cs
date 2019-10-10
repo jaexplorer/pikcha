@@ -18,11 +18,11 @@ namespace PikchaWebApp.Models
 
         public long TotalImageViews { get; set; }
 
-        public string BestImageTitle { get; set; }
-        public string BestImageLocation { get; set; }
-        public string BestImageThumbnailFile { get; set; }
-        public string BestImageWatermarkedFile { get; set; }
-        public long BestImageTotalViews { get; set; }
+        public string TopImageTitle { get; set; }
+        public string TopImageLocation { get; set; }
+        public string TopImageThumbnailFile { get; set; }
+        public string TopImageWatermarkedFile { get; set; }
+        public long TopImageTotalViews { get; set; }
 
 
 
