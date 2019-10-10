@@ -182,11 +182,11 @@ namespace PikchaWebApp
             Random rnd = new Random();
 
             List<string> locations = new List<string>();
-            locations.Add("Melbourne");
-            locations.Add("California");
-            locations.Add("France");
-            locations.Add("London");
-            locations.Add("Tokyo");
+            locations.Add("Melbourne, Australia");
+            locations.Add("California, USA");
+            locations.Add("Paris, France");
+            locations.Add("London, UK");
+            locations.Add("Tokyo, Japan");
 
             List<string> imageIds = new List<string>();
             imageIds.Add("7c8ad81f-4151-4b90-b7e6-6780993818dc");

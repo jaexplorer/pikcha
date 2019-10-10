@@ -21,6 +21,7 @@ failure query [ Statuscode="1222", Status="Null Exception Occured", Data= ""]
 - AUTHENTICATED : false
 - QUERY_PARAMS : Type = random [string, Default=random], Start [int, Optional], Count [int, Optional]
 - RESULTS : images[]
+- ERROR_CODES : 200, 404, 500
 
 Image
  - PikchaImageId
@@ -44,6 +45,7 @@ Image
 - AUTHENTICATED : false
 - QUERY_PARAMS : Type= pikcha100 [string], Start [int, Optional, Default=0], Count [int, Optional, Default=20]
 - RESULTS : images[]
+- ERROR_CODES : 200, 404, 500
 
 Image
  - PikchaImageId
@@ -65,6 +67,7 @@ Image
 - AUTHENTICATED : false
 
 - RESULTS : image
+- ERROR_CODES : 200, 404, 500
 
 Image
  - PikchaImageId
@@ -90,6 +93,7 @@ Image
 - AUTHENTICATED : true
 - PARAMS : Title [string], Caption [text], Location [string], NumberOfPrint [int], ImageFile [file]
 - RESULTS : OK
+- ERROR_CODES : 201, 500
 
 
 ### add view count
@@ -98,14 +102,14 @@ Image
 - AUTHENTICATED : false
 - PARAMS : imageId [string]
 - RESULTS : OK
-
+- ERROR_CODES : 201, 500
 
 ### Tags
 - ENDPOINT : api/image/tags
 - METHOD : get
 - AUTHENTICATED : false
 - RESULTS : tags[]
-
+- ERROR_CODES : 200, 500
 
 
 # Artists
@@ -116,6 +120,7 @@ Image
 - AUTHENTICATED : false
 - QUERY_PARAMS : Type=random [string, Default=random], Start [int, Optional], Count [int, Optional]
 - RESULTS : artists[]
+- ERROR_CODES : 200, 404, 500
 
 Artist
  - FirstName 
@@ -134,6 +139,7 @@ Artist
 - AUTHENTICATED : false
 - QUERY_PARAMS : Type=artists100 [string], Start [int, Optional], Count [int, Optional]
 - RESULTS : artists[]
+- ERROR_CODES : 200, 404, 500
 
 Artist
  - FirstName 
@@ -150,8 +156,9 @@ Artist
 - ENDPOINT : api/profile/{userId} 
 - METHOD : get
 - AUTHENTICATED : true
-
 - RESULTS : artist
+- ERROR_CODES : 200, 404, 500
+
 
 ARTIST
  - FirstName

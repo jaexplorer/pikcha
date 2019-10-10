@@ -22,13 +22,19 @@ namespace PikchaWebApp.Data
                 .ForMember(
                 dest => dest.TotalViews,
                 opt => opt.MapFrom(src =>
-                    src.PikchaImageViews.Sum(y => y.Count)));
+                    src.PikchaImageViews.Sum(y => y.Count)))
+                .ForMember(
+                dest => dest.Height, opt => opt.MapFrom( src => "0"))
+                ;
 
             CreateMap<PikchaImage, Pikcha100ImageDTO>()
                 .ForMember(
                 dest => dest.TotalViews,
                 opt => opt.MapFrom(src =>
-                    src.PikchaImageViews.Sum(y => y.Count)));
+                    src.PikchaImageViews.Sum(y => y.Count)))
+                .ForMember(
+                dest => dest.Height, opt => opt.MapFrom(src => "0"))
+                ;
 
         }
 

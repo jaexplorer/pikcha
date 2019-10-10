@@ -38,7 +38,6 @@ namespace PikchaWebApp.Controllers
         // POST: api/image/upload
         [HttpPost("upload")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
         public async Task<ActionResult> UploadImage([FromForm] ImageViewModel imgViewModel)

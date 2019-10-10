@@ -12,12 +12,15 @@ namespace PikchaWebApp.Models
 
     public class PikchaRandomImageDTO : PikchaImageBaseDTO
     {
+        public string Height { get; set; }
+
     }
 
 
     public class Pikcha100ImageDTO : PikchaImageBaseDTO
     {
         public string Caption { get; set; }
+        public string Height { get; set; }
     }
 
 
