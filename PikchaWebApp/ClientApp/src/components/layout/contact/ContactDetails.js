@@ -1,7 +1,4 @@
 import React from "react";
-import FacebookIcon from "../../../assets/images/facebook-black.png";
-import InstagramIcon from "../../../assets/images/instagram-black.png";
-import TwitterIcon from "../../../assets/images/twitter-black.png";
 
 const ContactDetails = () => {
   return (
@@ -23,14 +20,6 @@ const ContactDetails = () => {
       <div className='email-contact'>
         <div className='email-contact-title'>Email</div>
         <div className='email-contact-text'>contactpikcha@gmail.com</div>
-      </div>
-      <div className='socials-contact'>
-        <div className='socials-contact-title'>Socials</div>
-        <div className='socials-contact-links'>
-          <img src={FacebookIcon} alt='' />
-          <img src={InstagramIcon} alt='' />
-          <img src={TwitterIcon} alt='' />
-        </div>
       </div>
     </div>
   );

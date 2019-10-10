@@ -117,4 +117,137 @@
   }
 }
 
+// Mobile
+// ---------------------------------------- //
+#mobile-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 8rem;
+  .nav-menu-closed {
+    margin-left: 3rem;
+    img {
+      height: 2rem;
+      cursor: pointer;
+    }
+  }
+
+  .nav-menu-open {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: #1a1a1a;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8rem;
+    padding-bottom: 12rem;
+
+    .nav-menu-logo {
+      a {
+        img {
+          height: 6rem;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .nav-menu-list {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      a {
+        margin-top: 3rem;
+        font-family: "Montserrat";
+        font-size: 1.8rem;
+        font-weight: 300;
+        text-decoration: none;
+        color: #fafafa;
+        text-transform: uppercase;
+
+        &:hover {
+          color: mediumpurple;
+          transition: 0.3s cubic-bezier(0.4, 0, 0, 1);
+        }
+      }
+    }
+
+    .nav-menu-exit {
+      position: relative;
+      img {
+        height: 1.5rem;
+        cursor: pointer;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 5.5rem;
+        height: 5.5rem;
+        background: white;
+        border-radius: 50%;
+        top: -2rem;
+        left: -2rem;
+        z-index: -2;
+      }
+
+      &::before {
+        transform: scale(0);
+        content: "";
+        position: absolute;
+        width: 6.5rem;
+        height: 6.5rem;
+        background: mediumpurple;
+        border-radius: 50%;
+        top: -2.5rem;
+        left: -2.5rem;
+        z-index: -1;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0, 1);
+      }
+
+      &:hover::before {
+        transform: scale(1);
+        transition: transform 0.45s cubic-bezier(0.6, 0.01, 0, 1.38);
+      }
+    }
+  }
+
+  .nav-icons {
+    margin-right: 3rem;
+    display: flex;
+    align-items: center;
+
+    .nav-icon {
+      margin-left: 6rem;
+      position: relative;
+      img {
+        height: 2rem;
+        cursor: pointer;
+      }
+
+      &.profile-pic {
+        img {
+          height: 3.8rem;
+          cursor: pointer;
+        }
+      }
+      .notication {
+        position: absolute;
+        top: -1rem;
+        left: 2.3rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgb(235, 59, 71);
+      }
+    }
+  }
+}
+
 @import "./dropdown";

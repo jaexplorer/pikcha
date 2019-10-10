@@ -12,9 +12,12 @@ const Home = ({ auth }) => {
   return (
     <Fragment>
       <SideBar />
+      <Header
+        subtitle='Todays Popular'
+        title='Melbourne Black and White Portraits'
+      />
       <div className='main-container'>
         <div className='main-content-container'>
-          <Header subtitle='Todays Popular' title='Top Photos' />
           <MasonryGallery />
         </div>
       </div>
