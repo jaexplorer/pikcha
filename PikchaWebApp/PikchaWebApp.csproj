@@ -12,6 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.14.3" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
@@ -43,6 +45,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20190910235358_InitialCreate.cs" />
     <Compile Remove="Migrations\20190910235358_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191006131337_ImageViews.cs" />
+    <Compile Remove="Migrations\20191006131337_ImageViews.Designer.cs" />
+    <Compile Remove="Migrations\20191006132236_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191006132236_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191006133050_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191006133050_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -102,6 +110,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\fonts\Montserrat-Regular.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Uploads\Avatars\Test\profile1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Uploads\Avatars\Test\profile2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Uploads\Avatars\Test\profile3.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

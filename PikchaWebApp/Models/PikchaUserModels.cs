@@ -72,7 +72,32 @@ namespace PikchaWebApp.Models
         [Column("LinkdIn")]
 
         public string LinkedInLink { get; set; }
+                       
+        public List<PikchaImage> PikchaImages { get; set; }
 
+        [NotMapped]
+        public PikchaImage TopImage
+        {
+            get
+            {
+                // get the pikcha images
+                
+                if(this.PikchaImages == null)
+                {
+                    
+                    return new PikchaImage() { Title = "N/A", Location = "N/A" };
+                }
+                try
+                {
+                    return this.PikchaImages.OrderByDescending(v => v.PikchaImageViews.Sum(i => i.Count)).First();
+
+                }
+                catch(Exception ex)
+                {
+                    return new PikchaImage() { Title = "N/A", Location = "N/A" };
+                }
+            }
+        }
     }
 
     //public class 

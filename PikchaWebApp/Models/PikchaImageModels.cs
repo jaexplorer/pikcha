@@ -56,6 +56,7 @@ namespace PikchaWebApp.Models
         public PikchaUser Artist { get; set; }
         
         public IEnumerable<PikchaImageTag> PikchaImageTags { get; set; }
+        public IEnumerable<ImageView> PikchaImageViews { get; set; }
 
     }
 
@@ -80,14 +81,28 @@ namespace PikchaWebApp.Models
         [Column("PikchaImageTagId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public uint PikchaImageTagId { get; set; }
-        public uint ImageTagId { get; set; }
         public ImageTag ImageTag { get; set; }
-
-
-        public uint PikchaImageId { get; set; }
         public PikchaImage PikchaImage { get; set; }
 
     }
 
+    [Table("PikchaImageViews")]
+    public class ImageView
+    {
+        [Key]
+        [Column("PikchaImageViewId")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public uint PikchaImageViewId { get; set; }
+
+
+        [Column(TypeName = "Date")]
+        [Required]
+        public DateTime Date { get; set; }
+        
+        public uint Count { get; set; }
+
+        public PikchaImage PikchaImage { get; set; }
+
+    }
 
 }

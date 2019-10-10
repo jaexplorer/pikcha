@@ -15,7 +15,7 @@ namespace PikchaWebApp.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0-preview9.19423.6")
+                .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -94,7 +94,9 @@ namespace PikchaWebApp.Migrations
 
                     b.HasKey("Key");
 
-                    b.HasIndex("SubjectId", "ClientId", "Type", "Expiration");
+                    b.HasIndex("Expiration");
+
+                    b.HasIndex("SubjectId", "ClientId", "Type");
 
                     b.ToTable("PersistedGrants");
                 });
@@ -250,6 +252,29 @@ namespace PikchaWebApp.Migrations
                     b.ToTable("ImageTags");
                 });
 
+            modelBuilder.Entity("PikchaWebApp.Models.ImageView", b =>
+                {
+                    b.Property<long>("PikchaImageViewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("PikchaImageViewId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("Count")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("Date");
+
+                    b.Property<string>("PikchaImageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("PikchaImageViewId");
+
+                    b.HasIndex("PikchaImageId");
+
+                    b.ToTable("PikchaImageViews");
+                });
+
             modelBuilder.Entity("PikchaWebApp.Models.PikchaImage", b =>
                 {
                     b.Property<string>("PikchaImageId")
@@ -323,20 +348,17 @@ namespace PikchaWebApp.Migrations
                         .HasColumnName("PikchaImageTagId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ImageTagId")
+                    b.Property<long?>("ImageTagId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PikchaImageId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("PikchaImageId1")
+                    b.Property<string>("PikchaImageId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("PikchaImageTagId");
 
                     b.HasIndex("ImageTagId");
 
-                    b.HasIndex("PikchaImageId1");
+                    b.HasIndex("PikchaImageId");
 
                     b.ToTable("PikchaImageTags");
                 });
@@ -529,6 +551,13 @@ namespace PikchaWebApp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PikchaWebApp.Models.ImageView", b =>
+                {
+                    b.HasOne("PikchaWebApp.Models.PikchaImage", "PikchaImage")
+                        .WithMany("PikchaImageViews")
+                        .HasForeignKey("PikchaImageId");
+                });
+
             modelBuilder.Entity("PikchaWebApp.Models.PikchaImage", b =>
                 {
                     b.HasOne("PikchaWebApp.Models.PikchaUser", "Artist")
@@ -540,13 +569,11 @@ namespace PikchaWebApp.Migrations
                 {
                     b.HasOne("PikchaWebApp.Models.ImageTag", "ImageTag")
                         .WithMany("PikchaImageTags")
-                        .HasForeignKey("ImageTagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageTagId");
 
                     b.HasOne("PikchaWebApp.Models.PikchaImage", "PikchaImage")
                         .WithMany("PikchaImageTags")
-                        .HasForeignKey("PikchaImageId1");
+                        .HasForeignKey("PikchaImageId");
                 });
 #pragma warning restore 612, 618
         }
