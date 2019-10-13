@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -23,13 +24,15 @@ namespace PikchaWebApp.Controllers
         protected readonly IConfiguration _configuration;
         protected readonly UserManager<PikchaUser> _userManager;
         protected readonly PikchaDbContext _pikchDbContext;
+        private readonly IMapper _mapper;
 
-        public ProfileController(IWebHostEnvironment hostingEnvironment, IConfiguration configuration, UserManager<PikchaUser> userManager, PikchaDbContext pikchDbContext)
+        public ProfileController(IWebHostEnvironment hostingEnvironment, IConfiguration configuration, UserManager<PikchaUser> userManager, PikchaDbContext pikchDbContext, IMapper mapper)
         {
             _hostingEnvironment = hostingEnvironment;
             _configuration = configuration;
             _userManager = userManager;
             _pikchDbContext = pikchDbContext;
+            _mapper = mapper;
         }
 
         // GET: api/profile/list
@@ -56,7 +59,7 @@ namespace PikchaWebApp.Controllers
             //return Ok(pikchaUser);
             //return new ReturnDataModel() { Data = user };
         }
-               
+
 
         // PUT: api/profile/5
         [HttpPut("{userId}")]
@@ -78,7 +81,7 @@ namespace PikchaWebApp.Controllers
                 if (result.Succeeded)
                 {
                     return ReturnOkOrNotFound(pikchaUser);
-                   // return Ok(pikchaUser);
+                    // return Ok(pikchaUser);
                 }
                 return StatusCode(StatusCodes.Status500InternalServerError, "Details are not updated.");
 
@@ -92,7 +95,7 @@ namespace PikchaWebApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
@@ -168,6 +171,57 @@ namespace PikchaWebApp.Controllers
 
             return new ReturnDataModel() { Data = filePath };
         }
+
+        [Authorize]
+        [HttpPost("promotetophotographer/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> PromoteUserToPhotographer([FromForm] string userId)
+        {
+            try
+            {
+                var pikchaUser = await _userManager.GetUserAsync(this.User);
+                var result = await _userManager.AddToRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+
+                if(result.Succeeded)
+                {
+                    return Ok();
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error in promoting the user ");
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+
+            }
+        }
+
+        [Authorize]
+        [HttpGet("loggedinuserinfo/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> LoggedInUserInfo( string userId)
+        {
+            try
+            {
+                var pikchaUser = await _userManager.GetUserAsync(this.User);
+
+                var lgUSer =  _mapper.Map<PikchaLoggedInUserDTO>(_pikchDbContext.PikchaUsers.Find(pikchaUser.Id));
+                lgUSer.IsPhotoGrapher = await _userManager.IsInRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+                return ReturnOkOrNotFound(lgUSer);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+
+        }
+
+
     }
 
     public class ProfileViewModel

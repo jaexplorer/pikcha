@@ -41,10 +41,9 @@ const App = () => {
             <Route exact path='/pikcha100' component={Pikcha100} />
             <Route exact path='/artist100' component={Artist100} />
             <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={Login} />
+            <Route exact path='/login' component={Login} /> 
             <Route exact path='/profile/:userid' component={Profile} />
             <Route exact path='/product/:productid' component={Product} />
-            {/* <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} /> */}
             <PrivateRoute
               exact
               path='/customise/:productid'

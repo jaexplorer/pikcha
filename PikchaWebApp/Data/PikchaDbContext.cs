@@ -28,7 +28,7 @@ namespace PikchaWebApp.Data
         {
             base.OnModelCreating(builder);
             builder.Entity<PikchaUser>().ToTable("PikchaUsers");
-            builder.Entity<IdentityRole>().ToTable("PikchaRoles");
+            builder.Entity<PikchaRole>().ToTable("PikchaRoles");
             builder.Entity<IdentityUserRole<string>>().ToTable("PikchaUserRoles");
             builder.Entity<IdentityUserClaim<string>>().ToTable("PikchaUserClaims");
             builder.Entity<IdentityUserLogin<string>>().ToTable("PikchaUserLogins");
