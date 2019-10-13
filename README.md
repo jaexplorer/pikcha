@@ -191,3 +191,11 @@ LOGGEDINUSERINFO
  - LastName 
  - IsPhotoGrapher 
  - LastUploadedOn
+
+
+  ### Promote a user to a photographer 
+- ENDPOINT : api/profile/promotetophotographer/{userId} 
+- METHOD : post
+- AUTHENTICATED : true
+- RESULTS : SUCCESS
+- ERROR_CODES : 200, 404, 500
