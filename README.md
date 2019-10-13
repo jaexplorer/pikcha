@@ -178,3 +178,16 @@ ARTIST
  - InstagramLink
  - LinkedInLink
 
+ ### Get the loggedin user info 
+- ENDPOINT : api/profile/loggedinuserinfo/{userId} 
+- METHOD : get
+- AUTHENTICATED : true
+- RESULTS : loggedinuserinfo
+- ERROR_CODES : 200, 404, 500
+
+
+LOGGEDINUSERINFO
+ - FirstName
+ - LastName 
+ - IsPhotoGrapher 
+ - LastUploadedOn

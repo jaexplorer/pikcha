@@ -35,7 +35,7 @@ namespace PikchaWebApp.Models
 
     public class PikchaLoggedInUserDTO : PikchaUserBaseDTO
     {
-        public DateTime LastUploadedOn { get; set; }
+        public DateTimeOffset LastUploadedOn { get; set; }
 
         public bool IsPhotoGrapher { get; set; }
     }

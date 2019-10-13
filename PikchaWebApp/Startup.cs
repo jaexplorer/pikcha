@@ -43,7 +43,8 @@ namespace PikchaWebApp
                 //.AddRoles<IdentityRole>()
                 //.AddRoleManager<IdentityRole>()
                 // services.AddIdentity(PikchaUser, PikchaRo>()
-                .AddEntityFrameworkStores<PikchaDbContext>();
+                .AddEntityFrameworkStores<PikchaDbContext>()
+                .AddDefaultTokenProviders(); ;
 
             services.AddIdentityServer()
                 .AddApiAuthorization<PikchaUser, PikchaDbContext>();

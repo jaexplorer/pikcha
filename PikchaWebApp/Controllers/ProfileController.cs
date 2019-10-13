@@ -207,6 +207,8 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
+                // var tmpp = _userManager.GetUserAsync(this.User).Result;
+                // var tmpp2 = _userManager.GetUserAsync(HttpContext.User).Result;
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
 
                 var lgUSer =  _mapper.Map<PikchaLoggedInUserDTO>(_pikchDbContext.PikchaUsers.Find(pikchaUser.Id));
