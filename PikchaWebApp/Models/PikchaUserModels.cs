@@ -102,7 +102,7 @@ namespace PikchaWebApp.Models
 
     //public class 
     [Table("PikchaRoles")]
-    public class PikchaRole : IdentityRole<string>
+    public class PikchaRole: IdentityRole<string>
     {
 
     }

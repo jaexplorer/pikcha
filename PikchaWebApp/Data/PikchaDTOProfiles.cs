@@ -51,7 +51,13 @@ namespace PikchaWebApp.Data
                 dest => dest.BestImageTotalViews,
                 opt => opt.MapFrom(src =>
                     src.TopImage.PikchaImageViews.Sum(p => p.Count))) */
-                ;
+                ;            
+            CreateMap<PikchaUser, PikchaLoggedInUserDTO>()
+                .ForMember(
+                dest => dest.LastUploadedOn,
+                opt => opt.MapFrom(src => src.PikchaImages.OrderByDescending(i => i.UploadedAt).First() == null ? DateTime.MinValue : src.PikchaImages.OrderByDescending(i => i.UploadedAt).First().UploadedAt))
+                
+            ;
         }
 
 

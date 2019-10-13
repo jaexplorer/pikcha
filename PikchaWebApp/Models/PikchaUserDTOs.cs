@@ -9,11 +9,8 @@ namespace PikchaWebApp.Models
     {
     }
 
-    public class Pikcha100ArtistDTO
+    public class Pikcha100ArtistDTO : PikchaUserBaseDTO
     {
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
         public string PerCountry { get; set; }
 
         public long TotalImageViews { get; set; }
@@ -33,6 +30,24 @@ namespace PikchaWebApp.Models
 
         //public int PikchaImageViewsCount { get; set; }
 
+    }
+
+
+    public class PikchaLoggedInUserDTO : PikchaUserBaseDTO
+    {
+        public DateTime LastUploadedOn { get; set; }
+
+        public bool IsPhotoGrapher { get; set; }
+    }
+
+
+    public class PikchaUserBaseDTO
+    {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string Email { get; set; }
     }
 
 }
