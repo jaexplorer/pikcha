@@ -1,10 +1,6 @@
 // Login / Register Types
-export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
-export const REGISTER_FAIL = "REGISTER_FAIL";
-export const USER_LOADED = "USER_LOADED";
+export const LOGGED_IN = "LOGGED_IN";
 export const AUTH_ERROR = "AUTH_ERROR";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGGED_OUT = "LOGGED_OUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const AUTH_LOADING = "AUTH_LOADING";
@@ -46,3 +42,7 @@ export const ARTIST_ERROR = "ARTIST_ERROR";
 export const PRODUCT_ADDED = "PRODUCT_ADDED";
 export const PRODUCT_REMOVED = "PRODUCT_REMOVED";
 export const CLEAR_CART = "CLEAR_CART";
+
+// Account Types
+export const CREATE_DP_MODAL = "CREATE_DP_MODAL";
+export const REMOVE_DP_MODAL = "REMOVE_DP_MODAL";

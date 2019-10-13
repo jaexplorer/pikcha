@@ -469,9 +469,12 @@ body .frame-container .main-container .main-content-container {
   font-family: "Montserrat";
   font-size: 1.4rem;
   padding: 1rem;
-  display: -ms-grid;
-  display: grid;
-  grid-auto-flow: column;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -506,8 +509,8 @@ body .frame-container .main-container .main-content-container {
 }
 
 #profile-dropdown .profile-dropdown-item img {
-  height: 25px;
-  margin-left: 2rem;
+  height: 2rem;
+  margin-left: 3rem;
 }
 
 @media screen and (max-width: 699px) {
@@ -2501,8 +2504,35 @@ body .frame-container .main-container .main-content-container {
           justify-content: space-between;
 }
 
+.person-details-container .display-picture {
+  position: relative;
+}
+
 .person-details-container .display-picture img {
   height: 15rem;
+}
+
+.person-details-container .display-picture .edit {
+  position: absolute;
+  background: mediumpurple;
+  bottom: 0;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.person-details-container .display-picture .edit img {
+  height: 2rem;
+  cursor: pointer;
 }
 
 .person-details-container .name {
@@ -2740,7 +2770,7 @@ body .frame-container .main-container .main-content-container {
   padding-top: 11.5rem;
 }
 
-#side-menu .your-space {
+#side-menu .side-menu-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2751,13 +2781,13 @@ body .frame-container .main-container .main-content-container {
   font-family: "Montserrat";
 }
 
-#side-menu .your-space .your-space-heading {
+#side-menu .side-menu-container .side-menu-heading {
   font-size: 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
 }
 
-#side-menu .your-space .your-space-menu {
+#side-menu .side-menu-container .side-menu {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2768,9 +2798,10 @@ body .frame-container .main-container .main-content-container {
   position: relative;
   font-size: 1rem;
   margin-top: 2.5rem;
+  margin-bottom: 3.5rem;
 }
 
-#side-menu .your-space .your-space-menu::before {
+#side-menu .side-menu-container .side-menu::before {
   content: "";
   position: absolute;
   width: 1px;
@@ -2782,7 +2813,7 @@ body .frame-container .main-container .main-content-container {
   left: 0.6rem;
 }
 
-#side-menu .your-space .your-space-menu a {
+#side-menu .side-menu-container .side-menu a {
   color: #1a1a1a;
   text-decoration: none;
   margin-left: 2rem;
@@ -2790,11 +2821,11 @@ body .frame-container .main-container .main-content-container {
   position: relative;
 }
 
-#side-menu .your-space .your-space-menu a:first-child {
+#side-menu .side-menu-container .side-menu a:first-child {
   margin-top: 0;
 }
 
-#side-menu .your-space .your-space-menu a::before {
+#side-menu .side-menu-container .side-menu a::before {
   content: "";
   position: absolute;
   left: -1.6rem;
@@ -2808,7 +2839,7 @@ body .frame-container .main-container .main-content-container {
   margin: auto;
 }
 
-#side-menu .your-space .your-space-menu a.current::before {
+#side-menu .side-menu-container .side-menu a.current::before {
   content: "";
   position: absolute;
   left: -1.8rem;

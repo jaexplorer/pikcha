@@ -14,6 +14,7 @@ import ProfileDropdown from "./ProfileDropdown";
 import CartDropdown from "./CartDropdown";
 import MenuIcon from "../../../assets/images/menu-black.png";
 import CloseIcon from "../../../assets/images/delete-black.png";
+import { ApplicationPaths } from "../../api-authorization/ApiAuthorizationConstants";
 
 const MobileNavbar = ({
   auth,
@@ -62,8 +63,8 @@ const MobileNavbar = ({
             <Link to='/about'>About </Link>
             {!auth.isAuthenticated && (
               <Fragment>
-                <Link to='/register'>Signup </Link>
-                <Link to='/login'>Login</Link>
+                <Link to={ApplicationPaths.Register}>Signup </Link>
+                <Link to={ApplicationPaths.Login}>Login</Link>
               </Fragment>
             )}
           </div>
