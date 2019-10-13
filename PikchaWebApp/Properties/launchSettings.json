@@ -15,14 +15,6 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PikchaWebApp": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
-    },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
@@ -32,8 +24,16 @@
         "ASPNETCORE_HTTPS_PORT": "44312"
       },
       "httpPort": 51146,
-      "useSSL": true,
-      "sslPort": 44312
+      "sslPort": 44312,
+      "useSSL": true
+    },
+    "PikchaWebApp": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }
   }
 }
