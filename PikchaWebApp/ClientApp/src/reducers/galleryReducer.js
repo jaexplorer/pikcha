@@ -8,7 +8,7 @@ import {
 
 const initialState = {
   photos: null,
-  count: 5,
+  count: 15,
   start: 1,
   selected: null,
   loading: true,

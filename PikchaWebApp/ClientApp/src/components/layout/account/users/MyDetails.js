@@ -1,8 +1,11 @@
 // TODO: Uploading Profile Picture, Integrate with backend
 import React, { useState, Fragment } from "react";
-import ProfilePic from "../../../assets/images/profilePic.png";
+import { connect } from "react-redux";
+import { createModal, removeModal } from "../../../../actions/account";
+import ProfilePic from "../../../../assets/images/profilePic.png";
+import CameraIcon from "../../../../assets/images/camera-white.png";
 
-const MyDetails = () => {
+const MyDetails = ({ createModal, removeModal }) => {
   // Component State
   const [user, setUser] = useState({
     firstName: "",
@@ -45,6 +48,9 @@ const MyDetails = () => {
           <div className='person-details-container'>
             <div className='display-picture'>
               <img src={ProfilePic} alt='' />
+              <div className='edit'>
+                <img src={CameraIcon} alt='' />
+              </div>
             </div>
             <div className='name'>
               <div className='input-wrapper'>
@@ -209,4 +215,11 @@ const MyDetails = () => {
   );
 };
 
-export default MyDetails;
+const mapStateToProps = state => ({
+  account: state.accountReducer
+});
+
+export default connect(
+  mapStateToProps,
+  { createModal, removeModal }
+)(MyDetails);
