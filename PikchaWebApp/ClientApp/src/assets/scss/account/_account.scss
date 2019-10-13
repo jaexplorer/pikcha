@@ -1,6 +1,6 @@
 // Account
 // ------------------------------------------------------------------- //
-.account-container {
+#account-container {
   font-family: "Montserrat";
   .account-title {
     font-size: 2rem;
@@ -327,10 +327,118 @@
   }
 }
 
+#uploadModal-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: -20rem;
+  bottom: 0;
+  margin: auto;
+  height: max-content;
+  width: max-content;
+  padding: 2rem;
+  background: #fafafa;
+  z-index: 600;
+  box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 1);
+
+  .upload-error {
+    font-size: 1.2rem;
+    color: white;
+    background: rgb(181, 68, 68);
+    margin-bottom: 2rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      height: 1rem;
+      cursor: pointer;
+    }
+  }
+
+  .uploadModal-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+    margin-bottom: 2rem;
+    .upload-title {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+    img {
+      height: 1.4rem;
+      cursor: pointer;
+    }
+  }
+
+  .uploadDP-form {
+    display: flex;
+    justify-content: space-between;
+
+    .form-buttons {
+      display: flex;
+      flex-direction: column;
+      .upload-button {
+        background: #1a1a1a;
+        padding: 2rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+        cursor: pointer;
+
+        input[type="file"] {
+          display: none;
+        }
+      }
+
+      .form-btn {
+        background: #1a1a1a;
+        padding: 1rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        color: white;
+        cursor: pointer;
+      }
+    }
+
+    .image-preview {
+      margin-left: 2rem;
+      height: 30rem;
+      width: 30rem;
+      background: #1a1a1a;
+
+      img {
+        object-position: center center;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.cropper-view-box {
+  outline: 1px solid white !important;
+  outline-color: mediumpurple !important;
+}
+
+.cropper-point {
+  background-color: white !important;
+}
+
 // Small Devices
 // ---------------------------------------- //
 @media screen and (max-width: 699px) {
-  .account-container {
+  #account-container {
     padding-left: 3rem;
     padding-right: 3rem;
     margin-left: 20%;

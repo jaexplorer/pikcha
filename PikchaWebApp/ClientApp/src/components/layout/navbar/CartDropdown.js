@@ -3,13 +3,13 @@ import { connect } from "react-redux";
 import { removeCartDropdown } from "../../../actions/nav";
 import { removeFromCart } from "../../../actions/cart";
 
-import RemoveIcon from "../../../assets/images/remove-white.png";
+import RemoveIcon from "../../../assets/images/delete-black.png";
 
 const CartDropdown = ({ cart, removeCartDropdown, removeFromCart }) => {
   // Detect Clicks outside of container
   const dropdownContainer = useRef(null);
   useEffect(() => {
-    document.addEventListener("click", e => {
+    document.addEventListener("mousedown", e => {
       if (
         dropdownContainer.current &&
         !dropdownContainer.current.contains(e.target)

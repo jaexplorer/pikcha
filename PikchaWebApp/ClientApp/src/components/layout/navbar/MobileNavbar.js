@@ -14,7 +14,7 @@ import ProfileDropdown from "./ProfileDropdown";
 import CartDropdown from "./CartDropdown";
 import MenuIcon from "../../../assets/images/menu-black.png";
 import CloseIcon from "../../../assets/images/delete-black.png";
-import { ApplicationPaths } from "../../api-authorization/ApiAuthorizationConstants";
+import { ApplicationPaths } from "../../auth/ApiAuthorizationConstants";
 
 const MobileNavbar = ({
   auth,

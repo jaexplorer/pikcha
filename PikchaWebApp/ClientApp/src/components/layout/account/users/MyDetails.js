@@ -1,11 +1,12 @@
 // TODO: Uploading Profile Picture, Integrate with backend
 import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
-import { createModal, removeModal } from "../../../../actions/account";
+import { createModal } from "../../../../actions/account";
 import ProfilePic from "../../../../assets/images/profilePic.png";
 import CameraIcon from "../../../../assets/images/camera-white.png";
+import UploadModal from "../UploadModal";
 
-const MyDetails = ({ createModal, removeModal }) => {
+const MyDetails = ({ createModal, account }) => {
   // Component State
   const [user, setUser] = useState({
     firstName: "",
@@ -41,6 +42,7 @@ const MyDetails = ({ createModal, removeModal }) => {
 
   return (
     <Fragment>
+      {account.DPModal && <UploadModal />}
       <div className='account-title'>My Account</div>
       <form className='account-form'>
         <div className='form-section'>
@@ -48,7 +50,7 @@ const MyDetails = ({ createModal, removeModal }) => {
           <div className='person-details-container'>
             <div className='display-picture'>
               <img src={ProfilePic} alt='' />
-              <div className='edit'>
+              <div onClick={createModal} className='edit'>
                 <img src={CameraIcon} alt='' />
               </div>
             </div>
@@ -221,5 +223,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createModal, removeModal }
+  { createModal }
 )(MyDetails);

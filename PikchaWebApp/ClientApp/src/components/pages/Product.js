@@ -11,6 +11,7 @@ import MasonryGallery from "../layout/gallery/MasonryGallery";
 import BackArrow from "../layout/BackArrow";
 import { getProduct } from "../../actions/product";
 import NotFound from "./NotFound";
+import MainComponent from "../MainComponent";
 
 const Product = ({ auth, product, getProduct }) => {
   useEffect(() => {
@@ -30,21 +31,19 @@ const Product = ({ auth, product, getProduct }) => {
     <Fragment>
       <SideBar />
       <BackArrow />
-      <div className='main-container'>
-        <div className='main-content-container'>
-          {auth.loading || product.loading ? (
-            <h2 className='loading'>Loading...</h2>
-          ) : (
-            <div className='product-container'>
-              <ProductItem />
-              <MainSeller auth={auth} />
-              <SellerList />
-              <div className='more-content-heading'>More from this Artist</div>
-              <MasonryGallery />
-            </div>
-          )}
-        </div>
-      </div>
+      <MainComponent container='product-container'>
+        {product.loading ? (
+          <h2 className='loading'>Loading...</h2>
+        ) : (
+          <Fragment>
+            <ProductItem />
+            <MainSeller auth={auth} />
+            <SellerList />
+            <div className='more-content-heading'>More from this Artist</div>
+            <MasonryGallery />
+          </Fragment>
+        )}
+      </MainComponent>
     </Fragment>
   );
 };

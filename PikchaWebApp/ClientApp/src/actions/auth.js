@@ -1,5 +1,5 @@
 // TODO: Clean up Dispatch for consistency, link to backend
-import AuthorizeService from "../components/api-authorization/AuthorizeService";
+import AuthorizeService from "../components/auth/AuthorizeService";
 
 import {
   LOGGED_IN,
