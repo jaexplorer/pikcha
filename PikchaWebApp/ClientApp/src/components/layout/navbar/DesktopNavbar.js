@@ -12,6 +12,7 @@ import PeopleIcon from "../../../assets/images/people-black.png";
 import PlaceHolder from "../../../assets/images/placeholder.png";
 import ProfileDropdown from "./ProfileDropdown";
 import CartDropdown from "./CartDropdown";
+import { ApplicationPaths } from "../../api-authorization/ApiAuthorizationConstants";
 
 const MobileNavbar = ({
   auth,
@@ -42,10 +43,10 @@ const MobileNavbar = ({
       </div>
       <div id='navbar-right-links'>
         <li>
-          <Link to='/register'>Signup</Link>
+          <Link to={ApplicationPaths.Register}>Signup</Link>
         </li>
         <li>
-          <Link to='/login'>Login</Link>
+          <Link to={ApplicationPaths.Login}>Login</Link>
         </li>
       </div>
     </div>

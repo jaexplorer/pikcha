@@ -6,8 +6,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import Pikcha100 from "./pages/Pikcha100";
 import Artist100 from "./pages/Artist100";
-import Register from "./auth/Register";
-import Login from "./auth/Login";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
@@ -18,16 +16,17 @@ import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./layout/Alerts";
-import { loadUser, logout } from "../actions/auth";
+import { loaduser } from "../actions/auth";
+import { ApplicationPaths } from "./api-authorization/ApiAuthorizationConstants";
+import ApiAuthorizationRoutes from "./api-authorization/ApiAuthorizationRoutes";
+import AuthorizeRoute from "./api-authorization/AuthorizeRoute";
 
 const App = () => {
   useEffect(() => {
-    if (localStorage.token) {
-      store.dispatch(loadUser());
-    } else {
-      store.dispatch(logout());
-    }
-  });
+    setTimeout(() => {
+      store.dispatch(loaduser());
+    }, 1000);
+  }, []);
 
   return (
     <Provider store={store}>
@@ -41,12 +40,14 @@ const App = () => {
             <Route exact path='/contact' component={Contact} />
             <Route exact path='/pikcha100' component={Pikcha100} />
             <Route exact path='/artist100' component={Artist100} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={Login} />
             <Route exact path='/profile/:userid' component={Profile} />
             <Route exact path='/product/:productid' component={Product} />
-            {/* <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} /> */}
-            <PrivateRoute
+            <Route
+              path={ApplicationPaths.ApiAuthorizationPrefix}
+              component={ApiAuthorizationRoutes}
+            />
+
+            <AuthorizeRoute
               exact
               path='/customise/:productid'
               component={Customise}

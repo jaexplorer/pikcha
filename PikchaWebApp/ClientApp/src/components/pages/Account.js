@@ -3,11 +3,16 @@ import { connect } from "react-redux";
 import { Route, Switch, Redirect } from "react-router-dom";
 import SideMenu from "../layout/account/SideMenu";
 import BackArrow from "../layout/BackArrow";
-import MyDetails from "../layout/account/MyDetails";
-import MyPhotos from "../layout/account/MyPhotos";
-import MyOrders from "../layout/account/MyOrders";
-import PaymentDetails from "../layout/account/PaymentDetails";
-import Settings from "../layout/account/Settings";
+import MyDetails from "../layout/account/users/MyDetails";
+import MyPhotos from "../layout/account/users/MyPhotos";
+import MyOrders from "../layout/account/users/MyOrders";
+import PaymentDetails from "../layout/account/users/PaymentDetails";
+import Settings from "../layout/account/users/Settings";
+import BankDetails from "../layout/account/artists/BankDetails";
+import Socials from "../layout/account/artists/Socials";
+import ArtistsPhotos from "../layout/account/artists/ArtistPhotos";
+import Stats from "../layout/account/artists/Stats";
+import ArtistSettings from "../layout/account/artists/ArtistSettings";
 import NotFound from "./NotFound";
 
 const Account = ({ auth, match }) => {
@@ -34,6 +39,23 @@ const Account = ({ auth, match }) => {
                 exact
                 path={`${match.path}/settings`}
                 component={Settings}
+              />
+              <Route
+                exact
+                path={`${match.path}/bank`}
+                component={BankDetails}
+              />
+              <Route exact path={`${match.path}/socials`} component={Socials} />
+              <Route
+                exact
+                path={`${match.path}/artist-photos`}
+                component={ArtistsPhotos}
+              />
+              <Route exact path={`${match.path}/stats`} component={Stats} />
+              <Route
+                exact
+                path={`${match.path}/artist-settings`}
+                component={ArtistSettings}
               />
               <Route
                 component={() => (

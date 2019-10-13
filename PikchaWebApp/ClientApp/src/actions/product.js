@@ -17,7 +17,7 @@ export const getProduct = id => {
   return async dispatch => {
     try {
       dispatch(setLoading());
-      const res = await axios.get(`http://localhost:8000/api/image/${id}`);
+      const res = await axios.get(`api/image/${id}`);
       dispatch({
         type: GET_PRODUCT,
         payload: res.data
