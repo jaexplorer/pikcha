@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
-import { removeModal } from "../../../actions/account";
+import { removeModal } from "../../../actions/modal";
 import CloseIcon from "../../../assets/images/delete-black.png";
 import DeleteIcon from "../../../assets/images/delete-white.png";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
-const UploadModal = ({ removeModal }) => {
+const DPModal = ({ removeModal }) => {
   const [error, setError] = useState(false);
   const [preview, setPreview] = useState("");
   const [cropped, setCropped] = useState("");
@@ -43,8 +43,8 @@ const UploadModal = ({ removeModal }) => {
   };
 
   return (
-    <div id='uploadModal-container' ref={modalContainer}>
-      <div className='uploadModal-header'>
+    <div id='DPModal-container' ref={modalContainer}>
+      <div className='DPModal-header'>
         <div className='upload-title'>Update Profile Picture</div>
         <img onClick={removeModal} src={CloseIcon} alt='' />
       </div>
@@ -87,4 +87,4 @@ const UploadModal = ({ removeModal }) => {
 export default connect(
   null,
   { removeModal }
-)(UploadModal);
+)(DPModal);

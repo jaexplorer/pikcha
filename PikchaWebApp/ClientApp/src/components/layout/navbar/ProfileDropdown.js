@@ -1,15 +1,15 @@
 import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../../../actions/auth";
 import { removeProfileDropdown } from "../../../actions/nav";
 import LogoutIcon from "../../../assets/images/logout-black.png";
 import ProfileIcon from "../../../assets/images/profile-black.png";
 import AccountIcon from "../../../assets/images/account-black.png";
 import UploadIcon from "../../../assets/images/upload-white.png";
+import { createModal } from "../../../actions/modal";
 import { ApplicationPaths } from "../../auth/ApiAuthorizationConstants";
 
-const ProfileDropdown = ({ auth, logout, removeProfileDropdown }) => {
+const ProfileDropdown = ({ auth, removeProfileDropdown, createModal }) => {
   // Detect Clicks outside of container
   const dropdownContainer = useRef(null);
   useEffect(() => {
@@ -25,7 +25,13 @@ const ProfileDropdown = ({ auth, logout, removeProfileDropdown }) => {
 
   return (
     <div id='profile-dropdown' ref={dropdownContainer}>
-      <div className='upload-container'>
+      <div
+        onClick={() => {
+          createModal("RoleChangeModal");
+          removeProfileDropdown();
+        }}
+        className='upload-container'
+      >
         <img src={UploadIcon} alt='' />
         <div className='upload-button'>Upload</div>
       </div>
@@ -37,13 +43,7 @@ const ProfileDropdown = ({ auth, logout, removeProfileDropdown }) => {
         <img src={AccountIcon} alt='' />
         <Link to={"/account"}>Account</Link>
       </div>
-      <div
-        onClick={() => {
-          // logout();
-          removeProfileDropdown();
-        }}
-        className='profile-dropdown-item'
-      >
+      <div onClick={removeProfileDropdown} className='profile-dropdown-item'>
         <img src={LogoutIcon} alt='' />
         <Link to={ApplicationPaths.LogOut}>Logout</Link>
       </div>
@@ -57,5 +57,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logout, removeProfileDropdown }
+  { removeProfileDropdown, createModal }
 )(ProfileDropdown);

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
+import ModalManager from "./layout/modals/ModalManager";
 
 const MainComponent = ({ auth, container, children }) => {
   return (
@@ -8,7 +9,10 @@ const MainComponent = ({ auth, container, children }) => {
         {auth.loading ? (
           <h2 className='loading'>Loading...</h2>
         ) : (
-          <div id={container}>{children}</div>
+          <Fragment>
+            <ModalManager />
+            <div id={container}>{children}</div>
+          </Fragment>
         )}
       </div>
     </div>

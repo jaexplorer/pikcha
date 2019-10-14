@@ -2830,7 +2830,44 @@ body .frame-container .main-container .main-content-container {
   margin: auto;
 }
 
-#uploadModal-container {
+@media screen and (max-width: 699px) {
+  #account-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    margin-left: 20%;
+  }
+  #side-menu {
+    padding-top: 15.4rem;
+  }
+}
+
+.modal-container {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-family: "Montserrat";
+  overflow: scroll;
+}
+
+.modal-container::-webkit-scrollbar {
+  width: 0px;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+}
+
+#DPModal-container {
   position: fixed;
   left: 0;
   right: 0;
@@ -2848,9 +2885,10 @@ body .frame-container .main-container .main-content-container {
   z-index: 600;
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
+  font-family: "Montserrat";
 }
 
-#uploadModal-container .upload-error {
+#DPModal-container .upload-error {
   font-size: 1.2rem;
   color: white;
   background: #b54444;
@@ -2867,12 +2905,12 @@ body .frame-container .main-container .main-content-container {
           align-items: center;
 }
 
-#uploadModal-container .upload-error img {
+#DPModal-container .upload-error img {
   height: 1rem;
   cursor: pointer;
 }
 
-#uploadModal-container .uploadModal-header {
+#DPModal-container .DPModal-header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2884,18 +2922,18 @@ body .frame-container .main-container .main-content-container {
   margin-bottom: 2rem;
 }
 
-#uploadModal-container .uploadModal-header .upload-title {
+#DPModal-container .DPModal-header .upload-title {
   font-size: 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
 }
 
-#uploadModal-container .uploadModal-header img {
+#DPModal-container .DPModal-header img {
   height: 1.4rem;
   cursor: pointer;
 }
 
-#uploadModal-container .uploadDP-form {
+#DPModal-container .uploadDP-form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2904,7 +2942,7 @@ body .frame-container .main-container .main-content-container {
           justify-content: space-between;
 }
 
-#uploadModal-container .uploadDP-form .form-buttons {
+#DPModal-container .uploadDP-form .form-buttons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2914,7 +2952,7 @@ body .frame-container .main-container .main-content-container {
           flex-direction: column;
 }
 
-#uploadModal-container .uploadDP-form .form-buttons .upload-button {
+#DPModal-container .uploadDP-form .form-buttons .upload-button {
   background: #1a1a1a;
   padding: 2rem;
   padding-left: 4rem;
@@ -2927,11 +2965,11 @@ body .frame-container .main-container .main-content-container {
   cursor: pointer;
 }
 
-#uploadModal-container .uploadDP-form .form-buttons .upload-button input[type="file"] {
+#DPModal-container .uploadDP-form .form-buttons .upload-button input[type="file"] {
   display: none;
 }
 
-#uploadModal-container .uploadDP-form .form-buttons .form-btn {
+#DPModal-container .uploadDP-form .form-buttons .form-btn {
   background: #1a1a1a;
   padding: 1rem;
   padding-left: 4rem;
@@ -2942,14 +2980,14 @@ body .frame-container .main-container .main-content-container {
   cursor: pointer;
 }
 
-#uploadModal-container .uploadDP-form .image-preview {
+#DPModal-container .uploadDP-form .image-preview {
   margin-left: 2rem;
   height: 30rem;
   width: 30rem;
   background: #1a1a1a;
 }
 
-#uploadModal-container .uploadDP-form .image-preview img {
+#DPModal-container .uploadDP-form .image-preview img {
   -o-object-position: center center;
      object-position: center center;
   width: 100%;
@@ -2967,14 +3005,128 @@ body .frame-container .main-container .main-content-container {
   background-color: white !important;
 }
 
-@media screen and (max-width: 699px) {
-  #account-container {
-    padding-left: 3rem;
-    padding-right: 3rem;
-    margin-left: 20%;
-  }
-  #side-menu {
-    padding-top: 15.4rem;
-  }
+#role-change-modal-container {
+  position: relative;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 2rem;
+  background: #fafafa;
+  z-index: 600;
+  -webkit-box-shadow: 5px 10px 30px -20px black;
+          box-shadow: 5px 10px 30px -20px black;
+  margin-top: 20rem;
+  margin-bottom: 20rem;
+}
+
+#role-change-modal-container img {
+  height: 1.4rem;
+  position: absolute;
+  right: 2rem;
+  cursor: pointer;
+}
+
+#role-change-modal-container .modal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#role-change-modal-container .modal-header .modal-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#role-change-modal-container .modal-header .modal-subtext {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+#role-change-modal-container .role-change-form {
+  width: 60rem;
+}
+
+#role-change-modal-container .role-change-form .form-section {
+  margin-bottom: 4rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .section-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .section-text {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  margin-bottom: 2rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .signature-border {
+  width: 100%;
+  border: #1a1a1a 2rem solid;
+}
+
+#role-change-modal-container .role-change-form .form-section .signature-border .signature-container {
+  width: 100%;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+#role-change-modal-container .role-change-form .form-section .signature-border .signature-container .sigCanvas {
+  width: 100%;
+}
+
+#role-change-modal-container .role-change-form .form-section .signature-clear {
+  background: #1a1a1a;
+  padding: 1rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: white;
+  text-align: center;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+#role-change-modal-container .role-change-form .form-section .input-wrapper {
+  font-size: 1rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .checkbox {
+  margin-right: 1rem;
+}
+
+#role-change-modal-container .role-change-form .form-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#role-change-modal-container .role-change-form .form-btn input {
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
+  cursor: pointer;
 }
 /*# sourceMappingURL=main.css.map */
