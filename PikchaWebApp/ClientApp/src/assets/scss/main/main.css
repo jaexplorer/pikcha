@@ -514,6 +514,7 @@ body .frame-container .main-container .main-content-container {
 
 #profile-dropdown .profile-dropdown-item a:hover {
   color: mediumpurple;
+  cursor: pointer;
 }
 
 #profile-dropdown .profile-dropdown-item:first-child {
@@ -532,7 +533,6 @@ body .frame-container .main-container .main-content-container {
 
 #profile-dropdown .profile-dropdown-item:hover {
   color: mediumpurple;
-  cursor: pointer;
 }
 
 #profile-dropdown .profile-dropdown-item img {
@@ -2843,10 +2843,10 @@ body .frame-container .main-container .main-content-container {
 
 .modal-container {
   position: fixed;
-  width: 100%;
+  width: calc(100% - 6rem);
   top: 0;
   bottom: 0;
-  left: 0;
+  left: 3rem;
   right: 0;
   height: 100%;
   z-index: 600;
@@ -2868,12 +2868,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #DPModal-container {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: -20rem;
-  bottom: 0;
-  margin: auto;
+  position: relative;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
@@ -2886,6 +2881,8 @@ body .frame-container .main-container .main-content-container {
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
   font-family: "Montserrat";
+  margin-top: 10rem;
+  margin-bottom: 10rem;
 }
 
 #DPModal-container .upload-error {
@@ -2978,6 +2975,12 @@ body .frame-container .main-container .main-content-container {
   font-size: 1.2rem;
   color: white;
   cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 #DPModal-container .uploadDP-form .image-preview {
@@ -3005,21 +3008,35 @@ body .frame-container .main-container .main-content-container {
   background-color: white !important;
 }
 
+@media screen and (max-width: 699px) {
+  #DPModal-container .uploadDP-form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+  }
+  #DPModal-container .uploadDP-form .form-buttons {
+    margin-top: 2rem;
+  }
+  #DPModal-container .uploadDP-form .image-preview {
+    margin-left: 0;
+  }
+}
+
 #role-change-modal-container {
   position: relative;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: 100%;
+  max-width: 60rem;
   padding: 2rem;
   background: #fafafa;
   z-index: 600;
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
-  margin-top: 20rem;
-  margin-bottom: 20rem;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
 }
 
 #role-change-modal-container img {
@@ -3057,7 +3074,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #role-change-modal-container .role-change-form {
-  width: 60rem;
+  width: 100%;
 }
 
 #role-change-modal-container .role-change-form .form-section {
@@ -3093,6 +3110,7 @@ body .frame-container .main-container .main-content-container {
 
 #role-change-modal-container .role-change-form .form-section .signature-border .signature-container .sigCanvas {
   width: 100%;
+  height: 40rem;
 }
 
 #role-change-modal-container .role-change-form .form-section .signature-clear {

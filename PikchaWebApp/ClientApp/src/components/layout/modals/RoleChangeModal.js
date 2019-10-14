@@ -81,11 +81,10 @@ const RoleChangeModal = ({ removeModal }) => {
                   minWidth={2}
                   maxWidth={4}
                   minDistance={0}
-                  throttle={0}
-                  clearOnResize={false}
+                  throttle={20}
+                  // clearOnResize={false}
                   onEnd={saveSigPad}
                   canvasProps={{
-                    height: 500,
                     className: "sigCanvas"
                   }}
                 />
