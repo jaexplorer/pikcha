@@ -44,5 +44,7 @@ export const PRODUCT_REMOVED = "PRODUCT_REMOVED";
 export const CLEAR_CART = "CLEAR_CART";
 
 // Account Types
-export const CREATE_DP_MODAL = "CREATE_DP_MODAL";
-export const REMOVE_DP_MODAL = "REMOVE_DP_MODAL";
+
+// Modal Types
+export const CREATE_MODAL = "CREATE_MODAL";
+export const REMOVE_MODAL = "REMOVE_MODAL";

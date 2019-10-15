@@ -1,6 +1,6 @@
 // Customise
 // ------------------------------------------------------------------- //
-.customise-container {
+#customise-container {
   display: flex;
   flex-direction: column;
   font-family: "Montserrat";
@@ -177,7 +177,7 @@
 // Small Devices
 // ---------------------------------------- //
 @media screen and (max-width: 699px) {
-  .customise-container {
+  #customise-container {
     padding-left: 3rem;
     padding-right: 3rem;
   }

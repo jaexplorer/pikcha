@@ -459,34 +459,62 @@ body .frame-container .main-container .main-content-container {
   width: -moz-max-content;
   width: max-content;
   z-index: 40;
-  -webkit-box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
-          box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 5px 10px 30px -20px black;
+          box-shadow: 5px 10px 30px -20px black;
 }
 
-#profile-dropdown .profile-dropdown-item {
-  background: #1a1a1a;
-  color: white;
-  font-family: "Montserrat";
-  font-size: 1.4rem;
-  padding: 1rem;
+#profile-dropdown .upload-container {
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
+  padding: 2rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  cursor: pointer;
+}
+
+#profile-dropdown .upload-container img {
+  height: 2rem;
+  margin-right: 2rem;
+}
+
+#profile-dropdown .upload-container .upload-button {
+  color: white;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  padding-top: 1rem;
+  padding-bottom: 0.8rem;
+}
+
+#profile-dropdown .profile-dropdown-item {
+  background: #fafafa;
+  color: #1a1a1a;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  padding: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
 #profile-dropdown .profile-dropdown-item a {
-  color: white;
+  color: #1a1a1a;
   text-decoration: none;
+  margin-right: 3rem;
 }
 
 #profile-dropdown .profile-dropdown-item a:hover {
   color: mediumpurple;
+  cursor: pointer;
 }
 
 #profile-dropdown .profile-dropdown-item:first-child {
@@ -494,7 +522,7 @@ body .frame-container .main-container .main-content-container {
   border-top-right-radius: 10px;
 }
 
-#profile-dropdown .profile-dropdown-item:nth-child(2n) {
+#profile-dropdown .profile-dropdown-item:nth-child(1n) {
   border-top: rgba(147, 112, 216, 0.2) 1px solid;
 }
 
@@ -505,12 +533,11 @@ body .frame-container .main-container .main-content-container {
 
 #profile-dropdown .profile-dropdown-item:hover {
   color: mediumpurple;
-  cursor: pointer;
 }
 
 #profile-dropdown .profile-dropdown-item img {
   height: 2rem;
-  margin-left: 3rem;
+  margin-right: 2rem;
 }
 
 @media screen and (max-width: 699px) {
@@ -532,16 +559,16 @@ body .frame-container .main-container .main-content-container {
   width: -moz-max-content;
   width: max-content;
   z-index: 40;
-  -webkit-box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
-          box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 5px 10px 30px -20px black;
+          box-shadow: 5px 10px 30px -20px black;
 }
 
 #cart-dropdown .cart-dropdown-item {
-  background: #1a1a1a;
-  color: white;
+  background: #fafafa;
+  color: #1a1a1a;
   font-family: "Montserrat";
   font-size: 1.4rem;
-  padding: 1rem;
+  padding: 2rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -556,7 +583,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #cart-dropdown .cart-dropdown-item .cart-product-price {
-  margin-left: 6rem;
+  margin-left: 8rem;
 }
 
 #cart-dropdown .cart-dropdown-item .cart-product-remove {
@@ -564,10 +591,12 @@ body .frame-container .main-container .main-content-container {
   display: -ms-flexbox;
   display: flex;
   position: relative;
+  margin-left: 2rem;
 }
 
 #cart-dropdown .cart-dropdown-item .cart-product-remove img {
   position: relative;
+  height: 1.2rem;
 }
 
 #cart-dropdown .cart-dropdown-item .cart-product-remove img:hover {
@@ -580,8 +609,10 @@ body .frame-container .main-container .main-content-container {
   background: mediumpurple;
   height: 30px;
   width: 1px;
-  top: -2px;
-  left: 1.5rem;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  left: 0.5rem;
 }
 
 #cart-dropdown .cart-dropdown-item .cart-total {
@@ -590,13 +621,13 @@ body .frame-container .main-container .main-content-container {
 }
 
 #cart-dropdown .cart-dropdown-item .cart-checkout {
-  padding: 0.5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  background: white;
+  padding: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background: mediumpurple;
   border-radius: 5px;
-  color: black;
-  margin-left: 1rem;
+  color: white;
+  margin-left: 2rem;
   font-size: 1rem;
   text-transform: uppercase;
 }
@@ -624,60 +655,6 @@ body .frame-container .main-container .main-content-container {
   #cart-dropdown {
     top: 7rem;
     right: 5rem;
-  }
-  #cart-dropdown .cart-dropdown-item {
-    font-size: 1.6rem;
-    padding: 2rem;
-  }
-  #cart-dropdown .cart-dropdown-item .cart-product-name {
-    font-size: 1.6rem;
-  }
-  #cart-dropdown .cart-dropdown-item .cart-product-price {
-    margin-left: 8rem;
-  }
-  #cart-dropdown .cart-dropdown-item .cart-product-remove {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    position: relative;
-    margin-left: 1rem;
-  }
-  #cart-dropdown .cart-dropdown-item .cart-product-remove img {
-    height: 2.5rem;
-  }
-  #cart-dropdown .cart-dropdown-item .cart-product-remove img:hover {
-    cursor: pointer;
-  }
-  #cart-dropdown .cart-dropdown-item .cart-product-remove::after {
-    content: "";
-    position: absolute;
-    background: mediumpurple;
-    height: 30px;
-    width: 1px;
-    top: -2px;
-    left: 1rem;
-  }
-  #cart-dropdown .cart-dropdown-item .cart-total {
-    margin-left: auto;
-    font-size: 1.6rem;
-  }
-  #cart-dropdown .cart-dropdown-item .cart-checkout {
-    padding: 1rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    background: white;
-    border-radius: 5px;
-    color: black;
-    margin-left: 2rem;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-  }
-  #cart-dropdown .cart-dropdown-item img {
-    height: 2rem;
-    margin-left: 2.5rem;
   }
 }
 
@@ -1848,11 +1825,11 @@ body .frame-container .main-container .main-content-container {
   }
 }
 
-.product-container {
+#product-container {
   font-family: "Montserrat";
 }
 
-.product-container .more-content-heading {
+#product-container .more-content-heading {
   font-size: 2rem;
   padding-bottom: 2rem;
   border-bottom: 2px solid rgba(147, 112, 219, 0.24);
@@ -2199,13 +2176,13 @@ body .frame-container .main-container .main-content-container {
 }
 
 @media screen and (max-width: 699px) {
-  .product-container {
+  #product-container {
     padding-left: 3rem;
     padding-right: 3rem;
   }
 }
 
-.customise-container {
+#customise-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2431,46 +2408,46 @@ body .frame-container .main-container .main-content-container {
 }
 
 @media screen and (max-width: 699px) {
-  .customise-container {
+  #customise-container {
     padding-left: 3rem;
     padding-right: 3rem;
   }
 }
 
-.notFound-container {
+#notFound-container {
   font-family: "Montserrat";
 }
 
-.notFound-container h1 {
+#notFound-container h1 {
   font-size: 2rem;
 }
 
-.notFound-container p {
+#notFound-container p {
   font-size: 1.4rem;
   margin-top: 2rem;
 }
 
 @media screen and (max-width: 699px) {
-  .notFound-container {
+  #notFound-container {
     padding-left: 3rem;
     padding-right: 3rem;
   }
 }
 
-.account-container {
+#account-container {
   font-family: "Montserrat";
 }
 
-.account-container .account-title {
+#account-container .account-title {
   font-size: 2rem;
   margin-bottom: 3rem;
 }
 
-.account-container .account-form .form-section {
+#account-container .account-form .form-section {
   margin-bottom: 4rem;
 }
 
-.account-container .account-form .form-section .section-title {
+#account-container .account-form .form-section .section-title {
   font-size: 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
@@ -2479,13 +2456,13 @@ body .frame-container .main-container .main-content-container {
   margin-bottom: 2rem;
 }
 
-.account-container .account-form .form-section .input-title {
+#account-container .account-form .form-section .input-title {
   font-size: 1.2rem;
   text-transform: uppercase;
   margin-bottom: 1rem;
 }
 
-.account-container .account-form .form-section .input-field {
+#account-container .account-form .form-section .input-field {
   background: #1a1a1a;
   border: none;
   min-height: 4rem;
@@ -2854,7 +2831,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 @media screen and (max-width: 699px) {
-  .account-container {
+  #account-container {
     padding-left: 3rem;
     padding-right: 3rem;
     margin-left: 20%;
@@ -2862,5 +2839,518 @@ body .frame-container .main-container .main-content-container {
   #side-menu {
     padding-top: 15.4rem;
   }
+}
+
+.modal-container {
+  position: fixed;
+  width: calc(100% - 6rem);
+  top: 0;
+  bottom: 0;
+  left: 3rem;
+  right: 0;
+  height: 100%;
+  z-index: 600;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-family: "Montserrat";
+  overflow: scroll;
+}
+
+.modal-container::-webkit-scrollbar {
+  width: 0px;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+}
+
+#DPModal-container {
+  position: relative;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 2rem;
+  background: #fafafa;
+  z-index: 600;
+  -webkit-box-shadow: 5px 10px 30px -20px black;
+          box-shadow: 5px 10px 30px -20px black;
+  font-family: "Montserrat";
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+}
+
+#DPModal-container .upload-error {
+  font-size: 1.2rem;
+  color: white;
+  background: #b54444;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#DPModal-container .upload-error img {
+  height: 1rem;
+  cursor: pointer;
+}
+
+#DPModal-container .DPModal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
+}
+
+#DPModal-container .DPModal-header .upload-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#DPModal-container .DPModal-header img {
+  height: 1.4rem;
+  cursor: pointer;
+}
+
+#DPModal-container .uploadDP-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#DPModal-container .uploadDP-form .form-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#DPModal-container .uploadDP-form .form-buttons .upload-button {
+  background: #1a1a1a;
+  padding: 2rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+#DPModal-container .uploadDP-form .form-buttons .upload-button input[type="file"] {
+  display: none;
+}
+
+#DPModal-container .uploadDP-form .form-buttons .form-btn {
+  background: #1a1a1a;
+  padding: 1rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#DPModal-container .uploadDP-form .image-preview {
+  margin-left: 2rem;
+  height: 30rem;
+  width: 30rem;
+  background: #1a1a1a;
+}
+
+#DPModal-container .uploadDP-form .image-preview img {
+  -o-object-position: center center;
+     object-position: center center;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.cropper-view-box {
+  outline: 1px solid white !important;
+  outline-color: mediumpurple !important;
+}
+
+.cropper-point {
+  background-color: white !important;
+}
+
+@media screen and (max-width: 699px) {
+  #DPModal-container .uploadDP-form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+  }
+  #DPModal-container .uploadDP-form .form-buttons {
+    margin-top: 2rem;
+  }
+  #DPModal-container .uploadDP-form .image-preview {
+    margin-left: 0;
+  }
+}
+
+#upload-modal-container {
+  position: relative;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 2rem;
+  background: #fafafa;
+  z-index: 600;
+  -webkit-box-shadow: 5px 10px 30px -20px black;
+          box-shadow: 5px 10px 30px -20px black;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+}
+
+#upload-modal-container .modal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
+}
+
+#upload-modal-container .modal-header .modal-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#upload-modal-container .modal-header img {
+  height: 1.4rem;
+  cursor: pointer;
+}
+
+#upload-modal-container .upload-error {
+  font-size: 1.2rem;
+  color: white;
+  background: #b54444;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#upload-modal-container .upload-error img {
+  height: 1rem;
+  cursor: pointer;
+}
+
+#upload-modal-container .upload-form .form-section {
+  margin-bottom: 4rem;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview {
+  height: 50rem;
+  width: 50rem;
+  max-width: 60rem;
+  background: #1a1a1a;
+  margin-bottom: 2rem;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview img {
+  -o-object-position: center center;
+     object-position: center center;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .upload-button {
+  background: #1a1a1a;
+  padding: 2rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .upload-button input[type="file"] {
+  display: none;
+}
+
+#upload-modal-container .upload-form .form-section .section-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
+}
+
+#upload-modal-container .upload-form .form-section .input-title {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+#upload-modal-container .upload-form .form-section .input-field {
+  background: #1a1a1a;
+  border: none;
+  min-height: 4rem;
+  width: 100%;
+  color: #fafafa;
+  font-size: 1.4rem;
+  padding: 1rem;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .title {
+  width: 100%;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .location {
+  width: 100%;
+  margin-left: 4rem;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .tags {
+  width: 100%;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .price {
+  width: 100%;
+  margin-left: 4rem;
+}
+
+#upload-modal-container .upload-form .form-section .description {
+  width: 100%;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper {
+  height: 20rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper textarea {
+  resize: none;
+  height: 100%;
+}
+
+#upload-modal-container .upload-form .form-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
+}
+
+#upload-modal-container .upload-form .form-btn input {
+  background: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 699px) {
+  #upload-modal-container .upload-form .form-section .upload-image-container .image-preview {
+    width: 40rem;
+    height: 40rem;
+  }
+}
+
+#role-change-modal-container {
+  position: relative;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: 100%;
+  max-width: 60rem;
+  padding: 2rem;
+  background: #fafafa;
+  z-index: 600;
+  -webkit-box-shadow: 5px 10px 30px -20px black;
+          box-shadow: 5px 10px 30px -20px black;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+}
+
+#role-change-modal-container img {
+  height: 1.4rem;
+  position: absolute;
+  right: 2rem;
+  cursor: pointer;
+}
+
+#role-change-modal-container .modal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#role-change-modal-container .modal-header .modal-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+#role-change-modal-container .modal-header .modal-subtext {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+#role-change-modal-container .role-change-form {
+  width: 100%;
+}
+
+#role-change-modal-container .role-change-form .form-section {
+  margin-bottom: 4rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .section-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .section-text {
+  font-size: 1.2rem;
+  opacity: 0.6;
+  margin-bottom: 2rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .signature-border {
+  width: 100%;
+  border: #1a1a1a 2rem solid;
+}
+
+#role-change-modal-container .role-change-form .form-section .signature-border .signature-container {
+  width: 100%;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+#role-change-modal-container .role-change-form .form-section .signature-border .signature-container .sigCanvas {
+  width: 100%;
+  height: 40rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .signature-clear {
+  background: #1a1a1a;
+  padding: 1rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: white;
+  text-align: center;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+#role-change-modal-container .role-change-form .form-section .input-wrapper {
+  font-size: 1rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .checkbox {
+  margin-right: 1rem;
+}
+
+#role-change-modal-container .role-change-form .form-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#role-change-modal-container .role-change-form .form-btn input {
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
+  cursor: pointer;
 }
 /*# sourceMappingURL=main.css.map */
