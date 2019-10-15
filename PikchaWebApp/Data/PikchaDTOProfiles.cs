@@ -36,6 +36,13 @@ namespace PikchaWebApp.Data
                 dest => dest.Height, opt => opt.MapFrom(src => "0"))
                 ;
 
+            CreateMap<PikchaImage, PikchaImageDescriptionDTO>()
+                .ForMember(
+                dest => dest.TotalViews,
+                opt => opt.MapFrom(src =>
+                    src.PikchaImageViews.Sum(y => y.Count)))
+                ;
+
         }
 
         private void InitUserDTOs()

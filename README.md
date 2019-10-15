@@ -21,7 +21,7 @@ failure query [ Statuscode="1222", Status="Null Exception Occured", Data= ""]
 - AUTHENTICATED : false
 - QUERY_PARAMS : Type = random [string, Default=random], Start [int, Optional], Count [int, Optional]
 - RESULTS : images[]
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500
 
 Image
  - PikchaImageId
@@ -46,7 +46,7 @@ Image
 - AUTHENTICATED : false
 - QUERY_PARAMS : Type= pikcha100 [string], Start [int, Optional, Default=0], Count [int, Optional, Default=20]
 - RESULTS : images[]
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500
 
 Image
  - PikchaImageId
@@ -68,7 +68,7 @@ Image
 - AUTHENTICATED : false
 
 - RESULTS : image
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500
 
 Image
  - PikchaImageId
@@ -98,10 +98,9 @@ Image
 
 
 ### add view count
-- ENDPOINT : api/image/incrementviewcount
+- ENDPOINT : api/image/incrementviewcount/{imageId}
 - METHOD : post
 - AUTHENTICATED : false
-- PARAMS : imageId [string]
 - RESULTS : OK
 - ERROR_CODES : 201, 500
 
@@ -121,7 +120,7 @@ Image
 - AUTHENTICATED : false
 - QUERY_PARAMS : Type=random [string, Default=random], Start [int, Optional], Count [int, Optional]
 - RESULTS : artists[]
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500
 
 Artist
  - FirstName 
@@ -140,7 +139,7 @@ Artist
 - AUTHENTICATED : false
 - QUERY_PARAMS : Type=artists100 [string], Start [int, Optional], Count [int, Optional]
 - RESULTS : artists[]
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500
 
 Artist
  - FirstName 
@@ -158,7 +157,7 @@ Artist
 - METHOD : get
 - AUTHENTICATED : true
 - RESULTS : artist
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500
 
 
 ARTIST
@@ -184,7 +183,7 @@ ARTIST
 - METHOD : get
 - AUTHENTICATED : true
 - RESULTS : loggedinuserinfo
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500
 
 
 LOGGEDINUSERINFO
@@ -199,7 +198,7 @@ LOGGEDINUSERINFO
 - METHOD : post
 - AUTHENTICATED : true
 - RESULTS : SUCCESS
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500
 
 
 ### Upload user avatar 
@@ -207,4 +206,4 @@ LOGGEDINUSERINFO
 - METHOD : post
 - AUTHENTICATED : true
 - RESULTS : SUCCESS
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500

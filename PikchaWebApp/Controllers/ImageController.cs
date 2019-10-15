@@ -163,18 +163,18 @@ namespace PikchaWebApp.Controllers
         
      
 
-        [HttpPost("incrementviewcount")]
+        [HttpPost("incrementviewcount/{imageId}")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult> IncrementViewCount(uint imageId)
+        public async Task<ActionResult> IncrementViewCount(string imageId)
         {
             try
             {
-                var imgVw = await _pikchDbContext.ImageViews.FirstAsync(i => i.PikchaImage.Id == imageId && i.Date == DateTime.Today.Date);
+                var imgVw = await _pikchDbContext.ImageViews.FirstAsync(i => i.PikchaImage.PikchaImageId == imageId && i.Date == DateTime.Today.Date);
 
                 if ( imgVw == null)
                 {
-                    PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
+                    PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.PikchaImageId == imageId);
                     if(pImg != null)
                     {
                         _pikchDbContext.ImageViews.Add(new ImageView() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
