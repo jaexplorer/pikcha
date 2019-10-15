@@ -12,7 +12,7 @@ import PeopleIcon from "../../../assets/images/people-black.png";
 import PlaceHolder from "../../../assets/images/placeholder.png";
 import ProfileDropdown from "./ProfileDropdown";
 import CartDropdown from "./CartDropdown";
-import { ApplicationPaths } from "../../api-authorization/ApiAuthorizationConstants";
+import { ApplicationPaths } from "../../auth/ApiAuthorizationConstants";
 
 const MobileNavbar = ({
   auth,
@@ -31,8 +31,8 @@ const MobileNavbar = ({
       <div id='navbar-display-pic'>
         <img onClick={createProfileDropdown} src={PlaceHolder} alt='' />
       </div>
-      {nav.profileDropdown ? <ProfileDropdown /> : ""}
-      {nav.cartDropdown ? <CartDropdown /> : ""}
+      {nav.profileDropdown && <ProfileDropdown />}
+      {nav.cartDropdown && <CartDropdown />}
     </div>
   );
 

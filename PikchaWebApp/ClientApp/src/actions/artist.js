@@ -7,7 +7,7 @@ export const getArtist = id => {
   return async dispatch => {
     try {
       dispatch(setLoading());
-      const res = await axios.get(`http://localhost:8000/api/profile/${id}`);
+      const res = await axios.get(`api/profile/${id}`);
       dispatch({
         type: GET_ARTIST,
         payload: res.data
