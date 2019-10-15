@@ -22,12 +22,13 @@ namespace PikchaWebApp.Data
         public DbSet<PikchaUser> PikchaUsers { get; set; }
         public DbSet<PikchaImage> PikchaImages { get; set; }
         public DbSet<ImageTag> ImageTags { get; set; }
+        public DbSet<ImageView> ImageViews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.Entity<PikchaUser>().ToTable("PikchaUsers");
-            builder.Entity<IdentityRole>().ToTable("PikchaRoles");
+            builder.Entity<PikchaRole>().ToTable("PikchaRoles");
             builder.Entity<IdentityUserRole<string>>().ToTable("PikchaUserRoles");
             builder.Entity<IdentityUserClaim<string>>().ToTable("PikchaUserClaims");
             builder.Entity<IdentityUserLogin<string>>().ToTable("PikchaUserLogins");
