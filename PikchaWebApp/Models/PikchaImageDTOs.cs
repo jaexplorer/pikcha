@@ -43,6 +43,7 @@ namespace PikchaWebApp.Models
         public string WatermarkedFile { get; set; }
         public long TotalViews { get; set; }
 
+        public string ArtistId { get; set; }
         public string ArtistFirstname { get; set; }
         public string ArtistLastname { get; set; }
         public string ArtistPercity { get; set; }

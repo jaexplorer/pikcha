@@ -30,6 +30,7 @@ Image
  - Location 
  - ThumbnailFile 
  - WatermarkedFile 
+ - ArtisitId
  - ArtistFirstname 
  - ArtistLastname 
  - ArtistPercity 
@@ -178,7 +179,7 @@ ARTIST
  - InstagramLink
  - LinkedInLink
 
- ### Get the loggedin user info 
+### Get the loggedin user info 
 - ENDPOINT : api/profile/loggedinuserinfo/{userId} 
 - METHOD : get
 - AUTHENTICATED : true
@@ -193,8 +194,16 @@ LOGGEDINUSERINFO
  - LastUploadedOn
 
 
-  ### Promote a user to a photographer 
+### Promote a user to a photographer 
 - ENDPOINT : api/profile/promotetophotographer/{userId} 
+- METHOD : post
+- AUTHENTICATED : true
+- RESULTS : SUCCESS
+- ERROR_CODES : 200, 404, 500
+
+
+### Upload user avatar 
+- ENDPOINT : api/profile/avatar
 - METHOD : post
 - AUTHENTICATED : true
 - RESULTS : SUCCESS
