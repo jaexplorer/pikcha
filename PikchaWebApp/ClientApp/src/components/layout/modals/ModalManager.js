@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import DPModal from "./DPModal";
 import RoleChangeModal from "./RoleChangeModal";
+import UploadModal from "./UploadModal";
 
 const ModalManager = ({ modal }) => {
   const createModal = () => {
@@ -10,6 +11,8 @@ const ModalManager = ({ modal }) => {
         return <DPModal />;
       case "RoleChangeModal":
         return <RoleChangeModal />;
+      case "UploadModal":
+        return <UploadModal />;
     }
   };
 

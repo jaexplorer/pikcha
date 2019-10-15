@@ -146,6 +146,192 @@
   }
 }
 
+// Upload Image Modal
+// ---------------------------------------- //
+#upload-modal-container {
+  position: relative;
+  height: max-content;
+  width: max-content;
+  padding: 2rem;
+  background: #fafafa;
+  z-index: 600;
+  box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 1);
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+    margin-bottom: 2rem;
+    .modal-title {
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    img {
+      height: 1.4rem;
+      cursor: pointer;
+    }
+  }
+
+  .upload-error {
+    font-size: 1.2rem;
+    color: white;
+    background: rgb(181, 68, 68);
+    margin-bottom: 2rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      height: 1rem;
+      cursor: pointer;
+    }
+  }
+
+  .upload-form {
+    .form-section {
+      margin-bottom: 4rem;
+      .upload-image-container {
+        display: flex;
+        flex-direction: column;
+        .image-preview {
+          height: 50rem;
+          width: 50rem;
+          max-width: 60rem;
+
+          background: #1a1a1a;
+          margin-bottom: 2rem;
+
+          img {
+            object-position: center center;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+          }
+        }
+
+        .upload-button {
+          background: #1a1a1a;
+          padding: 2rem;
+          padding-left: 4rem;
+          padding-right: 4rem;
+          text-transform: uppercase;
+          font-size: 1.2rem;
+          color: white;
+          text-align: center;
+          margin-bottom: 2rem;
+          cursor: pointer;
+
+          input[type="file"] {
+            display: none;
+          }
+        }
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+        margin-bottom: 2rem;
+      }
+
+      .input-title {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+      }
+      .input-field {
+        background: #1a1a1a;
+        border: none;
+        min-height: 4rem;
+        width: 100%;
+        color: #fafafa;
+        font-size: 1.4rem;
+        padding: 1rem;
+      }
+
+      .split-details-container {
+        display: flex;
+        justify-content: space-between;
+
+        .title {
+          width: 100%;
+        }
+
+        .location {
+          width: 100%;
+          margin-left: 4rem;
+        }
+
+        .tags {
+          width: 100%;
+        }
+
+        .price {
+          width: 100%;
+          margin-left: 4rem;
+        }
+      }
+
+      .description {
+        width: 100%;
+        margin-top: 2.5rem;
+        margin-bottom: 2.5rem;
+
+        .input-wrapper {
+          height: 20rem;
+          display: flex;
+          flex-direction: column;
+
+          textarea {
+            resize: none;
+            height: 100%;
+          }
+        }
+      }
+    }
+    .form-btn {
+      display: flex;
+      justify-content: center;
+      background-image: linear-gradient(
+        -130deg,
+        #5271c4 0%,
+        #b19fff 50%,
+        rgba(236, 161, 254, 1) 100%
+      );
+
+      input {
+        background: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  #upload-modal-container {
+    .upload-form {
+      .form-section {
+        .upload-image-container {
+          .image-preview {
+            width: 40rem;
+            height: 40rem;
+          }
+        }
+      }
+    }
+  }
+}
+
 // Role Change Modal
 // ---------------------------------------- //
 #role-change-modal-container {

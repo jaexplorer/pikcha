@@ -3023,6 +3023,212 @@ body .frame-container .main-container .main-content-container {
   }
 }
 
+#upload-modal-container {
+  position: relative;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 2rem;
+  background: #fafafa;
+  z-index: 600;
+  -webkit-box-shadow: 5px 10px 30px -20px black;
+          box-shadow: 5px 10px 30px -20px black;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+}
+
+#upload-modal-container .modal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
+}
+
+#upload-modal-container .modal-header .modal-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#upload-modal-container .modal-header img {
+  height: 1.4rem;
+  cursor: pointer;
+}
+
+#upload-modal-container .upload-error {
+  font-size: 1.2rem;
+  color: white;
+  background: #b54444;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#upload-modal-container .upload-error img {
+  height: 1rem;
+  cursor: pointer;
+}
+
+#upload-modal-container .upload-form .form-section {
+  margin-bottom: 4rem;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview {
+  height: 50rem;
+  width: 50rem;
+  max-width: 60rem;
+  background: #1a1a1a;
+  margin-bottom: 2rem;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview img {
+  -o-object-position: center center;
+     object-position: center center;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .upload-button {
+  background: #1a1a1a;
+  padding: 2rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .upload-button input[type="file"] {
+  display: none;
+}
+
+#upload-modal-container .upload-form .form-section .section-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
+}
+
+#upload-modal-container .upload-form .form-section .input-title {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+#upload-modal-container .upload-form .form-section .input-field {
+  background: #1a1a1a;
+  border: none;
+  min-height: 4rem;
+  width: 100%;
+  color: #fafafa;
+  font-size: 1.4rem;
+  padding: 1rem;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .title {
+  width: 100%;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .location {
+  width: 100%;
+  margin-left: 4rem;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .tags {
+  width: 100%;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .price {
+  width: 100%;
+  margin-left: 4rem;
+}
+
+#upload-modal-container .upload-form .form-section .description {
+  width: 100%;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper {
+  height: 20rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper textarea {
+  resize: none;
+  height: 100%;
+}
+
+#upload-modal-container .upload-form .form-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
+}
+
+#upload-modal-container .upload-form .form-btn input {
+  background: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 699px) {
+  #upload-modal-container .upload-form .form-section .upload-image-container .image-preview {
+    width: 40rem;
+    height: 40rem;
+  }
+}
+
 #role-change-modal-container {
   position: relative;
   height: -webkit-max-content;

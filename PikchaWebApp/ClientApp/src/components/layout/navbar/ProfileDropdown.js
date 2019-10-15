@@ -27,7 +27,7 @@ const ProfileDropdown = ({ auth, removeProfileDropdown, createModal }) => {
     <div id='profile-dropdown' ref={dropdownContainer}>
       <div
         onClick={() => {
-          createModal("RoleChangeModal");
+          createModal("UploadModal");
           removeProfileDropdown();
         }}
         className='upload-container'
