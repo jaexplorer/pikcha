@@ -14,6 +14,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using PikchaWebApp.Controllers;
+using System.Threading;
+using System.Security.Claims;
+using PikchaWebApp.Managers;
 
 namespace PikchaWebApp.Test
 {
@@ -21,6 +26,7 @@ namespace PikchaWebApp.Test
     {
         public static StringBuilder LogMessage = new StringBuilder();
 
+        /*
         public static Mock<UserManager<TUser>> MockUserManager<TUser>() where TUser : class
         {
             var store = new Mock<IUserStore<TUser>>();
@@ -38,7 +44,7 @@ namespace PikchaWebApp.Test
             return new Mock<RoleManager<TRole>>(store, roles, new UpperInvariantLookupNormalizer(),
                 new IdentityErrorDescriber(), null);
         }
-
+        */
         public static Mock<ILogger<T>> MockILogger<T>(StringBuilder logStore = null) where T : class
         {
             logStore = logStore ?? LogMessage;
@@ -163,22 +169,43 @@ namespace PikchaWebApp.Test
             return users;
         }
 
-        public static async Task<PikchaUser> CreateNewUser(string userId, string userName, string password, SqliteInMemoryFixture fixture)
+        public static async Task<PikchaUser> CreateNewUser(int pikchaUserId, string userId, string userName, string password, SqliteInMemoryFixture fixture)
         {
             // Arrange
-            //var userId = "TestUserA";
-            //var phone = "abcdefg";
-            //var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, userId) };
-
             var userManager = fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
-
-            var user = new PikchaUser { Id = userId, UserName = userName, Email = userName, TwoFactorEnabled = true };
-
+           
+            var user = new PikchaUser {PikchaUserId = pikchaUserId, Id = userId, UserName = userName, Email = userName, TwoFactorEnabled=false };
+            
             await userManager.CreateAsync(user, password);
+            
             return user;
 
         }
 
+
+        public static UserManager<PikchaUser> CreateMockUserManager(PikchaUser pkUser)
+        {
+            Mock<IUserRoleStore<PikchaUser>> MockUserStore = new Mock<IUserStore<PikchaUser>>().As<IUserRoleStore<PikchaUser>>();
+            
+            MockUserStore.Setup(x => x.FindByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(
+            (string userName, CancellationToken token) => pkUser);
+
+
+            MockUserStore.Setup(x => x.UpdateAsync(It.IsAny<PikchaUser>(), It.IsAny<CancellationToken>())).ReturnsAsync(
+            (PikchaUser userName, CancellationToken token) => IdentityResult.Success);
+
+            
+            MockUserStore.Setup(x => x.AddToRoleAsync(It.IsAny<PikchaUser>(), It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(
+            Task.FromResult(IdentityResult.Success));
+
+            List<string> roles = new List<string>();
+            roles.Add(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+            MockUserStore.Setup(x => x.GetRolesAsync(It.IsAny<PikchaUser>(), It.IsAny<CancellationToken>())).ReturnsAsync(
+            (PikchaUser userName, CancellationToken token) => roles);
+
+            return new UserManager<PikchaUser>(MockUserStore.Object, null, null, null, null, null, null, null, null);
+
+        }
         public static async Task<PikchaUser> FindUserById(string userId, SqliteInMemoryFixture fixture)
         {
             var userManager = fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
@@ -192,6 +219,28 @@ namespace PikchaWebApp.Test
 
             await userManager.DeleteAsync(user);
 
+        }
+
+        public static void MockRandomImages(ref Mock<IMapper> _imapper)
+        {
+            _imapper.Setup(x => x.Map<PikchaRandomImageDTO>(It.IsAny<PikchaImage>()))
+      .Returns((PikchaImage source) => new PikchaRandomImageDTO() { });
+           
+
+        }
+
+        public static ImageViewModel CreateImage(string title, string caption, string location)
+        {
+            IFormFile imgFile = MockHelpers.CreateNewImageFile("TestPhotos/beach-jaffna.jpg", "beach-jaffna.jpg", "beach-jaffna");
+
+            ImageViewModel vmImage = new ImageViewModel();
+            vmImage.Title = title;
+            vmImage.Caption = caption;
+            vmImage.Location = location;
+            //vmImage.NumberOfPrint = 10;
+            vmImage.ImageFile = imgFile;
+
+            return vmImage;
         }
 
     }

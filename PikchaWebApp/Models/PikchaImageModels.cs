@@ -10,11 +10,11 @@ namespace PikchaWebApp.Models
     [Table("PikchaImages")]
     public class PikchaImage
     {
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("Id")]
-        public uint Id { get; set; }
-
-        [Key]
+        public int Id { get; set; }
+                
         [Column("PikchaImageId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string PikchaImageId { get; set; }
@@ -27,9 +27,6 @@ namespace PikchaWebApp.Models
 
         [Column("Location")]
         public string Location { get; set; }
-
-        [Column("NoOfPrint")]
-        public int NumberOfPrint { get; set; }
 
         [Column("Width")]
         public int Width { get; set; }
@@ -44,11 +41,11 @@ namespace PikchaWebApp.Models
         public string WatermarkedFile { get; set; }
 
         [Column("UploadedAt")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset UploadedAt { get; set; }
 
         [Column("ModifiedAt")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        // [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTimeOffset ModifiedAt { get; set; }
 
 
@@ -56,17 +53,17 @@ namespace PikchaWebApp.Models
         public PikchaUser Artist { get; set; }
         
         public IEnumerable<PikchaImageTag> PikchaImageTags { get; set; }
-        public IEnumerable<ImageView> PikchaImageViews { get; set; }
+        public IEnumerable<PikchaImageViews> PikchaImageViews { get; set; }
 
     }
 
-    [Table("ImageTags")]
-    public class ImageTag
+    [Table("PikchaTags")]
+    public class PikchaTag
     {
         [Key]
         [Column("ImageTagId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public uint ImageTagId { get; set; }
+        public int ImageTagId { get; set; }
 
         [Column("Name")]
         public string Name { get; set; }
@@ -77,30 +74,37 @@ namespace PikchaWebApp.Models
     [Table("PikchaImageTags")]
     public class PikchaImageTag
     {
-        [Key]
-        [Column("PikchaImageTagId")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public uint PikchaImageTagId { get; set; }
-        public ImageTag ImageTag { get; set; }
+        public int ImageTagId { get; set; }
+
+        [ForeignKey("ImageTagId")]
+        public PikchaTag ImageTag { get; set; }
+
+        public int PikchaImageId { get; set; }
+
+        [ForeignKey("PikchaImageId")]
+
         public PikchaImage PikchaImage { get; set; }
 
     }
 
     [Table("PikchaImageViews")]
-    public class ImageView
+    public class PikchaImageViews
     {
         [Key]
         [Column("PikchaImageViewId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public uint PikchaImageViewId { get; set; }
+        public int PikchaImageViewId { get; set; }
 
 
         [Column(TypeName = "Date")]
         [Required]
         public DateTime Date { get; set; }
         
-        public uint Count { get; set; }
+        public int Count { get; set; }
 
+        public int PikchaImageId { get; set; }
+
+        [ForeignKey("PikchaImageId")]
         public PikchaImage PikchaImage { get; set; }
 
     }
