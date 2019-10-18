@@ -25,7 +25,7 @@ namespace PikchaWebApp.Controllers
 
         [HttpGet("images")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status416RangeNotSatisfiable)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> Images(string Type="random", int Start=0, int Count=20 )
         {
@@ -36,7 +36,7 @@ namespace PikchaWebApp.Controllers
                 {
                     //var pikcha100imgTsks = _mapper.ProjectTo<Pikcha100ImageDTO>(_pikchDbContext.PikchaImages).OrderByDescending(im => im.TotalViews).Skip(Start).Take(Count).ToListAsync();
                     var pikcha100imgs = await _mapper.ProjectTo<Pikcha100ImageDTO>(_pikchDbContext.PikchaImages).OrderByDescending(im => im.TotalViews).Skip(Start).Take(Count).ToListAsync();
-                    return ReturnOkOrNotFound(pikcha100imgs);
+                    return ReturnOkOrErrorStatus(pikcha100imgs);
 
                     // return new ReturnDataModel() { Data = pikcha100imgs };
 
@@ -44,7 +44,7 @@ namespace PikchaWebApp.Controllers
 
                     if (pikcha100imgTsks.IsCompleted)
                     {
-                        return ReturnOkOrNotFound(pikcha100imgTsks.Result);
+                        return ReturnOkOrErrorStatus(pikcha100imgTsks.Result);
                     }
 
                     return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */
@@ -52,12 +52,12 @@ namespace PikchaWebApp.Controllers
 
                 //List<PikchaImage> images = _pikchDbContext.PikchaImages.Include(img => img.Artist).Skip(Start).Take(Count).OrderBy(r => Guid.NewGuid()).ToList();
                 var images = await _mapper.ProjectTo<PikchaRandomImageDTO>(_pikchDbContext.PikchaImages).OrderByDescending(im => im.TotalViews).Skip(Start).Take(Count).ToListAsync();
-                return ReturnOkOrNotFound(images);
+                return ReturnOkOrErrorStatus(images);
                 /*await imagesTsk;
 
                 if (imagesTsk.IsCompleted)
                 {
-                    return ReturnOkOrNotFound(imagesTsk.Result);
+                    return ReturnOkOrErrorStatus(imagesTsk.Result);
                 }
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */
@@ -72,7 +72,7 @@ namespace PikchaWebApp.Controllers
         
         [HttpGet("artists")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status416RangeNotSatisfiable)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> Artists(string Type = "random", int Start = 0, int Count = 20)
         {
@@ -85,12 +85,12 @@ namespace PikchaWebApp.Controllers
 
 
                     var artists100 =await _mapper.ProjectTo<Pikcha100ArtistDTO>(_pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews")).OrderByDescending(im => im.FirstName).Skip(Start).Take(Count).ToListAsync();
-                    return ReturnOkOrNotFound(artists100);
+                    return ReturnOkOrErrorStatus(artists100);
                     /* await artists100Tsk;
 
                     if (artists100Tsk.IsCompleted)
                     {
-                        return ReturnOkOrNotFound(artists100Tsk.Result);
+                        return ReturnOkOrErrorStatus(artists100Tsk.Result);
                     }
 
                     return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */
@@ -102,15 +102,15 @@ namespace PikchaWebApp.Controllers
                 var art2 = _pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews").ToList();
 
                 var artists = await _mapper.ProjectTo<Pikcha100ArtistDTO>(_pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews")).OrderByDescending(im => im.FirstName).Skip(Start).Take(Count).ToListAsync();
-                return ReturnOkOrNotFound(artists);
+                return ReturnOkOrErrorStatus(artists);
 
                // var artists = await _pikchDbContext.PikchaUsers.Skip(Start).Take(Count).OrderBy(r => Guid.NewGuid()).ToListAsync();
-               // return ReturnOkOrNotFound(artists);
+               // return ReturnOkOrErrorStatus(artists);
                 /*await artistTsk;
 
                 if (artistTsk.IsCompleted)
                 {
-                    return ReturnOkOrNotFound(artistTsk.Result);
+                    return ReturnOkOrErrorStatus(artistTsk.Result);
                 }
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */

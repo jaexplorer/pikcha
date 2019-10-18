@@ -14,6 +14,12 @@ namespace PikchaWebApp.Models
     {
         public string Height { get; set; }
 
+        public decimal Performance { get; set; }
+
+        public int TotalPhotosSold { get; set; }
+        public decimal AveragePrice { get; set; }
+
+        public List<PikchaUser> Sellers { get; set; }
     }
 
 
@@ -21,6 +27,12 @@ namespace PikchaWebApp.Models
     {
         public string Caption { get; set; }
         public string Height { get; set; }
+        public decimal Performance { get; set; }
+
+        public int TotalImageSold { get; set; }
+        public decimal AveragePrice { get; set; }
+
+        public List<PikchaUser> Sellers { get; set; }
     }
 
 
@@ -41,7 +53,9 @@ namespace PikchaWebApp.Models
         public string Location { get; set; }
         public string ThumbnailFile { get; set; }
         public string WatermarkedFile { get; set; }
-        public long TotalViews { get; set; }
+        public int TotalViews { get; set; }
+
+
 
         public string ArtistId { get; set; }
         public string ArtistFirstname { get; set; }
@@ -49,6 +63,8 @@ namespace PikchaWebApp.Models
         public string ArtistPercity { get; set; }
         public string ArtistPercountry { get; set; }
         public string ArtistAvatarfilename { get; set; }
+
+
     }
 
 }

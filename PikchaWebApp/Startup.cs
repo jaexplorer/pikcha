@@ -39,7 +39,7 @@ namespace PikchaWebApp
                     Configuration.GetConnectionString("DefaultConnection")));
 
            // services.AddDefaultIdentity<PikchaUser>()  
-            services.AddIdentity<PikchaUser, PikchaRole>()  
+            services.AddIdentity<PikchaUser, IdentityRole>()  
                 //.AddRoles<IdentityRole>()
                 //.AddRoleManager<IdentityRole>()
                 // services.AddIdentity(PikchaUser, PikchaRo>()
@@ -55,12 +55,12 @@ namespace PikchaWebApp
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            /*services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
                 builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
-            })); */
+            }));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -68,17 +68,16 @@ namespace PikchaWebApp
                 configuration.RootPath = "ClientApp/build";
             });
 
-            /*services.AddCors(options =>
+            services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
                     builder =>
                     {
 
-                        builder.WithOrigins("http://localhost.com",
-                                            "http://localhost").AllowAnyHeader().AllowAnyMethod(); 
+                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); 
                     });
 
-            }); */
+            }); 
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
@@ -120,7 +119,7 @@ namespace PikchaWebApp
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
-            app.UseCors("MyPolicy");
+            //app.UseCors("DefaultPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -160,7 +159,7 @@ namespace PikchaWebApp
                 {                 
                     var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
                     
-                    var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<PikchaRole>>();
+                    var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
                     InitDB(userManager, roleManager, context);
                     SeedData(userManager, env, context);                    
@@ -244,7 +243,7 @@ namespace PikchaWebApp
                 string imgId = imageIds[i];
 
                 int daysSince = rnd.Next(20);
-                //List<ImageView> imgViews = new List<ImageView>();
+                //List<PikchaImageViews> imgViews = new List<PikchaImageViews>();
 
                 
 
@@ -254,7 +253,7 @@ namespace PikchaWebApp
                     Caption = "Caption " + i,
                     Title = "Title " + i,
                     Location = locations[rnd.Next(locations.Count)],
-                    Id = (uint)i +1,
+                    //Id = i +1,
                     PikchaImageId = imgId,
                     WatermarkedFile = "Uploads/Images/Watermarks/" + imgId + ".jpg",
                     ThumbnailFile = "Uploads/Images/Thumbnail/" + imgId + ".jpg",
@@ -265,7 +264,7 @@ namespace PikchaWebApp
 
                 for (int j = 0; j < daysSince; j++)
                 {
-                    var imgv = new ImageView() { PikchaImageViewId = (uint) (img.Id * 100 + j + 1), Date = DateTime.Now.AddDays(-j), Count = (uint)rnd.Next(100), PikchaImage= img };
+                    var imgv = new PikchaImageViews() { Date = DateTime.Now.AddDays(-j), Count = rnd.Next(100), PikchaImage= img };
                     dbContext.ImageViews.Add(imgv);
                 }
                 dbContext.SaveChanges();
@@ -275,7 +274,7 @@ namespace PikchaWebApp
         }
 
 
-        private void InitDB(UserManager<PikchaUser> userManager, RoleManager<PikchaRole> roleManager, PikchaDbContext dbContext)
+        private void InitDB(UserManager<PikchaUser> userManager, RoleManager<IdentityRole> roleManager, PikchaDbContext dbContext)
         {
             // remove all data if there is
             // clear image views
@@ -299,8 +298,7 @@ namespace PikchaWebApp
             if (!userExist)
             {
                 // first we create Admin rool    
-                var role = new PikchaRole();
-                role.Id = Guid.NewGuid().ToString();
+                var role = new IdentityRole();
                 role.Name = PikchaConstants.PIKCHA_ROLES_USER_NAME;
                 var t = roleManager.CreateAsync(role).Result;
             }
@@ -308,8 +306,8 @@ namespace PikchaWebApp
             if (!photographerExist)
             {
                 // first we create Admin rool    
-                var role = new PikchaRole();
-                role.Id = Guid.NewGuid().ToString();
+                var role = new IdentityRole();
+                //role.Id = Guid.NewGuid().ToString();
                 role.Name = PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME;
                 var s = roleManager.CreateAsync(role).Result;
             }
@@ -318,8 +316,8 @@ namespace PikchaWebApp
             if (!adminExist)
             {
                 // first we create Admin rool    
-                var role = new PikchaRole();
-                role.Id = Guid.NewGuid().ToString();
+                var role = new IdentityRole();
+                //role.Id = Guid.NewGuid().ToString();
                 role.Name = PikchaConstants.PIKCHA_ROLES_ADMIN_NAME;
                 var d = roleManager.CreateAsync(role).Result;
             }

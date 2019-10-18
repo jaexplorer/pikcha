@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,10 @@ namespace PikchaWebApp.Models
     [Table("PikchaUsers")]
     public class PikchaUser : IdentityUser
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("PikchaUserId")]
+        public int PikchaUserId { get; set; }
         // personal info
         [Column("Fname")]
         public string FirstName { get; set; }
@@ -60,20 +65,13 @@ namespace PikchaWebApp.Models
         [Column("ShipCountry")]
         public string ShipCountry { get; set; }
 
-        // social media links
-        [Column("Facebook")]
+        [Column("SocialLinks")]
+        public string SocialLinks { get; set; } 
 
-        public string FacebookLink { get; set; }
-
-        [Column("Insta")]
-
-        public string InstagramLink { get; set; }
-
-        [Column("LinkdIn")]
-
-        public string LinkedInLink { get; set; }
-                       
         public List<PikchaImage> PikchaImages { get; set; }
+
+        public List<PikchaArtistFollower> FollowingArtists { get; set; } = new List<PikchaArtistFollower>();
+        public List<PikchaArtistFollower> Followers { get; set; } = new List<PikchaArtistFollower>();
 
         [NotMapped]
         public PikchaImage TopImage
@@ -92,6 +90,7 @@ namespace PikchaWebApp.Models
                     return this.PikchaImages.OrderByDescending(v => v.PikchaImageViews.Sum(i => i.Count)).First();
 
                 }
+                
                 catch(Exception ex)
                 {
                     return new PikchaImage() { Title = "N/A", Location = "N/A" };
@@ -99,6 +98,23 @@ namespace PikchaWebApp.Models
             }
         }
     }
+
+
+    [Table("PikchaArtistFollowers")]
+    public class PikchaArtistFollower
+    {
+        public string UserId { get; set; }
+
+        public PikchaUser PikchaUser { get; set; }
+
+        public string ArtistsId { get; set; }
+
+        public PikchaUser PikchaArtist { get; set; }
+
+    }
+
+
+
 
     //public class 
     [Table("PikchaRoles")]
