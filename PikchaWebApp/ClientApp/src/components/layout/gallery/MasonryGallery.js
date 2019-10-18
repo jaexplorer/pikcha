@@ -29,7 +29,7 @@ const MasonryGallery = ({ getPhotos, gallery }) => {
 
   const separate = () => {
     var res = [...Array(columns).keys()].map(c =>
-      gallery.photos.data.filter((_, i) => i % columns === c)
+      gallery.photos.filter((_, i) => i % columns === c)
     );
     return [...Array(columns)].map((column, index) => (
       <MasonryColumn key={index + 1} photos={res[index]} />
@@ -40,7 +40,7 @@ const MasonryGallery = ({ getPhotos, gallery }) => {
     <Fragment>
       {gallery.photos !== null && (
         <InfiniteScroll
-          dataLength={gallery.photos.data.length}
+          dataLength={gallery.photos.length}
           next={() => getPhotos(gallery.count, gallery.start)}
           hasMore={gallery.hasMore}
           loader={<h4 className='loading'>Loading...</h4>}

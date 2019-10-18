@@ -1,5 +1,6 @@
 // TODO: Clean up Dispatch for consistency, link to backend
 import AuthorizeService from "../components/auth/AuthorizeService";
+import axios from "axios";
 
 import {
   LOGGED_IN,
@@ -34,6 +35,8 @@ export const login = () => {
 
     try {
       const user = await AuthorizeService.getUser();
+      const res = await axios.get(`api/profile/myinfo/?userId=${user.s_hash}`);
+      console.log(res);
       dispatch({
         type: LOGGED_IN,
         payload: user

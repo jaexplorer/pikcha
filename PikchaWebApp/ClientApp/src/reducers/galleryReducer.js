@@ -19,23 +19,17 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_PHOTOS:
-      payload.data.forEach(d => {
+      payload.forEach(d => {
         const randomised = Math.random() * (30 - 15) + 15;
         d.height = randomised;
       });
       return {
         ...state,
-        photos:
-          state.photos == null
-            ? payload
-            : {
-                status: state.photos.status,
-                statuscode: state.photos.statuscode,
-                data: [...state.photos.data, ...payload.data]
-              },
+        photos: state.photos == null ? payload : [...state.photos, ...payload],
+
         loading: false,
         start: state.start + state.count,
-        hasMore: payload.data.length ? true : false
+        hasMore: payload.length ? true : false
       };
     case PHOTO_SELECTED:
       return {

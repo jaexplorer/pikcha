@@ -23,9 +23,9 @@ const Profile = ({ artist, getArtist }) => {
   }, []);
 
   // API DOESN'T WORK, WAITING ON THANANJI.
-  if (artist.loading === false && artist.artist.status === "Error Occured") {
-    return <Redirect to='/notFound' component={NotFound} />;
-  }
+  // if (artist.loading === false && artist.artist.status === "Error Occured") {
+  //   return <Redirect to='/notFound' component={NotFound} />;
+  // }
 
   return (
     <Fragment>
