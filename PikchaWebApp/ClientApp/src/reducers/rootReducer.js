@@ -6,7 +6,7 @@ import galleryReducer from "./galleryReducer";
 import productReducer from "./productReducer";
 import cartReducer from "./cartReducer";
 import artistReducer from "./artistReducer";
-import accountReducer from "./accountReducer";
+import modalReducer from "./modalReducer";
 
 export default combineReducers({
   authReducer,
@@ -16,5 +16,5 @@ export default combineReducers({
   productReducer,
   cartReducer,
   artistReducer,
-  accountReducer
+  modalReducer
 });

@@ -1,6 +1,6 @@
 // Account
 // ------------------------------------------------------------------- //
-.account-container {
+#account-container {
   font-family: "Montserrat";
   .account-title {
     font-size: 2rem;
@@ -330,7 +330,7 @@
 // Small Devices
 // ---------------------------------------- //
 @media screen and (max-width: 699px) {
-  .account-container {
+  #account-container {
     padding-left: 3rem;
     padding-right: 3rem;
     margin-left: 20%;

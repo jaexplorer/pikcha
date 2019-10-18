@@ -1,6 +1,6 @@
 // Not Found
 // ------------------------------------------------------------------- //
-.notFound-container {
+#notFound-container {
   font-family: "Montserrat";
   h1 {
     font-size: 2rem;
@@ -14,7 +14,7 @@
 // Small Devices
 // ---------------------------------------- //
 @media screen and (max-width: 699px) {
-  .notFound-container {
+  #notFound-container {
     padding-left: 3rem;
     padding-right: 3rem;
   }
