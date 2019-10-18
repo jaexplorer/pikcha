@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PikchaWebApp.Data;
 using PikchaWebApp.Managers;
@@ -36,28 +37,28 @@ namespace PikchaWebApp.Controllers
         }
 
         // GET: api/profile/list
-        [HttpGet("list")]
+        /*[HttpGet("list")]
         public async Task<ActionResult> List()
         {
             //var users = await _userManager.Users.ToListAsync();
             var users = await Task.FromResult(_userManager.Users.ToList());
-            return ReturnOkOrNotFound(users);
+            return ReturnOkOrErrorStatus(users);
             //return new ReturnDataModel() { Data = users };
-        }
+        } */
 
         // GET: api/profile/5
         [HttpGet("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> Get(string userId)
+        public async Task<ActionResult> GetUser(string userId)
         {
             //var user = await _userManager.FindByIdAsync(userId);
-            // TO DO :  if the reu=quest user is admin, return profile based on userId query
-            var pikchaUser = await _userManager.GetUserAsync(this.User); ;
-            return ReturnOkOrNotFound(pikchaUser);
-            //return Ok(pikchaUser);
-            //return new ReturnDataModel() { Data = user };
+            // TO DO :  if the request user is admin, return profile based on userId query
+            //var pikchaUser = await _userManager.GetUserAsync(this.User);
+            var pikchaUser = await _pikchDbContext.PikchaUsers.FindAsync(userId);
+            var userDTO = _mapper.Map<Pikcha100ArtistDTO>(pikchaUser);           
+            return ReturnOkOrErrorStatus(userDTO);
         }
 
 
@@ -67,33 +68,25 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
-        public async Task<ActionResult> Put(int id, [FromForm] ProfileViewModel profModel)
+        public async Task<ActionResult> UpdateUser(string userId, [FromForm] ProfileViewModel userInfo)
         {
             try
             {
-                //PikchaUser pikchaUser = _userManager.FindByIdAsync(profModel.Id).Result;
-                // Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
                 var pikchaUser = await _userManager.GetUserAsync(this.User); ;
+
+                if(pikchaUser == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, "User not found.");
+                }
                 //await loggedinUserTask;
-                pikchaUser.CopyPropertiesFrom(profModel);
+                pikchaUser.CopyPropertiesFrom(userInfo);
 
                 IdentityResult result = await _userManager.UpdateAsync(pikchaUser);
                 if (result.Succeeded)
                 {
-                    return ReturnOkOrNotFound(pikchaUser);
-                    // return Ok(pikchaUser);
+                    return Ok(pikchaUser);
                 }
-                return StatusCode(StatusCodes.Status500InternalServerError, "Details are not updated.");
-
-                /* if (loggedinUserTask.IsCompleted)
-                {
-                    //PikchaUser pikchaUser = loggedinUserTask.Result;
-                   
-
-                }
-
-                return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */
-
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error in updating the user information.");
             }
             catch (Exception ex)
             {
@@ -112,31 +105,45 @@ namespace PikchaWebApp.Controllers
 
         }
 
+
+
         // POST: api/profile/avatar
-        [HttpPost("avatar")]
-        public async Task<ActionResult> UploadAvatarImage([FromForm] IFormFile avatarFile)
+        [HttpPost("avatar/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
+        public async Task<ActionResult> UploadAvatarImage(string userId, [FromForm] IFormFile imageFile)
         {
 
             try
             {
                 StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
                 // = "";
-                Task<string> copyTask = manager.UploadToLocalDirectory(avatarFile, StorageManager.FileCategory.Avatar);
+                Task<string> copyTask = manager.UploadToLocalDirectory(imageFile, Guid.NewGuid().ToString(), ".jpg", StorageManager.FileCategory.Avatar);
                 string filePath = copyTask.Result;
                 // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
                 Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
 
                 await Task.WhenAll(copyTask, loggedinUserTask);
 
-                PikchaUser loggedinUser = loggedinUserTask.Result;
-                if (copyTask.IsCompleted)
+                PikchaUser pikchaUser = loggedinUserTask.Result;
+
+                if(pikchaUser == null)
                 {
-                    loggedinUser.AvatarFileName = filePath;
-                    await _pikchDbContext.SaveChangesAsync();
-                    return Ok(filePath);
+                    return StatusCode(StatusCodes.Status404NotFound, "User not found.");
 
                 }
-                return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed.");
+
+                if (copyTask.IsCompleted)
+                {
+                    pikchaUser.AvatarFileName = filePath;
+                    await _pikchDbContext.SaveChangesAsync();
+                    var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
+                    return Ok(lgUSer);
+
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error in uploading the profile image.");
 
 
             }
@@ -148,13 +155,14 @@ namespace PikchaWebApp.Controllers
 
         }
 
+        // TO DO : This api is not required. 
         // POST: api/profile/signature
         [HttpPost("signature")]
         public async Task<ReturnDataModel> UploadSignatureImage([FromForm] IFormFile signatureFile)
         {
 
             StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
-            Task<string> copyTask = manager.UploadToLocalDirectory(signatureFile, StorageManager.FileCategory.Signature);
+            Task<string> copyTask = manager.UploadToLocalDirectory(signatureFile, Guid.NewGuid().ToString(), ".jpg", StorageManager.FileCategory.Signature);
             string filePath = copyTask.Result;
 
             // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
@@ -173,20 +181,43 @@ namespace PikchaWebApp.Controllers
         }
 
         [Authorize]
-        [HttpPost("promotetophotographer/{userId}")]
+        [HttpPost("artist/promote/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> PromoteUserToPhotographer([FromForm] string userId)
+        public async Task<ActionResult> PromoteUserToPhotographer(string userId, [FromForm] IFormFile signatureFile)
         {
             try
             {
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
+                if (pikchaUser == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, "User not found.");
+                }
+                bool isInAlready = await _userManager.IsInRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+                if(isInAlready)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, "User is already promoted.");
+                }
+
+                // upload signature file
+                StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
+                string filePath = await manager.UploadToLocalDirectory(signatureFile, Guid.NewGuid().ToString(), ".jpg", StorageManager.FileCategory.Signature);
+
+                pikchaUser.SignatureFileName = filePath;
+                await _pikchDbContext.SaveChangesAsync();
+              
                 var result = await _userManager.AddToRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
 
                 if(result.Succeeded)
                 {
-                    return Ok();
+                    var pkUsr = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
+                    var roles = await _userManager.GetRolesAsync(pikchaUser);
+                    if (roles != null)
+                    {
+                        pkUsr.Roles = string.Join(", ", roles);
+                    }
+                    return Ok(pkUsr);
                 }
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error in promoting the user ");
 
@@ -199,31 +230,85 @@ namespace PikchaWebApp.Controllers
         }
 
         [Authorize]
-        [HttpGet("loggedinuserinfo/{userId}")]
+        [HttpGet("myinfo/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> LoggedInUserInfo( string userId)
+        {
+            var pikchaUser = await _userManager.GetUserAsync(this.User);
+
+            var userDTO = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
+            var roles = await _userManager.GetRolesAsync(pikchaUser);
+
+            if (roles != null)
+            {
+                userDTO.Roles = string.Join(", ", roles);
+            }
+            return ReturnOkOrErrorStatus(userDTO);
+
+        }
+
+        [Authorize]
+        [HttpGet("artist/follow/{artistId}/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> FollowAnArtist(string artistId, string userId)
         {
             try
             {
                 // var tmpp = _userManager.GetUserAsync(this.User).Result;
                 // var tmpp2 = _userManager.GetUserAsync(HttpContext.User).Result;
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
+                if(_pikchDbContext.PikchaUsers.Find(artistId) == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404NotFound);
+                }
+                pikchaUser.FollowingArtists.Add(new PikchaArtistFollower() { ArtistsId = artistId });
+                await _pikchDbContext.SaveChangesAsync();
 
-                var lgUSer =  _mapper.Map<PikchaLoggedInUserDTO>(_pikchDbContext.PikchaUsers.Find(pikchaUser.Id));
-                lgUSer.IsPhotoGrapher = await _userManager.IsInRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
-                return ReturnOkOrNotFound(lgUSer);
+                var qUser = _pikchDbContext.PikchaUsers.Include("FollowingArtists.PikchaArtist").First(u => u.Id == pikchaUser.Id);
+                var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(qUser);
+
+                //lgUSer.Following = _mapper.ProjectTo<PikchaAuthenticatedUserDTO>(qUser.FollowingArtists.ToList());
+                return ReturnOkOrErrorStatus(lgUSer);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
 
-
         }
 
+        [Authorize]
+        [HttpGet("artist/unfollow/{artistId}/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> UnFollowAnArtist(string artistId, string userId)
+        {
+            try
+            {
+                var pikchaUser = await _userManager.GetUserAsync(this.User);
 
+                var folArt = pikchaUser.FollowingArtists.First(f => f.ArtistsId == artistId && f.UserId == userId);
+
+                _pikchDbContext.Remove(folArt);
+                await _pikchDbContext.SaveChangesAsync();
+
+                var qUser = _pikchDbContext.PikchaUsers.Include("FollowingArtists.PikchaArtist").First(u => u.Id == pikchaUser.Id);
+                var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(qUser);
+
+                //lgUSer.Following = _mapper.ProjectTo<PikchaAuthenticatedUserDTO>(qUser.FollowingArtists.ToList());
+                return ReturnOkOrErrorStatus(lgUSer);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+        }
     }
 
     public class ProfileViewModel
@@ -241,8 +326,7 @@ namespace PikchaWebApp.Controllers
         public string ShipCity { get; set; }
         public string ShipPostalCode { get; set; }
         public string ShipCountry { get; set; }
-        public string FacebookLink { get; set; }
-        public string InstagramLink { get; set; }
-        public string LinkedInLink { get; set; }
+        public string SocialLinks { get; set; }
+
     }
 }

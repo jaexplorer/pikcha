@@ -52,6 +52,18 @@
     <Compile Remove="Migrations\20191006132236_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20191006133050_InitialCreate.cs" />
     <Compile Remove="Migrations\20191006133050_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191007094503_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191007094503_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016101414_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016101414_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016103037_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016103037_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016104846_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016104846_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016110421_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016110421_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016112615_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016112615_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -151,7 +163,7 @@
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)build\**" />
-      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </ResolvedFileToPublish>
