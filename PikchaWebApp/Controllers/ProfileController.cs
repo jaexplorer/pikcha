@@ -215,7 +215,7 @@ namespace PikchaWebApp.Controllers
                     var roles = await _userManager.GetRolesAsync(pikchaUser);
                     if (roles != null)
                     {
-                        pkUsr.Roles = string.Join(", ", roles);
+                        pkUsr.Roles = roles.ToList();
                     }
                     return Ok(pkUsr);
                 }
@@ -243,7 +243,7 @@ namespace PikchaWebApp.Controllers
 
             if (roles != null)
             {
-                userDTO.Roles = string.Join(", ", roles);
+                userDTO.Roles = roles.ToList();
             }
             return ReturnOkOrErrorStatus(userDTO);
 

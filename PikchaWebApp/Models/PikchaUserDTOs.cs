@@ -11,22 +11,23 @@ namespace PikchaWebApp.Models
 
     public class Pikcha100ArtistDTO : PikchaUserBaseDTO
     {
-        public string PerCountry { get; set; }
-        public string BioInfo { get; set; }
-        public string SocialLinks { get; set; }
-        
-        public long TotalImageViews { get; set; }
+        public string PikchaImageId { get; set; } = string.Empty;
+        public string BioInfo { get; set; } = string.Empty;
+        public Dictionary<string, string> SocialLinks { get; set; } = new Dictionary<string, string>();
 
-        public decimal Performance { get; set; }
+        public long TotalImageViews { get; set; } = 0;
 
-        public int TotalImageSold { get; set; }
-        public decimal AveragePrice { get; set; }
+        public decimal Performance { get; set; } = 0;
 
-        public string TopImageTitle { get; set; }
-        public string TopImageLocation { get; set; }
-        public string TopImageThumbnailFile { get; set; }
-        public string TopImageWatermarkedFile { get; set; }
-        public long TopImageTotalViews { get; set; }
+        public int TotalImageSold { get; set; } = 0;
+        public decimal AveragePrice { get; set; } = 0;
+
+        public string TopImageTitle { get; set; } = string.Empty;
+        public string TopImageLocation { get; set; } = string.Empty;
+        public string TopImageThumbnailFile { get; set; } = string.Empty;
+        public string TopImageWatermarkedFile { get; set; } = string.Empty;
+        public long TopImageTotalViews { get; set; } = 0;
+        public List<PikchaUserBaseDTO> Following { get; set; } = new List<PikchaUserBaseDTO>();
 
 
 
@@ -42,37 +43,37 @@ namespace PikchaWebApp.Models
 
     public class PikchaAuthenticatedUserDTO : PikchaUserBaseDTO
     {
-        public string BioInfo { get; set; }
-        public string SocialLinks { get; set; }
+        public string BioInfo { get; set; } = string.Empty;
+        public string SocialLinks { get; set; } = string.Empty;
 
-        public string ShipAddress1 { get; set; }
+        public string ShipAddress1 { get; set; } = string.Empty;
 
-        public string ShipAddress2 { get; set; }
+        public string ShipAddress2 { get; set; } = string.Empty;
 
-        public string ShipCity { get; set; }
+        public string ShipCity { get; set; } = string.Empty;
 
-        public string ShipPostalCode { get; set; }
+        public string ShipPostalCode { get; set; } = string.Empty;
 
-        public string ShipCountry { get; set; }
+        public string ShipCountry { get; set; } = string.Empty;
 
-        public List<PikchaUserBaseDTO> Following { get; set; }
+        public List<PikchaUserBaseDTO> Following { get; set; } = new List<PikchaUserBaseDTO>();
 
-        public DateTimeOffset LastUploadedOn { get; set; }
+        public DateTimeOffset LastUploadedOn { get; set; } = DateTimeOffset.MinValue;
 
-        public string Roles { get; set; }
+        public List<string> Roles { get; set; } = new List<string>();
 
     }
 
 
     public class PikchaUserBaseDTO
     {
-        public string Id { get; set; }
-        public string FirstName { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string AvatarFileName { get; set; }
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
+        public string AvatarFileName { get; set; } = string.Empty;
 
     }
 

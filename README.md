@@ -131,6 +131,7 @@ ARTIST
  - Performance
  - TotalImageSold
  - AveragePrice
+ - Following
 
 ### Get the loggedin user info 
 - ENDPOINT : api/profile/myinfo/{userId} 
@@ -196,4 +197,4 @@ LOGGEDINUSERINFO
 - AUTHENTICATED : true
 - PARAMS : imageFile [file]
 - RESULTS : loggedinuserinfo
-- ERROR_CODES : 200, 416, 500
+- ERROR_CODES : 200, 404, 500

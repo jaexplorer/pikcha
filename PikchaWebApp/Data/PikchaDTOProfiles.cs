@@ -18,7 +18,7 @@ namespace PikchaWebApp.Data
 
         private void InitImageDTOS()
         {
-            CreateMap<PikchaUser, PikchaImageBaseDTO>();
+            
 
             CreateMap<PikchaImage, PikchaRandomImageDTO>()
                 .ForMember(
@@ -27,6 +27,7 @@ namespace PikchaWebApp.Data
                     src.PikchaImageViews.Sum(y => y.Count)))
                 .ForMember(
                 dest => dest.Height, opt => opt.MapFrom( src => "0"))
+                //.ForAllMembers(opt => opt.NullSubstitute(new { }))
                 ;
 
             CreateMap<PikchaImage, Pikcha100ImageDTO>()
@@ -36,6 +37,7 @@ namespace PikchaWebApp.Data
                     src.PikchaImageViews.Sum(y => y.Count)))
                 .ForMember(
                 dest => dest.Height, opt => opt.MapFrom(src => "0"))
+               // .ForAllMembers(opt => opt.NullSubstitute(string.Empty))
                 ;
 
             CreateMap<PikchaImage, PikchaImageDescriptionDTO>()
@@ -43,15 +45,22 @@ namespace PikchaWebApp.Data
                 dest => dest.TotalViews,
                 opt => opt.MapFrom(src =>
                     src.PikchaImageViews.Sum(y => y.Count)))
-                ;
+                //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
 
+                ;
+            //CreateMap<PikchaUser, PikchaImageBaseDTO>()
+               //.ForAllMembers(opt => opt.NullSubstitute(string.Empty));
         }
 
         private void InitUserDTOs()
         {
-            CreateMap<PikchaUser, PikchaUserBaseDTO>();
+            CreateMap<PikchaUser, PikchaUserBaseDTO>()
+                //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
+                ;
 
             CreateMap<PikchaUser, Pikcha100ArtistDTO>()
+                //.ForAllMembers(opt => opt.NullSubstitute(new { }))
+
                 /*.ForMember(
                 dest => dest.TotalImageViews,
                 opt => opt.MapFrom(src =>
@@ -71,10 +80,9 @@ namespace PikchaWebApp.Data
 
                  .ForMember(
                 dest => dest.Following,
-                opt => opt.MapFrom(src => src.FollowingArtists.Select(y => y.PikchaArtist).ToList()));
-            ;
-
-
+                opt => opt.MapFrom(src => src.FollowingArtists.Select(y => y.PikchaArtist).ToList()))
+                //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
+                 ;
 
         }
 

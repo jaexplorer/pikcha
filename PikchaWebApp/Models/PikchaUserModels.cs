@@ -66,7 +66,7 @@ namespace PikchaWebApp.Models
         public string ShipCountry { get; set; }
 
         [Column("SocialLinks")]
-        public string SocialLinks { get; set; } 
+        public Dictionary<string, string> SocialLinks { get; set; } 
 
         public List<PikchaImage> PikchaImages { get; set; }
 

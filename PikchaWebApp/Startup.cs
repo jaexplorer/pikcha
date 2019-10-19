@@ -38,11 +38,7 @@ namespace PikchaWebApp
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-           // services.AddDefaultIdentity<PikchaUser>()  
             services.AddIdentity<PikchaUser, IdentityRole>()  
-                //.AddRoles<IdentityRole>()
-                //.AddRoleManager<IdentityRole>()
-                // services.AddIdentity(PikchaUser, PikchaRo>()
                 .AddEntityFrameworkStores<PikchaDbContext>()
                 .AddDefaultTokenProviders(); ;
 
@@ -82,15 +78,21 @@ namespace PikchaWebApp
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new PikchaDTOProfiles());
-            });
 
+                mc.AddProfile(new PikchaDTOProfiles());
+                mc.ForAllMaps((obj, cnfg) => cnfg.ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null)));
+            });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
             // email
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+            });
 
             //services.AddIdentity<PikchaUser, PikchaRole>();
         }

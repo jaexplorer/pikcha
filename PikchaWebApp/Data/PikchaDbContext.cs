@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace PikchaWebApp.Data
 {
@@ -43,6 +44,11 @@ namespace PikchaWebApp.Data
             .Property(b => b.ModifiedAt)
             .HasDefaultValueSql("getdate()");
             */
+            builder.Entity<PikchaUser>()
+                .Property(b => b.SocialLinks)
+                .HasConversion(
+                v => JsonConvert.SerializeObject(v),
+                v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
 
             // pikcha tags
             builder.Entity<PikchaImageTag>().HasKey(sc => new { sc.ImageTagId, sc.PikchaImageId });
