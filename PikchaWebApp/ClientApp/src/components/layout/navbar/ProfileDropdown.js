@@ -9,7 +9,7 @@ import UploadIcon from "../../../assets/images/upload-white.png";
 import { createModal } from "../../../actions/modal";
 import { ApplicationPaths } from "../../auth/ApiAuthorizationConstants";
 
-const ProfileDropdown = ({ auth, removeProfileDropdown, createModal }) => {
+const ProfileDropdown = ({ account, removeProfileDropdown, createModal }) => {
   // Detect Clicks outside of container
   const dropdownContainer = useRef(null);
   useEffect(() => {
@@ -27,7 +27,9 @@ const ProfileDropdown = ({ auth, removeProfileDropdown, createModal }) => {
     <div id='profile-dropdown' ref={dropdownContainer}>
       <div
         onClick={() => {
-          createModal("UploadModal");
+          account.user.roles === "artist"
+            ? createModal("UploadModal")
+            : createModal("RoleChangeModal");
           removeProfileDropdown();
         }}
         className='upload-container'
@@ -35,10 +37,13 @@ const ProfileDropdown = ({ auth, removeProfileDropdown, createModal }) => {
         <img src={UploadIcon} alt='' />
         <div className='upload-button'>Upload</div>
       </div>
-      <div onClick={removeProfileDropdown} className='profile-dropdown-item'>
-        <img src={ProfileIcon} alt='' />
-        <Link to={`/profile/${auth.user._id}`}>Profile</Link>
-      </div>
+      {account.user.roles === "artist" && (
+        <div onClick={removeProfileDropdown} className='profile-dropdown-item'>
+          <img src={ProfileIcon} alt='' />
+          <Link to={`/profile/${account.user.id}`}>Profile</Link>
+        </div>
+      )}
+
       <div onClick={removeProfileDropdown} className='profile-dropdown-item'>
         <img src={AccountIcon} alt='' />
         <Link to={"/account"}>Account</Link>
@@ -52,7 +57,7 @@ const ProfileDropdown = ({ auth, removeProfileDropdown, createModal }) => {
 };
 
 const mapStateToProps = state => ({
-  auth: state.authReducer
+  account: state.accountReducer
 });
 
 export default connect(

@@ -20,6 +20,7 @@ const MobileNavbar = ({
   auth,
   nav,
   cart,
+  account,
   createProfileDropdown,
   createCartDropdown
 }) => {
@@ -27,16 +28,22 @@ const MobileNavbar = ({
 
   const authIcons = (
     <Fragment>
-      <div className='nav-icon'>
-        <img onClick={createCartDropdown} src={CartIcon} alt='' />
-        {cart.products.length !== 0 && <div className='notication'></div>}
-      </div>
-      <div className='nav-icon'>
-        <img src={PeopleIcon} alt='' />
-      </div>
-      <div className='nav-icon profile-pic'>
-        <img onClick={createProfileDropdown} src={PlaceHolder} alt='' />
-      </div>
+      {account.loading === false && (
+        <Fragment>
+          <div className='nav-icon'>
+            <img onClick={createCartDropdown} src={CartIcon} alt='' />
+            {cart.products.length !== 0 && <div className='notication'></div>}
+          </div>
+          {account.user.following.length !== 0 && (
+            <div className='nav-icon'>
+              <img src={PeopleIcon} alt='' />
+            </div>
+          )}
+          <div className='nav-icon profile-pic'>
+            <img onClick={createProfileDropdown} src={PlaceHolder} alt='' />
+          </div>
+        </Fragment>
+      )}
       {nav.profileDropdown ? <ProfileDropdown /> : ""}
       {nav.cartDropdown ? <CartDropdown /> : ""}
     </Fragment>
@@ -92,7 +99,8 @@ const MobileNavbar = ({
 const mapStateToProps = state => ({
   auth: state.authReducer,
   nav: state.navReducer,
-  cart: state.cartReducer
+  cart: state.cartReducer,
+  account: state.accountReducer
 });
 
 export default connect(

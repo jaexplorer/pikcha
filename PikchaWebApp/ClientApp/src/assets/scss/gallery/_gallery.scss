@@ -113,6 +113,10 @@
       a {
         img {
           height: 5rem;
+          width: 5rem;
+          border-radius: 50%;
+          object-position: center center;
+          object-fit: cover;
           cursor: pointer;
         }
       }

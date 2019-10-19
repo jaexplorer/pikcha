@@ -28,8 +28,7 @@ export default (state = initialState, { type, payload }) => {
         photos: state.photos == null ? payload : [...state.photos, ...payload],
 
         loading: false,
-        start: state.start + state.count,
-        hasMore: payload.length ? true : false
+        start: state.start + state.count
       };
     case PHOTO_SELECTED:
       return {
@@ -42,11 +41,12 @@ export default (state = initialState, { type, payload }) => {
         selected: null
       };
     case PHOTOS_ERROR:
-      console.error(payload);
+      !payload.data === "You have reached the end." && console.error(payload);
       return {
         ...state,
         error: payload,
-        loading: false
+        loading: false,
+        hasMore: !payload.data === "You have reached the end."
       };
     case PHOTOS_LOADING:
       return {

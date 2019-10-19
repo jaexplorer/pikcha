@@ -1,9 +1,14 @@
-// Login / Register Types
-export const LOGGED_IN = "LOGGED_IN";
-export const AUTH_ERROR = "AUTH_ERROR";
-export const LOGGED_OUT = "LOGGED_OUT";
-export const CLEAR_ERRORS = "CLEAR_ERRORS";
+// Auth Types
+export const DEAUTHENTICATE = "DEAUTHENTICATE";
 export const AUTH_LOADING = "AUTH_LOADING";
+export const AUTH_FAILED = "AUTH_FAILED";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+
+// Account Types
+export const USER_LOADING = "USER_LOADING";
+export const USER_LOADED = "USER_LOADED";
+export const LOGGED_OUT = "LOGGED_OUT";
+export const USER_ERROR = "USER_ERROR";
 
 // Alert Types
 export const SET_ALERT = "SET_ALERT";

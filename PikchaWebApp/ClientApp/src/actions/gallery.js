@@ -21,7 +21,10 @@ export const getPhotos = (count, start) => {
         payload: res.data
       });
     } catch (err) {
-      dispatch({ type: PHOTOS_ERROR });
+      dispatch({
+        type: PHOTOS_ERROR,
+        payload: err.response
+      });
     }
   };
 };

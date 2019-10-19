@@ -18,19 +18,27 @@ const MobileNavbar = ({
   auth,
   nav,
   cart,
+  account,
   createProfileDropdown,
   createCartDropdown
 }) => {
   const authLinks = (
     <div className='navbar-right'>
-      <div className='navbar-icons'>
-        <img onClick={createCartDropdown} src={CartIcon} alt='' />
-        {cart.products.length !== 0 && <div className='notication'></div>}
-        <img src={PeopleIcon} alt='' />
-      </div>
-      <div id='navbar-display-pic'>
-        <img onClick={createProfileDropdown} src={PlaceHolder} alt='' />
-      </div>
+      {account.loading === false && (
+        <Fragment>
+          <div className='navbar-icons'>
+            <img onMouseDown={createCartDropdown} src={CartIcon} alt='' />
+            {cart.products.length !== 0 && <div className='notication'></div>}
+            {account.user.following.length !== 0 && (
+              <img src={PeopleIcon} alt='' />
+            )}
+          </div>
+
+          <div id='navbar-display-pic'>
+            <img onMouseDown={createProfileDropdown} src={PlaceHolder} alt='' />
+          </div>
+        </Fragment>
+      )}
       {nav.profileDropdown && <ProfileDropdown />}
       {nav.cartDropdown && <CartDropdown />}
     </div>
@@ -77,7 +85,8 @@ const MobileNavbar = ({
 const mapStateToProps = state => ({
   auth: state.authReducer,
   nav: state.navReducer,
-  cart: state.cartReducer
+  cart: state.cartReducer,
+  account: state.accountReducer
 });
 
 export default connect(

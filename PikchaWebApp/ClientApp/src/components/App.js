@@ -5,13 +5,13 @@ import store from "../store";
 import { BrowserRouter as Router } from "react-router-dom";
 import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./layout/Alerts";
-import { loaduser } from "../actions/auth";
+import { authenticate } from "../actions/auth";
 import Routes from "./Routes/Routes";
 
 const App = () => {
   useEffect(() => {
     setTimeout(() => {
-      store.dispatch(loaduser());
+      store.dispatch(authenticate());
     }, 1000);
   }, []);
 

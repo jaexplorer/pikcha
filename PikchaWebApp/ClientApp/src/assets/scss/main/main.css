@@ -458,7 +458,7 @@ body .frame-container .main-container .main-content-container {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  z-index: 40;
+  z-index: 800;
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
 }
@@ -558,7 +558,7 @@ body .frame-container .main-container .main-content-container {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  z-index: 40;
+  z-index: 800;
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
 }
@@ -1590,6 +1590,12 @@ body .frame-container .main-container .main-content-container {
 
 .masonry-item .itemInfo-popup .popup-artist a img {
   height: 5rem;
+  width: 5rem;
+  border-radius: 50%;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
   cursor: pointer;
 }
 
@@ -3352,5 +3358,44 @@ body .frame-container .main-container .main-content-container {
 #role-change-modal-container .role-change-form .form-btn input {
   background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
   cursor: pointer;
+}
+
+.alert-container {
+  position: absolute;
+  font-family: "Montserrat";
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 3rem;
+  padding-top: 1.5rem;
+  z-index: 700;
+}
+
+.alert-container .alert {
+  color: white;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 40px;
+  -webkit-box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
+          box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+}
+
+.alert-container .alert.danger {
+  background: #ff7669;
+}
+
+.alert-container .alert.success {
+  background: #7fe283;
+}
+
+.alert-container .alert.info {
+  background: #54c9ff;
+}
+
+.alert-container .alert.warning {
+  background: #ffcb33;
 }
 /*# sourceMappingURL=main.css.map */

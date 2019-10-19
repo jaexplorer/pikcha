@@ -5,20 +5,20 @@ import { createModal } from "../../../../actions/modal";
 import ProfilePic from "../../../../assets/images/profilePic.png";
 import CameraIcon from "../../../../assets/images/camera-white.png";
 
-const MyDetails = ({ createModal }) => {
+const MyDetails = ({ createModal, account }) => {
   // Component State
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    bio: "",
-    email: "",
-    phone: "",
-    address1: "",
-    address2: "",
-    country: "",
+    firstName: account.user.firstName,
+    lastName: account.user.lastName,
+    bio: account.user.bioInfo,
+    email: account.user.email,
+    phone: account.user.phoneNumber,
+    address1: account.user.shipAddress1,
+    address2: account.user.shipAddress2,
+    country: account.user.shipCountry,
     state: "",
-    city: "",
-    zip: ""
+    city: account.user.shipCity,
+    zip: account.user.shipPostalCode
   });
 
   // Destructuring Component State
@@ -215,7 +215,11 @@ const MyDetails = ({ createModal }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  account: state.accountReducer
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { createModal }
 )(MyDetails);
