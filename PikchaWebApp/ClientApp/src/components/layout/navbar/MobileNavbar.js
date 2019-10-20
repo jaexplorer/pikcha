@@ -34,7 +34,7 @@ const MobileNavbar = ({
             <img onClick={createCartDropdown} src={CartIcon} alt='' />
             {cart.products.length !== 0 && <div className='notication'></div>}
           </div>
-          {account.user.following.length !== 0 && (
+          {account.user && account.user.following.length !== 0 && (
             <div className='nav-icon'>
               <img src={PeopleIcon} alt='' />
             </div>

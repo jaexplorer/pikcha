@@ -29,7 +29,7 @@ const MobileNavbar = ({
           <div className='navbar-icons'>
             <img onMouseDown={createCartDropdown} src={CartIcon} alt='' />
             {cart.products.length !== 0 && <div className='notication'></div>}
-            {account.user.following.length !== 0 && (
+            {account.user && account.user.following.length !== 0 && (
               <img src={PeopleIcon} alt='' />
             )}
           </div>
