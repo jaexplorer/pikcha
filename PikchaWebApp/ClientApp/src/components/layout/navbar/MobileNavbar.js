@@ -40,12 +40,17 @@ const MobileNavbar = ({
             </div>
           )}
           <div className='nav-icon profile-pic'>
-            <img onClick={createProfileDropdown} src={PlaceHolder} alt='' />
+            <img
+              onClick={createProfileDropdown}
+              src={account.user.avatar}
+              alt=''
+            />
           </div>
+
+          {nav.profileDropdown ? <ProfileDropdown /> : ""}
+          {nav.cartDropdown ? <CartDropdown /> : ""}
         </Fragment>
       )}
-      {nav.profileDropdown ? <ProfileDropdown /> : ""}
-      {nav.cartDropdown ? <CartDropdown /> : ""}
     </Fragment>
   );
 

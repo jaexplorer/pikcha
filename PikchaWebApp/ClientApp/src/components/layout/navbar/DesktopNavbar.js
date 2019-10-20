@@ -35,12 +35,17 @@ const MobileNavbar = ({
           </div>
 
           <div id='navbar-display-pic'>
-            <img onMouseDown={createProfileDropdown} src={PlaceHolder} alt='' />
+            <img
+              onMouseDown={createProfileDropdown}
+              src={account.user.avatar}
+              alt=''
+            />
           </div>
+
+          {nav.profileDropdown && <ProfileDropdown />}
+          {nav.cartDropdown && <CartDropdown />}
         </Fragment>
       )}
-      {nav.profileDropdown && <ProfileDropdown />}
-      {nav.cartDropdown && <CartDropdown />}
     </div>
   );
 

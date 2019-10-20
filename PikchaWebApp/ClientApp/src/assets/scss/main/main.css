@@ -281,6 +281,13 @@ body .frame-container .main-container .main-content-container {
 
 #top-navbar #navbar .navbar-right #navbar-display-pic img {
   height: 3rem;
+  width: 3rem;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  border: #c9c9c9 2px solid;
   margin-right: 1.5rem;
 }
 
@@ -438,6 +445,13 @@ body .frame-container .main-container .main-content-container {
 
 #mobile-navbar .nav-icons .nav-icon.profile-pic img {
   height: 3.8rem;
+  width: 3.8rem;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  border: #c9c9c9 2px solid;
   cursor: pointer;
 }
 
@@ -1478,7 +1492,6 @@ body .frame-container .main-container .main-content-container {
 }
 
 .masonry .masonry-col {
-  margin: 0.1rem;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -1496,6 +1509,16 @@ body .frame-container .main-container .main-content-container {
       -ms-flex-direction: column;
           flex-direction: column;
   overflow: hidden;
+  margin-left: 0.05rem;
+  margin-right: 0.05rem;
+}
+
+.masonry .masonry-col:first-child {
+  margin-left: 0rem;
+}
+
+.masonry .masonry-col:last-child {
+  margin-right: 0rem;
 }
 
 .masonry .masonry-col.selected {
@@ -2491,8 +2514,15 @@ body .frame-container .main-container .main-content-container {
   position: relative;
 }
 
-.person-details-container .display-picture img {
+.person-details-container .display-picture > img {
   height: 15rem;
+  width: 15rem;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  border: #c9c9c9 2px solid;
 }
 
 .person-details-container .display-picture .edit {

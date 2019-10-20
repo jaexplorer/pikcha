@@ -281,7 +281,7 @@ namespace PikchaWebApp.Controllers
             var pikchaUser = await _userManager.GetUserAsync(this.User);
 
             var userDTO = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
-            //var roles = await _userManager.GetRolesAsync(pikchaUser);
+            var roles = await _userManager.GetRolesAsync(pikchaUser);
 
             if (roles != null)
             {

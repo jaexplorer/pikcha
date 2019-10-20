@@ -8,17 +8,17 @@ import CameraIcon from "../../../../assets/images/camera-white.png";
 const MyDetails = ({ createModal, account }) => {
   // Component State
   const [user, setUser] = useState({
-    firstName: account.user.firstName,
-    lastName: account.user.lastName,
-    bio: account.user.bioInfo,
+    firstName: account.user.fName,
+    lastName: account.user.lName,
+    bio: account.user.bio,
     email: account.user.email,
-    phone: account.user.phoneNumber,
-    address1: account.user.shipAddress1,
-    address2: account.user.shipAddress2,
-    country: account.user.shipCountry,
-    state: "",
-    city: account.user.shipCity,
-    zip: account.user.shipPostalCode
+    phone: account.user.phone,
+    address1: account.user.addr1,
+    address2: account.user.addr2,
+    country: account.user.country,
+    state: account.user.state,
+    city: account.user.city,
+    zip: account.user.postal
   });
 
   // Destructuring Component State
@@ -47,7 +47,7 @@ const MyDetails = ({ createModal, account }) => {
           <div className='section-title'>Personal Information</div>
           <div className='person-details-container'>
             <div className='display-picture'>
-              <img src={ProfilePic} alt='' />
+              <img src={account.user.avatar} alt='' />
               <div onClick={() => createModal("DPModal")} className='edit'>
                 <img src={CameraIcon} alt='' />
               </div>

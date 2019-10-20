@@ -110,6 +110,11 @@
         cursor: pointer;
         img {
           height: 3rem;
+          width: 3rem;
+          object-position: center center;
+          object-fit: cover;
+          border-radius: 50%;
+          border: rgb(201, 201, 201) 2px solid;
           margin-right: 1.5rem;
         }
       }
@@ -234,6 +239,11 @@
       &.profile-pic {
         img {
           height: 3.8rem;
+          width: 3.8rem;
+          object-position: center center;
+          object-fit: cover;
+          border-radius: 50%;
+          border: rgb(201, 201, 201) 2px solid;
           cursor: pointer;
         }
       }

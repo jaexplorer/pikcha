@@ -11,7 +11,6 @@
   overflow: auto;
 
   .masonry-col {
-    margin: 0.1rem;
     flex: 1;
     height: 100%;
     background-position: center;
@@ -21,6 +20,16 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    margin-left: 0.05rem;
+    margin-right: 0.05rem;
+
+    &:first-child {
+      margin-left: 0rem;
+    }
+
+    &:last-child {
+      margin-right: 0rem;
+    }
 
     &.selected {
       flex: 2;

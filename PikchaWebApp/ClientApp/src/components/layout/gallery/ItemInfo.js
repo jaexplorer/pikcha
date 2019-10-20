@@ -15,6 +15,24 @@ import { deselectPhoto } from "../../../actions/gallery";
 const ItemInfo = ({ deselectPhoto, photo }) => {
   const [popup, setPopup] = useState(false);
 
+  // Decontructing photo
+  const {
+    caption,
+    performance,
+    totSold,
+    avgPrice,
+    productIds,
+    id: pictureId,
+    title,
+    location,
+    watermark,
+    views,
+    artist
+  } = photo;
+
+  // Decontructing artist
+  const { id: artistId, fName, lName, email, phone, avatar } = artist;
+
   return (
     <Fragment>
       <div className='itemInfo-back-arrow'>
@@ -32,32 +50,28 @@ const ItemInfo = ({ deselectPhoto, photo }) => {
       {popup && (
         <div className='itemInfo-popup'>
           <div className='popup-artist'>
-            <Link to={`/profile/${photo.artistId}`}>
-              <img src={photo.artistAvatarfilename} alt='' />
+            <Link to={`/profile/${artistId}`}>
+              <img src={avatar} alt='' />
             </Link>
           </div>
           <div className='popup-artist-name'>
-            {photo.artistFirstname} {photo.artistLastname}
+            {fName} {lName}
           </div>
           <div className='popup-content-container'>
-            <div className='popup-photo-name'>{photo.title}</div>
+            <div className='popup-photo-name'>{title}</div>
             <div className='popup-photo-stats'>
               <span>
-                {photo.performance >= 0 ? "Up " : "Down "}
-                {photo.performance}%
+                {performance >= 0 ? "Up " : "Down "}
+                {performance}%
               </span>
-              <span>{photo.totalPhotosSold} Sold</span>
+              <span>{totSold} Sold</span>
             </div>
-            <div className='popup-photo-description'>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Doloribus alias vero sequi at autem tempora magni quam natus
-              incidunt ipsa, odit error, nulla totam facere.
-            </div>
+            <div className='popup-photo-description'>{caption}</div>
             <div className='popup-photo-action'>
               <div className='photo-purchase'>
-                <Link to={`/product/${photo.pikchaImageId}`}>View</Link>
+                <Link to={`/product/${pictureId}`}>View</Link>
               </div>
-              <span>${photo.averagePrice}</span>
+              <span>${avgPrice}</span>
             </div>
           </div>
           <div className='popup-delete'>

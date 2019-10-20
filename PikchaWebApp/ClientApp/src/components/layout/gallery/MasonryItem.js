@@ -26,7 +26,7 @@ const MasonryItem = ({ gallery, selectPhoto, photo }) => {
         !isSelected && selectPhoto(thisPhoto);
       }}
     >
-      <img src={photo.watermarkedFile} alt='' />
+      <img src={photo.watermark} alt='' />
       {isSelected && <ItemInfo photo={photo} />}
     </div>
   );
