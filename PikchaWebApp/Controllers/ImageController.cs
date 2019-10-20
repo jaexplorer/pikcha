@@ -47,7 +47,7 @@ namespace PikchaWebApp.Controllers
                 string imageId = Guid.NewGuid().ToString();
                 PikchaImage pkImg = new PikchaImage();
                 pkImg.CopyPropertiesFrom(imgViewModel);
-                pkImg.PikchaImageId = imageId;
+                pkImg.Id = imageId;
                 pkImg.UploadedAt = DateTime.Now;
                 pkImg.ModifiedAt = DateTime.Now;
 
@@ -83,7 +83,7 @@ namespace PikchaWebApp.Controllers
                             await _pikchDbContext.SaveChangesAsync();
                             //return new ReturnDataModel() { Data = pkImg };
                             return Ok();
-                            //return CreatedAtAction(nameof(GetById), new { imageId = pkImg.PikchaImageId }, pkImg);
+                            //return CreatedAtAction(nameof(GetById), new { imageId = pkImg.Id }, pkImg);
                         } */
 
                     }
@@ -116,17 +116,17 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                //var pkImg = await _pikchDbContext.PikchaImages.FirstAsync( im => im.PikchaImageId == imageId);
-                var pkImg = await _pikchDbContext.PikchaImages.FirstAsync( im => im.PikchaImageId == imageId);
+                //var pkImg = await _pikchDbContext.Images.FirstAsync( im => im.Id == imageId);
+                var pkImg = await _pikchDbContext.PikchaImages.FirstAsync( im => im.Id == imageId);
                 if(pkImg == null)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404NotFound);
 
                 }
-                var image =  _mapper.Map<PikchaImageDescriptionDTO>(pkImg);
+                var image =  _mapper.Map<PikchaImageFilterDTO>(pkImg);
                 return ReturnOkOrErrorStatus(image);
                 /*
-                var imageTsk = _pikchDbContext.PikchaImages.Include(img => img.Artist).FirstAsync(i => i.PikchaImageId == imageId);
+                var imageTsk = _pikchDbContext.Images.Include(img => img.Artist).FirstAsync(i => i.Id == imageId);
 
                 await imageTsk;
 
@@ -184,10 +184,10 @@ namespace PikchaWebApp.Controllers
                 var tmp = _pikchDbContext.ImageViews.Count();
                 try
                 {
-                    var imgVw = await _pikchDbContext.ImageViews.FirstAsync(i => i.PikchaImage.PikchaImageId == imageId && i.Date == DateTime.Today.Date);
+                    var imgVw = await _pikchDbContext.ImageViews.FirstAsync(i => i.PikchaImage.Id == imageId && i.Date == DateTime.Today.Date);
                     if (imgVw == null)
                     {
-                        PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.PikchaImageId == imageId);
+                        PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
                         if (pImg != null)
                         {
                             _pikchDbContext.ImageViews.Add(new PikchaImageViews() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
@@ -200,7 +200,7 @@ namespace PikchaWebApp.Controllers
                 }
                 catch
                 {
-                    PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.PikchaImageId == imageId);
+                    PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
                     if (pImg != null)
                     {
                         _pikchDbContext.ImageViews.Add(new PikchaImageViews() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });

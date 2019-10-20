@@ -9,70 +9,62 @@ namespace PikchaWebApp.Models
     {
     }
 
-    public class Pikcha100ArtistDTO : PikchaUserBaseDTO
+    public class PikchaArtistDTO : PikchaUserBaseDTO
     {
-        public string PerCountry { get; set; }
-        public string BioInfo { get; set; }
-        public string SocialLinks { get; set; }
+        public string Bio { get; set; } = string.Empty;
+        public Dictionary<string, string> Links { get; set; } = new Dictionary<string, string>();
+
+        public string Location { get; set; } = string.Empty;
+        public string Views { get; set; } = string.Empty;
+
+        public decimal Performance { get; set; } = 0;
+
+        public int TotSold { get; set; } = 0;
+        public decimal AvgPrice { get; set; } = 0;
         
-        public long TotalImageViews { get; set; }
+        public List<PikchaUserBaseDTO> Following { get; set; } = new List<PikchaUserBaseDTO>();
+        public List<PikchaUserBaseDTO> Followers { get; set; } = new List<PikchaUserBaseDTO>();
 
-        public decimal Performance { get; set; }
-
-        public int TotalImageSold { get; set; }
-        public decimal AveragePrice { get; set; }
-
-        public string TopImageTitle { get; set; }
-        public string TopImageLocation { get; set; }
-        public string TopImageThumbnailFile { get; set; }
-        public string TopImageWatermarkedFile { get; set; }
-        public long TopImageTotalViews { get; set; }
-
-
-
-        //public PikchaUser Artist { get; set; }
-        //public IEnumerable<PikchaImageTag> ImageTags { get; set; }
-
-        // public List<PikchaImageViews> PikchaImageViews { get; set; }
-
-        //public int PikchaImageViewsCount { get; set; }
+        public List<string> Roles { get; set; } = new List<string>();
 
     }
 
 
     public class PikchaAuthenticatedUserDTO : PikchaUserBaseDTO
     {
-        public string BioInfo { get; set; }
-        public string SocialLinks { get; set; }
+        public string Bio { get; set; } = string.Empty;
+        public Dictionary<string, string> Links { get; set; } = new Dictionary<string, string>();
 
-        public string ShipAddress1 { get; set; }
+        public string Addr1 { get; set; } = string.Empty;
 
-        public string ShipAddress2 { get; set; }
+        public string Addr2 { get; set; } = string.Empty;
 
-        public string ShipCity { get; set; }
+        public string City { get; set; } = string.Empty;
 
-        public string ShipPostalCode { get; set; }
+        public string Postal { get; set; } = string.Empty;
 
-        public string ShipCountry { get; set; }
+        public string State { get; set; } = string.Empty;
 
-        public List<PikchaUserBaseDTO> Following { get; set; }
+        public string Country { get; set; } = string.Empty;
 
-        public DateTimeOffset LastUploadedOn { get; set; }
+        public List<PikchaUserBaseDTO> Following { get; set; } = new List<PikchaUserBaseDTO>();
 
-        public string Roles { get; set; }
+        public DateTimeOffset LUploadOn { get; set; } = DateTimeOffset.MinValue;
+
+        public List<string> Roles { get; set; } = new List<string>();
 
     }
 
 
     public class PikchaUserBaseDTO
     {
-        public string Id { get; set; }
-        public string FirstName { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string FName { get; set; } = string.Empty;
 
-        public string LastName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string AvatarFileName { get; set; }
+        public string LName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Phone { get; set; } = string.Empty; // need to add a mapping
+        public string Avatar { get; set; } = @"Uploads\Avatars\default-avatar.jpg";
 
     }
 

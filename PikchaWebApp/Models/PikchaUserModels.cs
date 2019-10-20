@@ -11,66 +11,51 @@ namespace PikchaWebApp.Models
     [Table("PikchaUsers")]
     public class PikchaUser : IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("PikchaUserId")]
-        public int PikchaUserId { get; set; }
         // personal info
         [Column("Fname")]
-        public string FirstName { get; set; }
+        public string FName { get; set; }
 
         [Column("Lname")]
-        public string LastName { get; set; }
+        public string LName { get; set; }
 
-        [Column("AvFile")]
-        public string AvatarFileName { get; set; }
+        [Column("Avatar")]
+        public string Avatar { get; set; }
 
-        [Column("SigFile")]
-        public string SignatureFileName { get; set; }
+        [Column("Sign")]
+        public string Sign { get; set; }
+
+        [Column("InvSign")]
+        public string InvSign { get; set; }
 
         [Column("Bio")]
-        public string BioInfo { get; set; }
-
-
-        // permenant address
-        [Column("PerAddr1")]
-        public string PerAddress1 { get; set; }
-
-        [Column("PerAddr2")]
-        public string PerAddress2 { get; set; }
-
-        [Column("PerCity")]
-        public string PerCity { get; set; }
-
-        [Column("PerPostal")]
-        public string PerPostalCode { get; set; }
-
-        [Column("PerCountry")]
-        public string PerCountry { get; set; }
-
-
+        public string Bio { get; set; }
+        
+        
         // shipping address
-        [Column("ShipAddr1")]
-        public string ShipAddress1 { get; set; }
+        [Column("Addr1")]
+        public string Addr1 { get; set; }
 
-        [Column("ShipAddr2")]
-        public string ShipAddress2 { get; set; }
+        [Column("Addr2")]
+        public string Addr2 { get; set; }
 
-        [Column("ShipCity")]
-        public string ShipCity { get; set; }
+        [Column("City")]
+        public string City { get; set; }
 
-        [Column("ShipPostal")]
-        public string ShipPostalCode { get; set; }
+        [Column("Postal")]
+        public string Postal { get; set; }
 
-        [Column("ShipCountry")]
-        public string ShipCountry { get; set; }
+        [Column("State")]
+        public string State { get; set; }
 
-        [Column("SocialLinks")]
-        public string SocialLinks { get; set; } 
+        [Column("Country")]
+        public string Country { get; set; }
 
-        public List<PikchaImage> PikchaImages { get; set; }
+        [Column("Links")]
+        public Dictionary<string, string> Links { get; set; } 
 
-        public List<PikchaArtistFollower> FollowingArtists { get; set; } = new List<PikchaArtistFollower>();
+        public List<PikchaImage> Images { get; set; }
+
+        public List<PikchaArtistFollower> Following { get; set; } = new List<PikchaArtistFollower>();
         public List<PikchaArtistFollower> Followers { get; set; } = new List<PikchaArtistFollower>();
 
         [NotMapped]
@@ -80,14 +65,14 @@ namespace PikchaWebApp.Models
             {
                 // get the pikcha images
                 
-                if(this.PikchaImages == null)
+                if(this.Images == null)
                 {
                     
                     return new PikchaImage() { Title = "N/A", Location = "N/A" };
                 }
                 try
                 {
-                    return this.PikchaImages.OrderByDescending(v => v.PikchaImageViews.Sum(i => i.Count)).First();
+                    return this.Images.OrderByDescending(v => v.Views.Sum(i => i.Count)).First();
 
                 }
                 
@@ -100,7 +85,7 @@ namespace PikchaWebApp.Models
     }
 
 
-    [Table("PikchaArtistFollowers")]
+    [Table("ArtistFollowers")]
     public class PikchaArtistFollower
     {
         public string UserId { get; set; }

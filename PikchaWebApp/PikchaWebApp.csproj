@@ -128,6 +128,9 @@
     <Content Update="wwwroot\fonts\Montserrat-Regular.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\Uploads\Avatars\default-avatar.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\Uploads\Avatars\Test\profile1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

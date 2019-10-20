@@ -32,9 +32,19 @@ namespace PikchaWebApp.Managers
             fileStream.Position = 0;
             await formFileInfo.CopyToAsync(fileStream);
             return filePath;
-
         }
 
+        public string UploadMagickImage(MagickImage image, string subDirectory, string imageName, string imageExt, FileCategory fileCategory)
+        {
+            var uploadPath = Path.Combine(GetDirectory(fileCategory), subDirectory);
+
+            ValidateDirectory(uploadPath);
+            string filePath = Path.Combine(uploadPath, imageName) + imageExt;
+
+            image.Write(filePath);
+
+            return filePath;
+        }
         public string UploadThumbnail(MagickImage image, string imageId, FileCategory fileCategory)
         {
             var uploadPath = Path.Combine(GetDirectory(fileCategory), "Thumbnail") ;
@@ -65,7 +75,7 @@ namespace PikchaWebApp.Managers
             switch (fileCategory)
             {
                 case FileCategory.Avatar: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.Avatar"]) ? @"Uploads\Avatars" : _configuration["UploadDirectories.Avatar"]; break;
-                case FileCategory.Signature: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.Signature"]) ? @"Uploads\Signatures" : _configuration["UploadDirectories.Signature"]; break;
+                case FileCategory.Signature: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.Sign"]) ? @"Uploads\Signatures" : _configuration["UploadDirectories.Sign"]; break;
                 case FileCategory.PikchaImage: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.PikchaImage"]) ? @"Uploads\Images" : _configuration["UploadDirectories.PikchaImage"]; break;
             }
             try

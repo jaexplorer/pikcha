@@ -57,7 +57,15 @@ namespace PikchaWebApp.Controllers
             // TO DO :  if the request user is admin, return profile based on userId query
             //var pikchaUser = await _userManager.GetUserAsync(this.User);
             var pikchaUser = await _pikchDbContext.PikchaUsers.FindAsync(userId);
-            var userDTO = _mapper.Map<Pikcha100ArtistDTO>(pikchaUser);           
+            
+            var userDTO = _mapper.Map<PikchaArtistDTO>(pikchaUser);
+
+            var roles = await _userManager.GetRolesAsync(pikchaUser);
+            if(userDTO != null && roles != null)
+            {
+                userDTO.Roles = roles.ToList();
+            }
+
             return ReturnOkOrErrorStatus(userDTO);
         }
 
@@ -84,7 +92,14 @@ namespace PikchaWebApp.Controllers
                 IdentityResult result = await _userManager.UpdateAsync(pikchaUser);
                 if (result.Succeeded)
                 {
-                    return Ok(pikchaUser);
+                    var lgUser = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
+                    var roles = await _userManager.GetRolesAsync(pikchaUser);
+                    if (roles != null)
+                    {
+                        lgUser.Roles = roles.ToList();
+                    }
+
+                    return Ok(lgUser);
                 }
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error in updating the user information.");
             }
@@ -137,9 +152,15 @@ namespace PikchaWebApp.Controllers
 
                 if (copyTask.IsCompleted)
                 {
-                    pikchaUser.AvatarFileName = filePath;
+                    pikchaUser.Avatar = filePath;
                     await _pikchDbContext.SaveChangesAsync();
                     var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
+                    var roles = await _userManager.GetRolesAsync(pikchaUser);
+
+                    if (roles != null)
+                    {
+                        lgUSer.Roles = roles.ToList();
+                    }
                     return Ok(lgUSer);
 
                 }
@@ -157,28 +178,28 @@ namespace PikchaWebApp.Controllers
 
         // TO DO : This api is not required. 
         // POST: api/profile/signature
-        [HttpPost("signature")]
-        public async Task<ReturnDataModel> UploadSignatureImage([FromForm] IFormFile signatureFile)
-        {
+        //[HttpPost("signature")]
+        //public async Task<ReturnDataModel> UploadSignatureImage([FromForm] IFormFile signatureFile)
+        //{
 
-            StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
-            Task<string> copyTask = manager.UploadToLocalDirectory(signatureFile, Guid.NewGuid().ToString(), ".jpg", StorageManager.FileCategory.Signature);
-            string filePath = copyTask.Result;
+        //    StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
+        //    Task<string> copyTask = manager.UploadToLocalDirectory(signatureFile, Guid.NewGuid().ToString(), ".jpg", StorageManager.FileCategory.Sign);
+        //    string filePath = copyTask.Result;
 
-            // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
-            Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
+        //    // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
+        //    Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
 
-            await Task.WhenAll(copyTask, loggedinUserTask);
+        //    await Task.WhenAll(copyTask, loggedinUserTask);
 
-            PikchaUser loggedinUser = loggedinUserTask.Result;
-            if (copyTask.IsCompleted)
-            {
-                loggedinUser.SignatureFileName = filePath;
-                await _pikchDbContext.SaveChangesAsync();
-            }
+        //    PikchaUser loggedinUser = loggedinUserTask.Result;
+        //    if (copyTask.IsCompleted)
+        //    {
+        //        loggedinUser.SignatureFileName = filePath;
+        //        await _pikchDbContext.SaveChangesAsync();
+        //    }
 
-            return new ReturnDataModel() { Data = filePath };
-        }
+        //    return new ReturnDataModel() { Data = filePath };
+        //}
 
         [Authorize]
         [HttpPost("artist/promote/{userId}")]
@@ -192,19 +213,24 @@ namespace PikchaWebApp.Controllers
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
                 if (pikchaUser == null)
                 {
-                    return StatusCode(StatusCodes.Status404NotFound, "User not found.");
+                    return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
                 }
                 bool isInAlready = await _userManager.IsInRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
                 if(isInAlready)
                 {
-                    return StatusCode(StatusCodes.Status404NotFound, "User is already promoted.");
+                    return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserAlreadyPromoted);
                 }
 
                 // upload signature file
-                StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
-                string filePath = await manager.UploadToLocalDirectory(signatureFile, Guid.NewGuid().ToString(), ".jpg", StorageManager.FileCategory.Signature);
+                ImageProcessingManager manager = new ImageProcessingManager(_hostingEnvironment, _configuration);
+                //string filePath = await manager.UploadToLocalDirectory(signatureFile, Guid.NewGuid().ToString(), ".jpg", StorageManager.FileCategory.Sign);
+                string orgFName = string.Empty;
+                string invFName = string.Empty;
 
-                pikchaUser.SignatureFileName = filePath;
+                manager.ProcessSignatureFile(signatureFile, ref orgFName, ref invFName);
+
+                pikchaUser.Sign = orgFName;
+                pikchaUser.InvSign = invFName;
                 await _pikchDbContext.SaveChangesAsync();
               
                 var result = await _userManager.AddToRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
@@ -215,7 +241,7 @@ namespace PikchaWebApp.Controllers
                     var roles = await _userManager.GetRolesAsync(pikchaUser);
                     if (roles != null)
                     {
-                        pkUsr.Roles = string.Join(", ", roles);
+                        pkUsr.Roles = roles.ToList();
                     }
                     return Ok(pkUsr);
                 }
@@ -227,6 +253,22 @@ namespace PikchaWebApp.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 
             }
+        }
+
+
+        [Authorize]
+        [HttpGet("artist/signature/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetSignature(string userId)
+        {
+            var pikchaUser = await _userManager.GetUserAsync(this.User);
+            if (pikchaUser == null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
+            }
+            return Ok(new { OrgSig = pikchaUser.Sign ?? string.Empty, InvSig = pikchaUser.InvSign ?? string.Empty});
         }
 
         [Authorize]
@@ -243,14 +285,14 @@ namespace PikchaWebApp.Controllers
 
             if (roles != null)
             {
-                userDTO.Roles = string.Join(", ", roles);
+                userDTO.Roles = roles.ToList();
             }
             return ReturnOkOrErrorStatus(userDTO);
 
         }
 
         [Authorize]
-        [HttpGet("artist/follow/{artistId}/{userId}")]
+        [HttpPost("artist/follow/{artistId}/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -265,13 +307,18 @@ namespace PikchaWebApp.Controllers
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404NotFound);
                 }
-                pikchaUser.FollowingArtists.Add(new PikchaArtistFollower() { ArtistsId = artistId });
+                pikchaUser.Following.Add(new PikchaArtistFollower() { ArtistsId = artistId });
                 await _pikchDbContext.SaveChangesAsync();
 
-                var qUser = _pikchDbContext.PikchaUsers.Include("FollowingArtists.PikchaArtist").First(u => u.Id == pikchaUser.Id);
+                var qUser = _pikchDbContext.PikchaUsers.Include("Following.PikchaArtist").First(u => u.Id == pikchaUser.Id);
                 var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(qUser);
+                var roles = await _userManager.GetRolesAsync(pikchaUser);
 
-                //lgUSer.Following = _mapper.ProjectTo<PikchaAuthenticatedUserDTO>(qUser.FollowingArtists.ToList());
+                if (roles != null)
+                {
+                    lgUSer.Roles = roles.ToList();
+                }
+                //lgUSer.Following = _mapper.ProjectTo<PikchaAuthenticatedUserDTO>(qUser.Following.ToList());
                 return ReturnOkOrErrorStatus(lgUSer);
             }
             catch (Exception ex)
@@ -282,7 +329,7 @@ namespace PikchaWebApp.Controllers
         }
 
         [Authorize]
-        [HttpGet("artist/unfollow/{artistId}/{userId}")]
+        [HttpPost("artist/unfollow/{artistId}/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -292,15 +339,20 @@ namespace PikchaWebApp.Controllers
             {
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
 
-                var folArt = pikchaUser.FollowingArtists.First(f => f.ArtistsId == artistId && f.UserId == userId);
+                var folArt = pikchaUser.Following.First(f => f.ArtistsId == artistId && f.UserId == userId);
 
                 _pikchDbContext.Remove(folArt);
                 await _pikchDbContext.SaveChangesAsync();
 
-                var qUser = _pikchDbContext.PikchaUsers.Include("FollowingArtists.PikchaArtist").First(u => u.Id == pikchaUser.Id);
+                var qUser = _pikchDbContext.PikchaUsers.Include("Following.PikchaArtist").First(u => u.Id == pikchaUser.Id);
                 var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(qUser);
+                var roles = await _userManager.GetRolesAsync(pikchaUser);
 
-                //lgUSer.Following = _mapper.ProjectTo<PikchaAuthenticatedUserDTO>(qUser.FollowingArtists.ToList());
+                if (roles != null)
+                {
+                    lgUSer.Roles = roles.ToList();
+                }
+                //lgUSer.Following = _mapper.ProjectTo<PikchaAuthenticatedUserDTO>(qUser.Following.ToList());
                 return ReturnOkOrErrorStatus(lgUSer);
             }
             catch (Exception ex)
@@ -313,20 +365,20 @@ namespace PikchaWebApp.Controllers
 
     public class ProfileViewModel
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string BioInfo { get; set; }
-        public string PerAddress1 { get; set; }
-        public string PerAddress2 { get; set; }
-        public string PerCity { get; set; }
-        public string PerPostalCode { get; set; }
-        public string PerCountry { get; set; }
-        public string ShipAddress1 { get; set; }
-        public string ShipAddress2 { get; set; }
-        public string ShipCity { get; set; }
-        public string ShipPostalCode { get; set; }
-        public string ShipCountry { get; set; }
-        public string SocialLinks { get; set; }
+        public string FName { get; set; }
+        public string LName { get; set; }
+        public string Bio { get; set; }
+        public string Addr1 { get; set; }
+        public string Addr2 { get; set; }
+        public string City { get; set; }
+        public string Postal { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+        public Dictionary<string, string> Links { get; set; }
 
     }
+
+
+
+
 }
