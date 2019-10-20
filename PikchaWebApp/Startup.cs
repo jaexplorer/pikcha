@@ -155,6 +155,9 @@ namespace PikchaWebApp
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<PikchaDbContext>();
+
+                context.Database.EnsureDeleted();
+
                 context.Database.Migrate();
 
                 try
@@ -178,8 +181,6 @@ namespace PikchaWebApp
 
         private void SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
         {
-
-            
 
             Random rnd = new Random();
 
@@ -214,7 +215,7 @@ namespace PikchaWebApp
             imageIds.Add("f466feff-5e42-44bd-8418-3902a05e797f");
 
             List<PikchaUser> lstUsers = new List<PikchaUser>();
-            for (int i = 1; i < 4; i++)
+            for (int i = 1; i < 10; i++)
             {
                 var user = new PikchaUser()
                 {
@@ -223,8 +224,8 @@ namespace PikchaWebApp
                     Bio = "test user" + i + " bio info",
                     FName = "test " + i + " FName",
                     LName = "test " + i + " LName",
-                    Avatar = "Uploads/Avatars/Test/profile" + i + ".jpg",
-                    Country = locations[rnd.Next(locations.Count)]
+                    Country = locations[rnd.Next(locations.Count)],
+                     Avatar = ""
                 };
                 var exUsr = userManager.FindByEmailAsync(user.Email).Result;
                 if(exUsr == null)
@@ -235,9 +236,28 @@ namespace PikchaWebApp
                 else
                 {
                     lstUsers.Add(exUsr);
-
                 }
             }
+
+            // add followers 
+            for (int i = 1; i < 5; i++)
+            {
+                var artist = lstUsers[i];
+                // make these to artist
+                userManager.AddToRoleAsync(artist, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+                int count = rnd.Next(3, 8);
+                for (int j = 1; j < count; j++)
+                {
+                    if(i == j)
+                    {
+                        continue;
+                    }
+                    var pkUs = lstUsers[j];
+                    dbContext.Followers.Add(new PikchaArtistFollower() { PikchaArtist = artist, PikchaUser = pkUs });
+                }
+            }
+            dbContext.SaveChangesAsync();
+
 
 
             for (int i = 0; i < imageIds.Count; i++)
@@ -269,6 +289,19 @@ namespace PikchaWebApp
                     var imgv = new PikchaImageViews() { Date = DateTime.Now.AddDays(-j), Count = rnd.Next(100), PikchaImage= img };
                     dbContext.ImageViews.Add(imgv);
                 }
+
+                ImageProduct imgProd = new ImageProduct()
+                {
+                     Image = img,
+                      IsSale = true,
+                       Price = rnd.Next(100,10000),
+                        Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_OWNER,
+                         Seller = img.Artist
+                };
+
+                // set up some resellers
+
+
                 dbContext.SaveChanges();
 
             }
@@ -278,23 +311,6 @@ namespace PikchaWebApp
 
         private void InitDB(UserManager<PikchaUser> userManager, RoleManager<IdentityRole> roleManager, PikchaDbContext dbContext)
         {
-            // remove all data if there is
-            // clear image views
-            var imgvws = dbContext.ImageViews.ToListAsync().Result;
-            dbContext.RemoveRange(imgvws);
-            dbContext.SaveChanges();
-
-            // clear images
-            var imgs = dbContext.PikchaImages.ToListAsync().Result;
-            dbContext.RemoveRange(imgs);
-            dbContext.SaveChanges();
-
-            // clear users
-            var usrs = dbContext.PikchaUsers.ToListAsync().Result;
-            dbContext.RemoveRange(usrs);
-            dbContext.SaveChanges();
-
-
             // create roles
             bool userExist = roleManager.RoleExistsAsync(PikchaConstants.PIKCHA_ROLES_USER_NAME).Result;
             if (!userExist)

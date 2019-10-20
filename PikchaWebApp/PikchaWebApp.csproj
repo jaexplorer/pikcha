@@ -66,6 +66,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Identity\Pages\Account\NotUsedDontDelete\" />
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
