@@ -220,11 +220,11 @@ namespace PikchaWebApp
                 {
                     UserName = "testuser" + i + "@pikcha.com",
                     Email = "testuser" + i + "@pikcha.com",
-                    BioInfo = "test user" + i + " bio info",
-                    FirstName = "test " + i + " FName",
-                    LastName = "test " + i + " LName",
-                    AvatarFileName = "Uploads/Avatars/Test/profile" + i + ".jpg",
-                    PerCountry = locations[rnd.Next(locations.Count)]
+                    Bio = "test user" + i + " bio info",
+                    FName = "test " + i + " FName",
+                    LName = "test " + i + " LName",
+                    Avatar = "Uploads/Avatars/Test/profile" + i + ".jpg",
+                    Country = locations[rnd.Next(locations.Count)]
                 };
                 var exUsr = userManager.FindByEmailAsync(user.Email).Result;
                 if(exUsr == null)
@@ -245,7 +245,7 @@ namespace PikchaWebApp
                 string imgId = imageIds[i];
 
                 int daysSince = rnd.Next(20);
-                //List<PikchaImageViews> imgViews = new List<PikchaImageViews>();
+                //List<Views> imgViews = new List<Views>();
 
                 
 
@@ -256,9 +256,9 @@ namespace PikchaWebApp
                     Title = "Title " + i,
                     Location = locations[rnd.Next(locations.Count)],
                     //Id = i +1,
-                    PikchaImageId = imgId,
-                    WatermarkedFile = "Uploads/Images/Watermarks/" + imgId + ".jpg",
-                    ThumbnailFile = "Uploads/Images/Thumbnail/" + imgId + ".jpg",
+                    Id = imgId,
+                    Watermark = "Uploads/Images/Watermarks/" + imgId + ".jpg",
+                    Thumbnail = "Uploads/Images/Thumbnail/" + imgId + ".jpg",
                     UploadedAt = DateTime.Now.AddDays(-daysSince).AddHours(-5).AddSeconds(rnd.Next(10) * 100),
                 };
                 dbContext.PikchaImages.Add(img);
@@ -329,9 +329,9 @@ namespace PikchaWebApp
             {
                 UserName = "PikchaAdmin",
                 Email = "admin@pikcha.com",
-                BioInfo = "I am the super admin of Pikcha Web",
-                FirstName = "Pikcha admin",
-                LastName = "Super Admin"
+                Bio = "I am the super admin of Pikcha Web",
+                FName = "Pikcha admin",
+                LName = "Super Admin"
             };
                         //Here we create a Admin super user who will maintain the website                   
            string userPWD = "p1KcAd!N0o7";

@@ -6,59 +6,53 @@
 
 # Images
 
-### Filter Images - random/ pikcha100
+### Filter Images - random/ pikcha100/ artists100
 - ENDPOINT : api/filter/images 
 - METHOD : get
 - AUTHENTICATED : false
-- QUERY_PARAMS : Type = random/ [string, Default=random], Start [int, Optional], Count [int, Optional]
+- QUERY_PARAMS : Type = random/ pikcha100/ artists100 [string, Default=random], Start [int, Optional], Count [int, Optional]
 - RESULTS : images[]
 - ERROR_CODES : 200, 416, 500
 
 Image
- - PikchaImageId
- - Title
- - Caption 
- - Location 
- - ThumbnailFile 
- - WatermarkedFile 
- - ArtisitId
- - ArtistFirstname 
- - ArtistLastname 
- - ArtistPercity 
- - ArtistPercountry 
- - ArtistAvatarfilename 
- - TotalViews
- - Height
- - TotalPhotosSold
- - AveragePriice
- - Sellers
+ - Id 
+ - Title 
+ - Location  
+ - Caption  
+ - Thumbnail  
+ - Watermark  
+ - Views 
+ - Artist  
+ - Performance 
+ - TotSold 
+ - AvgPrice 
+ - Height 
+ - ProductIds 
  
 
-### Get an Image by image id
-- ENDPOINT : api/image/{imageId} 
+### Get an Image by product id
+- ENDPOINT : api/product/{productId} 
 - METHOD : get
 - AUTHENTICATED : false
 - RESULTS : image
-- ERROR_CODES : 200, 416, 500
+- ERROR_CODES : 200, 404, 500
 
 Image
- - PikchaImageId
+ - Id <-- product id
+ - ImageId
  - Title
  - Caption 
  - Location 
- - ThumbnailFile 
+ - Type 
+ - IsSale 
+ - Price 
+ - AvgPrice 
+ - Watermark 
+ - Views  
  - WatermarkedFile 
- - ArtisitId
- - ArtistFirstname 
- - ArtistLastname 
- - ArtistPercity 
- - ArtistPercountry 
- - ArtistAvatarfilename 
- - TotalViews
- - Height
- - TotalImageSold
- - AveragePrice
- - Sellers
+ - Performance 
+ - TotSold  
+ - Artist 
 
 
 
@@ -82,29 +76,6 @@ Image
 
 # Artists
 
-### Filter Artists - random/ artists100
-- ENDPOINT : api/filter/artists 
-- METHOD : get
-- AUTHENTICATED : false
-- QUERY_PARAMS : Type=random/ artists100 [string, Default=random], Start [int, Optional], Count [int, Optional]
-- RESULTS : artists[]
-- ERROR_CODES : 200, 416, 500
-
-Artist
- - FirstName 
- - LastName
- - PerCountry
- - TotalImageViews
- - TopImageTitle
- - TopImageLocation
- - TopImageThumbnailFile
- - TopImageWatermarkedFile
- - TopImageTotalViews
- - SocialLinks
- - Performance
- - TotalImageSold
- - AveragePrice
-
 ### Get an Artist
 - ENDPOINT : api/profile/{userId} 
 - METHOD : get
@@ -114,24 +85,22 @@ Artist
 
 
 ARTIST
- - FirstName
- - LastName 
- - BioInfo 
- - PerAddress1 
- - PerAddress2
- - PerCity 
- - PerPostalCode 
- - PerCountry 
- - ShipAddress1 
- - ShipAddress2 
- - ShipCity 
- - ShipPostalCode 
- - ShipCountry 
- - SocialLinks
- - Performance
- - TotalImageSold
- - AveragePrice
- - Following
+ - Id
+ - FName 
+ - LName
+ - Email 
+ - Phone 
+ - Avatar 
+ - Bio  
+ - Links <- dictionary of strings
+ - Location 
+ - Views 
+ - Performance 
+ - TotSold 
+ - AvgPrice 
+ - Following <-- list of users
+ - Followers <-- list of users
+ - Roles  <-- list of string
 
 ### Get the loggedin user info 
 - ENDPOINT : api/profile/myinfo/{userId} 
@@ -142,22 +111,23 @@ ARTIST
 
 
 LOGGEDINUSERINFO
-- Id
-- AvatarFileName
-- FirstName
-- LastName
-- BioInfo
-- Location
-- Email
-- PhoneNumber
-- ShipAddress1
-- ShipAddress2
-- ShipCity
-- ShipPostalCode
-- ShipCountry
-- Sociallinks - json string
-- Following[] - an array of artists the user is following (E.g [{Id, Firstname, Lastname, AvatarFileName}])
-- Role - string [ comma seperated roles]
+ - Id
+ - FName 
+ - LName
+ - Email 
+ - Phone 
+ - Avatar
+ - Bio 
+ - Links 
+ - Addr1 
+ - Addr2 
+ - City 
+ - Postal 
+ - State 
+ - Country 
+ - Following 
+ - LUploadOn  <--- last uploaded on - to limit one image per day
+ - Roles 
 
 ### Update user info
 - ENDPOINT : api/profile/{userId} 

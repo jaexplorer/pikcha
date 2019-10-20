@@ -123,9 +123,9 @@ namespace PikchaWebApp.Test.Unit
             var filtContr = new FilterController(_fixture.Context, _imapper);
 
             var responseV = await filtContr.Images() as ObjectResult;
-            var imlst = responseV.Value as List<PikchaRandomImageDTO>;
+            var imlst = responseV.Value as List<PikchaImageFilterDTO>;
 
-            var responseS = await imgContr.GetById(imlst[0].PikchaImageId) as ObjectResult;
+            var responseS = await imgContr.GetById(imlst[0].Id) as ObjectResult;
             Assert.Equal(statusCode, responseS.StatusCode);
 
         }
@@ -147,11 +147,11 @@ namespace PikchaWebApp.Test.Unit
 
             var pkImg =  _fixture.Context.PikchaImages.First();
             
-            var responseV = await imgContr.IncrementViewCount(pkImg.PikchaImageId) as StatusCodeResult;
+            var responseV = await imgContr.IncrementViewCount(pkImg.Id) as StatusCodeResult;
 
             Assert.Equal(201, responseV.StatusCode);
 
-            Assert.True(pkImg.PikchaImageViews.Count() > 0);
+            Assert.True(pkImg.Views.Count() > 0);
 
         }
 

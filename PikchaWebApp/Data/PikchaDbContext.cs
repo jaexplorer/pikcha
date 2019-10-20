@@ -22,6 +22,7 @@ namespace PikchaWebApp.Data
 
         public DbSet<PikchaUser> PikchaUsers { get; set; }
         public DbSet<PikchaImage> PikchaImages { get; set; }
+        public DbSet<ImageProduct> ImageProducts { get; set; }
         public DbSet<PikchaTag> ImageTags { get; set; }
         public DbSet<PikchaImageViews> ImageViews { get; set; }
 
@@ -45,22 +46,26 @@ namespace PikchaWebApp.Data
             .HasDefaultValueSql("getdate()");
             */
             builder.Entity<PikchaUser>()
-                .Property(b => b.SocialLinks)
+                .Property(b => b.Links)
                 .HasConversion(
                 v => JsonConvert.SerializeObject(v),
                 v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
+
+
+            //PikchaImageViews
+            builder.Entity<PikchaImageViews>().HasKey(sc => new { sc.Date, sc.PikchaImageId });
 
             // pikcha tags
             builder.Entity<PikchaImageTag>().HasKey(sc => new { sc.ImageTagId, sc.PikchaImageId });
             builder.Entity<PikchaImageTag>()
                 .HasOne<PikchaTag>(sc => sc.ImageTag)
-                .WithMany(s => s.PikchaImageTags)
+                .WithMany(s => s.Tags)
                 .HasForeignKey(sc => sc.ImageTagId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<PikchaImageTag>()
                 .HasOne<PikchaImage>(sc => sc.PikchaImage)
-                .WithMany(s => s.PikchaImageTags)
+                .WithMany(s => s.Tags)
                 .HasForeignKey(sc => sc.PikchaImageId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -68,7 +73,7 @@ namespace PikchaWebApp.Data
             builder.Entity<PikchaArtistFollower>().HasKey(sc => new { sc.ArtistsId, sc.UserId });
             builder.Entity<PikchaArtistFollower>()
                 .HasOne<PikchaUser>(sc => sc.PikchaUser)
-                .WithMany(s => s.FollowingArtists)
+                .WithMany(s => s.Following)
                 .HasForeignKey(sc => sc.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
             
