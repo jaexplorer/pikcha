@@ -5,65 +5,73 @@ using System.Threading.Tasks;
 
 namespace PikchaWebApp.Models
 {
-    public class PikchaImageDTOs
+    public class PikchaImageDTOs 
     {
 
     }
 
-    public class PikchaRandomImageDTO : PikchaImageBaseDTO
+    public class PikchaImageDTO : PikchaImageBaseDTO
     {
-        public string Height { get; set; }
-
-        public decimal Performance { get; set; }
-
-        public int TotalPhotosSold { get; set; }
-        public decimal AveragePrice { get; set; }
-
-        public List<PikchaUser> Sellers { get; set; }
-    }
-
-
-    public class Pikcha100ImageDTO : PikchaImageBaseDTO
-    {
-        public string Caption { get; set; }
-        public string Height { get; set; }
-        public decimal Performance { get; set; }
-
-        public int TotalImageSold { get; set; }
-        public decimal AveragePrice { get; set; }
-
-        public List<PikchaUser> Sellers { get; set; }
-    }
-
-
-    public class PikchaImageDescriptionDTO : PikchaImageBaseDTO
-    {
-        public string Caption { get; set; }
-
-        public int NumberOfPrint { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
 
     }
+    //public class PikchaRandomImageDTO : PikchaImageBaseDTO
+    //{
+    //    public string Caption { get; set; } = string.Empty;
+    //    public string Height { get; set; } = string.Empty;
 
+    //    public decimal Performance { get; set; } = 0;
+
+    //    public int TotalPhotosSold { get; set; } = 0;
+    //    public decimal AvgPrice { get; set; } = 0;
+
+    //    public List<PikchaUserBaseDTO> Sellers { get; set; } = new List<PikchaUserBaseDTO>();
+    //}
+
+
+    //public class Pikcha100ImageDTO : PikchaImageBaseDTO
+    //{
+    //    public string Caption { get; set; } = string.Empty;
+    //    public string Height { get; set; } = string.Empty;
+
+    //    public int TotSold { get; set; } = 0;
+    //    public decimal AvgPrice { get; set; } = 0;
+
+    //    public List<PikchaUserBaseDTO> Sellers { get; set; } = new List<PikchaUserBaseDTO>();
+    //}
+
+
+    //public class PikchaImageDescriptionDTO : PikchaImageBaseDTO
+    //{
+    //    public string Caption { get; set; } = string.Empty;
+
+    //    public int NumberOfPrint { get; set; } = 0;
+    //    public int Width { get; set; } = 0;
+    //    public int Height { get; set; } = 0;
+
+    //}
+
+    public class PikchaImageFilterDTO : PikchaImageBaseDTO
+    {
+        public string Caption { get; set; } = string.Empty;
+        public decimal Performance { get; set; } = 0;
+        public int TotSold { get; set; } = 0;
+        public decimal AvgPrice { get; set; } = 0;
+
+        public string Height { get; set; } = string.Empty;
+
+        public List<string> ProductIds { get; set; } = new List<string>();
+
+    }
     public class PikchaImageBaseDTO
     {
-        public string PikchaImageId { get; set; }
-        public string Title { get; set; }
-        public string Location { get; set; }
-        public string ThumbnailFile { get; set; }
-        public string WatermarkedFile { get; set; }
-        public int TotalViews { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+        public string Thumbnail { get; set; } = string.Empty;
+        public string Watermark { get; set; } = string.Empty;
+        public string Views { get; set; } =  string.Empty;
 
-
-
-        public string ArtistId { get; set; }
-        public string ArtistFirstname { get; set; }
-        public string ArtistLastname { get; set; }
-        public string ArtistPercity { get; set; }
-        public string ArtistPercountry { get; set; }
-        public string ArtistAvatarfilename { get; set; }
-
+        public PikchaUserBaseDTO Artist { get; set; } = new PikchaUserBaseDTO();
 
     }
 

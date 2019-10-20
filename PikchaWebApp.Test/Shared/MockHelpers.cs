@@ -174,7 +174,7 @@ namespace PikchaWebApp.Test
             // Arrange
             var userManager = fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
            
-            var user = new PikchaUser {PikchaUserId = pikchaUserId, Id = userId, UserName = userName, Email = userName, TwoFactorEnabled=false };
+            var user = new PikchaUser {Id = userId, UserName = userName, Email = userName, TwoFactorEnabled=false };
             
             await userManager.CreateAsync(user, password);
             
@@ -223,15 +223,15 @@ namespace PikchaWebApp.Test
 
         public static void MockRandomImages(ref Mock<IMapper> _imapper)
         {
-            _imapper.Setup(x => x.Map<PikchaRandomImageDTO>(It.IsAny<PikchaImage>()))
-      .Returns((PikchaImage source) => new PikchaRandomImageDTO() { });
+            _imapper.Setup(x => x.Map<PikchaImageFilterDTO>(It.IsAny<PikchaImage>()))
+      .Returns((PikchaImage source) => new PikchaImageFilterDTO() { });
            
 
         }
 
-        public static ImageViewModel CreateImage(string title, string caption, string location)
+        public static ImageViewModel CreateImage(string title, string caption, string location, string imagePath = "TestPhotos/beach-jaffna.jpg")
         {
-            IFormFile imgFile = MockHelpers.CreateNewImageFile("TestPhotos/beach-jaffna.jpg", "beach-jaffna.jpg", "beach-jaffna");
+            IFormFile imgFile = MockHelpers.CreateNewImageFile(imagePath, "beach-jaffna.jpg", title);
 
             ImageViewModel vmImage = new ImageViewModel();
             vmImage.Title = title;

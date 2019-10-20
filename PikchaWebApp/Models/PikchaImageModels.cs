@@ -7,17 +7,13 @@ using System.Threading.Tasks;
 
 namespace PikchaWebApp.Models
 {
-    [Table("PikchaImages")]
+    [Table("Images")]
     public class PikchaImage
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("Id")]
-        public int Id { get; set; }
-                
-        [Column("PikchaImageId")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string PikchaImageId { get; set; }
+        public string Id { get; set; }
 
         [Column("Title")]
         public string Title { get; set; }
@@ -34,11 +30,11 @@ namespace PikchaWebApp.Models
         [Column("Height")]
         public int Height { get; set; }
 
-        [Column("ThumbFile")]
-        public string ThumbnailFile { get; set; }
+        [Column("Thumbnail")]
+        public string Thumbnail { get; set; }
 
-        [Column("WaterFile")]
-        public string WatermarkedFile { get; set; }
+        [Column("Watermark")]
+        public string Watermark { get; set; }
 
         [Column("UploadedAt")]
         // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -52,59 +48,51 @@ namespace PikchaWebApp.Models
         [Column("Artist")]
         public PikchaUser Artist { get; set; }
         
-        public IEnumerable<PikchaImageTag> PikchaImageTags { get; set; }
-        public IEnumerable<PikchaImageViews> PikchaImageViews { get; set; }
+        public IEnumerable<PikchaImageTag> Tags { get; set; }
+        public IEnumerable<PikchaImageViews> Views { get; set; }
+        public IEnumerable<ImageProduct> Products { get; set; }
 
+        
     }
 
     [Table("PikchaTags")]
     public class PikchaTag
     {
         [Key]
-        [Column("ImageTagId")]
+        [Column("Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ImageTagId { get; set; }
+        public string Id { get; set; }
 
         [Column("Name")]
         public string Name { get; set; }
 
-        public IEnumerable<PikchaImageTag> PikchaImageTags { get; set; }
+        public IEnumerable<PikchaImageTag> Tags { get; set; }
     }
 
-    [Table("PikchaImageTags")]
+    [Table("Tags")]
     public class PikchaImageTag
     {
-        public int ImageTagId { get; set; }
-
-        [ForeignKey("ImageTagId")]
+        public string ImageTagId { get; set; }
+        
         public PikchaTag ImageTag { get; set; }
 
-        public int PikchaImageId { get; set; }
-
-        [ForeignKey("PikchaImageId")]
-
+        public string PikchaImageId { get; set; }
+        
         public PikchaImage PikchaImage { get; set; }
 
     }
 
-    [Table("PikchaImageViews")]
+    [Table("Views")]
     public class PikchaImageViews
     {
-        [Key]
-        [Column("PikchaImageViewId")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int PikchaImageViewId { get; set; }
-
-
         [Column(TypeName = "Date")]
         [Required]
         public DateTime Date { get; set; }
         
         public int Count { get; set; }
 
-        public int PikchaImageId { get; set; }
+        public string PikchaImageId { get; set; }
 
-        [ForeignKey("PikchaImageId")]
         public PikchaImage PikchaImage { get; set; }
 
     }

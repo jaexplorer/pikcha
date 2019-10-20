@@ -68,7 +68,7 @@ namespace PikchaWebApp.Test.Unit
 
             Assert.Equal(statusCode, result2.StatusCode);
 
-            var qUsr = result2.Value as Pikcha100ArtistDTO;
+            var qUsr = result2.Value as PikchaArtistDTO;
             Assert.Equal(userId, qUsr.Id);
             return;
 
@@ -89,8 +89,8 @@ namespace PikchaWebApp.Test.Unit
             string updateFName = "Updated First Name2";
             ProfileViewModel updtModel = new ProfileViewModel()
             {
-                 BioInfo = "UpdatedBio-Info",
-                  FirstName = updateFName
+                 Bio = "UpdatedBio-Info",
+                  FName = updateFName
             };
             var result = await profContr.UpdateUser(pkUser.Id, updtModel) as ObjectResult;
 
@@ -99,14 +99,14 @@ namespace PikchaWebApp.Test.Unit
             // get the user from DB
             var updUsr = await _fixture.Context.PikchaUsers.FindAsync(pkUser.Id);
 
-            Assert.Equal(updateFName, updUsr.FirstName);
+            Assert.Equal(updateFName, updUsr.FName);
 
         }
 
         [Theory]
         [InlineData("valid", StatusCodes.Status200OK)]
         //[InlineData("invalid", StatusCodes.Status500InternalServerError)]
-        public async Task Post_Promote_Photo_Grapher_Test(string idType, int statusCode)
+        public async Task<PikchaUser> Post_Promote_Photo_Grapher_Test(string idType, int statusCode)
         {
             // create a new user
             string userId = Guid.NewGuid().ToString();
@@ -122,14 +122,15 @@ namespace PikchaWebApp.Test.Unit
             var s = roleManager.CreateAsync(role).Result;
 
             // create a file
-            var img = MockHelpers.CreateImage(DateTime.Now.ToShortDateString(), "Caption 1", "location 1");
+            string imagePath = "TestPhotos/black-white.jpg";
+            var img = MockHelpers.CreateImage(DateTime.Now.ToShortDateString(), "Caption 1", "location 1", imagePath);
 
             if(idType == "invalid")
             {
                 var result2 = await profCntrl.PromoteUserToPhotographer(Guid.NewGuid().ToString(), img.ImageFile) as ObjectResult;
                 Assert.Equal(statusCode, result2.StatusCode);
 
-                return;
+                return pkUser;
             }
 
             var result = await profCntrl.PromoteUserToPhotographer(pkUser.Id, img.ImageFile) as ObjectResult;
@@ -138,6 +139,25 @@ namespace PikchaWebApp.Test.Unit
             var qUsr = result.Value as PikchaAuthenticatedUserDTO;
 
             Assert.Contains(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME, qUsr.Roles);
+
+            return pkUser;
+        }
+
+        [Fact]
+        //[InlineData("invalid", StatusCodes.Status500InternalServerError)]
+        public async Task Get_Signature()
+        {
+            var artist = await Post_Promote_Photo_Grapher_Test("valid", 200);
+                       
+            var profCntrl = CreateAuthenticatedProfileController(artist);
+
+            var result = await profCntrl.GetSignature(artist.Id) as ObjectResult;
+            Assert.Equal(200, result.StatusCode);
+
+            //File.Exists(result.Value.)
+            //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
+
+            //Assert.Contains(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME, qUsr.Roles);
 
         }
 
@@ -171,7 +191,7 @@ namespace PikchaWebApp.Test.Unit
 
             var qUsr = result.Value as PikchaAuthenticatedUserDTO;
 
-            Assert.True(File.Exists(qUsr.AvatarFileName));
+            Assert.True(File.Exists(qUsr.Avatar));
 
         }
 
@@ -208,7 +228,7 @@ namespace PikchaWebApp.Test.Unit
 
             //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
 
-            //Assert.True(File.Exists(qUsr.AvatarFileName));
+            //Assert.True(File.Exists(qUsr.Avatar));
 
         }
 
@@ -242,7 +262,7 @@ namespace PikchaWebApp.Test.Unit
 
             //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
 
-            //Assert.True(File.Exists(qUsr.AvatarFileName));
+            //Assert.True(File.Exists(qUsr.Avatar));
 
         }
 
@@ -341,7 +361,7 @@ namespace PikchaWebApp.Test.Unit
         //      Task<PikchaUser> user1Result = MockHelpers.CreateNewUser(1, userId, email, "Test@123", _fixture);
         //      if (user1Result.IsCompleted)
         //      {
-        //          ProfileViewModel profVM = new ProfileViewModel() { PerAddress1 = "Address 1", FirstName = fName, LastName = "LName", PerPostalCode = "1234" };
+        //          ProfileViewModel profVM = new ProfileViewModel() { PerAddress1 = "Address 1", FName = fName, LName = "LName", PerPostalCode = "1234" };
 
         //         /* var userManager = _fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
         //          var controller = new ProfileController(_webHostEnvironment.Object, _configurationManager.Object, userManager, _fixture.Context);
@@ -353,18 +373,18 @@ namespace PikchaWebApp.Test.Unit
         //          Assert.NotNull(viewResult.Data);
         //          var user = Assert.IsType<ProfileViewModel>(viewResult.Data);
 
-        //          Assert.Equal(fName, user.FirstName);
+        //          Assert.Equal(fName, user.FName);
 
         //          // get the user from DB and check whether it is updated
         //          PikchaUser dUser = _fixture.Context.Users.Find(userId);
-        //          Assert.Equal(fName, dUser.FirstName);
+        //          Assert.Equal(fName, dUser.FName);
         //          */
 
 
         //          // get the PikchUser (get it from user manager and make sure it is updated in user manager as well
         //          PikchaUser pUser = MockHelpers.FindUserById(userId, _fixture).Result;
 
-        //          Assert.Equal(fName, pUser.FirstName);
+        //          Assert.Equal(fName, pUser.FName);
 
         //          // delete the user
         //          await MockHelpers.DeleteUser(pUser, _fixture);
@@ -410,13 +430,13 @@ namespace PikchaWebApp.Test.Unit
 
         //          // get the user from DB and check whether it is updated
         //          PikchaUser dUser = _fixture.Context.Users.Find(userId);
-        //          Assert.Contains("uploads/avatars", dUser.AvatarFileName);
+        //          Assert.Contains("uploads/avatars", dUser.Avatar);
 
 
 
         //          // get the PikchUser (get it from user manager and make sure it is updated in user manager as well
         //          PikchaUser pUser = MockHelpers.FindUserById(userId, _fixture).Result;
-        //          Assert.Contains("uploads/avatars", pUser.AvatarFileName);
+        //          Assert.Contains("uploads/avatars", pUser.Avatar);
 
         //          // delete the user
         //          //await MockHelpers.DeleteUser(pUser, _fixture);
@@ -436,7 +456,7 @@ namespace PikchaWebApp.Test.Unit
         //      Task<PikchaUser> user1Result = MockHelpers.CreateNewUser(userId, email, "Test@123", _fixture);
         //      if (user1Result.IsCompleted)
         //      {
-        //          ProfileViewModel profVM = new ProfileViewModel() { Id = user1Result.Result.Id, Address_1 = "Address 1", FirstName = fName, LastName = "LName", PostalCode = "1234" };
+        //          ProfileViewModel profVM = new ProfileViewModel() { Id = user1Result.Result.Id, Address_1 = "Address 1", FName = fName, LName = "LName", Postal = "1234" };
 
         //          var userManager = _fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
         //          var controller = new UserProfileController(_webHostEnvironment.Object, _configurationManager.Object, userManager, _fixture.Context);
@@ -448,18 +468,18 @@ namespace PikchaWebApp.Test.Unit
         //          Assert.NotNull(viewResult.Data);
         //          var user = Assert.IsType<ProfileViewModel>(viewResult.Data);
 
-        //          Assert.Equal(fName, user.FirstName);
+        //          Assert.Equal(fName, user.FName);
 
         //          // get the user from DB and check whether it is updated
         //          PikchaUser dUser = _fixture.Context.Users.Find(userId);
-        //          Assert.Equal(fName, dUser.FirstName);
+        //          Assert.Equal(fName, dUser.FName);
 
 
 
         //          // get the PikchUser (get it from user manager and make sure it is updated in user manager as well
         //          PikchaUser pUser = MockHelpers.FindUserById(userId, _fixture).Result;
 
-        //          Assert.Equal(fName, pUser.FirstName);
+        //          Assert.Equal(fName, pUser.FName);
 
         //          // delete the user
         //          //await MockHelpers.DeleteUser(pUser, _fixture);

@@ -53,7 +53,7 @@ namespace PikchaWebApp.Managers
                         }
 
                         StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
-                        pkImage.ThumbnailFile = manager.UploadThumbnail(image, imageId, StorageManager.FileCategory.PikchaImage);
+                        pkImage.Thumbnail = manager.UploadThumbnail(image, imageId, StorageManager.FileCategory.PikchaImage);
 
                         // Read the watermark that will be put on top of the image
                         using (MagickImage watermark = new MagickImage(_watermark_img))
@@ -61,7 +61,7 @@ namespace PikchaWebApp.Managers
                             //watermark.Resize(100, 0);
                             // Draw the watermark in the center
                             waterImage.Composite(watermark, Gravity.Center, CompositeOperator.Over);
-                            pkImage.WatermarkedFile = manager.UploadWaterMark(waterImage, imageId, StorageManager.FileCategory.PikchaImage);
+                            pkImage.Watermark = manager.UploadWaterMark(waterImage, imageId, StorageManager.FileCategory.PikchaImage);
 
                         }
                         return true;
@@ -72,6 +72,38 @@ namespace PikchaWebApp.Managers
             {
                 return false;
             }            
+        }
+
+
+        public bool ProcessSignatureFile(IFormFile formFileInfo, ref string sigFile, ref string invSigFile)
+        {
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    //await formFileInfo.CopyToAsync(memoryStream);
+                    formFileInfo.CopyTo(memoryStream);
+
+                    using (MagickImage image = new MagickImage(memoryStream.ToArray()))
+                    {
+
+                        MagickImage revImg = (MagickImage)image.Clone();
+
+                        revImg.Negate();
+
+                        StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
+                        string id = Guid.NewGuid().ToString();
+                        sigFile = manager.UploadMagickImage(image, string.Empty, id + "-org", PikchaConstants.PIKCHA_IMAGE_SAVE_EXTENTION, StorageManager.FileCategory.Signature);
+                        invSigFile = manager.UploadMagickImage(revImg, string.Empty, id + "-inv", PikchaConstants.PIKCHA_IMAGE_SAVE_EXTENTION, StorageManager.FileCategory.Signature);
+
+                        return true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
 
