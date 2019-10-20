@@ -30,6 +30,9 @@ namespace PikchaWebApp.Models
 
         [Column("Image")]
         public PikchaImage Image { get; set; }
+
+        [Column("Seller")]
+        public PikchaUser Seller { get; set; }
     }
 
 

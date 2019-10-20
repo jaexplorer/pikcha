@@ -233,15 +233,17 @@ namespace PikchaWebApp.Test
         {
             IFormFile imgFile = MockHelpers.CreateNewImageFile(imagePath, "beach-jaffna.jpg", title);
 
+            string signatureFilePath = "TestPhotos/black-white.jpg";
+
             ImageViewModel vmImage = new ImageViewModel();
             vmImage.Title = title;
             vmImage.Caption = caption;
             vmImage.Location = location;
             //vmImage.NumberOfPrint = 10;
             vmImage.ImageFile = imgFile;
+            vmImage.Signature = signatureFilePath;
 
             return vmImage;
         }
-
     }
 }

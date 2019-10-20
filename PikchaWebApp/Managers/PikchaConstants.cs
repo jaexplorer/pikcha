@@ -16,5 +16,9 @@ namespace PikchaWebApp.Managers
         // image
         public const string PIKCHA_IMAGE_SAVE_EXTENTION = ".jpg";
 
+        // product
+        public const string PIKCHA_PRODUCT_TYPE_OWNER = "Primary";
+        public const string PIKCHA_PRODUCT_TYPE_SELLER = "Secondary";
+
     }
 }

@@ -38,12 +38,28 @@ namespace PikchaWebApp.Controllers
         // POST: api/image/upload
         [HttpPost("upload")]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
         public async Task<ActionResult> UploadImage([FromForm] ImageViewModel imgViewModel)
         {
             try
-            {               
+            {  
+               PikchaUser loggedinUser = await _userManager.GetUserAsync(this.User);
+                if(loggedinUser == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
+                }
+
+                if (string.IsNullOrEmpty(imgViewModel.Signature))
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404SignatureNotFound);
+                }
+                if (imgViewModel.ImageFile == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404ImageNotFound);
+                }
+
                 string imageId = Guid.NewGuid().ToString();
                 PikchaImage pkImg = new PikchaImage();
                 pkImg.CopyPropertiesFrom(imgViewModel);
@@ -54,7 +70,7 @@ namespace PikchaWebApp.Controllers
                
                 ImageProcessingManager imgManager = new ImageProcessingManager(_hostingEnvironment, _configuration);
 
-                bool status = imgManager.ResizeImage(imageId, imgViewModel.ImageFile, ref pkImg);
+                bool status = imgManager.ResizeImage(imageId, imgViewModel.ImageFile, imgViewModel.Signature, ref pkImg);
 
                 // add image tags
                 AddImageTags(ref pkImg, imgViewModel.Tags);
@@ -67,11 +83,23 @@ namespace PikchaWebApp.Controllers
 
                        // await Task.WhenAll(loggedinUserTask);
 
-                        PikchaUser loggedinUser = await _userManager.GetUserAsync(this.User);
 
                         pkImg.Artist = loggedinUser;
                         await _pikchDbContext.AddAsync(pkImg);
+
+                        // add new product owned by owner of the image
+
+                        ImageProduct imgPrd = new ImageProduct()
+                        {
+                             IsSale = true,
+                              Price = imgViewModel.Price,
+                               Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_OWNER,
+                                Image = pkImg,
+                                 Seller = loggedinUser
+                        };
+
                         await _pikchDbContext.SaveChangesAsync();
+                        
                         //return new ReturnDataModel() { Data = pkImg };
                         return StatusCode(StatusCodes.Status201Created);
 
@@ -275,7 +303,10 @@ namespace PikchaWebApp.Controllers
 
         public IFormFile ImageFile { get; set; }
 
+        public string Signature { get; set; }
         public List<string> Tags { get; set; }
+
+        public decimal Price { get; set; } = 100;
     }
 
 
