@@ -41,8 +41,8 @@ namespace PikchaWebApp.Managers
 
             ValidateDirectory(uploadPath);
             string filePath = Path.Combine(uploadPath, imageName) + imageExt;
-
-            image.Write(filePath);
+            //string fullPath = Path.GetFullPath(filePath);
+            image.Write(PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER + filePath);
 
             return filePath;
         }
@@ -53,7 +53,7 @@ namespace PikchaWebApp.Managers
             ValidateDirectory(uploadPath);
             string filePath = Path.Combine(uploadPath, imageId)  + ".jpg";
 
-            image.Write(filePath);
+            image.Write(PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER + filePath);
 
             return filePath;
         }
@@ -65,7 +65,7 @@ namespace PikchaWebApp.Managers
             ValidateDirectory(uploadPath);
             string filePath = Path.Combine(uploadPath, imageId) + ".jpg";
 
-            image.Write(filePath);
+            image.Write(PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER + filePath);
 
             return filePath;
         }

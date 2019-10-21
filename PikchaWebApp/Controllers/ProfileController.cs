@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -8,8 +10,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PikchaWebApp.Data;
 using PikchaWebApp.Managers;
 using PikchaWebApp.Models;
@@ -126,39 +131,55 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
-        public async Task<ActionResult> UploadAvatarImage(string userId, [FromBody] string avatarContent)
+        public async Task<ActionResult> UploadAvatarImage(string userId)
         {
-
             try
             {
-                ImageProcessingManager manager = new ImageProcessingManager(_hostingEnvironment, _configuration);
-                // = "";
-                string filePath = string.Empty;
-
-                manager.ProcessAvatarFile(avatarContent, ref filePath);
-                // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
-                PikchaUser pikchaUser = await  _userManager.GetUserAsync(this.User);
-
-                if(pikchaUser == null)
+                using (var streamReader = new HttpRequestStreamReader(Request.Body, Encoding.UTF8))
+                using (var jsonReader = new JsonTextReader(streamReader))
                 {
-                    return StatusCode(StatusCodes.Status404NotFound, "User not found.");
+                    var json = await JObject.LoadAsync(jsonReader);
 
-                }
+                    string avatarContentFull = (string) json["avatarContent"];
+                    string avatarContent = avatarContentFull.Split(",")[1];
 
-                if (!string.IsNullOrEmpty(filePath))
-                {
-                    pikchaUser.Avatar = filePath;
-                    await _pikchDbContext.SaveChangesAsync();
-                    var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
-                    var roles = await _userManager.GetRolesAsync(pikchaUser);
+                    //string tmp = (string)json["avatarContent"]["data"];
+                    ImageProcessingManager manager = new ImageProcessingManager(_hostingEnvironment, _configuration);
+                    // = "";
+                    string filePath = string.Empty;
+                    manager.ProcessAvatarFile(avatarContent, ref filePath);
+                    // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
+                    PikchaUser pikchaUser = await _userManager.GetUserAsync(this.User);
 
-                    if (roles != null)
+                    if (pikchaUser == null)
                     {
-                        lgUSer.Roles = roles.ToList();
-                    }
-                    return Ok(lgUSer);
+                        return StatusCode(StatusCodes.Status404NotFound, "User not found.");
 
+                    }
+
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        pikchaUser.Avatar = filePath;
+                        await _pikchDbContext.SaveChangesAsync();
+                        var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
+                        var roles = await _userManager.GetRolesAsync(pikchaUser);
+
+                        if (roles != null)
+                        {
+                            lgUSer.Roles = roles.ToList();
+                        }
+                        return Ok(lgUSer);
+
+                    }
+                    // process JSON
                 }
+                //using (var reader = new StreamReader(Request.Body))
+                //{
+                //    var content = await reader.ReadToEndAsync();
+
+                //}
+
+               
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error in uploading the profile image.");
 
 

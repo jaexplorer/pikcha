@@ -16,6 +16,7 @@ namespace PikchaWebApp.Managers
 
         // image
         public const string PIKCHA_IMAGE_SAVE_EXTENTION = ".jpg";
+        public const string PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER = @"wwwroot\";
 
         // product
         public const string PIKCHA_PRODUCT_TYPE_OWNER = "Primary";

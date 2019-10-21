@@ -147,7 +147,7 @@
             },
             "Magick.NET-Q8-AnyCPU": {
               "target": "Package",
-              "version": "[7.14.3, )"
+              "version": "[7.14.4, )"
             },
             "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": {
               "target": "Package",
