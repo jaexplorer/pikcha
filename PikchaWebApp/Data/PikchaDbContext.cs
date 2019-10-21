@@ -23,8 +23,8 @@ namespace PikchaWebApp.Data
         public DbSet<PikchaUser> PikchaUsers { get; set; }
         public DbSet<PikchaImage> PikchaImages { get; set; }
         public DbSet<ImageProduct> ImageProducts { get; set; }
-        public DbSet<PikchaTag> ImageTags { get; set; }
-        public DbSet<PikchaImageViews> ImageViews { get; set; }
+        public DbSet<Tag> ImageTags { get; set; }
+        public DbSet<ImageViews> ImageViews { get; set; }
 
         public DbSet<PikchaArtistFollower> Followers { get; set; }
 
@@ -55,18 +55,18 @@ namespace PikchaWebApp.Data
                 v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v));
 
 
-            //PikchaImageViews
-            builder.Entity<PikchaImageViews>().HasKey(sc => new { sc.Date, sc.PikchaImageId });
+            //ImageViews
+            builder.Entity<ImageViews>().HasKey(sc => new { sc.Date, sc.PikchaImageId });
 
             // pikcha tags
-            builder.Entity<PikchaImageTag>().HasKey(sc => new { sc.ImageTagId, sc.PikchaImageId });
-            builder.Entity<PikchaImageTag>()
-                .HasOne<PikchaTag>(sc => sc.ImageTag)
+            builder.Entity<ImageTag>().HasKey(sc => new { sc.ImageTagId, sc.PikchaImageId });
+            builder.Entity<ImageTag>()
+                .HasOne<Tag>(sc => sc.Tag)
                 .WithMany(s => s.Tags)
                 .HasForeignKey(sc => sc.ImageTagId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<PikchaImageTag>()
+            builder.Entity<ImageTag>()
                 .HasOne<PikchaImage>(sc => sc.PikchaImage)
                 .WithMany(s => s.Tags)
                 .HasForeignKey(sc => sc.PikchaImageId)

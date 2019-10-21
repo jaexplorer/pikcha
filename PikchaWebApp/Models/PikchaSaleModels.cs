@@ -11,13 +11,20 @@ namespace PikchaWebApp.Models
     {
     }
 
-    [Table("Pk_ImageProducts")]
+    [Table("ImageProducts")]
     public class ImageProduct
     {
         [Key]
         [Column("Id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
+
+        //[Column("ProdCode")]
+        //public string ProdCode { get; set; }
+
+        //[Column("ProdNum")]
+        //public int ProdNum { get; set; }
+        //// https://docs.microsoft.com/en-us/ef/core/modeling/relational/sequences
 
         [Column("IsSale")]
         public bool IsSale { get; set; } = false;

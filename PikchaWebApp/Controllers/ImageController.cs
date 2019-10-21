@@ -51,7 +51,7 @@ namespace PikchaWebApp.Controllers
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
                 }
 
-                if (string.IsNullOrEmpty(imgViewModel.Signature))
+                if (string.IsNullOrEmpty(imgViewModel.Signature) || ! System.IO.File.Exists(imgViewModel.Signature))
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404SignatureNotFound);
                 }
@@ -186,7 +186,7 @@ namespace PikchaWebApp.Controllers
             try
             {
 
-                List<PikchaTag> tags = await _pikchDbContext.ImageTags.OrderBy(t => t.Name).ToListAsync();
+                List<Tag> tags = await _pikchDbContext.ImageTags.OrderBy(t => t.Name).ToListAsync();
                 return ReturnOkOrErrorStatus(tags);
 
                // return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = tags };
@@ -218,7 +218,7 @@ namespace PikchaWebApp.Controllers
                         PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
                         if (pImg != null)
                         {
-                            _pikchDbContext.ImageViews.Add(new PikchaImageViews() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
+                            _pikchDbContext.ImageViews.Add(new ImageViews() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
                         }
                     }
                     else
@@ -231,7 +231,7 @@ namespace PikchaWebApp.Controllers
                     PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
                     if (pImg != null)
                     {
-                        _pikchDbContext.ImageViews.Add(new PikchaImageViews() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
+                        _pikchDbContext.ImageViews.Add(new ImageViews() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
                     }
                 }
 
@@ -258,7 +258,7 @@ namespace PikchaWebApp.Controllers
                 {
                     return;
                 }
-                List<PikchaImageTag> imgTags = new List<PikchaImageTag>();
+                List<ImageTag> imgTags = new List<ImageTag>();
                 // get all tags from 
                 var tagsInDb = _pikchDbContext.ImageTags.Where(c => tags.Contains(c.Name)).ToList(); // single DB query
                 foreach (var tag in tags)
@@ -266,16 +266,16 @@ namespace PikchaWebApp.Controllers
                     var tagInDb = tagsInDb.SingleOrDefault(t => t.Name == tag); // runs in memory
                     if (tagInDb != null)
                     {
-                        PikchaTag newTag = new PikchaTag() { Name = tag };
+                        Tag newTag = new Tag() { Name = tag };
                         // _pikchDbContext.ImageTags.add();
                         _pikchDbContext.AddAsync(newTag);
                         _pikchDbContext.SaveChangesAsync();
-                        imgTags.Add(new PikchaImageTag() { ImageTag = newTag, PikchaImage = pkImg });
+                        imgTags.Add(new ImageTag() { Tag = newTag, PikchaImage = pkImg });
 
                     }
                     else
                     {
-                        imgTags.Add(new PikchaImageTag() { ImageTag = tagInDb, PikchaImage = pkImg });
+                        imgTags.Add(new ImageTag() { Tag = tagInDb, PikchaImage = pkImg });
                     }
                 }
             }

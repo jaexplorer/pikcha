@@ -30,7 +30,7 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                var imgProd = await _pikchDbContext.ImageProducts.FirstAsync(im => im.Id == productId);
+                var imgProd = await _pikchDbContext.ImageProducts.Include("Image").Include("Image.Artist").FirstAsync(im => im.Id == productId);
                 if (imgProd == null)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ProductNotFound);

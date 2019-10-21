@@ -76,7 +76,7 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
-        public async Task<ActionResult> UpdateUser(string userId, [FromForm] ProfileViewModel userInfo)
+        public async Task<ActionResult> UpdateUser(string userId, [FromBody] ProfileViewModel userInfo)
         {
             try
             {
@@ -88,6 +88,7 @@ namespace PikchaWebApp.Controllers
                 }
                 //await loggedinUserTask;
                 pikchaUser.CopyPropertiesFrom(userInfo);
+                //pikchaUser.Addr2 = userInfo.
 
                 IdentityResult result = await _userManager.UpdateAsync(pikchaUser);
                 if (result.Succeeded)
@@ -128,7 +129,7 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
-        public async Task<ActionResult> UploadAvatarImage(string userId, [FromForm] IFormFile imageFile)
+        public async Task<ActionResult> UploadAvatarImage(string userId, [FromBody] IFormFile imageFile)
         {
 
             try
@@ -206,7 +207,7 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> PromoteUserToPhotographer(string userId, [FromForm] IFormFile signatureFile)
+        public async Task<ActionResult> PromoteUserToPhotographer(string userId, [FromBody] IFormFile signatureFile)
         {
             try
             {
