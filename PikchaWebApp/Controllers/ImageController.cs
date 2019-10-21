@@ -41,7 +41,7 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
-        public async Task<ActionResult> UploadImage([FromForm] ImageViewModel imgViewModel)
+        public async Task<ActionResult> UploadImage([FromBody] ImageViewModel imgViewModel)
         {
             try
             {  

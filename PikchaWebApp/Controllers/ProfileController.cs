@@ -56,7 +56,7 @@ namespace PikchaWebApp.Controllers
             //var user = await _userManager.FindByIdAsync(userId);
             // TO DO :  if the request user is admin, return profile based on userId query
             //var pikchaUser = await _userManager.GetUserAsync(this.User);
-            var pikchaUser = await _pikchDbContext.PikchaUsers.FindAsync(userId);
+            var pikchaUser = await _pikchDbContext.PikchaUsers.Include("Following").Include("Following.PikchaUser").Include("Following.PikchaArtist").FirstAsync( u => u.Id == userId);
             
             var userDTO = _mapper.Map<PikchaArtistDTO>(pikchaUser);
 
@@ -129,21 +129,18 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
-        public async Task<ActionResult> UploadAvatarImage(string userId, [FromBody] IFormFile imageFile)
+        public async Task<ActionResult> UploadAvatarImage(string userId, [FromBody] string avatarContent)
         {
 
             try
             {
-                StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
+                ImageProcessingManager manager = new ImageProcessingManager(_hostingEnvironment, _configuration);
                 // = "";
-                Task<string> copyTask = manager.UploadToLocalDirectory(imageFile, Guid.NewGuid().ToString(), ".jpg", StorageManager.FileCategory.Avatar);
-                string filePath = copyTask.Result;
+                string filePath = string.Empty;
+
+                manager.ProcessAvatarFile(avatarContent, ref filePath);
                 // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
-                Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
-
-                await Task.WhenAll(copyTask, loggedinUserTask);
-
-                PikchaUser pikchaUser = loggedinUserTask.Result;
+                PikchaUser pikchaUser = await  _userManager.GetUserAsync(this.User);
 
                 if(pikchaUser == null)
                 {
@@ -151,7 +148,7 @@ namespace PikchaWebApp.Controllers
 
                 }
 
-                if (copyTask.IsCompleted)
+                if (!string.IsNullOrEmpty(filePath))
                 {
                     pikchaUser.Avatar = filePath;
                     await _pikchDbContext.SaveChangesAsync();
@@ -207,7 +204,7 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> PromoteUserToPhotographer(string userId, [FromBody] IFormFile signatureFile)
+        public async Task<ActionResult> PromoteUserToPhotographer(string userId, [FromBody] string signatureContent)
         {
             try
             {
@@ -228,7 +225,7 @@ namespace PikchaWebApp.Controllers
                 string orgFName = string.Empty;
                 string invFName = string.Empty;
 
-                manager.ProcessSignatureFile(signatureFile, ref orgFName, ref invFName);
+                manager.ProcessSignatureFile(signatureContent, ref orgFName, ref invFName);
 
                 pikchaUser.Sign = orgFName;
                 pikchaUser.InvSign = invFName;
