@@ -81,14 +81,17 @@ namespace PikchaWebApp.Managers
         }
 
 
-        public bool ProcessSignatureFile(IFormFile formFileInfo, ref string sigFile, ref string invSigFile)
+        public bool ProcessSignatureFile(string signatureContent, ref string sigFile, ref string invSigFile)
         {
             try
-            {
-                using (var memoryStream = new MemoryStream())
+            {  
+               var imageDataByteArray = Convert.FromBase64String(signatureContent);
+
+                using (var memoryStream = new MemoryStream(imageDataByteArray))
                 {
+                    memoryStream.Position = 0;
                     //await formFileInfo.CopyToAsync(memoryStream);
-                    formFileInfo.CopyTo(memoryStream);
+                    //formFileInfo.CopyTo(memoryStream);
 
                     using (MagickImage image = new MagickImage(memoryStream.ToArray()))
                     {
@@ -112,6 +115,33 @@ namespace PikchaWebApp.Managers
             }
         }
 
+        public bool ProcessAvatarFile(string avatarContent, ref string avatarFile)
+        {
+            try
+            {
+                var imageDataByteArray = Convert.FromBase64String(avatarContent);
+
+                using (var memoryStream = new MemoryStream(imageDataByteArray))
+                {
+                    memoryStream.Position = 0;
+                    //await formFileInfo.CopyToAsync(memoryStream);
+                    //formFileInfo.CopyTo(memoryStream);
+
+                    using (MagickImage image = new MagickImage(memoryStream.ToArray()))
+                    {
+                        StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
+                        string id = Guid.NewGuid().ToString();
+                        avatarFile = manager.UploadMagickImage(image, string.Empty, id, PikchaConstants.PIKCHA_IMAGE_SAVE_EXTENTION, StorageManager.FileCategory.Avatar);
+
+                        return true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
 
         public bool ValidateImage(IFormFile formFileInfo)
         {

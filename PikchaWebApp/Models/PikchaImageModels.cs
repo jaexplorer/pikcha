@@ -48,15 +48,15 @@ namespace PikchaWebApp.Models
         [Column("Artist")]
         public PikchaUser Artist { get; set; }
         
-        public IEnumerable<PikchaImageTag> Tags { get; set; }
-        public IEnumerable<PikchaImageViews> Views { get; set; }
+        public IEnumerable<ImageTag> Tags { get; set; }
+        public IEnumerable<ImageViews> Views { get; set; }
         public IEnumerable<ImageProduct> Products { get; set; }
 
         
     }
 
-    [Table("PikchaTags")]
-    public class PikchaTag
+    [Table("Tags")]
+    public class Tag
     {
         [Key]
         [Column("Id")]
@@ -66,15 +66,15 @@ namespace PikchaWebApp.Models
         [Column("Name")]
         public string Name { get; set; }
 
-        public IEnumerable<PikchaImageTag> Tags { get; set; }
+        public IEnumerable<ImageTag> Tags { get; set; }
     }
 
-    [Table("Tags")]
-    public class PikchaImageTag
+    [Table("ImageTags")]
+    public class ImageTag
     {
         public string ImageTagId { get; set; }
         
-        public PikchaTag ImageTag { get; set; }
+        public Tag Tag { get; set; }
 
         public string PikchaImageId { get; set; }
         
@@ -82,8 +82,8 @@ namespace PikchaWebApp.Models
 
     }
 
-    [Table("Views")]
-    public class PikchaImageViews
+    [Table("ImageViews")]
+    public class ImageViews
     {
         [Column(TypeName = "Date")]
         [Required]

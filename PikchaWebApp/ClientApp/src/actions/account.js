@@ -60,7 +60,7 @@ export const updateProfilePicture = formData => {
       dispatch(setLoading());
       const token = await AuthorizeService.getAccessToken();
       const user = await AuthorizeService.getUser();
-      const res = await axios.put(`api/profile/avatar/${user.sub}`, formData, {
+      const res = await axios.post(`api/profile/${user.sub}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"

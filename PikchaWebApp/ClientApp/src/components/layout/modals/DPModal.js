@@ -45,9 +45,8 @@ const DPModal = ({ removeModal, updateProfilePicture, account }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const imageFile = new Image();
-    imageFile.src = cropped;
-    updateProfilePicture(imageFile);
+    const avatarContent = cropped;
+    updateProfilePicture({ avatarContent });
   };
 
   return (

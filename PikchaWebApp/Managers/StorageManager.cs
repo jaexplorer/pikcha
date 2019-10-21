@@ -34,6 +34,7 @@ namespace PikchaWebApp.Managers
             return filePath;
         }
 
+    
         public string UploadMagickImage(MagickImage image, string subDirectory, string imageName, string imageExt, FileCategory fileCategory)
         {
             var uploadPath = Path.Combine(GetDirectory(fileCategory), subDirectory);

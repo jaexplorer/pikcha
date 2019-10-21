@@ -127,20 +127,34 @@ namespace PikchaWebApp.Test.Unit
 
             if(idType == "invalid")
             {
-                var result2 = await profCntrl.PromoteUserToPhotographer(Guid.NewGuid().ToString(), img.ImageFile) as ObjectResult;
-                Assert.Equal(statusCode, result2.StatusCode);
+                using (var ms = new MemoryStream())
+                {
+                    img.ImageFile.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string imgContent = Convert.ToBase64String(fileBytes);
+                    var result2 = await profCntrl.PromoteUserToPhotographer(Guid.NewGuid().ToString(), imgContent) as ObjectResult;
+                    Assert.Equal(statusCode, result2.StatusCode);
+
+                    return pkUser;
+                }
+                    
+            }
+            using (var ms = new MemoryStream())
+            {
+                img.ImageFile.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                string imgContent = Convert.ToBase64String(fileBytes);
+                // act on the Base64 data
+                var result = await profCntrl.PromoteUserToPhotographer(pkUser.Id, imgContent) as ObjectResult;
+                Assert.Equal(statusCode, result.StatusCode);
+
+                var qUsr = result.Value as PikchaAuthenticatedUserDTO;
+
+                Assert.Contains(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME, qUsr.Roles);
 
                 return pkUser;
             }
-
-            var result = await profCntrl.PromoteUserToPhotographer(pkUser.Id, img.ImageFile) as ObjectResult;
-            Assert.Equal(statusCode, result.StatusCode);
-
-            var qUsr = result.Value as PikchaAuthenticatedUserDTO;
-
-            Assert.Contains(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME, qUsr.Roles);
-
-            return pkUser;
+           
         }
 
         [Fact]
@@ -180,18 +194,32 @@ namespace PikchaWebApp.Test.Unit
 
             if (idType == "invalid")
             {
-                var result2 = await profCntrl.UploadAvatarImage(Guid.NewGuid().ToString(), img.ImageFile) as ObjectResult;
-                Assert.Equal(statusCode, result2.StatusCode);
+                using (var ms = new MemoryStream())
+                {
+                    img.ImageFile.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    string imgContent = Convert.ToBase64String(fileBytes);
+                    var result2 = await profCntrl.UploadAvatarImage(Guid.NewGuid().ToString(), imgContent) as ObjectResult;
+                    Assert.Equal(statusCode, result2.StatusCode);
 
-                return;
+                    return;
+                }
+                    
             }
 
-            var result = await profCntrl.UploadAvatarImage(pkUser.Id, img.ImageFile) as ObjectResult;
-            Assert.Equal(statusCode, result.StatusCode);
+            using (var ms = new MemoryStream())
+            {
+                img.ImageFile.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                string imgContent = Convert.ToBase64String(fileBytes);
+                var result = await profCntrl.UploadAvatarImage(pkUser.Id, imgContent) as ObjectResult;
+                Assert.Equal(statusCode, result.StatusCode);
 
-            var qUsr = result.Value as PikchaAuthenticatedUserDTO;
+                var qUsr = result.Value as PikchaAuthenticatedUserDTO;
 
-            Assert.True(File.Exists(qUsr.Avatar));
+                Assert.True(File.Exists(qUsr.Avatar));
+            }
+                
 
         }
 

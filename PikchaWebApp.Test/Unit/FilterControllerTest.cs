@@ -44,12 +44,15 @@ namespace PikchaWebApp.Test.Unit
         }
 
         [Theory]
-        [InlineData("random", 0,2, StatusCodes.Status200OK)]
-        [InlineData("random", 15,2, StatusCodes.Status416RequestedRangeNotSatisfiable)]
-        [InlineData("pikcha100", 0,2, StatusCodes.Status200OK)]
-        [InlineData("pikcha100", 10,20, StatusCodes.Status416RequestedRangeNotSatisfiable)]
+        [InlineData("random", 0, 2, StatusCodes.Status200OK)]
+        [InlineData("random", 15, 2, StatusCodes.Status416RequestedRangeNotSatisfiable)]
+        [InlineData("pikcha100", 0, 2, StatusCodes.Status200OK)]
+        [InlineData("pikcha100", 10, 20, StatusCodes.Status416RequestedRangeNotSatisfiable)]
         [InlineData("artist100", 0, 2, StatusCodes.Status200OK)]
         [InlineData("artist100", 10, 20, StatusCodes.Status416RequestedRangeNotSatisfiable)]
+        [InlineData("artistId", 0, 2, StatusCodes.Status200OK)]
+        [InlineData("artistId", 10, 20, StatusCodes.Status416RequestedRangeNotSatisfiable)]
+
         public async Task Get_ReturnsJson_ListofImages(string type, int start, int count, int expectedStatus)
         {
             // create image
@@ -80,8 +83,16 @@ namespace PikchaWebApp.Test.Unit
             
             // check uploaded images are there
             var filtContr = new FilterController(_fixture.Context, _imapper);
+            ObjectResult response ;
+            if(type == "artistId")
+            {
+                response = await filtContr.Images(type, start, count, pkUser.Id) as ObjectResult;
+            }
+            else
+            {
+                response = await filtContr.Images(type, start, count) as ObjectResult;
 
-            var response = await filtContr.Images(type, start, count) as ObjectResult;
+            }
             Assert.Equal(expectedStatus, response.StatusCode);
             if(expectedStatus != StatusCodes.Status200OK)
             {

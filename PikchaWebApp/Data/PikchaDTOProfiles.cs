@@ -26,7 +26,7 @@ namespace PikchaWebApp.Data
                 .ForMember(
                     dest => dest.Height, opt => opt.MapFrom( src => "0"))
                 .ForMember(
-                    dest => dest.ProductIds, opt => opt.MapFrom(src => new List<string>()))
+                    dest => dest.ProductIds, opt => opt.MapFrom(src => src.Products.Select(p => p.Id)))
                 ;
 
             CreateMap<PikchaUser, PikchaImageFilterDTO>()
@@ -50,6 +50,7 @@ namespace PikchaWebApp.Data
                       dest => dest.TotSold, opt => opt.MapFrom(src => 0))
                    .ForMember(
                       dest => dest.Watermark, opt => opt.MapFrom(src => src.TopImage.Watermark))
+
                    ;
 
 

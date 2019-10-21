@@ -6,11 +6,11 @@
 
 # Images
 
-### Filter Images - random/ pikcha100/ artists100
+### Filter Images - random/ pikcha100/ artists100/ artistId
 - ENDPOINT : api/filter/images 
 - METHOD : get
 - AUTHENTICATED : false
-- QUERY_PARAMS : Type = random/ pikcha100/ artists100 [string, Default=random], Start [int, Optional], Count [int, Optional]
+- QUERY_PARAMS : Type = random/ pikcha100/ artists100 [string, Default=random], Start [int, Optional], Count [int, Optional], ArtistId [int, Optional - required for artistId-Type ]
 - RESULTS : images[]
 - ERROR_CODES : 200, 416, 500
 
@@ -133,7 +133,7 @@ LOGGEDINUSERINFO
 - ENDPOINT : api/profile/{userId} 
 - METHOD : PUT
 - AUTHENTICATED : true
-- PARAMS : FirstName, LastName, BioInfo, Sociallinks, ShipAddress1 , ShipAddress2, ShipCity, ShipPostalCode, ShipCountry
+- PARAMS : FName, LName, Bio, Links, Addr1 , Addr2, City, Postal,State, Country
 - RESULTS : loggedinuserinfo
 - ERROR_CODES : 200, 404, 500
 
@@ -141,7 +141,7 @@ LOGGEDINUSERINFO
 - ENDPOINT : api/profile/artist/promote/{userId} 
 - METHOD : post
 - AUTHENTICATED : true
-- PARAMS : signatureFile [file]
+- PARAMS : signatureContent [Base64String]
 - RESULTS : loggedinuserinfo
 - ERROR_CODES : 200, 404, 500
 
@@ -165,6 +165,6 @@ LOGGEDINUSERINFO
 - ENDPOINT : api/profile/avatar/{userId}
 - METHOD : post
 - AUTHENTICATED : true
-- PARAMS : imageFile [file]
+- PARAMS : avatarContent [Base64String]
 - RESULTS : loggedinuserinfo
 - ERROR_CODES : 200, 404, 500

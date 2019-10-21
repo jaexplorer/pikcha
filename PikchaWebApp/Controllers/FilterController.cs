@@ -8,9 +8,11 @@ using PikchaWebApp.Data;
 using PikchaWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using PikchaWebApp.Managers;
 
 namespace PikchaWebApp.Controllers
 {
+    [Route("api/[controller]")]
     public class FilterController : PikchaBaseController
     {
         protected readonly PikchaDbContext _pikchDbContext;
@@ -27,7 +29,7 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status416RangeNotSatisfiable)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> Images(string Type="random", int Start=0, int Count=20 )
+        public async Task<ActionResult> Images(string Type="random",  int Start=0, int Count=20, string ArtistId = "" )
         {
             try
             {  
@@ -38,8 +40,10 @@ namespace PikchaWebApp.Controllers
                         //break;
                     case "artist100":
                         return await ProcessArtists100(Start, Count);
+                    case "artistId":                       
+                        return await ProcessArtistsId(ArtistId, Start, Count);
 
-                        //break;
+                    //break;
                     default:
                         return await ProcessRandomImages(Start, Count);
                         //break;                    
@@ -96,6 +100,23 @@ namespace PikchaWebApp.Controllers
             
             //var artists100 = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaUsers.Include("Images").Include("Images.Views").OrderByDescending(im => im.Images.Select(v => v.Views.Count())).Skip(start).Take(count)).ToListAsync();
             var artists100 = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaUsers.Include("Images").Include("Images.Views").OrderByDescending(im => im.Images.Count()).Skip(start).Take(count)).ToListAsync();
+            return ReturnOkOrErrorStatus(artists100);
+        }
+
+
+        private async Task<ActionResult> ProcessArtistsId(string artistId, int start, int count)
+        {
+            if(artistId == "")
+            {
+                return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ArtistNotFound); 
+            }
+
+
+            //var images = _pikchDbContext.PikchaImages.Include("Images.Views").Where( i => i.Artist.Id == artistId);
+
+            //var artists100 = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaUsers.Include("Images").Include("Images.Views").OrderByDescending(im => im.Images.Select(v => v.Views.Count())).Skip(start).Take(count)).ToListAsync();
+            //var tmp = _pikchDbContext.PikchaImages.Include("Artist").Include("Views").Where(i => i.Artist.Id == artistId).ToList();
+            var artists100 = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaImages.Include("Artist").Include("Views").Where(i => i.Artist.Id == artistId).AsQueryable().Skip(start).Take(count)).ToListAsync();
             return ReturnOkOrErrorStatus(artists100);
         }
 
