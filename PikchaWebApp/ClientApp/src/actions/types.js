@@ -7,6 +7,7 @@ export const AUTH_SUCCESS = "AUTH_SUCCESS";
 // Account Types
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
+export const USER_UPDATED = "USER_UPDATED";
 export const LOGGED_OUT = "LOGGED_OUT";
 export const USER_ERROR = "USER_ERROR";
 

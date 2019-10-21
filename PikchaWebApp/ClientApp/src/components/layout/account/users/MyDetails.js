@@ -2,47 +2,60 @@
 import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
 import { createModal } from "../../../../actions/modal";
-import ProfilePic from "../../../../assets/images/profilePic.png";
 import CameraIcon from "../../../../assets/images/camera-white.png";
+import { setAlert } from "../../../../actions/alert";
+import { updateUserDetails } from "../../../../actions/account";
 
-const MyDetails = ({ createModal, account }) => {
+const MyDetails = ({ createModal, account, setAlert, updateUserDetails }) => {
   // Component State
   const [user, setUser] = useState({
-    firstName: account.user.fName,
-    lastName: account.user.lName,
+    fName: account.user.fName,
+    lName: account.user.lName,
     bio: account.user.bio,
     email: account.user.email,
     phone: account.user.phone,
-    address1: account.user.addr1,
-    address2: account.user.addr2,
+    addr1: account.user.addr1,
+    addr2: account.user.addr2,
     country: account.user.country,
     state: account.user.state,
     city: account.user.city,
-    zip: account.user.postal
+    postal: account.user.postal
   });
 
   // Destructuring Component State
   const {
-    firstName,
-    lastName,
+    fName,
+    lName,
     bio,
     email,
     phone,
-    address1,
-    address2,
+    addr1,
+    addr2,
     country,
     state,
     city,
-    zip
+    postal
   } = user;
 
   // Update Component State on change
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value });
 
+  const onSubmit = e => {
+    e.preventDefault();
+
+    if (fName === "" || lName === "" || email === "") {
+      fName === "" && setAlert("Please fill in your first name", "danger");
+      lName === "" && setAlert("Please fill in your last name", "danger");
+      email === "" && setAlert("Please fill in your last email", "danger");
+    } else {
+      updateUserDetails(user);
+    }
+  };
+
   return (
     <Fragment>
       <div className='account-title'>My Account</div>
-      <form className='account-form'>
+      <form className='account-form' onSubmit={onSubmit}>
         <div className='form-section'>
           <div className='section-title'>Personal Information</div>
           <div className='person-details-container'>
@@ -58,8 +71,8 @@ const MyDetails = ({ createModal, account }) => {
                 <input
                   className='input-field'
                   type='text'
-                  name='firstName'
-                  value={firstName}
+                  name='fName'
+                  value={fName}
                   onChange={onChange}
                 />
               </div>
@@ -68,8 +81,8 @@ const MyDetails = ({ createModal, account }) => {
                 <input
                   className='input-field'
                   type='text'
-                  name='lastName'
-                  value={lastName}
+                  name='lName'
+                  value={lName}
                   onChange={onChange}
                 />
               </div>
@@ -130,8 +143,8 @@ const MyDetails = ({ createModal, account }) => {
                   <input
                     className='input-field'
                     type='text'
-                    name='address1'
-                    value={address1}
+                    name='addr1'
+                    value={addr1}
                     onChange={onChange}
                   />
                 </div>
@@ -170,8 +183,8 @@ const MyDetails = ({ createModal, account }) => {
                   <input
                     className='input-field'
                     type='text'
-                    name='address2'
-                    value={address2}
+                    name='addr2'
+                    value={addr2}
                     onChange={onChange}
                   />
                 </div>
@@ -191,14 +204,13 @@ const MyDetails = ({ createModal, account }) => {
                 </div>
                 <div className='zip'>
                   <div className='input-wrapper'>
-                    <div className='input-title'>Zip Code</div>
+                    <div className='input-title'>postal Code</div>
                     <input
                       className='input-field'
                       type='text'
-                      name='zip'
-                      value={zip}
+                      name='postal'
+                      value={postal}
                       onChange={onChange}
-                      pattern='[0-9]*'
                     />
                   </div>
                 </div>
@@ -221,5 +233,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createModal }
+  { createModal, setAlert, updateUserDetails }
 )(MyDetails);

@@ -27,23 +27,30 @@ const MobileNavbar = ({
       {account.loading === false && (
         <Fragment>
           <div className='navbar-icons'>
-            <img onMouseDown={createCartDropdown} src={CartIcon} alt='' />
-            {cart.products.length !== 0 && <div className='notication'></div>}
-            {account.user && account.user.following.length !== 0 && (
-              <img src={PeopleIcon} alt='' />
-            )}
+            {/* <div className='navbar-icon'>
+              <img src={SearchIcon} alt='' />
+            </div> */}
+
+            {/* <div className='navbar-icon'>
+              <img onClick={createCartDropdown} src={CartIcon} alt='' />
+              {cart.products.length !== 0 && <div className='notication'></div>}
+              {nav.cartDropdown && <CartDropdown />}
+            </div> */}
+            {/* {account.user && account.user.following.length !== 0 && (
+              <div className='navbar-icon'>
+                <img src={PeopleIcon} alt='' />
+              </div>
+            )} */}
           </div>
 
           <div id='navbar-display-pic'>
             <img
-              onMouseDown={createProfileDropdown}
+              onClick={createProfileDropdown}
               src={account.user.avatar}
               alt=''
             />
+            {nav.profileDropdown && <ProfileDropdown />}
           </div>
-
-          {nav.profileDropdown && <ProfileDropdown />}
-          {nav.cartDropdown && <CartDropdown />}
         </Fragment>
       )}
     </div>
@@ -51,9 +58,12 @@ const MobileNavbar = ({
 
   const guestLinks = (
     <div className='navbar-right'>
-      <div className='navbar-icons'>
-        <img src={SearchIcon} alt='' />
-      </div>
+      {/* <div className='navbar-icons'>
+        <div className='navbar-icon'>
+          <img src={SearchIcon} alt='' />
+        </div>
+      </div> */}
+
       <div id='navbar-right-links'>
         <li>
           <Link to={ApplicationPaths.Register}>Signup</Link>

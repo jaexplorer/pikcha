@@ -32,6 +32,8 @@
         color: #fafafa;
         font-size: 1.4rem;
         padding: 1rem;
+        border-radius: 10px;
+        text-transform: capitalize;
       }
     }
   }
@@ -56,7 +58,12 @@
 
     .edit {
       position: absolute;
-      background: mediumpurple;
+      background-image: linear-gradient(
+        -130deg,
+        #5271c4 0%,
+        #b19fff 50%,
+        rgba(236, 161, 254, 1) 100%
+      );
       bottom: 0;
       right: 0;
       width: 4rem;
@@ -64,6 +71,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 10px;
       img {
         height: 2rem;
         cursor: pointer;
@@ -125,6 +133,9 @@
   .email {
     .input-wrapper {
       width: 39rem;
+      .input-field {
+        text-transform: lowercase !important;
+      }
     }
   }
 
@@ -236,7 +247,13 @@
   justify-content: flex-end;
 
   input {
-    background: #1a1a1a;
+    background-image: linear-gradient(
+      -130deg,
+      #5271c4 0%,
+      #b19fff 50%,
+      rgba(236, 161, 254, 1) 100%
+    );
+    border-radius: 10px;
     color: white;
     border: none;
     padding-left: 2rem;

@@ -221,16 +221,16 @@ body .frame-container .main-container .main-content-container {
   cursor: pointer;
 }
 
-#top-navbar #navbar .navbar-right .navbar-icons img {
+#top-navbar #navbar .navbar-right .navbar-icons .navbar-icon {
+  position: relative;
+}
+
+#top-navbar #navbar .navbar-right .navbar-icons .navbar-icon > img {
   height: 1.6rem;
   margin-right: 5rem;
 }
 
-#top-navbar #navbar .navbar-right .navbar-icons img:last-child {
-  margin-right: 4rem;
-}
-
-#top-navbar #navbar .navbar-right .navbar-icons .notication {
+#top-navbar #navbar .navbar-right .navbar-icons .navbar-icon .notication {
   position: absolute;
   top: 1.4rem;
   left: 2rem;
@@ -238,6 +238,10 @@ body .frame-container .main-container .main-content-container {
   height: 12px;
   border-radius: 50%;
   background: #eb3b47;
+}
+
+#top-navbar #navbar .navbar-right .navbar-icons .navbar-icon:last-child img {
+  margin-right: 4rem;
 }
 
 #top-navbar #navbar .navbar-right #navbar-right-links {
@@ -279,7 +283,7 @@ body .frame-container .main-container .main-content-container {
   cursor: pointer;
 }
 
-#top-navbar #navbar .navbar-right #navbar-display-pic img {
+#top-navbar #navbar .navbar-right #navbar-display-pic > img {
   height: 3rem;
   width: 3rem;
   -o-object-position: center center;
@@ -467,7 +471,7 @@ body .frame-container .main-container .main-content-container {
 
 #profile-dropdown {
   position: absolute;
-  top: 6rem;
+  top: 7rem;
   right: 1.6rem;
   width: -webkit-max-content;
   width: -moz-max-content;
@@ -567,8 +571,8 @@ body .frame-container .main-container .main-content-container {
 
 #cart-dropdown {
   position: absolute;
-  top: 6rem;
-  right: 15.7rem;
+  top: 5rem;
+  right: 4rem;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
@@ -2499,6 +2503,8 @@ body .frame-container .main-container .main-content-container {
   color: #fafafa;
   font-size: 1.4rem;
   padding: 1rem;
+  border-radius: 10px;
+  text-transform: capitalize;
 }
 
 .person-details-container {
@@ -2527,7 +2533,7 @@ body .frame-container .main-container .main-content-container {
 
 .person-details-container .display-picture .edit {
   position: absolute;
-  background: mediumpurple;
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
   bottom: 0;
   right: 0;
   width: 4rem;
@@ -2541,6 +2547,7 @@ body .frame-container .main-container .main-content-container {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  border-radius: 10px;
 }
 
 .person-details-container .display-picture .edit img {
@@ -2621,6 +2628,10 @@ body .frame-container .main-container .main-content-container {
 
 .contact-details-container .email .input-wrapper {
   width: 39rem;
+}
+
+.contact-details-container .email .input-wrapper .input-field {
+  text-transform: lowercase !important;
 }
 
 .contact-details-container .phone {
@@ -2765,7 +2776,8 @@ body .frame-container .main-container .main-content-container {
 }
 
 .form-btn input {
-  background: #1a1a1a;
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
+  border-radius: 10px;
   color: white;
   border: none;
   padding-left: 2rem;
@@ -2904,21 +2916,22 @@ body .frame-container .main-container .main-content-container {
 }
 
 #DPModal-container {
-  position: relative;
+  position: absolute;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  padding: 2rem;
   background: #fafafa;
   z-index: 600;
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
   font-family: "Montserrat";
-  margin-top: 10rem;
+  top: 10rem;
   margin-bottom: 10rem;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 #DPModal-container .upload-error {
@@ -2951,14 +2964,15 @@ body .frame-container .main-container .main-content-container {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
-  margin-bottom: 2rem;
+  padding: 2rem;
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
 }
 
 #DPModal-container .DPModal-header .upload-title {
   font-size: 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
+  color: white;
 }
 
 #DPModal-container .DPModal-header img {
@@ -2973,6 +2987,7 @@ body .frame-container .main-container .main-content-container {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  padding: 2rem;
 }
 
 #DPModal-container .uploadDP-form .form-buttons {
@@ -2995,6 +3010,7 @@ body .frame-container .main-container .main-content-container {
   color: white;
   text-align: center;
   margin-bottom: 2rem;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -3017,6 +3033,11 @@ body .frame-container .main-container .main-content-container {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  border-radius: 10px;
+}
+
+#DPModal-container .uploadDP-form .form-buttons .form-btn input {
+  background: none;
 }
 
 #DPModal-container .uploadDP-form .image-preview {
@@ -3024,6 +3045,8 @@ body .frame-container .main-container .main-content-container {
   height: 30rem;
   width: 30rem;
   background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 #DPModal-container .uploadDP-form .image-preview img {
@@ -3407,7 +3430,7 @@ body .frame-container .main-container .main-content-container {
   width: 100%;
   text-align: center;
   padding: 1rem;
-  border-radius: 40px;
+  border-radius: 10px;
   -webkit-box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
           box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
   margin-bottom: 1rem;

@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { removeModal } from "../../../actions/modal";
-import CloseIcon from "../../../assets/images/delete-black.png";
+import { updateProfilePicture } from "../../../actions/account";
+import CloseIcon from "../../../assets/images/delete-white.png";
 import DeleteIcon from "../../../assets/images/delete-white.png";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
-const DPModal = ({ removeModal }) => {
+const DPModal = ({ removeModal, updateProfilePicture, account }) => {
   const [error, setError] = useState(false);
-  const [preview, setPreview] = useState("");
+  const [preview, setPreview] = useState(account.user.avatar);
   const [cropped, setCropped] = useState("");
   const modalContainer = useRef(null);
   const uploadButton = useRef(null);
@@ -42,6 +43,13 @@ const DPModal = ({ removeModal }) => {
     setCropped(cropper.current.getCroppedCanvas().toDataURL("image/jpeg"));
   };
 
+  const onSubmit = e => {
+    e.preventDefault();
+    const imageFile = new Image();
+    imageFile.src = cropped;
+    updateProfilePicture(imageFile);
+  };
+
   return (
     <div className='modal-container'>
       <div id='DPModal-container' ref={modalContainer}>
@@ -57,7 +65,7 @@ const DPModal = ({ removeModal }) => {
             <img onClick={() => setError(false)} src={DeleteIcon} alt='' />
           </div>
         )}
-        <form className='uploadDP-form'>
+        <form className='uploadDP-form' onSubmit={onSubmit}>
           <div className='form-buttons'>
             <label className='upload-button'>
               Upload <input type='file' ref={uploadButton} />
@@ -86,7 +94,11 @@ const DPModal = ({ removeModal }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  account: state.accountReducer
+});
+
 export default connect(
-  null,
-  { removeModal }
+  mapStateToProps,
+  { removeModal, updateProfilePicture }
 )(DPModal);

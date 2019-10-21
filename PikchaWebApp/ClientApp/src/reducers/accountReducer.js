@@ -1,6 +1,7 @@
 import {
   USER_LOADING,
   USER_LOADED,
+  USER_UPDATED,
   LOGGED_OUT,
   USER_ERROR
 } from "../actions/types";
@@ -14,6 +15,12 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case USER_LOADED:
+      return {
+        ...state,
+        user: payload,
+        loading: false
+      };
+    case USER_UPDATED:
       return {
         ...state,
         user: payload,

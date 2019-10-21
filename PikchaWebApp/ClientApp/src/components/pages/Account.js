@@ -3,17 +3,28 @@ import SideMenu from "../layout/account/SideMenu";
 import BackArrow from "../layout/BackArrow";
 import AccountRoutes from "../Routes/AccountRoutes";
 import MainComponent from "../MainComponent";
+import { connect } from "react-redux";
 
-const Account = ({ match }) => {
+const Account = ({ match, account }) => {
   return (
     <Fragment>
-      <SideMenu />
       <BackArrow />
-      <MainComponent container='account-container'>
-        <AccountRoutes match={match} />
-      </MainComponent>
+      {account.loading ? (
+        <h2 className='loading'>Loading...</h2>
+      ) : (
+        <Fragment>
+          <SideMenu />
+          <MainComponent container='account-container'>
+            <AccountRoutes match={match} />
+          </MainComponent>
+        </Fragment>
+      )}
     </Fragment>
   );
 };
 
-export default Account;
+const mapStateToProps = state => ({
+  account: state.accountReducer
+});
+
+export default connect(mapStateToProps)(Account);

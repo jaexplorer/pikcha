@@ -38,7 +38,7 @@ namespace PikchaWebApp
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<PikchaUser, IdentityRole>()  
+            services.AddIdentity<PikchaUser, IdentityRole>()
                 .AddEntityFrameworkStores<PikchaDbContext>()
                 .AddDefaultTokenProviders(); ;
 
@@ -70,10 +70,10 @@ namespace PikchaWebApp
                     builder =>
                     {
 
-                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(); 
+                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                     });
 
-            }); 
+            });
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
@@ -156,21 +156,21 @@ namespace PikchaWebApp
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<PikchaDbContext>();
 
-                context.Database.EnsureDeleted();
+                //context.Database.EnsureDeleted();
 
                 context.Database.Migrate();
 
                 try
-                {                 
+                {
                     var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
-                    
+
                     var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
                     InitDB(userManager, roleManager, context);
-                    SeedData(userManager, env, context);                    
-                        
+                    SeedData(userManager, env, context);
+
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
 
                 }
@@ -215,32 +215,42 @@ namespace PikchaWebApp
             imageIds.Add("f466feff-5e42-44bd-8418-3902a05e797f");
 
             List<PikchaUser> lstUsers = new List<PikchaUser>();
-            for (int i = 1; i < 10; i++)
+            var userCount = userManager.Users.CountAsync().Result;
+            if (userCount == 0)
             {
-                var user = new PikchaUser()
+                for (int i = 1; i < 10; i++)
                 {
-                    UserName = "testuser" + i + "@pikcha.com",
-                    Email = "testuser" + i + "@pikcha.com",
-                    Bio = "test user" + i + " bio info",
-                    FName = "test " + i + " FName",
-                    LName = "test " + i + " LName",
-                    Country = locations[rnd.Next(locations.Count)],
-                     Avatar = ""
-                };
-                var exUsr = userManager.FindByEmailAsync(user.Email).Result;
-                if(exUsr == null)
-                {
-                    var resl = userManager.CreateAsync(user).Result;
-                    lstUsers.Add(user);
-                }
-                else
-                {
-                    lstUsers.Add(exUsr);
+                    var user = new PikchaUser()
+                    {
+                        UserName = "testuser" + i + "@pikcha.com",
+                        Email = "testuser" + i + "@pikcha.com",
+                        Bio = "test user" + i + " bio info",
+                        FName = "test " + i + " FName",
+                        LName = "test " + i + " LName",
+                        Country = locations[rnd.Next(locations.Count)],
+                        Avatar = ""
+                    };
+                    var exUsr = userManager.FindByEmailAsync(user.Email).Result;
+                    if (exUsr == null)
+                    {
+                        var resl = userManager.CreateAsync(user).Result;
+                        lstUsers.Add(user);
+                    }
+                    else
+                    {
+                        lstUsers.Add(exUsr);
+                    }
                 }
             }
+            else
+            {
+                lstUsers = userManager.Users.ToListAsync().Result;
+            }
+
+
 
             // add followers 
-            for (int i = 1; i < 5; i++)
+            /*for (int i = 1; i < 5; i++)
             {
                 var artist = lstUsers[i];
                 // make these to artist
@@ -248,7 +258,7 @@ namespace PikchaWebApp
                 int count = rnd.Next(3, 8);
                 for (int j = 1; j < count; j++)
                 {
-                    if(i == j)
+                    if (i == j)
                     {
                         continue;
                     }
@@ -256,7 +266,7 @@ namespace PikchaWebApp
                     dbContext.Followers.Add(new PikchaArtistFollower() { PikchaArtist = artist, PikchaUser = pkUs });
                 }
             }
-            dbContext.SaveChangesAsync();
+            dbContext.SaveChangesAsync(); */
 
 
 
@@ -267,7 +277,7 @@ namespace PikchaWebApp
                 int daysSince = rnd.Next(20);
                 //List<Views> imgViews = new List<Views>();
 
-                
+
 
                 var img = new PikchaImage()
                 {
@@ -286,18 +296,18 @@ namespace PikchaWebApp
 
                 for (int j = 0; j < daysSince; j++)
                 {
-                    var imgv = new PikchaImageViews() { Date = DateTime.Now.AddDays(-j), Count = rnd.Next(100), PikchaImage= img };
+                    var imgv = new PikchaImageViews() { Date = DateTime.Now.AddDays(-j), Count = rnd.Next(100), PikchaImage = img };
                     dbContext.ImageViews.Add(imgv);
                 }
 
-                ImageProduct imgProd = new ImageProduct()
+               /* ImageProduct imgProd = new ImageProduct()
                 {
-                     Image = img,
-                      IsSale = true,
-                       Price = rnd.Next(100,10000),
-                        Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_OWNER,
-                         Seller = img.Artist
-                };
+                    Image = img,
+                    IsSale = true,
+                    Price = rnd.Next(100, 10000),
+                    Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_OWNER,
+                    Seller = img.Artist
+                }; */
 
                 // set up some resellers
 
@@ -311,6 +321,23 @@ namespace PikchaWebApp
 
         private void InitDB(UserManager<PikchaUser> userManager, RoleManager<IdentityRole> roleManager, PikchaDbContext dbContext)
         {
+            // remove all data if there is
+            // clear image views
+            var imgvws = dbContext.ImageViews.ToListAsync().Result;
+            dbContext.RemoveRange(imgvws);
+            dbContext.SaveChanges();
+
+            // clear images
+            var imgs = dbContext.PikchaImages.ToListAsync().Result;
+            dbContext.RemoveRange(imgs);
+            dbContext.SaveChanges();
+
+            // clear users
+            //var usrs = dbContext.PikchaUsers.ToListAsync().Result;
+            //dbContext.RemoveRange(usrs);
+            //dbContext.SaveChanges();
+
+
             // create roles
             bool userExist = roleManager.RoleExistsAsync(PikchaConstants.PIKCHA_ROLES_USER_NAME).Result;
             if (!userExist)
@@ -349,10 +376,10 @@ namespace PikchaWebApp
                 FName = "Pikcha admin",
                 LName = "Super Admin"
             };
-                        //Here we create a Admin super user who will maintain the website                   
-           string userPWD = "p1KcAd!N0o7";
+            //Here we create a Admin super user who will maintain the website                   
+            string userPWD = "p1KcAd!N0o7";
 
-           IdentityResult chkUser = userManager.CreateAsync(user, userPWD).Result;
+            IdentityResult chkUser = userManager.CreateAsync(user, userPWD).Result;
 
             //Add default User to Role Admin    
             if (chkUser.Succeeded)

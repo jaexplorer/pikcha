@@ -13,7 +13,7 @@ const SideMenu = ({ account }) => {
           ? a.classList.add("current")
           : a.classList.remove("current");
       });
-      if (account.loading === false && account.user.roles === "artist") {
+      if (account.user.roles === "artist") {
         [...menu2.current.children].forEach(a => {
           a.href === window.location.href
             ? a.classList.add("current")
@@ -44,7 +44,7 @@ const SideMenu = ({ account }) => {
           <Link to='/account/settings'>Settings</Link>
         </div>
       </div>
-      {account.loading === false && account.user.roles === "artist" && (
+      {account.user.roles === "artist" && (
         <div className='side-menu-container'>
           <div className='side-menu-heading'>For Artists</div>
           <div

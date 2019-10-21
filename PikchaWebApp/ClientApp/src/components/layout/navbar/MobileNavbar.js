@@ -30,25 +30,24 @@ const MobileNavbar = ({
     <Fragment>
       {account.loading === false && (
         <Fragment>
-          <div className='nav-icon'>
+          {/* <div className='nav-icon'>
             <img onClick={createCartDropdown} src={CartIcon} alt='' />
             {cart.products.length !== 0 && <div className='notication'></div>}
-          </div>
-          {account.user && account.user.following.length !== 0 && (
+            {nav.cartDropdown ? <CartDropdown /> : ""}
+          </div> */}
+          {/* {account.user && account.user.following.length !== 0 && (
             <div className='nav-icon'>
               <img src={PeopleIcon} alt='' />
             </div>
-          )}
+          )} */}
           <div className='nav-icon profile-pic'>
             <img
               onClick={createProfileDropdown}
               src={account.user.avatar}
               alt=''
             />
+            {nav.profileDropdown && <ProfileDropdown />}
           </div>
-
-          {nav.profileDropdown ? <ProfileDropdown /> : ""}
-          {nav.cartDropdown ? <CartDropdown /> : ""}
         </Fragment>
       )}
     </Fragment>
@@ -90,9 +89,9 @@ const MobileNavbar = ({
             <img onClick={() => setMenuOpen(true)} src={MenuIcon} alt='' />
           </div>
           <div className='nav-icons'>
-            <div className='nav-icon'>
+            {/* <div className='nav-icon'>
               <img src={SearchIcon} alt='' />
-            </div>
+            </div> */}
             {auth.isAuthenticated && authIcons}
           </div>
         </Fragment>
