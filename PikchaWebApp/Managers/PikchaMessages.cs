@@ -19,5 +19,9 @@ namespace PikchaWebApp.Managers
         public const string MESS_Status404SignatureNotFound = "Signature not found.";
 
 
+        public const string MESS_Status500InternalServerError = "Internal server error.";
+
+
+
     }
 }

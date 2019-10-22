@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using PikchaWebApp.Drivers.Email;
 using PikchaWebApp.Managers;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PikchaWebApp
 {
@@ -167,7 +168,7 @@ namespace PikchaWebApp
 
                 try
                 {
-                    bool populateDB = false;
+                    bool populateDB = true;
                     if (populateDB)
                     {
                         var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
@@ -176,7 +177,8 @@ namespace PikchaWebApp
 
                         try
                         {
-                            InitDB(userManager, roleManager, context);
+                            Task intTask = InitDB(userManager, roleManager, context);
+                            Task.WaitAll(intTask);
                         }
                         catch (Exception ex)
                         {
@@ -185,8 +187,8 @@ namespace PikchaWebApp
 
                         try
                         {
-                            SeedData(userManager, env, context);
-
+                            Task intTask = SeedData(userManager, env, context);
+                            Task.WaitAll(intTask);
                         }
                         catch (Exception ex)
                         {
@@ -205,7 +207,7 @@ namespace PikchaWebApp
             }
         }
 
-        private void SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
+        private async Task SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
         {
 
             Random rnd = new Random();
@@ -241,7 +243,7 @@ namespace PikchaWebApp
             imageIds.Add("f466feff-5e42-44bd-8418-3902a05e797f");
 
             List<PikchaUser> lstUsers = new List<PikchaUser>();
-            var userCount = userManager.Users.CountAsync().Result;
+            var userCount = await userManager.Users.CountAsync();
             if (userCount < 10)
             {
                 for (int i = 1; i < 10; i++)
@@ -256,10 +258,10 @@ namespace PikchaWebApp
                         Country = locations[rnd.Next(locations.Count)],
                         Avatar = PikchaConstants.PIKCHA_USER_DEFAULT_AVATAR
                     };
-                    var exUsr = userManager.FindByEmailAsync(user.Email).Result;
+                    var exUsr = await userManager.FindByEmailAsync(user.Email);
                     if (exUsr == null)
                     {
-                        var resl = userManager.CreateAsync(user).Result;
+                        var resl = await userManager.CreateAsync(user);
                         lstUsers.Add(user);
                     }
                     else
@@ -278,7 +280,7 @@ namespace PikchaWebApp
             {
                 var artist = lstUsers[i];
                 // make these to artist
-                userManager.AddToRoleAsync(artist, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+                await userManager.AddToRoleAsync(artist, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
                 int count = rnd.Next(3, 8);
                 for (int j = 1; j < count; j++)
                 {
@@ -291,9 +293,9 @@ namespace PikchaWebApp
 
                 }
             }
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
             for (int i = 0; i < imageIds.Count; i++)
             {
@@ -349,33 +351,33 @@ namespace PikchaWebApp
                     dbContext.ImageProducts.Add(imgPrd);
                 }
             }
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
         }
 
 
-        private void InitDB(UserManager<PikchaUser> userManager, RoleManager<IdentityRole> roleManager, PikchaDbContext dbContext)
+        private async Task InitDB(UserManager<PikchaUser> userManager, RoleManager<IdentityRole> roleManager, PikchaDbContext dbContext)
         {
             // remove all data if there is
 
             // clear image views
-            var folls = dbContext.Followers.ToListAsync().Result;
+            var folls = await dbContext.Followers.ToListAsync();
             dbContext.RemoveRange(folls);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
-            var imPrds = dbContext.ImageProducts.ToListAsync().Result;
+            var imPrds = await dbContext.ImageProducts.ToListAsync();
             dbContext.RemoveRange(imPrds);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             // clear image views
-            var imgvws = dbContext.ImageViews.ToListAsync().Result;
+            var imgvws = await dbContext.ImageViews.ToListAsync();
             dbContext.RemoveRange(imgvws);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             // clear images
-            var imgs = dbContext.PikchaImages.ToListAsync().Result;
+            var imgs = await dbContext.PikchaImages.ToListAsync();
             dbContext.RemoveRange(imgs);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             // clear users
             //var usrs = dbContext.PikchaUsers.ToListAsync().Result;

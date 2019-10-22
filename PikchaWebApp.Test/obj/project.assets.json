@@ -140,7 +140,7 @@
           "lib/netstandard2.0/IdentityServer4.Storage.dll": {}
         }
       },
-      "Magick.NET-Q8-AnyCPU/7.14.3": {
+      "Magick.NET-Q8-AnyCPU/7.14.4": {
         "type": "package",
         "compile": {
           "lib/netstandard20/Magick.NET-Q8-AnyCPU.dll": {}
@@ -3801,7 +3801,7 @@
         "dependencies": {
           "AutoMapper": "9.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
-          "Magick.NET-Q8-AnyCPU": "7.14.3",
+          "Magick.NET-Q8-AnyCPU": "7.14.4",
           "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": "3.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "3.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "3.0.0",
@@ -4000,10 +4000,10 @@
         "lib/netstandard2.0/IdentityServer4.Storage.xml"
       ]
     },
-    "Magick.NET-Q8-AnyCPU/7.14.3": {
-      "sha512": "v/FLBMdr2oFX4hhnOYtHksd98vCCJeNbn0L/iI8R+6nJGoFK1MdStxLVdqr7u8lcnSouEocsTJJhk7icJCIMhQ==",
+    "Magick.NET-Q8-AnyCPU/7.14.4": {
+      "sha512": "Ja6QE374DfCNCujpdbRJUtdJ9z3IVoSNLNg9/VIkRKo2FtbhDxco+0TsNqCb9UrT5H/vjjaHmsMBBzwgfMUbeg==",
       "type": "package",
-      "path": "magick.net-q8-anycpu/7.14.3",
+      "path": "magick.net-q8-anycpu/7.14.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4016,7 +4016,7 @@
         "lib/netstandard13/Magick.NET-Q8-AnyCPU.xml",
         "lib/netstandard20/Magick.NET-Q8-AnyCPU.dll",
         "lib/netstandard20/Magick.NET-Q8-AnyCPU.xml",
-        "magick.net-q8-anycpu.7.14.3.nupkg.sha512",
+        "magick.net-q8-anycpu.7.14.4.nupkg.sha512",
         "magick.net-q8-anycpu.nuspec",
         "runtimes/linux-x64/native/Magick.Native-Q8-x64.dll.so",
         "runtimes/osx-x64/native/Magick.Native-Q8-x64.dll.dylib",

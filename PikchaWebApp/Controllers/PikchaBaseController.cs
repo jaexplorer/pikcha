@@ -8,7 +8,7 @@ using PikchaWebApp.Managers;
 
 namespace PikchaWebApp.Controllers
 {
-    //[Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PikchaBaseController : ControllerBase
     {

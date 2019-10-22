@@ -80,6 +80,9 @@ namespace PikchaWebApp.Data
         {
 
             CreateMap<PikchaUser, PikchaUserBaseDTO>()
+                 .ForMember(
+                dest => dest.Location,
+                opt => opt.MapFrom(src => src.City + ", " + src.Country))
                 //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
                 ;
 

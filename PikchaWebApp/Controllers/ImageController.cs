@@ -202,7 +202,7 @@ namespace PikchaWebApp.Controllers
         
      
 
-        [HttpPost("views/increment/{imageId}")]
+        [HttpPost("{imageId}/view")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult> IncrementViewCount(string imageId)
