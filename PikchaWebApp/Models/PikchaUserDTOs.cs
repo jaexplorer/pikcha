@@ -66,6 +66,8 @@ namespace PikchaWebApp.Models
         public string Phone { get; set; } = string.Empty; // need to add a mapping
         public string Avatar { get; set; } = @"Uploads\Avatars\default-avatar.jpg";
 
+        public string Location { get; set; } = string.Empty;
+
     }
 
 }

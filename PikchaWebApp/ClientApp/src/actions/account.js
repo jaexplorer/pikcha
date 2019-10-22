@@ -15,7 +15,7 @@ export const loadUser = () => {
       dispatch(setLoading());
       const token = await AuthorizeService.getAccessToken();
       const user = await AuthorizeService.getUser();
-      const res = await axios.get(`api/profile/myinfo/${user.sub}`, {
+        const res = await axios.get(`api/profile/${user.sub}/myinfo`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -60,7 +60,7 @@ export const updateProfilePicture = formData => {
       dispatch(setLoading());
       const token = await AuthorizeService.getAccessToken();
       const user = await AuthorizeService.getUser();
-      const res = await axios.post(`api/profile/${user.sub}`, formData, {
+      const res = await axios.post(`api/profile/${user.sub}/avatar`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"

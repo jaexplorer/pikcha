@@ -66,7 +66,7 @@ Image
 
 
 ### add view count
-- ENDPOINT : api/image/views/increment/{imageId}
+- ENDPOINT : api/image/{imageId}/view
 - METHOD : post
 - AUTHENTICATED : false
 - RESULTS : OK
@@ -103,7 +103,7 @@ ARTIST
  - Roles  <-- list of string
 
 ### Get the loggedin user info 
-- ENDPOINT : api/profile/myinfo/{userId} 
+- ENDPOINT : api/profile/{userId}/myinfo 
 - METHOD : get
 - AUTHENTICATED : true
 - RESULTS : loggedinuserinfo
@@ -138,7 +138,7 @@ LOGGEDINUSERINFO
 - ERROR_CODES : 200, 404, 500
 
 ### Promote a user to an artist 
-- ENDPOINT : api/profile/artist/promote/{userId} 
+- ENDPOINT : api/profile/{userId}/promote 
 - METHOD : post
 - AUTHENTICATED : true
 - PARAMS : signatureContent [Base64String]
@@ -146,7 +146,7 @@ LOGGEDINUSERINFO
 - ERROR_CODES : 200, 404, 500
 
 ### Follow an artist 
-- ENDPOINT : api/profile/artist/follow/{artistId}/{userId} 
+- ENDPOINT : api/profile/{userId}/artist/{artistId}/follow 
 - METHOD : post
 - AUTHENTICATED : true
 - RESULTS : loggedinuserinfo
@@ -154,7 +154,7 @@ LOGGEDINUSERINFO
 
 
 ### Unfollow an artist 
-- ENDPOINT : api/profile/artist/unfollow/{artistId}/{userId}  
+- ENDPOINT : api/profile/{userId}/artist/{artistId}/unfollow 
 - METHOD : post
 - AUTHENTICATED : true
 - RESULTS : loggedinuserinfo
@@ -162,7 +162,7 @@ LOGGEDINUSERINFO
 
 
 ### Upload user avatar 
-- ENDPOINT : api/profile/avatar/{userId}
+- ENDPOINT : api/profile/{userId}/avatar
 - METHOD : post
 - AUTHENTICATED : true
 - PARAMS : avatarContent [Base64String]

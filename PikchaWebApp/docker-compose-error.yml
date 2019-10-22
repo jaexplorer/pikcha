@@ -1,4 +1,4 @@
-﻿version: '3.7'
+﻿version: '3.7''
 
 networks:
   pikcha-net:
@@ -24,8 +24,6 @@ services:
     container_name: msdb_c
     image: "mcr.microsoft.com/mssql/server" 
     restart: always
-    ports:
-      - 1433:1433
     volumes:
       - dbvol:/var/lib/mssql
     networks:
@@ -33,7 +31,9 @@ services:
     environment:
             SA_PASSWORD: "My_password123"
             ACCEPT_EULA: "Y"
-            MSSQL_PID: "Express"   
+            MSSQL_PID: "Express"
+
+   
 volumes:
   dbvol:
 

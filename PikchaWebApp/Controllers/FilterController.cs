@@ -12,7 +12,6 @@ using PikchaWebApp.Managers;
 
 namespace PikchaWebApp.Controllers
 {
-    [Route("api/[controller]")]
     public class FilterController : PikchaBaseController
     {
         protected readonly PikchaDbContext _pikchDbContext;
