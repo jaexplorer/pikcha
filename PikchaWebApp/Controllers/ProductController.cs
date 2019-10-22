@@ -22,7 +22,7 @@ namespace PikchaWebApp.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{productId}")]
+        [HttpGet("api/product/{productId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

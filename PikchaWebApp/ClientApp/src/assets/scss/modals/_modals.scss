@@ -2,17 +2,20 @@
 // ------------------------------------------------------------------- //
 .modal-container {
   position: fixed;
-  width: calc(100% - 6rem);
+  width: calc(100%);
   top: 0;
   bottom: 0;
-  left: 3rem;
+  left: 0;
   right: 0;
   height: 100%;
-  z-index: 600;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   font-family: "Montserrat";
   overflow: scroll;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-left: 3rem;
+  padding-right: 3rem;
 
   &::-webkit-scrollbar {
     width: 0px; /* Remove scrollbar space */
@@ -357,41 +360,54 @@
   height: max-content;
   width: 100%;
   max-width: 60rem;
-  padding: 2rem;
+  // padding: 2rem;
   background: #fafafa;
-  z-index: 600;
   box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 1);
   margin-top: 10rem;
   margin-bottom: 10rem;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1000;
 
-  img {
-    height: 1.4rem;
-    position: absolute;
-    right: 2rem;
-    cursor: pointer;
-  }
   .modal-header {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    padding-bottom: 1rem;
+    padding: 2rem;
+    background-image: linear-gradient(
+      -130deg,
+      #5271c4 0%,
+      #b19fff 50%,
+      rgba(236, 161, 254, 1) 100%
+    );
 
-    .modal-title {
-      font-size: 2rem;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 1rem;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      .modal-title {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: white;
+      }
+
+      img {
+        height: 1.4rem;
+        cursor: pointer;
+      }
     }
-
-    .modal-subtext {
+    .header-text {
       font-size: 1.2rem;
       opacity: 0.6;
-      text-align: center;
-      margin-bottom: 4rem;
+      color: white;
     }
   }
 
   .role-change-form {
     width: 100%;
+    padding: 2rem;
+
     .form-section {
       margin-bottom: 4rem;
 
@@ -413,6 +429,8 @@
       .signature-border {
         width: 100%;
         border: #1a1a1a 2rem solid;
+        border-radius: 10px;
+        overflow: hidden;
 
         .signature-container {
           width: 100%;
@@ -435,6 +453,8 @@
         color: white;
         text-align: center;
         margin-top: 1rem;
+        border-radius: 10px;
+        overflow: hidden;
         cursor: pointer;
       }
 
@@ -442,8 +462,76 @@
         font-size: 1rem;
       }
 
-      .checkbox {
-        margin-right: 1rem;
+      #checkmark {
+        display: none;
+
+        &:checked + .check svg {
+          stroke: mediumpurple;
+
+          path {
+            stroke-dashoffset: 60;
+            transition: all 0.3s linear;
+          }
+
+          polyline {
+            stroke-dashoffset: 42;
+            transition: all 0.2s linear;
+            transition-delay: 0.15s;
+          }
+        }
+      }
+
+      .check {
+        cursor: pointer;
+        position: relative;
+        margin: auto;
+        width: 18px;
+        height: 18px;
+        left: 15px;
+        top: 3px;
+        margin-right: 3rem;
+
+        &:hover::before {
+          opacity: 1;
+        }
+
+        &:hover svg {
+          stroke: mediumpurple;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: -20px;
+          left: -15px;
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: rgba(34, 50, 84, 0.03);
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+        svg {
+          position: relative;
+          z-index: 1;
+          fill: none;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke: #c8ccd4;
+          stroke-width: 1.5;
+          transform: translate3d(0, 0, 0);
+          transition: all 0.2s ease;
+
+          path {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 0;
+          }
+
+          polyline {
+            stroke-dasharray: 22;
+            stroke-dashoffset: 66;
+          }
+        }
       }
     }
 
@@ -452,6 +540,7 @@
       justify-content: center;
 
       input {
+        width: 100%;
         background-image: linear-gradient(
           -130deg,
           #5271c4 0%,

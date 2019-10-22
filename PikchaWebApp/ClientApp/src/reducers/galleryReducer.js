@@ -1,5 +1,5 @@
 import {
-  GET_PHOTOS,
+  PHOTOS_LOADED,
   PHOTO_SELECTED,
   PHOTO_DESELECTED,
   PHOTOS_LOADING,
@@ -18,7 +18,7 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case GET_PHOTOS:
+    case PHOTOS_LOADED:
       payload.forEach(d => {
         const randomised = Math.random() * (30 - 15) + 15;
         d.height = randomised;

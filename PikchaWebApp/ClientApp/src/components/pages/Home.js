@@ -8,10 +8,7 @@ const Home = () => {
   return (
     <Fragment>
       <SideBar />
-      <Header
-        subtitle='Todays Popular'
-        title='Melbourne Black and White Portraits'
-      />
+      <Header subtitle='Todays Popular' title='Your Personalised Feed' />
       <MainComponent container='home-container'>
         <MasonryGallery />
       </MainComponent>

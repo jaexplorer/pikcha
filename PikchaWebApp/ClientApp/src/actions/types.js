@@ -22,11 +22,18 @@ export const CREATE_CART_DROPDOWN = "CREATE_CART_DROPDOWN";
 export const REMOVE_CART_DROPDOWN = "REMOVE_CART_DROPDOWN";
 
 // Gallery Types
-export const GET_PHOTOS = "GET_PHOTOS";
+export const PHOTOS_LOADED = "PHOTOS_LOADED";
 export const PHOTOS_LOADING = "PHOTOS_LOADING";
 export const PHOTOS_ERROR = "PHOTOS_ERROR";
 export const PHOTO_SELECTED = "PHOTO_SELECTED";
 export const PHOTO_DESELECTED = "PHOTO_DESELECTED";
+
+// Pikcha100 && Artist100
+export const PIKCHA100_LOADED = "PIKCHA100_LOADED";
+export const ARTIST100_LOADED = "ARTIST100_LOADED";
+export const PIKCHA100_LOADING = "PIKCHA100_LOADING";
+export const ARTIST100_LOADING = "ARTIST100_LOADING";
+export const TOP100_ERROR = "TOP100_ERROR";
 
 // Product Types
 export const GET_PRODUCT = "GET_PRODUCT";
@@ -48,8 +55,6 @@ export const ARTIST_ERROR = "ARTIST_ERROR";
 export const PRODUCT_ADDED = "PRODUCT_ADDED";
 export const PRODUCT_REMOVED = "PRODUCT_REMOVED";
 export const CLEAR_CART = "CLEAR_CART";
-
-// Account Types
 
 // Modal Types
 export const CREATE_MODAL = "CREATE_MODAL";

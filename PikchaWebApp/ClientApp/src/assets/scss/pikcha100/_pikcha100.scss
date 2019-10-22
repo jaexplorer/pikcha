@@ -12,6 +12,10 @@
     border-bottom: 2px solid rgba(147, 112, 219, 0.24);
     height: 16rem;
 
+    &:last-child {
+      border-bottom: none;
+    }
+
     .pikcha-rank {
       font-weight: bold;
       font-size: 1.8rem;
@@ -23,6 +27,16 @@
       width: 12rem;
       height: 12rem;
       background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-position: center center;
+        object-fit: cover;
+        cursor: pointer;
+      }
     }
 
     .pikcha-photo-information {
@@ -54,6 +68,7 @@
       width: 8rem;
       height: 8rem;
       background: mediumpurple;
+      border-radius: 10px;
     }
 
     .divider {
@@ -67,11 +82,17 @@
     .artist-picture {
       img {
         height: 6rem;
+        width: 6rem;
+        object-position: center center;
+        object-fit: cover;
+        border-radius: 50%;
+        border: rgb(201, 201, 201) 2px solid;
+        cursor: pointer;
       }
     }
 
     .artist-information {
-      margin-left: 1rem;
+      margin-left: 1.5rem;
       .artist-name {
         font-size: 1.6rem;
         font-weight: bold;

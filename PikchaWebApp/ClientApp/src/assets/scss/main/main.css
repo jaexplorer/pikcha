@@ -1148,6 +1148,10 @@ body .frame-container .main-container .main-content-container {
   height: 16rem;
 }
 
+#artist100-container .artist-container:last-child {
+  border-bottom: none;
+}
+
 #artist100-container .artist-container .artist-rank {
   font-weight: bold;
   font-size: 1.8rem;
@@ -1159,10 +1163,18 @@ body .frame-container .main-container .main-content-container {
 
 #artist100-container .artist-container .artist-picture img {
   height: 7rem;
+  width: 7rem;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  border: #c9c9c9 2px solid;
+  cursor: pointer;
 }
 
 #artist100-container .artist-container .artist-information {
-  margin-left: 1rem;
+  margin-left: 1.5rem;
 }
 
 #artist100-container .artist-container .artist-information .artist-name {
@@ -1218,6 +1230,18 @@ body .frame-container .main-container .main-content-container {
   width: 12rem;
   height: 12rem;
   background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#artist100-container .artist-container .artist-top-photo img {
+  height: 100%;
+  width: 100%;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 699px) {
@@ -1251,6 +1275,10 @@ body .frame-container .main-container .main-content-container {
   height: 16rem;
 }
 
+#pikcha100-container .pikcha-container:last-child {
+  border-bottom: none;
+}
+
 #pikcha100-container .pikcha-container .pikcha-rank {
   font-weight: bold;
   font-size: 1.8rem;
@@ -1262,6 +1290,18 @@ body .frame-container .main-container .main-content-container {
   width: 12rem;
   height: 12rem;
   background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#pikcha100-container .pikcha-container .pikcha-photo img {
+  height: 100%;
+  width: 100%;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
 }
 
 #pikcha100-container .pikcha-container .pikcha-photo-information {
@@ -1297,6 +1337,7 @@ body .frame-container .main-container .main-content-container {
   width: 8rem;
   height: 8rem;
   background: mediumpurple;
+  border-radius: 10px;
 }
 
 #pikcha100-container .pikcha-container .divider {
@@ -1309,10 +1350,18 @@ body .frame-container .main-container .main-content-container {
 
 #pikcha100-container .pikcha-container .artist-picture img {
   height: 6rem;
+  width: 6rem;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  border: #c9c9c9 2px solid;
+  cursor: pointer;
 }
 
 #pikcha100-container .pikcha-container .artist-information {
-  margin-left: 1rem;
+  margin-left: 1.5rem;
 }
 
 #pikcha100-container .pikcha-container .artist-information .artist-name {
@@ -1513,8 +1562,8 @@ body .frame-container .main-container .main-content-container {
       -ms-flex-direction: column;
           flex-direction: column;
   overflow: hidden;
-  margin-left: 0.05rem;
-  margin-right: 0.05rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .masonry .masonry-col:first-child {
@@ -1536,7 +1585,9 @@ body .frame-container .main-container .main-content-container {
   transition: all 0.8s ease;
   background-color: #1a1a1a;
   position: relative;
-  margin-bottom: 0.1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .masonry .masonry-col .masonry-item.selected > img {
@@ -1596,6 +1647,7 @@ body .frame-container .main-container .main-content-container {
           transform: translate(calc(-100% + 0.5px), -100%);
   width: 70%;
   height: 35rem;
+  border-top-left-radius: 10px;
 }
 
 .masonry-item .itemInfo-popup::before {
@@ -2891,13 +2943,13 @@ body .frame-container .main-container .main-content-container {
 
 .modal-container {
   position: fixed;
-  width: calc(100% - 6rem);
+  width: calc(100%);
   top: 0;
   bottom: 0;
-  left: 3rem;
+  left: 0;
   right: 0;
   height: 100%;
-  z-index: 600;
+  z-index: 1000;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2906,6 +2958,9 @@ body .frame-container .main-container .main-content-container {
           justify-content: center;
   font-family: "Montserrat";
   overflow: scroll;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
 .modal-container::-webkit-scrollbar {
@@ -3295,20 +3350,14 @@ body .frame-container .main-container .main-content-container {
   height: max-content;
   width: 100%;
   max-width: 60rem;
-  padding: 2rem;
   background: #fafafa;
-  z-index: 600;
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
   margin-top: 10rem;
   margin-bottom: 10rem;
-}
-
-#role-change-modal-container img {
-  height: 1.4rem;
-  position: absolute;
-  right: 2rem;
-  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1000;
 }
 
 #role-change-modal-container .modal-header {
@@ -3319,27 +3368,42 @@ body .frame-container .main-container .main-content-container {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  padding-bottom: 1rem;
+  padding: 2rem;
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
 }
 
-#role-change-modal-container .modal-header .modal-title {
-  font-size: 2rem;
+#role-change-modal-container .modal-header .header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+#role-change-modal-container .modal-header .header .modal-title {
+  font-size: 1.5rem;
+  text-transform: uppercase;
   font-weight: bold;
-  text-align: center;
-  margin-bottom: 1rem;
+  color: white;
 }
 
-#role-change-modal-container .modal-header .modal-subtext {
+#role-change-modal-container .modal-header .header img {
+  height: 1.4rem;
+  cursor: pointer;
+}
+
+#role-change-modal-container .modal-header .header-text {
   font-size: 1.2rem;
   opacity: 0.6;
-  text-align: center;
-  margin-bottom: 4rem;
+  color: white;
 }
 
 #role-change-modal-container .role-change-form {
   width: 100%;
+  padding: 2rem;
 }
 
 #role-change-modal-container .role-change-form .form-section {
@@ -3364,6 +3428,8 @@ body .frame-container .main-container .main-content-container {
 #role-change-modal-container .role-change-form .form-section .signature-border {
   width: 100%;
   border: #1a1a1a 2rem solid;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 #role-change-modal-container .role-change-form .form-section .signature-border .signature-container {
@@ -3388,6 +3454,8 @@ body .frame-container .main-container .main-content-container {
   color: white;
   text-align: center;
   margin-top: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -3395,8 +3463,83 @@ body .frame-container .main-container .main-content-container {
   font-size: 1rem;
 }
 
-#role-change-modal-container .role-change-form .form-section .checkbox {
-  margin-right: 1rem;
+#role-change-modal-container .role-change-form .form-section #checkmark {
+  display: none;
+}
+
+#role-change-modal-container .role-change-form .form-section #checkmark:checked + .check svg {
+  stroke: mediumpurple;
+}
+
+#role-change-modal-container .role-change-form .form-section #checkmark:checked + .check svg path {
+  stroke-dashoffset: 60;
+  -webkit-transition: all 0.3s linear;
+  transition: all 0.3s linear;
+}
+
+#role-change-modal-container .role-change-form .form-section #checkmark:checked + .check svg polyline {
+  stroke-dashoffset: 42;
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+  -webkit-transition-delay: 0.15s;
+          transition-delay: 0.15s;
+}
+
+#role-change-modal-container .role-change-form .form-section .check {
+  cursor: pointer;
+  position: relative;
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  left: 15px;
+  top: 3px;
+  margin-right: 3rem;
+}
+
+#role-change-modal-container .role-change-form .form-section .check:hover::before {
+  opacity: 1;
+}
+
+#role-change-modal-container .role-change-form .form-section .check:hover svg {
+  stroke: mediumpurple;
+}
+
+#role-change-modal-container .role-change-form .form-section .check::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -15px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(34, 50, 84, 0.03);
+  opacity: 0;
+  -webkit-transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
+}
+
+#role-change-modal-container .role-change-form .form-section .check svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #c8ccd4;
+  stroke-width: 1.5;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+#role-change-modal-container .role-change-form .form-section .check svg path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+
+#role-change-modal-container .role-change-form .form-section .check svg polyline {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
 }
 
 #role-change-modal-container .role-change-form .form-btn {
@@ -3409,6 +3552,7 @@ body .frame-container .main-container .main-content-container {
 }
 
 #role-change-modal-container .role-change-form .form-btn input {
+  width: 100%;
   background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
   cursor: pointer;
 }

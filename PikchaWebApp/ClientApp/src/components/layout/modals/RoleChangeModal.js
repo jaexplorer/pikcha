@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { removeModal } from "../../../actions/modal";
-import CloseIcon from "../../../assets/images/delete-black.png";
+import CloseIcon from "../../../assets/images/delete-white.png";
 import SignatureCanvas from "react-signature-canvas";
 
 const RoleChangeModal = ({ removeModal }) => {
@@ -37,35 +37,30 @@ const RoleChangeModal = ({ removeModal }) => {
   return (
     <div className='modal-container'>
       <div id='role-change-modal-container' ref={modalContainer}>
-        <img onClick={removeModal} src={CloseIcon} alt='' />
         <div className='modal-header'>
-          <div className='modal-title'>Want To Be An Artist?</div>
-          <div className='modal-subtext'>
+          <div className='header'>
+            <div className='modal-title'>Want To Be An Artist?</div>
+            <img onClick={removeModal} src={CloseIcon} alt='' />
+          </div>
+          <div className='header-text'>
             It's a great way to earn money, launch your photography career
             <br />
             and have a chance to be in the top 100.
           </div>
         </div>
+        {/* 
+        <div className='form-subtext'>
+
+        </div> */}
+
         <form className='role-change-form'>
-          <div className='form-section'>
+          {/* <div className='form-section'>
             <div className='section-title'>Getting Paid</div>
             <div className='section-text'>
               We use Paypal to handle payments, please ensure this is setup
               properly.
             </div>
-            {/* <div className='email'>
-            <div className='input-wrapper'>
-              <div className='input-title'>Email</div>
-              <input
-                className='input-field'
-                type='email'
-                name='email'
-                value={email}
-                onChange={onChange}
-              />
-            </div>
           </div> */}
-          </div>
 
           <div className='form-section'>
             <div className='section-title'>Your Signature</div>
@@ -104,13 +99,19 @@ const RoleChangeModal = ({ removeModal }) => {
             </div>
             <div className='input-wrapper'>
               <input
-                className='checkbox'
+                id='checkmark'
                 type='checkbox'
                 name='agreement'
                 value={agreement}
                 required
                 // onChange={onChange}
               />
+              <label htmlFor='checkmark' className='check'>
+                <svg width='18px' height='18px' viewBox='0 0 18 18'>
+                  <path d='M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z'></path>
+                  <polyline points='1 9 7 14 15 4'></polyline>
+                </svg>
+              </label>
               Yes, I agree to the Pikcha User Agreement
             </div>
           </div>

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import {
-  GET_PHOTOS,
+  PHOTOS_LOADED,
   PHOTO_SELECTED,
   PHOTO_DESELECTED,
   PHOTOS_LOADING,
@@ -17,7 +17,7 @@ export const getPhotos = (count, start) => {
         `api/filter/images?count=${count}&start=${start}`
       );
       dispatch({
-        type: GET_PHOTOS,
+        type: PHOTOS_LOADED,
         payload: res.data
       });
     } catch (err) {
@@ -46,7 +46,7 @@ export const deselectPhoto = () => {
     });
 };
 
-// SET LOADING
+// Set Loading
 export const setLoading = () => {
   return { type: PHOTOS_LOADING };
 };

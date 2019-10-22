@@ -8,6 +8,7 @@ import cartReducer from "./cartReducer";
 import artistReducer from "./artistReducer";
 import modalReducer from "./modalReducer";
 import accountReducer from "./accountReducer";
+import top100Reducer from "./top100Reducer";
 
 export default combineReducers({
   authReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   cartReducer,
   artistReducer,
   modalReducer,
-  accountReducer
+  accountReducer,
+  top100Reducer
 });
