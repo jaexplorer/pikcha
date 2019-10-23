@@ -28,7 +28,7 @@ const MobileNavbar = ({
 
   const authIcons = (
     <Fragment>
-      {account.loading === false && (
+      {account.loadingUser === false && (
         <Fragment>
           {/* <div className='nav-icon'>
             <img onClick={createCartDropdown} src={CartIcon} alt='' />

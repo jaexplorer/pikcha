@@ -1,23 +1,27 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { Fragment, useState, useRef, useEffect } from "react";
 import { connect } from "react-redux";
 import { removeModal } from "../../../actions/modal";
-import CloseIcon from "../../../assets/images/delete-black.png";
+import CloseIcon from "../../../assets/images/delete-white.png";
 import DeleteIcon from "../../../assets/images/delete-white.png";
+import { loadSignature } from "../../../actions/account";
+import { setAlert } from "../../../actions/alert";
 
-const UploadModal = ({ removeModal }) => {
+const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
   const [error, setError] = useState(false);
   const uploadButton = useRef(null);
   const [preview, setPreview] = useState("");
   const modalContainer = useRef(null);
+  const [tagInput, setTagInput] = useState("");
   const [image, setImage] = useState({
     title: "",
     location: "",
     description: "",
-    tags: "",
-    price: ""
+    price: "",
+    tags: [],
+    signature: ""
   });
 
-  const { title, location, description, tags, price } = image;
+  const { title, location, description, price, signature, tags } = image;
 
   // Update Component State on change
   const onChange = e => setImage({ ...image, [e.target.name]: e.target.value });
@@ -32,6 +36,7 @@ const UploadModal = ({ removeModal }) => {
         removeModal();
       }
     });
+
     uploadButton.current.addEventListener("change", () => {
       const acceptedImageTypes = ["image/jpeg", "image/png"];
       const file = window.URL.createObjectURL(uploadButton.current.files[0]);
@@ -45,6 +50,51 @@ const UploadModal = ({ removeModal }) => {
       }
     });
   });
+
+  useEffect(() => {
+    loadSignature();
+  }, []);
+
+  const onSubmit = e => {
+    e.preventDefault();
+
+    if (
+      title === "" ||
+      location === "" ||
+      description === "" ||
+      price === "" ||
+      tags.length === 0
+    ) {
+      title === "" &&
+        setAlert("Please supply a title for your image", "danger");
+      location === "" &&
+        setAlert("Please supply the location of the image", "danger");
+      description === "" &&
+        setAlert("Please supply a description of the image", "danger");
+      price === ""
+        ? setAlert(
+            "Please set the amount you would like from this image",
+            "danger"
+          )
+        : /(^[0-9]+$)/.test(price) === false &&
+          setAlert("Please use digits only", "danger");
+      tags.length === 0 &&
+        setAlert("Please enter atleast one tag for this image", "danger");
+    } else {
+      removeModal();
+    }
+  };
+
+  const onTagBlur = () => {
+    let txt = tagInput;
+    txt = txt.replace(/[^a-zA-Z0-9\+\-\.\#]/g, "");
+    txt !== "" && setImage({ ...image, tags: [...image.tags, txt] });
+    setTagInput("");
+  };
+
+  const onKeyUp = e => {
+    /(188|32)/.test(e.which) && onTagBlur();
+  };
 
   return (
     <div className='modal-container'>
@@ -61,11 +111,37 @@ const UploadModal = ({ removeModal }) => {
             <img onClick={() => setError(false)} src={DeleteIcon} alt='' />
           </div>
         )}
-        <form className='upload-form'>
+        <form className='upload-form' onSubmit={onSubmit}>
           <div className='form-section'>
             <div className='upload-image-container'>
               <div className='image-preview'>
                 <img src={preview} alt='' />
+                {account.loadingSignature === false && (
+                  <div className='signature-toggle'>
+                    <input
+                      type='radio'
+                      id='orgSig'
+                      name='signature'
+                      value='orgSig'
+                      onChange={onChange}
+                      defaultChecked
+                    />
+                    <label htmlFor='orgSig'>
+                      <img src={account.signature.orgSig} alt='' />
+                    </label>
+
+                    <input
+                      type='radio'
+                      id='invSig'
+                      name='signature'
+                      value='invSig'
+                      onChange={onChange}
+                    />
+                    <label htmlFor='invSig'>
+                      <img src={account.signature.invSig} alt='' />
+                    </label>
+                  </div>
+                )}
               </div>
               <label className='upload-button'>
                 Upload <input type='file' ref={uploadButton} />
@@ -74,7 +150,7 @@ const UploadModal = ({ removeModal }) => {
           </div>
 
           <div className='form-section'>
-            <div className='section-title'>Edit Details</div>
+            <div className='section-title'>Edit Image Details</div>
             <div className='split-details-container'>
               <div className='title'>
                 <div className='input-wrapper'>
@@ -85,6 +161,7 @@ const UploadModal = ({ removeModal }) => {
                     name='title'
                     value={title}
                     onChange={onChange}
+                    placeholder='Whats this image called?'
                   />
                 </div>
               </div>
@@ -97,6 +174,7 @@ const UploadModal = ({ removeModal }) => {
                     name='location'
                     value={location}
                     onChange={onChange}
+                    placeholder='Where was this picture taken?'
                   />
                 </div>
               </div>
@@ -112,6 +190,7 @@ const UploadModal = ({ removeModal }) => {
                   name='description'
                   value={description}
                   onChange={onChange}
+                  placeholder='Tell us about the image in under 100 words'
                 />
               </div>
             </div>
@@ -120,24 +199,44 @@ const UploadModal = ({ removeModal }) => {
               <div className='tags'>
                 <div className='input-wrapper'>
                   <div className='input-title'>Tags</div>
-                  <input
-                    className='input-field'
-                    type='text'
-                    name='tags'
-                    value={tags}
-                    onChange={onChange}
-                  />
+                  <div id='tags-container'>
+                    {image.tags.map((tag, index) => (
+                      <div
+                        onClick={() => {
+                          setImage({
+                            ...image,
+                            tags: image.tags.filter(aTag => aTag !== tag)
+                          });
+                        }}
+                        className='tag'
+                        key={index}
+                      >
+                        {tag}
+                      </div>
+                    ))}
+                    <input
+                      type='text'
+                      id='tag-input'
+                      name='tagInput'
+                      value={tagInput}
+                      onChange={e => setTagInput(e.target.value)}
+                      onBlur={onTagBlur}
+                      onKeyUp={e => onKeyUp(e)}
+                      placeholder='Eg. blue, ocean, beach...'
+                    />
+                  </div>
                 </div>
               </div>
               <div className='price'>
                 <div className='input-wrapper'>
-                  <div className='input-title'>Price</div>
+                  <div className='input-title'>Set your take</div>
                   <input
                     className='input-field'
                     type='text'
                     name='price'
                     value={price}
                     onChange={onChange}
+                    placeholder='How much do you want from this image?'
                   />
                 </div>
               </div>
@@ -153,7 +252,11 @@ const UploadModal = ({ removeModal }) => {
   );
 };
 
+const mapStateToProps = state => ({
+  account: state.accountReducer
+});
+
 export default connect(
-  null,
-  { removeModal }
+  mapStateToProps,
+  { removeModal, loadSignature, setAlert }
 )(UploadModal);

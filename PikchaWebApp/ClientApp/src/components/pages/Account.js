@@ -9,7 +9,7 @@ const Account = ({ match, account }) => {
   return (
     <Fragment>
       <BackArrow />
-      {account.loading ? (
+      {account.loadingUser ? (
         <h2 className='loading'>Loading...</h2>
       ) : (
         <Fragment>

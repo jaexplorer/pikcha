@@ -172,24 +172,31 @@
 #upload-modal-container {
   position: relative;
   height: max-content;
-  width: max-content;
-  padding: 2rem;
+  width: 54rem;
   background: #fafafa;
   z-index: 600;
   box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 1);
-  margin-top: 10rem;
   margin-bottom: 10rem;
+  top: 10rem;
+  border-radius: 10px;
+  overflow: hidden;
 
   .modal-header {
     display: flex;
     justify-content: space-between;
     padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(147, 112, 219, 0.24);
-    margin-bottom: 2rem;
+    padding: 2rem;
+    background-image: linear-gradient(
+      -130deg,
+      #5271c4 0%,
+      #b19fff 50%,
+      rgba(236, 161, 254, 1) 100%
+    );
     .modal-title {
       font-size: 1.5rem;
       text-transform: uppercase;
       font-weight: bold;
+      color: white;
     }
 
     img {
@@ -215,6 +222,8 @@
   }
 
   .upload-form {
+    padding: 2rem;
+
     .form-section {
       margin-bottom: 4rem;
       .upload-image-container {
@@ -224,15 +233,60 @@
           height: 50rem;
           width: 50rem;
           max-width: 60rem;
-
           background: #1a1a1a;
           margin-bottom: 2rem;
+          border-radius: 10px;
+          position: relative;
+          overflow: hidden;
+
+          &:hover .signature-toggle {
+            opacity: 1;
+            transition: opacity 0.4s ease;
+          }
 
           img {
             object-position: center center;
             width: 100%;
             height: 100%;
             object-fit: contain;
+          }
+
+          .signature-toggle {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            width: max-content;
+            height: max-content;
+            display: flex;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+
+            input[type="radio"] {
+              display: none;
+            }
+            input[type="radio"] + label {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 4rem;
+              height: 4rem;
+              border-radius: 10px;
+              margin-left: 2rem;
+              border: white 2px solid;
+              cursor: pointer;
+            }
+            input[type="radio"]:checked + label {
+              border: mediumpurple 2px solid;
+            }
+
+            label {
+              img {
+                height: 2rem;
+                width: 2rem;
+                object-position: center center;
+                object-fit: cover;
+              }
+            }
           }
         }
 
@@ -246,6 +300,8 @@
           color: white;
           text-align: center;
           margin-bottom: 2rem;
+          border-radius: 10px;
+          overflow: hidden;
           cursor: pointer;
 
           input[type="file"] {
@@ -276,6 +332,8 @@
         color: #fafafa;
         font-size: 1.4rem;
         padding: 1rem;
+        border-radius: 10px;
+        overflow: hidden;
       }
 
       .split-details-container {
@@ -292,11 +350,53 @@
         }
 
         .tags {
-          width: 100%;
+          flex: 1;
+          overflow: hidden;
+
+          #tags-container {
+            background: #1a1a1a;
+            border: none;
+            min-height: 4rem;
+            width: 100%;
+            color: #fafafa;
+            font-size: 1.4rem;
+            border-radius: 10px;
+            overflow: auto;
+            padding: 1rem;
+            display: flex;
+
+            .tag {
+              background: mediumpurple;
+              border: none;
+              width: max-content;
+              height: 2rem;
+              padding-left: 1rem;
+              padding-right: 1rem;
+              color: #fafafa;
+              font-size: 1.2rem;
+              border-radius: 10px;
+              display: flex;
+              align-items: center;
+              margin-right: 1rem;
+              cursor: pointer;
+            }
+
+            input {
+              background: #1a1a1a;
+              border: none;
+              width: max-content;
+              height: 2rem;
+              padding: 1rem;
+              margin-left: -1rem;
+              color: #fafafa;
+              font-size: 1.4rem;
+              border-radius: 10px;
+            }
+          }
         }
 
         .price {
-          width: 100%;
+          flex: 1;
           margin-left: 4rem;
         }
       }
@@ -314,6 +414,8 @@
           textarea {
             resize: none;
             height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
           }
         }
       }
@@ -327,6 +429,8 @@
         #b19fff 50%,
         rgba(236, 161, 254, 1) 100%
       );
+      border-radius: 10px;
+      overflow: hidden;
 
       input {
         background: none;
@@ -340,6 +444,7 @@
 // ---------------------------------------- //
 @media screen and (max-width: 699px) {
   #upload-modal-container {
+    width: 44rem;
     .upload-form {
       .form-section {
         .upload-image-container {
@@ -384,7 +489,6 @@
     .header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 2rem;
       .modal-title {
         font-size: 1.5rem;
         text-transform: uppercase;
@@ -397,11 +501,13 @@
         cursor: pointer;
       }
     }
-    .header-text {
-      font-size: 1.2rem;
-      opacity: 0.6;
-      color: white;
-    }
+  }
+
+  .header-text {
+    padding: 2rem;
+    font-size: 1.4rem;
+    color: mediumpurple;
+    text-align: center;
   }
 
   .role-change-form {
@@ -485,10 +591,10 @@
         cursor: pointer;
         position: relative;
         margin: auto;
-        width: 18px;
-        height: 18px;
-        left: 15px;
-        top: 3px;
+        width: 1.5rem;
+        height: 1.5rem;
+        left: 1.2rem;
+        top: 0.4rem;
         margin-right: 3rem;
 
         &:hover::before {
@@ -502,10 +608,10 @@
         &::before {
           content: "";
           position: absolute;
-          top: -20px;
-          left: -15px;
-          width: 48px;
-          height: 48px;
+          top: -1.8rem;
+          left: -1.25rem;
+          width: 4rem;
+          height: 4rem;
           border-radius: 50%;
           background: rgba(34, 50, 84, 0.03);
           opacity: 0;

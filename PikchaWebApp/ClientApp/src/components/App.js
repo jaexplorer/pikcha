@@ -7,6 +7,7 @@ import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./layout/Alerts";
 import { authenticate } from "../actions/auth";
 import Routes from "./Routes/Routes";
+import ModalManager from "./layout/modals/ModalManager";
 
 const App = () => {
   useEffect(() => {
@@ -22,6 +23,7 @@ const App = () => {
           <NavBar />
           <Alerts />
           <Routes />
+          <ModalManager />
         </div>
       </Router>
     </Provider>

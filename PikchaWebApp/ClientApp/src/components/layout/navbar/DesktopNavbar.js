@@ -24,7 +24,7 @@ const MobileNavbar = ({
 }) => {
   const authLinks = (
     <div className='navbar-right'>
-      {account.loading === false && (
+      {account.loadingUser === false && (
         <Fragment>
           <div className='navbar-icons'>
             {/* <div className='navbar-icon'>

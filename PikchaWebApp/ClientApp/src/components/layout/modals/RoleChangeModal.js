@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { removeModal } from "../../../actions/modal";
 import CloseIcon from "../../../assets/images/delete-white.png";
 import SignatureCanvas from "react-signature-canvas";
+import { setAlert } from "../../../actions/alert";
+import { promoteToArtist } from "../../../actions/account";
 
-const RoleChangeModal = ({ removeModal }) => {
-  const [agreement, setAgreement] = useState("");
+const RoleChangeModal = ({ removeModal, setAlert, promoteToArtist }) => {
+  const [agreement, setAgreement] = useState(false);
   const [signature, setSignature] = useState(null);
 
   const modalContainer = useRef(null);
@@ -29,9 +31,24 @@ const RoleChangeModal = ({ removeModal }) => {
   };
 
   const saveSigPad = () => {
-    setSignature({
-      trimmedDataURL: sigPad.current.getTrimmedCanvas().toDataURL("image/png")
-    });
+    setSignature(sigPad.current.getTrimmedCanvas().toDataURL("image/png"));
+  };
+
+  const onChange = e =>
+    setAgreement({ ...agreement, [e.target.name]: e.target.checked });
+
+  const onSubmit = e => {
+    e.preventDefault();
+
+    if (signature === null || agreement === false) {
+      agreement === false &&
+        setAlert("Please agree to the pikcha user agreement", "danger");
+      signature === null && setAlert("Please supply your signature", "danger");
+    } else {
+      removeModal();
+      const signatureContent = signature;
+      promoteToArtist({ signatureContent });
+    }
   };
 
   return (
@@ -42,18 +59,14 @@ const RoleChangeModal = ({ removeModal }) => {
             <div className='modal-title'>Want To Be An Artist?</div>
             <img onClick={removeModal} src={CloseIcon} alt='' />
           </div>
-          <div className='header-text'>
-            It's a great way to earn money, launch your photography career
-            <br />
-            and have a chance to be in the top 100.
-          </div>
         </div>
-        {/* 
-        <div className='form-subtext'>
+        <div className='header-text'>
+          It's a great way to earn money, launch your photography career
+          <br />
+          and have a chance to be in the top 100.
+        </div>
 
-        </div> */}
-
-        <form className='role-change-form'>
+        <form className='role-change-form' onSubmit={onSubmit} noValidate>
           {/* <div className='form-section'>
             <div className='section-title'>Getting Paid</div>
             <div className='section-text'>
@@ -77,7 +90,6 @@ const RoleChangeModal = ({ removeModal }) => {
                   maxWidth={4}
                   minDistance={0}
                   throttle={20}
-                  // clearOnResize={false}
                   onEnd={saveSigPad}
                   canvasProps={{
                     className: "sigCanvas"
@@ -104,10 +116,10 @@ const RoleChangeModal = ({ removeModal }) => {
                 name='agreement'
                 value={agreement}
                 required
-                // onChange={onChange}
+                onChange={onChange}
               />
               <label htmlFor='checkmark' className='check'>
-                <svg width='18px' height='18px' viewBox='0 0 18 18'>
+                <svg width='1.5rem' height='1.5rem' viewBox='0 0 18 18'>
                   <path d='M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z'></path>
                   <polyline points='1 9 7 14 15 4'></polyline>
                 </svg>
@@ -127,5 +139,5 @@ const RoleChangeModal = ({ removeModal }) => {
 
 export default connect(
   null,
-  { removeModal }
+  { removeModal, setAlert, promoteToArtist }
 )(RoleChangeModal);

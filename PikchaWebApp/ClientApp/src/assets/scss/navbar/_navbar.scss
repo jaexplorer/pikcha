@@ -36,10 +36,26 @@
       li {
         list-style-type: none;
         a {
+          position: relative;
           font-family: "Montserrat";
           font-size: 1.6rem;
           color: #1a1a1a;
           text-decoration: none;
+          z-index: 30;
+
+          &:hover::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            top: -1rem;
+            left: -1.6rem;
+            padding: 1.5rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.5);
+            z-index: -1;
+          }
         }
         &:nth-child(2) {
           margin-left: 3rem;
@@ -95,11 +111,27 @@
         li {
           list-style-type: none;
           a {
+            position: relative;
             font-family: "Montserrat";
             color: #1a1a1a;
             font-size: 1.2rem;
             text-decoration: none;
             text-transform: uppercase;
+            z-index: 30;
+
+            &:hover::before {
+              content: "";
+              position: absolute;
+              width: 100%;
+              top: -1.2rem;
+              left: -1.6rem;
+              padding: 1.5rem;
+              padding-top: 2rem;
+              padding-bottom: 2rem;
+              border-radius: 50px;
+              background: rgba(230, 230, 230, 0.5);
+              z-index: -1;
+            }
           }
           :first-child {
             margin-right: 3rem;

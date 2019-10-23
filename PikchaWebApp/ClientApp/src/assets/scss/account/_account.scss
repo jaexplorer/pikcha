@@ -290,7 +290,7 @@
       position: relative;
       font-size: 1rem;
       margin-top: 2.5rem;
-      margin-bottom: 3.5rem;
+      margin-bottom: 3.6rem;
 
       &::before {
         content: "";
@@ -345,6 +345,43 @@
           }
         }
       }
+    }
+  }
+
+  .prompt {
+    width: 12rem;
+    height: max-content;
+    padding: 2rem;
+    background-image: linear-gradient(
+      -130deg,
+      #5271c4 0%,
+      #b19fff 50%,
+      #eca1fe 100%
+    );
+    border-radius: 10px;
+    font-family: "Montserrat";
+    color: white;
+    text-align: center;
+    cursor: pointer;
+
+    .prompt-title {
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .prompt-text {
+      font-size: 1.2rem;
+      margin-bottom: 3rem;
+    }
+
+    .prompt-action {
+      z-index: 20;
+      position: relative;
+      img {
+        height: 2rem;
+      }
+      margin-bottom: 1rem;
     }
   }
 }

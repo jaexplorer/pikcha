@@ -27,7 +27,7 @@ const ProfileDropdown = ({ account, removeProfileDropdown, createModal }) => {
     <div id='profile-dropdown' ref={dropdownContainer}>
       <div
         onClick={() => {
-          account.user.roles === "artist"
+          account.user.roles.includes("Photographer")
             ? createModal("UploadModal")
             : createModal("RoleChangeModal");
           removeProfileDropdown();

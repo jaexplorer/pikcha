@@ -188,10 +188,26 @@ body .frame-container .main-container .main-content-container {
 }
 
 #top-navbar #navbar #navbar-left li a {
+  position: relative;
   font-family: "Montserrat";
   font-size: 1.6rem;
   color: #1a1a1a;
   text-decoration: none;
+  z-index: 30;
+}
+
+#top-navbar #navbar #navbar-left li a:hover::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  top: -1rem;
+  left: -1.6rem;
+  padding: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: -1;
 }
 
 #top-navbar #navbar #navbar-left li:nth-child(2) {
@@ -260,11 +276,27 @@ body .frame-container .main-container .main-content-container {
 }
 
 #top-navbar #navbar .navbar-right #navbar-right-links li a {
+  position: relative;
   font-family: "Montserrat";
   color: #1a1a1a;
   font-size: 1.2rem;
   text-decoration: none;
   text-transform: uppercase;
+  z-index: 30;
+}
+
+#top-navbar #navbar .navbar-right #navbar-right-links li a:hover::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  top: -1.2rem;
+  left: -1.6rem;
+  padding: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 50px;
+  background: rgba(230, 230, 230, 0.5);
+  z-index: -1;
 }
 
 #top-navbar #navbar .navbar-right #navbar-right-links li :first-child {
@@ -476,7 +508,7 @@ body .frame-container .main-container .main-content-container {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  z-index: 800;
+  z-index: 1200;
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
 }
@@ -576,7 +608,7 @@ body .frame-container .main-container .main-content-container {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  z-index: 800;
+  z-index: 1200;
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
 }
@@ -1203,6 +1235,11 @@ body .frame-container .main-container .main-content-container {
   width: 1px;
   height: 60px;
   background: mediumpurple;
+  display: none;
+}
+
+#artist100-container .artist-container .top-photo-information {
+  margin-left: auto;
 }
 
 #artist100-container .artist-container .top-photo-information .top-photo-name {
@@ -1611,9 +1648,21 @@ body .frame-container .main-container .main-content-container {
         -ms-flex: 1;
             flex: 1;
   }
+  .masonry .masonry-col:first-child {
+    margin-left: 1rem;
+  }
+  .masonry .masonry-col:last-child {
+    margin-right: 1rem;
+  }
   .masonry .masonry-col.selected {
     -ms-flex-preferred-size: 100%;
         flex-basis: 100%;
+  }
+  .masonry .masonry-col.selected:first-child {
+    margin-right: -0.5rem;
+  }
+  .masonry .masonry-col.selected:last-child {
+    margin-left: -0.5rem;
   }
 }
 
@@ -2875,7 +2924,7 @@ body .frame-container .main-container .main-content-container {
   position: relative;
   font-size: 1rem;
   margin-top: 2.5rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3.6rem;
 }
 
 #side-menu .side-menu-container .side-menu::before {
@@ -2928,6 +2977,41 @@ body .frame-container .main-container .main-content-container {
   top: 0;
   bottom: 0;
   margin: auto;
+}
+
+#side-menu .prompt {
+  width: 12rem;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  padding: 2rem;
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
+  border-radius: 10px;
+  font-family: "Montserrat";
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+#side-menu .prompt .prompt-title {
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+#side-menu .prompt .prompt-text {
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+}
+
+#side-menu .prompt .prompt-action {
+  z-index: 20;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+#side-menu .prompt .prompt-action img {
+  height: 2rem;
 }
 
 @media screen and (max-width: 699px) {
@@ -3142,16 +3226,15 @@ body .frame-container .main-container .main-content-container {
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  padding: 2rem;
+  width: 54rem;
   background: #fafafa;
   z-index: 600;
   -webkit-box-shadow: 5px 10px 30px -20px black;
           box-shadow: 5px 10px 30px -20px black;
-  margin-top: 10rem;
   margin-bottom: 10rem;
+  top: 10rem;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 #upload-modal-container .modal-header {
@@ -3162,14 +3245,15 @@ body .frame-container .main-container .main-content-container {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
-  margin-bottom: 2rem;
+  padding: 2rem;
+  background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
 }
 
 #upload-modal-container .modal-header .modal-title {
   font-size: 1.5rem;
   text-transform: uppercase;
   font-weight: bold;
+  color: white;
 }
 
 #upload-modal-container .modal-header img {
@@ -3199,6 +3283,10 @@ body .frame-container .main-container .main-content-container {
   cursor: pointer;
 }
 
+#upload-modal-container .upload-form {
+  padding: 2rem;
+}
+
 #upload-modal-container .upload-form .form-section {
   margin-bottom: 4rem;
 }
@@ -3219,6 +3307,15 @@ body .frame-container .main-container .main-content-container {
   max-width: 60rem;
   background: #1a1a1a;
   margin-bottom: 2rem;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview:hover .signature-toggle {
+  opacity: 1;
+  -webkit-transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease;
 }
 
 #upload-modal-container .upload-form .form-section .upload-image-container .image-preview img {
@@ -3228,6 +3325,59 @@ body .frame-container .main-container .main-content-container {
   height: 100%;
   -o-object-fit: contain;
      object-fit: contain;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview .signature-toggle {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview .signature-toggle input[type="radio"] {
+  display: none;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview .signature-toggle input[type="radio"] + label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 10px;
+  margin-left: 2rem;
+  border: white 2px solid;
+  cursor: pointer;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview .signature-toggle input[type="radio"]:checked + label {
+  border: mediumpurple 2px solid;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview .signature-toggle label img {
+  height: 2rem;
+  width: 2rem;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 #upload-modal-container .upload-form .form-section .upload-image-container .upload-button {
@@ -3240,6 +3390,8 @@ body .frame-container .main-container .main-content-container {
   color: white;
   text-align: center;
   margin-bottom: 2rem;
+  border-radius: 10px;
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -3270,6 +3422,8 @@ body .frame-container .main-container .main-content-container {
   color: #fafafa;
   font-size: 1.4rem;
   padding: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 #upload-modal-container .upload-form .form-section .split-details-container {
@@ -3291,11 +3445,67 @@ body .frame-container .main-container .main-content-container {
 }
 
 #upload-modal-container .upload-form .form-section .split-details-container .tags {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  overflow: hidden;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .tags #tags-container {
+  background: #1a1a1a;
+  border: none;
+  min-height: 4rem;
   width: 100%;
+  color: #fafafa;
+  font-size: 1.4rem;
+  border-radius: 10px;
+  overflow: auto;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .tags #tags-container .tag {
+  background: mediumpurple;
+  border: none;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: #fafafa;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+#upload-modal-container .upload-form .form-section .split-details-container .tags #tags-container input {
+  background: #1a1a1a;
+  border: none;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: 2rem;
+  padding: 1rem;
+  margin-left: -1rem;
+  color: #fafafa;
+  font-size: 1.4rem;
+  border-radius: 10px;
 }
 
 #upload-modal-container .upload-form .form-section .split-details-container .price {
-  width: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   margin-left: 4rem;
 }
 
@@ -3319,6 +3529,8 @@ body .frame-container .main-container .main-content-container {
 #upload-modal-container .upload-form .form-section .description .input-wrapper textarea {
   resize: none;
   height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 #upload-modal-container .upload-form .form-btn {
@@ -3329,6 +3541,8 @@ body .frame-container .main-container .main-content-container {
       -ms-flex-pack: center;
           justify-content: center;
   background-image: linear-gradient(-130deg, #5271c4 0%, #b19fff 50%, #eca1fe 100%);
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 #upload-modal-container .upload-form .form-btn input {
@@ -3337,6 +3551,9 @@ body .frame-container .main-container .main-content-container {
 }
 
 @media screen and (max-width: 699px) {
+  #upload-modal-container {
+    width: 44rem;
+  }
   #upload-modal-container .upload-form .form-section .upload-image-container .image-preview {
     width: 40rem;
     height: 40rem;
@@ -3380,7 +3597,6 @@ body .frame-container .main-container .main-content-container {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-bottom: 2rem;
 }
 
 #role-change-modal-container .modal-header .header .modal-title {
@@ -3395,10 +3611,11 @@ body .frame-container .main-container .main-content-container {
   cursor: pointer;
 }
 
-#role-change-modal-container .modal-header .header-text {
-  font-size: 1.2rem;
-  opacity: 0.6;
-  color: white;
+#role-change-modal-container .header-text {
+  padding: 2rem;
+  font-size: 1.4rem;
+  color: mediumpurple;
+  text-align: center;
 }
 
 #role-change-modal-container .role-change-form {
@@ -3489,10 +3706,10 @@ body .frame-container .main-container .main-content-container {
   cursor: pointer;
   position: relative;
   margin: auto;
-  width: 18px;
-  height: 18px;
-  left: 15px;
-  top: 3px;
+  width: 1.5rem;
+  height: 1.5rem;
+  left: 1.2rem;
+  top: 0.4rem;
   margin-right: 3rem;
 }
 
@@ -3507,10 +3724,10 @@ body .frame-container .main-container .main-content-container {
 #role-change-modal-container .role-change-form .form-section .check::before {
   content: "";
   position: absolute;
-  top: -20px;
-  left: -15px;
-  width: 48px;
-  height: 48px;
+  top: -1.8rem;
+  left: -1.25rem;
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
   background: rgba(34, 50, 84, 0.03);
   opacity: 0;
@@ -3565,7 +3782,7 @@ body .frame-container .main-container .main-content-container {
   width: 100%;
   padding: 3rem;
   padding-top: 1.5rem;
-  z-index: 700;
+  z-index: 1100;
 }
 
 .alert-container .alert {

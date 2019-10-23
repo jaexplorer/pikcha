@@ -65,8 +65,24 @@
     .masonry-col {
       flex: 1;
 
+      &:first-child {
+        margin-left: 1rem;
+      }
+
+      &:last-child {
+        margin-right: 1rem;
+      }
+
       &.selected {
         flex-basis: 100%;
+
+        &:first-child {
+          margin-right: -0.5rem;
+        }
+
+        &:last-child {
+          margin-left: -0.5rem;
+        }
       }
     }
   }
