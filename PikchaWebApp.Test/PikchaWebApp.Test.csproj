@@ -22,10 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestPhotos\beach-jaffna.jpg">
+    <None Update="wwwroot\TestPhotos\beach-jaffna.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestPhotos\black-white.jpg">
+    <None Update="wwwroot\TestPhotos\black-white.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

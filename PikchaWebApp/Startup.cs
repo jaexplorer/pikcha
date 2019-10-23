@@ -21,6 +21,7 @@ using PikchaWebApp.Drivers.Email;
 using PikchaWebApp.Managers;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PikchaWebApp
 {
@@ -166,9 +167,15 @@ namespace PikchaWebApp
 
                 context.Database.Migrate();
 
+                //PikchaUser pkUs =  context.PikchaUsers.Include("Images").Include("Images.Views").FirstAsync().Result;
+                //var tmp2 = pkUs.Images.SelectMany(v => v.Views.Select(c => c.Count)).Sum();
+                //var tmp3 = pkUs.Images.Sum(v => v.Views.Sum(c => c.Count));
+                
+                //var tmp = pkUs.Images.Select(v => v.Views.Select(c => c.Count).Sum());
+
                 try
                 {
-                    bool populateDB = true;
+                    bool populateDB = false;
                     if (populateDB)
                     {
                         var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();

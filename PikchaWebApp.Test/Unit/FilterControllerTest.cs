@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using PikchaWebApp.Controllers;
 using PikchaWebApp.Data;
+using PikchaWebApp.Managers;
 using PikchaWebApp.Models;
 using PikchaWebApp.Test.Shared;
 using System;
@@ -106,8 +107,8 @@ namespace PikchaWebApp.Test.Unit
                 // validate uploaded image
                 Assert.True(imlst.Exists(i => i.Title == img.Title));
 
-                Assert.True(File.Exists(imlst[0].Thumbnail));
-                Assert.True(File.Exists(imlst[0].Watermark));
+                Assert.True(File.Exists(PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER + imlst[0].Thumbnail));
+                Assert.True(File.Exists(PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER + imlst[0].Watermark));
                 return;
             }
 
@@ -115,8 +116,8 @@ namespace PikchaWebApp.Test.Unit
             // validate uploaded image
             Assert.True(lst.Exists(i => i.Title == img.Title));
 
-            Assert.True(File.Exists(lst[0].Thumbnail));
-            Assert.True(File.Exists(lst[0].Watermark));
+            Assert.True(File.Exists(PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER + lst[0].Thumbnail));
+            Assert.True(File.Exists(PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER + lst[0].Watermark));
 
         }
 

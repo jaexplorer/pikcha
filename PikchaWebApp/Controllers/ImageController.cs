@@ -51,7 +51,7 @@ namespace PikchaWebApp.Controllers
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
                 }
 
-                if (string.IsNullOrEmpty(imgViewModel.Signature) || ! System.IO.File.Exists(imgViewModel.Signature))
+                if (string.IsNullOrEmpty(imgViewModel.Signature) || ! System.IO.File.Exists(PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER +  imgViewModel.Signature))
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404SignatureNotFound);
                 }

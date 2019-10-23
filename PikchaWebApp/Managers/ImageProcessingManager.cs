@@ -35,7 +35,7 @@ namespace PikchaWebApp.Managers
 
                     using (MagickImage image = new MagickImage(memoryStream.ToArray()))
                     {
-                        using (MagickImage signatureImg = new MagickImage(signatureFile))
+                        using (MagickImage signatureImg = new MagickImage( PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER +  signatureFile))
                         {
                             pkImage.Width = image.Width;
                             pkImage.Height = image.Height;
@@ -102,8 +102,8 @@ namespace PikchaWebApp.Managers
 
                         StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
                         string id = Guid.NewGuid().ToString();
-                        sigFile = manager.UploadMagickImage(image, string.Empty, id + "-org", PikchaConstants.PIKCHA_IMAGE_SAVE_EXTENTION, StorageManager.FileCategory.Signature);
-                        invSigFile = manager.UploadMagickImage(revImg, string.Empty, id + "-inv", PikchaConstants.PIKCHA_IMAGE_SAVE_EXTENTION, StorageManager.FileCategory.Signature);
+                        sigFile = manager.UploadMagickImage(image, string.Empty, id + "-org", PikchaConstants.PIKCHA_SIGNATURE_SAVE_EXTENTION, StorageManager.FileCategory.Signature);
+                        invSigFile = manager.UploadMagickImage(revImg, string.Empty, id + "-inv", PikchaConstants.PIKCHA_SIGNATURE_SAVE_EXTENTION, StorageManager.FileCategory.Signature);
 
                         return true;
                     }

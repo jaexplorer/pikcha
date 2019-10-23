@@ -229,7 +229,7 @@ namespace PikchaWebApp.Test
 
         }
 
-        public static ImageViewModel CreateImage(string title, string caption, string location, string imagePath = "TestPhotos/beach-jaffna.jpg")
+        public static ImageViewModel CreateImage(string title, string caption, string location, string imagePath = "wwwroot/TestPhotos/beach-jaffna.jpg")
         {
             IFormFile imgFile = MockHelpers.CreateNewImageFile(imagePath, "beach-jaffna.jpg", title);
 
