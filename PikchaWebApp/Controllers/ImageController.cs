@@ -16,8 +16,8 @@ using PikchaWebApp.Models;
 
 namespace PikchaWebApp.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    //[Route("api/[controller]")]
+    //[ApiController]
     public class ImageController : PikchaBaseController
     {
         protected readonly IWebHostEnvironment _hostingEnvironment;
@@ -73,7 +73,7 @@ namespace PikchaWebApp.Controllers
                 bool status = imgManager.ResizeImage(imageId, imgViewModel.ImageFile, imgViewModel.Signature, ref pkImg);
 
                 // add image tags
-                AddImageTags(ref pkImg, imgViewModel.Tags);
+                //AddImageTags(ref pkImg, imgViewModel.Tags);
 
                 if (status)
                 {
@@ -304,7 +304,7 @@ namespace PikchaWebApp.Controllers
         public IFormFile ImageFile { get; set; }
 
         public string Signature { get; set; }
-        public List<string> Tags { get; set; }
+        //public List<string> Tags { get; set; }
 
         public decimal Price { get; set; } = 100;
     }

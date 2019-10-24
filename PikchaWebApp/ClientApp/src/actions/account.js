@@ -128,6 +128,23 @@ export const loadSignature = () => {
   };
 };
 
+export const uploadImage = formData => {
+  return async dispatch => {
+    try {
+      const token = await AuthorizeService.getAccessToken();
+      const res = await axios.post(`api/image/upload`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+};
+
 // Deauthenticate user
 export const logout = () => {
   return async dispatch => {

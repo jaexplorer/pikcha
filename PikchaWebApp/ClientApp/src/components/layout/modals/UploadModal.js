@@ -3,10 +3,16 @@ import { connect } from "react-redux";
 import { removeModal } from "../../../actions/modal";
 import CloseIcon from "../../../assets/images/delete-white.png";
 import DeleteIcon from "../../../assets/images/delete-white.png";
-import { loadSignature } from "../../../actions/account";
+import { loadSignature, uploadImage } from "../../../actions/account";
 import { setAlert } from "../../../actions/alert";
 
-const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
+const UploadModal = ({
+  account,
+  removeModal,
+  loadSignature,
+  setAlert,
+  uploadImage
+}) => {
   const [error, setError] = useState(false);
   const uploadButton = useRef(null);
   const [preview, setPreview] = useState("");
@@ -80,8 +86,9 @@ const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
       location === "" ||
       description === "" ||
       price === "" ||
+      /(^[0-9]+$)/.test(price) === false ||
       tags.length === 0 ||
-      (selectedFile === null || selectedFile.size < 5000000)
+      (selectedFile === null || selectedFile.size < 5)
     ) {
       title === "" &&
         setAlert("Please supply a title for your image", "danger");
@@ -108,11 +115,12 @@ const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
           setAlert("Please use digits only", "danger");
       tags.length === 0 &&
         setAlert("Please enter atleast one tag for this image", "danger");
-      selectedFile === null
-        ? setAlert("Please select an image to upload", "danger")
-        : selectedFile.size < 5000000 &&
-          setAlert("Please select an image larger than 5MB", "danger");
+      selectedFile === null &&
+        setAlert("Please select an image to upload", "danger");
+      // : selectedFile.size < 5000000 &&
+      //   setAlert("Please select an image larger than 5MB", "danger");
     } else {
+      uploadImage({ title, location, description, price });
       removeModal();
     }
   };
@@ -301,5 +309,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { removeModal, loadSignature, setAlert }
+  { removeModal, loadSignature, uploadImage, setAlert }
 )(UploadModal);
