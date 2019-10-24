@@ -17,7 +17,7 @@ namespace PikchaWebApp.Data
         }
 
         private void InitImageDTOS()
-        {            
+        {
             CreateMap<PikchaImage, PikchaImageFilterDTO>()
                 .ForMember(
                     dest => dest.Views,
@@ -26,14 +26,14 @@ namespace PikchaWebApp.Data
                 .ForMember(
                     dest => dest.Height, opt => opt.MapFrom( src => "0"))
                 .ForMember(
-                    dest => dest.ProductIds, opt => opt.MapFrom(src => src.Products.Select(p => p.Id)))
+                    dest => dest.ProductIds, opt =>  opt.MapFrom(src => src.Products.Select(p => p.Id)))
                 ;
 
             CreateMap<PikchaUser, PikchaImageFilterDTO>()
                   .ForMember(
                       dest => dest.Artist,
                       opt => opt.MapFrom(src =>
-                          new PikchaUserBaseDTO() { Avatar = src.Avatar, Id = src.Id, FName = src.FName, LName = src.LName }))
+                          new PikchaArtistBaseDTO() { Avatar = src.Avatar ?? string.Empty, Id = src.Id, FName = src.FName, LName = src.LName, Location = src.City?? string.Empty + ", " + src.Country?? string.Empty, AggrImViews = src.AggrImViews.ToString() }))
                   .ForMember(
                       dest => dest.Caption, opt => opt.MapFrom(src => src.TopImage.Caption))
                    .ForMember(
@@ -79,12 +79,18 @@ namespace PikchaWebApp.Data
         private void InitUserDTOs()
         {
 
-            CreateMap<PikchaUser, PikchaUserBaseDTO>()
+            CreateMap<PikchaUser, PikchaUserBaseDTO>()              
+                ;
+
+            CreateMap<PikchaUser, PikchaArtistBaseDTO>()
                  .ForMember(
                 dest => dest.Location,
-                opt => opt.MapFrom(src => src.City + ", " + src.Country))
-                //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
-                ;
+                opt => opt.MapFrom(src => src.City ?? string.Empty + ", " + src.Country?? string.Empty))
+                 .ForMember(
+                dest => dest.AggrImViews,
+                opt => opt.MapFrom(src => src.AggrImViews.ToString()));
+            //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
+            ;
 
             CreateMap<PikchaUser, PikchaArtistDTO>()
                 .ForMember(
@@ -131,7 +137,7 @@ namespace PikchaWebApp.Data
                 .ForMember(
                     dest => dest.Artist,
                     opt => opt.MapFrom(src =>
-                        new PikchaUserBaseDTO() { Avatar = src.Image.Artist.Avatar, Id = src.Image.Artist.Id, FName = src.Image.Artist.FName, LName = src.Image.Artist.LName }))
+                        new PikchaUserBaseDTO() { Avatar = src.Image.Artist.Avatar?? string.Empty, Id = src.Image.Artist.Id, FName = src.Image.Artist.FName, LName = src.Image.Artist.LName }))
                  .ForMember(
                       dest => dest.Caption, opt => opt.MapFrom(src => src.Image.Caption))
                  .ForMember(

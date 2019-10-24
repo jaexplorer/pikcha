@@ -3310,6 +3310,15 @@ body .frame-container .main-container .main-content-container {
   border-radius: 10px;
   position: relative;
   overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #upload-modal-container .upload-form .form-section .upload-image-container .image-preview:hover .signature-toggle {
@@ -3318,7 +3327,12 @@ body .frame-container .main-container .main-content-container {
   transition: opacity 0.4s ease;
 }
 
-#upload-modal-container .upload-form .form-section .upload-image-container .image-preview img {
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview .image-container {
+  width: inherit;
+  height: inherit;
+}
+
+#upload-modal-container .upload-form .form-section .upload-image-container .image-preview .image-container img {
   -o-object-position: center center;
      object-position: center center;
   width: 100%;
@@ -3364,6 +3378,9 @@ body .frame-container .main-container .main-content-container {
   border-radius: 10px;
   margin-left: 2rem;
   border: white 2px solid;
+  background: rgba(147, 112, 216, 0.5);
+  -webkit-box-shadow: 5px 10px 30px -20px black;
+          box-shadow: 5px 10px 30px -20px black;
   cursor: pointer;
 }
 
@@ -3513,6 +3530,7 @@ body .frame-container .main-container .main-content-container {
   width: 100%;
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
+  position: relative;
 }
 
 #upload-modal-container .upload-form .form-section .description .input-wrapper {
@@ -3526,11 +3544,94 @@ body .frame-container .main-container .main-content-container {
           flex-direction: column;
 }
 
-#upload-modal-container .upload-form .form-section .description .input-wrapper textarea {
+#upload-modal-container .upload-form .form-section .description .input-wrapper .input-container {
+  height: 100%;
+  position: relative;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper .input-container:hover .info {
+  opacity: 1;
+  -webkit-transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper .input-container .info {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: mediumpurple;
+  color: white;
+  font-family: "Montserrat";
+  font-size: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: default;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease;
+  z-index: 10;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper .input-container .info:hover + .info-text {
+  opacity: 1;
+  -webkit-transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper .input-container .info-text {
+  position: absolute;
+  top: 1.5rem;
+  right: 5rem;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 10px;
+  background: mediumpurple;
+  color: white;
+  font-family: "Montserrat";
+  font-size: 1rem;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease;
+  z-index: 20;
+  -webkit-box-shadow: 5px 10px 30px -20px black;
+          box-shadow: 5px 10px 30px -20px black;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper .input-container textarea {
   resize: none;
   height: 100%;
   border-radius: 10px;
   overflow: hidden;
+}
+
+#upload-modal-container .upload-form .form-section .description .input-wrapper .textarea-counter {
+  position: absolute;
+  color: white;
+  bottom: 2rem;
+  right: 2rem;
 }
 
 #upload-modal-container .upload-form .form-btn {

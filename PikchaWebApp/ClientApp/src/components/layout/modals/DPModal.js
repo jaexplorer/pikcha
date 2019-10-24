@@ -27,21 +27,21 @@ const DPModal = ({ removeModal, updateProfilePicture, account }) => {
     });
     uploadButton.current.addEventListener("change", () => {
       const acceptedImageTypes = ["image/jpeg", "image/png"];
-      if (
-        uploadButton.current.files &&
-        uploadButton.current.files[0] &&
-        acceptedImageTypes.includes(uploadButton.current.files[0]["type"])
-      ) {
-        const reader = new FileReader();
-        reader.readAsDataURL(uploadButton.current.files[0]);
-        reader.onload = function(e) {
-          setPreview(e.target.result);
-        };
-      } else {
-        setError(true);
-        setTimeout(() => {
-          setError(false);
-        }, 10000);
+      if (uploadButton.current.files && uploadButton.current.files[0]) {
+        if (
+          acceptedImageTypes.includes(uploadButton.current.files[0]["type"])
+        ) {
+          const reader = new FileReader();
+          reader.readAsDataURL(uploadButton.current.files[0]);
+          reader.onload = function(e) {
+            setPreview(e.target.result);
+          };
+        } else {
+          setError(true);
+          setTimeout(() => {
+            setError(false);
+          }, 10000);
+        }
       }
     });
   });

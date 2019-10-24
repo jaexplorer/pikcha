@@ -22,12 +22,13 @@ Image
  - Thumbnail  
  - Watermark  
  - Views 
- - Artist  
+ - Artist [FName, LName, Location, Avatar, AggrImViews ]  
  - Performance 
  - TotSold 
  - AvgPrice 
  - Height 
- - ProductIds 
+ - ProductIds
+ 
  
 
 ### Get an Image by product id

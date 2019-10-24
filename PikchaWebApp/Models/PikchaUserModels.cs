@@ -57,6 +57,7 @@ namespace PikchaWebApp.Models
 
         public List<PikchaArtistFollower> Following { get; set; } = new List<PikchaArtistFollower>();
         public List<PikchaArtistFollower> Followers { get; set; } = new List<PikchaArtistFollower>();
+        
 
         [NotMapped]
         public PikchaImage TopImage
@@ -82,8 +83,32 @@ namespace PikchaWebApp.Models
                 }
             }
         }
-    }
 
+        [NotMapped]
+        public int AggrImViews
+        {
+            get
+            {
+                // get the pikcha images
+
+                if (this.Images == null || this.Images.Select(v => v.Views) == null)
+                {
+
+                    return 0;
+                }
+                try
+                {
+                    return this.Images.Sum(v => v.Views.Sum(c => c.Count));
+
+                }
+
+                catch (Exception ex)
+                {
+                    return 0;
+                }
+            }
+        }
+    }
 
     [Table("ArtistFollowers")]
     public class PikchaArtistFollower

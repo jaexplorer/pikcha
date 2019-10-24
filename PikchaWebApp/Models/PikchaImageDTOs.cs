@@ -71,7 +71,7 @@ namespace PikchaWebApp.Models
         public string Watermark { get; set; } = string.Empty;
         public string Views { get; set; } =  string.Empty;
 
-        public PikchaUserBaseDTO Artist { get; set; } = new PikchaUserBaseDTO();
+        public PikchaArtistBaseDTO Artist { get; set; } = new PikchaArtistBaseDTO();
 
     }
 

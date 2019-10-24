@@ -32,7 +32,7 @@ const SideMenu = ({ account, createModal }) => {
         ? a.classList.add("current")
         : a.classList.remove("current");
     });
-    if (account.user.roles.includes("Photographer")) {
+    if (account.user.roles.includes("Artist")) {
       [...menu2.current.children].forEach(a => {
         a.href === window.location.href
           ? a.classList.add("current")
@@ -53,7 +53,7 @@ const SideMenu = ({ account, createModal }) => {
           <Link to='/account/settings'>Settings</Link>
         </div>
       </div>
-      {account.user.roles.includes("Photographer") ? (
+      {account.user.roles.includes("Artist") ? (
         <div className='side-menu-container'>
           <div className='side-menu-heading'>For Artists</div>
           <div onClick={() => setCurrent()} className='side-menu' ref={menu2}>

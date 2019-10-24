@@ -9,13 +9,10 @@ namespace PikchaWebApp.Models
     {
     }
 
-    public class PikchaArtistDTO : PikchaUserBaseDTO
+    public class PikchaArtistDTO : PikchaArtistBaseDTO
     {
         public string Bio { get; set; } = string.Empty;
         public Dictionary<string, string> Links { get; set; } = new Dictionary<string, string>();
-
-        public string Location { get; set; } = string.Empty;
-        public string Views { get; set; } = string.Empty;
 
         public decimal Performance { get; set; } = 0;
 
@@ -66,8 +63,13 @@ namespace PikchaWebApp.Models
         public string Phone { get; set; } = string.Empty; // need to add a mapping
         public string Avatar { get; set; } = @"Uploads\Avatars\default-avatar.jpg";
 
-        public string Location { get; set; } = string.Empty;
 
+    }
+
+    public class PikchaArtistBaseDTO : PikchaUserBaseDTO
+    {
+        public string Location { get; set; } = string.Empty;
+        public string AggrImViews { get; set; }
     }
 
 }

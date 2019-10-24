@@ -18,10 +18,19 @@ const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
     description: "",
     price: "",
     tags: [],
-    signature: ""
+    signature: "",
+    selectedFile: null
   });
 
-  const { title, location, description, price, signature, tags } = image;
+  const {
+    title,
+    location,
+    description,
+    price,
+    signature,
+    tags,
+    selectedFile
+  } = image;
 
   // Update Component State on change
   const onChange = e => setImage({ ...image, [e.target.name]: e.target.value });
@@ -39,14 +48,22 @@ const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
 
     uploadButton.current.addEventListener("change", () => {
       const acceptedImageTypes = ["image/jpeg", "image/png"];
-      const file = window.URL.createObjectURL(uploadButton.current.files[0]);
-      if (acceptedImageTypes.includes(uploadButton.current.files[0]["type"])) {
-        setPreview(file);
-      } else {
-        setError(true);
-        setTimeout(() => {
-          setError(false);
-        }, 10000);
+      if (uploadButton.current.files && uploadButton.current.files[0]) {
+        if (
+          acceptedImageTypes.includes(uploadButton.current.files[0]["type"])
+        ) {
+          const reader = new FileReader();
+          reader.readAsDataURL(uploadButton.current.files[0]);
+          reader.onload = function(e) {
+            setPreview(e.target.result);
+          };
+          setImage({ ...image, selectedFile: uploadButton.current.files[0] });
+        } else {
+          setError(true);
+          setTimeout(() => {
+            setError(false);
+          }, 10000);
+        }
       }
     });
   });
@@ -63,14 +80,25 @@ const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
       location === "" ||
       description === "" ||
       price === "" ||
-      tags.length === 0
+      tags.length === 0 ||
+      (selectedFile === null || selectedFile.size < 5000000)
     ) {
       title === "" &&
         setAlert("Please supply a title for your image", "danger");
       location === "" &&
         setAlert("Please supply the location of the image", "danger");
-      description === "" &&
-        setAlert("Please supply a description of the image", "danger");
+      description === ""
+        ? setAlert("Please supply a description of the image", "danger")
+        : description.length > 380
+        ? setAlert(
+            "Please describe your image in under 380 characters",
+            "danger"
+          )
+        : description.length < 120 &&
+          setAlert(
+            "Please describe your image in with atleast 120 characters",
+            "danger"
+          );
       price === ""
         ? setAlert(
             "Please set the amount you would like from this image",
@@ -80,6 +108,10 @@ const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
           setAlert("Please use digits only", "danger");
       tags.length === 0 &&
         setAlert("Please enter atleast one tag for this image", "danger");
+      selectedFile === null
+        ? setAlert("Please select an image to upload", "danger")
+        : selectedFile.size < 5000000 &&
+          setAlert("Please select an image larger than 5MB", "danger");
     } else {
       removeModal();
     }
@@ -115,7 +147,9 @@ const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
           <div className='form-section'>
             <div className='upload-image-container'>
               <div className='image-preview'>
-                <img src={preview} alt='' />
+                <div className='image-container'>
+                  <img src={preview} alt='' />
+                </div>
                 {account.loadingSignature === false && (
                   <div className='signature-toggle'>
                     <input
@@ -183,15 +217,24 @@ const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
             <div className='description'>
               <div className='input-wrapper'>
                 <div className='input-title'>Description</div>
-                <textarea
-                  maxLength='100'
-                  className='input-field'
-                  type='text'
-                  name='description'
-                  value={description}
-                  onChange={onChange}
-                  placeholder='Tell us about the image in under 100 words'
-                />
+                <div className='input-container'>
+                  <div className='info'>i</div>
+                  <div className='info-text'>
+                    Only the first 150 characters will appear in the gallery
+                    popup
+                  </div>
+                  <textarea
+                    className='input-field'
+                    type='text'
+                    name='description'
+                    value={description}
+                    onChange={onChange}
+                    placeholder='Tell us about your image'
+                  />
+                </div>
+                <div className='textarea-counter'>
+                  {380 - description.length}
+                </div>
               </div>
             </div>
 
@@ -236,7 +279,7 @@ const UploadModal = ({ account, removeModal, loadSignature, setAlert }) => {
                     name='price'
                     value={price}
                     onChange={onChange}
-                    placeholder='How much do you want from this image?'
+                    placeholder='Your takings'
                   />
                 </div>
               </div>
