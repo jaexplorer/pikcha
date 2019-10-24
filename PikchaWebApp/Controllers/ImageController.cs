@@ -41,10 +41,10 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
-        public async Task<ActionResult> UploadImage([FromBody] ImageViewModel imgViewModel)
+        public async Task<ActionResult> UploadImage([FromBody] ImageViewModel imgViewModel )
         {
             try
-            {  
+            {  //
                PikchaUser loggedinUser = await _userManager.GetUserAsync(this.User);
                 if(loggedinUser == null)
                 {
@@ -88,11 +88,12 @@ namespace PikchaWebApp.Controllers
                         await _pikchDbContext.AddAsync(pkImg);
 
                         // add new product owned by owner of the image
-
+                        decimal price = 0;
+                        decimal.TryParse(imgViewModel.Price, out price);
                         ImageProduct imgPrd = new ImageProduct()
                         {
                              IsSale = true,
-                              Price = imgViewModel.Price,
+                              Price = price,
                                Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_OWNER,
                                 Image = pkImg,
                                  Seller = loggedinUser
@@ -209,7 +210,7 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                var tmp = _pikchDbContext.ImageViews.Count();
+                //var tmp = _pikchDbContext.ImageViews.Count();
                 try
                 {
                     var imgVw = await _pikchDbContext.ImageViews.FirstAsync(i => i.PikchaImage.Id == imageId && i.Date == DateTime.Today.Date);
@@ -239,7 +240,11 @@ namespace PikchaWebApp.Controllers
 
                 await _pikchDbContext.SaveChangesAsync();
 
-                return StatusCode(StatusCodes.Status201Created);
+                // get the totla pikcha view count
+                var views = await _pikchDbContext.ImageViews.Where(i => i.PikchaImage.Id == imageId).SumAsync( c => c.Count);
+
+                //return StatusCode(StatusCodes.Status201Created);
+                return Ok(views);
 
             }
             catch (Exception ex)
@@ -293,20 +298,21 @@ namespace PikchaWebApp.Controllers
 
     public class ImageViewModel
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
-        public string Caption { get; set; }
+        public string Caption { get; set; } = string.Empty;
 
-        public string Location { get; set; }
+        public string Location { get; set; } = string.Empty;
 
-        public int NumberOfPrint { get; set; }
+        public int NumberOfPrint { get; set; } = 100;
 
-        public IFormFile ImageFile { get; set; }
+        public IFormFile ImageFile { get; set; } 
 
-        public string Signature { get; set; }
-        //public List<string> Tags { get; set; }
+        public string Signature { get; set; } = string.Empty;
+        
+        public List<string> Tags { get; set; }
 
-        public decimal Price { get; set; } = 100;
+        public string Price { get; set; } = "100";
     }
 
 
