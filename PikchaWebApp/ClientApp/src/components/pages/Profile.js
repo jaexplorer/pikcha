@@ -22,10 +22,9 @@ const Profile = ({ artist, getArtist }) => {
     // eslint-disable-next-line
   }, []);
 
-  // API DOESN'T WORK, WAITING ON THANANJI.
-  // if (artist.loading === false && artist.artist.status === "Error Occured") {
-  //   return <Redirect to='/notFound' component={NotFound} />;
-  // }
+  if (artist.error !== null) {
+    return <Redirect to='/notFound' component={NotFound} />;
+  }
 
   return (
     <Fragment>
@@ -36,61 +35,80 @@ const Profile = ({ artist, getArtist }) => {
       ) : (
         <Fragment>
           <MainComponent container='profile-container'>
-            <div id='profile-basic'>
-              <div id='profile-picture'>
-                <img src={ProfilePic} alt='' />
+            <div className='profile-summary-container'>
+              <div className='first-container'>
+                <div className='artist-picture'>
+                  <img src={ProfilePic} alt='' />
+                </div>
+                <div className='artist-details'>
+                  <div className='artist-name'>Anton Mihalcov</div>
+                  <div className='artist-location'>Melbourne, Australia</div>
+                </div>
+                <button className='artist-action'>Follow</button>
+
+                <div className='artist-description'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam eum nesciunt dolor architecto, amet voluptates quo
+                  incidunt atque illo. Esse consequatur accusamus alias
+                  distinctio fuga maiores modi ratione asperiores vitae ullam
+                  similique, aspernatur iusto maxime debitis itaque sit.
+                </div>
               </div>
-              <div id='profile-name'>Anton Mihalcov</div>
-              <div id='profile-location'>Melbourne, Australia</div>
-              <div id='profile-socials'>
-                <div className='social-button'>
-                  <img src={FacebookIcon} alt='' />
+              <div className='second-container'>
+                <div className='artist-description'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam eum nesciunt dolor architecto, amet voluptates quo
+                  incidunt atque illo. Esse consequatur accusamus alias
+                  distinctio fuga maiores modi ratione asperiores vitae ullam
+                  similique, aspernatur iusto maxime debitis itaque sit.
                 </div>
-                <div className='social-button'>
-                  <img src={InstagramIcon} alt='' />
+                <div className='artist-stats'>
+                  <div className='artist-views'>390k Views</div>
+                  <div className='artist-followers'>2.2k Followers</div>
+                  <div className='photos-sold'>20,930 Photos Sold</div>
+                  <div className='average-price'>$420.30 Average Price</div>
                 </div>
-                <div className='social-button'>
-                  <img src={TwitterIcon} alt='' />
+                <div className='following'>
+                  <div className='following-title'>Following</div>
+                  <div className='following-container'>
+                    <div className='following-wrapper'>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                      <div className='followed'>
+                        <img src={ProfilePic} alt='' />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div id='profile-button'>
-                <button>Follow</button>
               </div>
             </div>
-            <div id='profile-background'>
-              <div id='profile-bio'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Reprehenderit adipisci quisquam tenetur consectetur distinctio
-                libero error ipsa animi eaque deserunt, incidunt cupiditate?
-                Vero quo reiciendis eligendi sapiente quasi facilis, tempore
-                dolor.
-              </div>
-              <div id='profile-overlay'></div>
-              <div id='profile-options'>
-                <img src={MoreIcon} alt='' />
-              </div>
-            </div>
-            <div id='profile-stats'>
-              <div id='profile-views'>390k Views</div>
-              <div id='profile-followers'>2.2k Followers</div>
-              <div id='profile-photos-sold'>20,930 Photos Sold</div>
-              <div id='profile-average-price'>
-                $420.30 Average Price <span>(0.42%)</span>
-              </div>
-              <div id='profile-following'>
-                <span>FOLLOWING</span>
-                <div className='following-item'></div>
-                <div className='following-item'></div>
-                <div className='following-item'></div>
-                <div className='following-item'></div>
-                <div className='following-item'></div>
-                <div className='following-item'></div>
-                <div className='following-item'></div>
-                <div className='following-item'></div>
-              </div>
-            </div>
+            <MasonryGallery />
           </MainComponent>
-          <MasonryGallery />
         </Fragment>
       )}
     </Fragment>

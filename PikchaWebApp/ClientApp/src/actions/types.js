@@ -49,7 +49,7 @@ export const SET_FINISH = "SET_FINISH";
 export const CLEAR_CUSTOMISATIONS = "CLEAR_CUSTOMISATIONS";
 
 // Artist Types
-export const GET_ARTIST = "GET_ARTIST";
+export const ARTIST_LOADED = "ARTIST_LOADED";
 export const ARTIST_LOADING = "ARTIST_LOADING";
 export const ARTIST_ERROR = "ARTIST_ERROR";
 

@@ -276,7 +276,7 @@
       }
 
       &.profile-pic {
-        img {
+        & > img {
           height: 3.8rem;
           width: 3.8rem;
           object-position: center center;
