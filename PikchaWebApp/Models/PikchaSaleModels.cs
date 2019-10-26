@@ -29,7 +29,7 @@ namespace PikchaWebApp.Models
         [Column("IsSale")]
         public bool IsSale { get; set; } = false;
 
-        [Column("Price")]
+        [Column("Price", TypeName = "DECIMAL(13,2)")]
         public decimal Price { get; set; } = 0;
 
         [Column("Type")]

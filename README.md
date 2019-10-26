@@ -61,7 +61,7 @@ Image
 - ENDPOINT : api/image/upload
 - METHOD : post
 - AUTHENTICATED : true
-- PARAMS : Title [string], Caption [text], Location [string], ImageFile [file], Tags [list of strings]
+- PARAMS : Title [string], Caption [text], Location [string], ImageFile [file], Tags [list of strings], Signature [string], Price [Number]
 - RESULTS : OK
 - ERROR_CODES : 201, 500
 
