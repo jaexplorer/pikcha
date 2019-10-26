@@ -28,6 +28,7 @@
           object-position: center center;
           object-fit: cover;
           border-radius: 50%;
+          border: rgb(201, 201, 201) 2px solid;
         }
       }
 
@@ -37,6 +38,7 @@
           font-weight: bold;
           font-size: 1.8rem;
           margin-bottom: 0.2rem;
+          text-transform: capitalize;
         }
         .artist-location {
           text-align: center;
@@ -63,6 +65,9 @@
         font-weight: bold;
         cursor: pointer;
         margin-top: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .artist-description {
@@ -81,6 +86,7 @@
       flex-direction: column;
       justify-content: space-between;
       margin-left: 4rem;
+      width: 100%;
 
       .artist-description {
         display: flex;
@@ -104,6 +110,7 @@
         justify-content: space-between;
         align-items: center;
         font-size: 1rem;
+        height: 4rem;
       }
 
       .following {

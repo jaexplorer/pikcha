@@ -8,7 +8,9 @@ import {
   LOGGED_OUT,
   USER_ERROR,
   SIGNATURE_LOADED,
-  SIGNATURE_LOADING
+  SIGNATURE_LOADING,
+  ARTIST_FOLLOWED,
+  ARTIST_UNFOLLOWED
 } from "./types";
 
 export const loadUser = () => {
@@ -141,6 +143,52 @@ export const uploadImage = formData => {
       console.log(res);
     } catch (err) {
       console.log(err.response);
+    }
+  };
+};
+
+export const followArtist = (userId, artistId) => {
+  return async dispatch => {
+    try {
+      const token = await AuthorizeService.getAccessToken();
+      const res = await axios.post(
+        `api/profile/${userId}/artist/${artistId}/follow`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      dispatch(setUserLoading());
+      dispatch({
+        type: USER_UPDATED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: USER_ERROR, payload: err.response });
+    }
+  };
+};
+
+export const unfollowArtist = (userId, artistId) => {
+  return async dispatch => {
+    try {
+      const token = await AuthorizeService.getAccessToken();
+      const res = await axios.post(
+        `api/profile/${userId}/artist/${artistId}/unfollow`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      dispatch(setUserLoading());
+      dispatch({
+        type: USER_UPDATED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: USER_ERROR, payload: err.response });
     }
   };
 };

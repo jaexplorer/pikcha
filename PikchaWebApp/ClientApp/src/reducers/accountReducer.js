@@ -5,7 +5,9 @@ import {
   LOGGED_OUT,
   USER_ERROR,
   SIGNATURE_LOADED,
-  SIGNATURE_LOADING
+  SIGNATURE_LOADING,
+  ARTIST_FOLLOWED,
+  ARTIST_UNFOLLOWED
 } from "../actions/types";
 
 const initialState = {

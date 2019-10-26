@@ -333,8 +333,10 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                var pikchaUser = await _userManager.GetUserAsync(this.User);
+                // var pikchaUser = await _userManager.GetUserAsync(this.User);
 
+                // var qUser = _pikchDbContext.PikchaUsers.Include("Following.PikchaArtist").First(u => u.Id == pikchaUser.Id);
+                var pikchaUser = await _pikchDbContext.PikchaUsers.Include("Following").Include("Following.PikchaUser").Include("Following.PikchaArtist").FirstAsync(u => u.Id == userId);
                 var userDTO = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
                 var roles = await _userManager.GetRolesAsync(pikchaUser);
 

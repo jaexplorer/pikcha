@@ -12,6 +12,8 @@ export const LOGGED_OUT = "LOGGED_OUT";
 export const USER_ERROR = "USER_ERROR";
 export const SIGNATURE_LOADING = "SIGNATURE_LOADING";
 export const SIGNATURE_LOADED = "SIGNATURE_LOADED";
+export const ARTIST_FOLLOWED = "ARTIST_FOLLOWED";
+export const ARTIST_UNFOLLOWED = "ARTIST_UNFOLLOWED";
 
 // Alert Types
 export const SET_ALERT = "SET_ALERT";
