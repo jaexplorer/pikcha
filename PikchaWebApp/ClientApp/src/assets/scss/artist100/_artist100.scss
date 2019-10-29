@@ -1,0 +1,124 @@
+// Artist100
+// ------------------------------------------------------------------- //
+#artist100-container {
+  font-family: "Montserrat";
+
+  .artist-container {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+    height: 16rem;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .artist-rank {
+      font-weight: bold;
+      font-size: 1.8rem;
+    }
+
+    .artist-picture {
+      margin-left: 2rem;
+      img {
+        height: 7rem;
+        width: 7rem;
+        object-position: center center;
+        object-fit: cover;
+        border-radius: 50%;
+        border: rgb(201, 201, 201) 2px solid;
+        cursor: pointer;
+      }
+    }
+
+    .artist-information {
+      margin-left: 1.5rem;
+
+      .artist-name {
+        font-size: 1.6rem;
+        font-weight: bold;
+        margin-bottom: 0.3rem;
+      }
+      .artist-location {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+      }
+      .artist-stats {
+        .artist-photos-sold {
+          font-size: 1rem;
+        }
+        .artist-photo-views {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .divider {
+      margin-left: auto;
+      margin-right: auto;
+      width: 1px;
+      height: 60px;
+      background: mediumpurple;
+      display: none;
+    }
+
+    .top-photo-information {
+      margin-left: auto;
+
+      .top-photo-name {
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+      .top-photo-views {
+        font-size: 1rem;
+      }
+      .top-photo-avg-price {
+        font-size: 1rem;
+      }
+      .top-photo-location {
+        font-size: 1rem;
+      }
+    }
+
+    .artist-top-photo {
+      margin-left: 2rem;
+      display: block;
+      width: 12rem;
+      height: 12rem;
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      img {
+        height: 100%;
+        width: 100%;
+        object-position: center center;
+        object-fit: cover;
+        cursor: pointer;
+      }
+    }
+  }
+}
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  #artist100-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media screen and (max-width: 559px) {
+  #artist100-container {
+    .artist-container {
+      .artist-top-photo {
+        width: 8rem;
+        height: 8rem;
+      }
+    }
+  }
+}

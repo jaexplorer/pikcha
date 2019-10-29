@@ -1,0 +1,326 @@
+// Product
+// ------------------------------------------------------------------- //
+#product-container {
+  font-family: "Montserrat";
+
+  .more-content-heading {
+    font-size: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+    margin-bottom: 2rem;
+  }
+}
+
+// Product Item
+// ---------------------------------------- //
+.productItem-container {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 2rem;
+
+  .productItem-content {
+    display: flex;
+    max-width: 700px;
+    flex-direction: column;
+
+    .productItem-heading {
+      display: flex;
+      justify-content: space-between;
+      .product-title {
+        font-size: 2rem;
+      }
+      .product-number {
+        font-size: 2rem;
+      }
+    }
+
+    .productItem-stats {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      div {
+        margin-top: 0.2rem;
+      }
+    }
+
+    .productItem-description {
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: 300;
+      opacity: 0.5;
+    }
+
+    & .product-subtitle {
+      text-transform: uppercase;
+    }
+
+    & .product-subtext {
+      font-size: 1rem;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+
+    .productItem-origins {
+      margin-top: 2rem;
+      display: flex;
+
+      .productItem-artist-pic {
+        cursor: pointer;
+        img {
+          height: 3.5rem;
+          padding-right: 1rem;
+        }
+      }
+
+      .product-artist-info {
+        font-size: 1.2rem;
+        display: grid;
+        font-size: 1.2rem;
+        height: 50px;
+        grid-template-rows: 1fr 1fr;
+      }
+
+      .product-location {
+        margin-left: 3rem;
+        font-size: 1.2rem;
+        height: 50px;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+      }
+    }
+
+    .productItem-about-artist {
+      font-size: 1.2rem;
+      margin-top: auto;
+
+      .productItem-artist-description {
+        margin-top: 0.5rem;
+        font-size: 1.2rem;
+        font-weight: 300;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .productItem-photo {
+    background: #1a1a1a;
+    margin-left: 2rem;
+    min-width: 40rem;
+    height: 40rem;
+    position: relative;
+
+    & > img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+
+    .fullscreen-icon {
+      position: absolute;
+      right: 2rem;
+      top: 2rem;
+      cursor: pointer;
+
+      img {
+        height: 2.5rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .productItem-container {
+    display: flex;
+    flex-direction: column-reverse;
+
+    .productItem-content {
+      display: flex;
+      max-width: 100%;
+      flex-direction: column;
+      height: 30rem;
+    }
+
+    .productItem-photo {
+      margin-left: 0;
+      width: 100%;
+      height: calc(80vw - 6rem);
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 699px) {
+  .productItem-container {
+    .productItem-photo {
+      margin-left: 0;
+      width: 100%;
+      height: calc(100vw - 6rem);
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+// Main Seller
+// ---------------------------------------- //
+.mainSeller-container {
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+  margin-bottom: 3rem;
+  .mainSeller-heading {
+    font-size: 2rem;
+  }
+  .mainSeller-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-image: linear-gradient(
+      -130deg,
+      #5271c4 0%,
+      #b19fff 10%,
+      rgba(236, 161, 254, 0.5) 25%,
+      #fafafa 50%
+    );
+
+    .mainSeller-seller {
+      .mainSeller-artist {
+        display: flex;
+        align-items: center;
+        img {
+          height: 7rem;
+        }
+        .mainSeller-info {
+          margin-left: 1.5rem;
+          .mainSeller-artist-name {
+            font-size: 1.6rem;
+            font-weight: bold;
+          }
+
+          .mainSeller-artist-location {
+            margin-top: 0.2rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+
+    .break {
+      height: 3rem;
+      width: 1px;
+      background: rgba(147, 112, 216, 0.5);
+    }
+
+    .mainSeller-price {
+      font-size: 1.8rem;
+    }
+
+    .mainSeller-action {
+      background: #1a1a1a;
+      padding: 1.5rem;
+      width: 10rem;
+      text-align: center;
+      margin-right: 3rem;
+      color: white;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .mainSeller-container {
+    .mainSeller-content {
+      background-image: none;
+      .mainSeller-action {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+// Seller List
+// ---------------------------------------- //
+.sellerList-container {
+  padding-bottom: 2rem;
+  .sellerList-heading {
+    font-size: 2rem;
+  }
+  .sellerList-content {
+    position: relative;
+  }
+}
+
+// Seller Item
+// ---------------------------------------- //
+.sellerItem-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .sellerItem-print-number {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  .sellerItem-print-dimensions {
+    font-size: 1.2rem;
+  }
+
+  .sellerItem-print-materials {
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+
+  .break {
+    height: 3rem;
+    width: 1px;
+    background: rgba(147, 112, 216, 0.5);
+  }
+
+  .sellerItem-price {
+    font-size: 1.8rem;
+  }
+
+  .sellerItem-action {
+    background: #1a1a1a;
+    padding: 1.5rem;
+    width: 10rem;
+    text-align: center;
+    margin-right: 3rem;
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .sellerItem-container {
+    .sellerItem-action {
+      margin-right: 0;
+    }
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  #product-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}

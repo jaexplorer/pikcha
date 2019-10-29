@@ -1,0 +1,302 @@
+// Navbar
+// ------------------------------------------------------------------- //
+#top-navbar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 20% 80%;
+  height: 6rem;
+  background-image: linear-gradient(
+    120deg,
+    #5271c4 0%,
+    #b19fff 16%,
+    rgba(236, 161, 254, 0.5) 30%,
+    rgba(255, 255, 255, 0) 70%
+  );
+
+  #navbar-logo {
+    a {
+      display: grid;
+      height: 100%;
+      align-items: center;
+      padding-left: 2rem;
+      img {
+        height: 3rem;
+      }
+    }
+  }
+
+  #navbar {
+    display: grid;
+    grid-auto-flow: column;
+
+    #navbar-left {
+      display: flex;
+      align-items: center;
+
+      li {
+        list-style-type: none;
+        a {
+          position: relative;
+          font-family: "Montserrat";
+          font-size: 1.6rem;
+          color: #1a1a1a;
+          text-decoration: none;
+          z-index: 30;
+
+          &:hover::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            top: -1rem;
+            left: -1.6rem;
+            padding: 1.5rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.5);
+            z-index: -1;
+          }
+        }
+        &:nth-child(2) {
+          margin-left: 3rem;
+        }
+      }
+    }
+
+    .navbar-right {
+      display: flex;
+      align-items: center;
+      justify-self: right;
+
+      .navbar-icons {
+        position: relative;
+        display: grid;
+        height: 100%;
+        align-items: center;
+        justify-items: center;
+        grid-auto-flow: column;
+        cursor: pointer;
+
+        .navbar-icon {
+          position: relative;
+
+          & > img {
+            height: 1.6rem;
+            margin-right: 5rem;
+          }
+          .notication {
+            position: absolute;
+            top: 1.4rem;
+            left: 2rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgb(235, 59, 71);
+          }
+
+          &:last-child {
+            img {
+              margin-right: 4rem;
+            }
+          }
+        }
+      }
+
+      #navbar-right-links {
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        padding-right: 5rem;
+
+        li {
+          list-style-type: none;
+          a {
+            position: relative;
+            font-family: "Montserrat";
+            color: #1a1a1a;
+            font-size: 1.2rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            z-index: 30;
+
+            &:hover::before {
+              content: "";
+              position: absolute;
+              width: 100%;
+              top: -1.2rem;
+              left: -1.6rem;
+              padding: 1.5rem;
+              padding-top: 2rem;
+              padding-bottom: 2rem;
+              border-radius: 50px;
+              background: rgba(230, 230, 230, 0.5);
+              z-index: -1;
+            }
+          }
+          :first-child {
+            margin-right: 3rem;
+          }
+        }
+      }
+
+      #navbar-display-pic {
+        display: grid;
+        height: 100%;
+        align-items: center;
+        justify-items: right;
+        grid-auto-flow: column;
+        cursor: pointer;
+
+        & > img {
+          height: 3rem;
+          width: 3rem;
+          object-position: center center;
+          object-fit: cover;
+          border-radius: 50%;
+          border: rgb(201, 201, 201) 2px solid;
+          margin-right: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+// Mobile
+// ---------------------------------------- //
+#mobile-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 8rem;
+  .nav-menu-closed {
+    margin-left: 3rem;
+    img {
+      height: 2rem;
+      cursor: pointer;
+    }
+  }
+
+  .nav-menu-open {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: #1a1a1a;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8rem;
+    padding-bottom: 12rem;
+
+    .nav-menu-logo {
+      a {
+        img {
+          height: 6rem;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .nav-menu-list {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+
+      a {
+        margin-top: 3rem;
+        font-family: "Montserrat";
+        font-size: 1.8rem;
+        font-weight: 300;
+        text-decoration: none;
+        color: #fafafa;
+        text-transform: uppercase;
+
+        &:hover {
+          color: mediumpurple;
+          transition: 0.3s cubic-bezier(0.4, 0, 0, 1);
+        }
+      }
+    }
+
+    .nav-menu-exit {
+      position: relative;
+      img {
+        height: 1.5rem;
+        cursor: pointer;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 5.5rem;
+        height: 5.5rem;
+        background: white;
+        border-radius: 50%;
+        top: -2rem;
+        left: -2rem;
+        z-index: -2;
+      }
+
+      &::before {
+        transform: scale(0);
+        content: "";
+        position: absolute;
+        width: 6.5rem;
+        height: 6.5rem;
+        background: mediumpurple;
+        border-radius: 50%;
+        top: -2.5rem;
+        left: -2.5rem;
+        z-index: -1;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0, 1);
+      }
+
+      &:hover::before {
+        transform: scale(1);
+        transition: transform 0.45s cubic-bezier(0.6, 0.01, 0, 1.38);
+      }
+    }
+  }
+
+  .nav-icons {
+    margin-right: 3rem;
+    display: flex;
+    align-items: center;
+
+    .nav-icon {
+      margin-left: 6rem;
+      position: relative;
+      img {
+        height: 2rem;
+        cursor: pointer;
+      }
+
+      &.profile-pic {
+        img {
+          height: 3.8rem;
+          width: 3.8rem;
+          object-position: center center;
+          object-fit: cover;
+          border-radius: 50%;
+          border: rgb(201, 201, 201) 2px solid;
+          cursor: pointer;
+        }
+      }
+      .notication {
+        position: absolute;
+        top: -1rem;
+        left: 2.3rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgb(235, 59, 71);
+      }
+    }
+  }
+}
+
+@import "./dropdown";

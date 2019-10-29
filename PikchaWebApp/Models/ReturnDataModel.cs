@@ -8,17 +8,25 @@ namespace PikchaWebApp.Models
     public class ReturnDataModel
     {
         public string Status { get; set; }
-        public string Statuscode { get; set; }
+        public int Statuscode { get; set; }
         public object Data { get; set; }
         public ReturnDataModel()
         {
             this.Status = "success";
-            this.Statuscode = "200";
+            this.Statuscode = 200;
         }
-        public ReturnDataModel(string status, string statusCode)
+        public ReturnDataModel(string status, int statusCode)
         {
             this.Status = status;
             this.Statuscode = statusCode;
         }
+    }
+
+    public enum STATUS_CODES
+    {
+        Success = 200,
+        ExceptionThrown = 1901,
+        UnsuccesfulUpdate = 1902
+
     }
 }

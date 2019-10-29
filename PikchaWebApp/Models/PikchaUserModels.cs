@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,72 +13,122 @@ namespace PikchaWebApp.Models
     {
         // personal info
         [Column("Fname")]
-        public string FirstName { get; set; }
+        public string FName { get; set; }
 
         [Column("Lname")]
-        public string LastName { get; set; }
+        public string LName { get; set; }
 
-        [Column("AvFile")]
-        public string AvatarFileName { get; set; }
+        [Column("Avatar")]
+        public string Avatar { get; set; }
 
-        [Column("SigFile")]
-        public string SignatureFileName { get; set; }
+        [Column("Sign")]
+        public string Sign { get; set; }
+
+        [Column("InvSign")]
+        public string InvSign { get; set; }
 
         [Column("Bio")]
-        public string BioInfo { get; set; }
-
-
-        // permenant address
-        [Column("PerAddr1")]
-        public string PerAddress1 { get; set; }
-
-        [Column("PerAddr2")]
-        public string PerAddress2 { get; set; }
-
-        [Column("PerCity")]
-        public string PerCity { get; set; }
-
-        [Column("PerPostal")]
-        public string PerPostalCode { get; set; }
-
-        [Column("PerCountry")]
-        public string PerCountry { get; set; }
-
-
+        public string Bio { get; set; }
+        
+        
         // shipping address
-        [Column("ShipAddr1")]
-        public string ShipAddress1 { get; set; }
+        [Column("Addr1")]
+        public string Addr1 { get; set; }
 
-        [Column("ShipAddr2")]
-        public string ShipAddress2 { get; set; }
+        [Column("Addr2")]
+        public string Addr2 { get; set; }
 
-        [Column("ShipCity")]
-        public string ShipCity { get; set; }
+        [Column("City")]
+        public string City { get; set; }
 
-        [Column("ShipPostal")]
-        public string ShipPostalCode { get; set; }
+        [Column("Postal")]
+        public string Postal { get; set; }
 
-        [Column("ShipCountry")]
-        public string ShipCountry { get; set; }
+        [Column("State")]
+        public string State { get; set; }
 
-        // social media links
-        [Column("Facebook")]
+        [Column("Country")]
+        public string Country { get; set; }
 
-        public string FacebookLink { get; set; }
+        [Column("Links")]
+        public Dictionary<string, string> Links { get; set; } 
 
-        [Column("Insta")]
+        public List<PikchaImage> Images { get; set; }
 
-        public string InstagramLink { get; set; }
+        public List<PikchaArtistFollower> Following { get; set; } = new List<PikchaArtistFollower>();
+        public List<PikchaArtistFollower> Followers { get; set; } = new List<PikchaArtistFollower>();
+        
 
-        [Column("LinkdIn")]
+        [NotMapped]
+        public PikchaImage TopImage
+        {
+            get
+            {
+                // get the pikcha images
+                
+                if(this.Images == null)
+                {
+                    
+                    return new PikchaImage() { Title = "N/A", Location = "N/A" };
+                }
+                try
+                {
+                    return this.Images.OrderByDescending(v => v.Views.Sum(i => i.Count)).First();
 
-        public string LinkedInLink { get; set; }
+                }
+                
+                catch(Exception ex)
+                {
+                    return new PikchaImage() { Title = "N/A", Location = "N/A" };
+                }
+            }
+        }
+
+        [NotMapped]
+        public int AggrImViews
+        {
+            get
+            {
+                // get the pikcha images
+
+                if (this.Images == null || this.Images.Select(v => v.Views) == null)
+                {
+
+                    return 0;
+                }
+                try
+                {
+                    return this.Images.Sum(v => v.Views.Sum(c => c.Count));
+
+                }
+
+                catch (Exception ex)
+                {
+                    return 0;
+                }
+            }
+        }
+    }
+
+    [Table("ArtistFollowers")]
+    public class PikchaArtistFollower
+    {
+        public string UserId { get; set; }
+
+        public PikchaUser PikchaUser { get; set; }
+
+        public string ArtistsId { get; set; }
+
+        public PikchaUser PikchaArtist { get; set; }
 
     }
 
+
+
+
     //public class 
     [Table("PikchaRoles")]
-    public class PikchaRole : IdentityRole<string>
+    public class PikchaRole: IdentityRole<string>
     {
 
     }
