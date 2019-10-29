@@ -9,6 +9,7 @@ using PikchaWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using PikchaWebApp.Managers;
+using Serilog;
 
 namespace PikchaWebApp.Controllers
 {
@@ -81,6 +82,7 @@ namespace PikchaWebApp.Controllers
             }
             catch(Exception ex)
             {
+                Log.Debug(ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
 
             }

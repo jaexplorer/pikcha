@@ -335,6 +335,10 @@ namespace PikchaWebApp.Controllers
             {
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
 
+                var userDB = await _pikchDbContext.PikchaUsers.Include("Following").Include("Following.PikchaUser")
+                    .Include("Following.PikchaArtist").FirstAsync(u => u.Id == pikchaUser.Id);
+
+
                 var userDTO = _mapper.Map<PikchaAuthenticatedUserDTO>(pikchaUser);
                 var roles = await _userManager.GetRolesAsync(pikchaUser);
 

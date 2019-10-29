@@ -103,6 +103,8 @@ namespace PikchaWebApp
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
             });
+
+            services.AddHttpClient(); // for external api requests
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -212,6 +214,8 @@ namespace PikchaWebApp
 
 
             }
+
+
         }
 
         private async Task SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)

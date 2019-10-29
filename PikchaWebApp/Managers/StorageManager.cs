@@ -1,4 +1,7 @@
-﻿using ImageMagick;
+﻿using Amazon;
+using Amazon.S3;
+using Amazon.S3.Transfer;
+using ImageMagick;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -116,6 +119,29 @@ namespace PikchaWebApp.Managers
 
 
             return true;
+        }
+
+        // upload files to AWS bucket
+        public async Task UploadFileToS3(IFormFile file)
+        {
+            using (var client = new AmazonS3Client("yourAwsAccessKeyId", "yourAwsSecretAccessKey", RegionEndpoint.USEast1))
+            {
+                using (var newMemoryStream = new MemoryStream())
+                {
+                    file.CopyTo(newMemoryStream);
+
+                    var uploadRequest = new TransferUtilityUploadRequest
+                    {
+                        InputStream = newMemoryStream,
+                        Key = file.FileName,
+                        BucketName = "yourBucketName",
+                        CannedACL = S3CannedACL.PublicRead
+                    };
+
+                    var fileTransferUtility = new TransferUtility(client);
+                    await fileTransferUtility.UploadAsync(uploadRequest);
+                }
+            }
         }
     }
 }

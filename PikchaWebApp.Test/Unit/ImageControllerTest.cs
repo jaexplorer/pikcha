@@ -149,7 +149,7 @@ namespace PikchaWebApp.Test.Unit
             
             var responseV = await imgContr.IncrementViewCount(pkImg.Id) as StatusCodeResult;
 
-            Assert.Equal(201, responseV.StatusCode);
+            Assert.Equal(200, responseV.StatusCode);
 
             Assert.True(pkImg.Views.Count() > 0);
 
