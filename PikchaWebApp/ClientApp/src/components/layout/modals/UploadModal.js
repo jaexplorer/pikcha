@@ -25,7 +25,7 @@ const UploadModal = ({
     price: "",
     tags: [],
     signature: "",
-    selectedFile: null
+    imageFile: null
   });
 
   const {
@@ -35,7 +35,7 @@ const UploadModal = ({
     price,
     signature,
     tags,
-    selectedFile
+    imageFile
   } = image;
 
   // Update Component State on change
@@ -63,7 +63,7 @@ const UploadModal = ({
           reader.onload = function(e) {
             setPreview(e.target.result);
           };
-          setImage({ ...image, selectedFile: uploadButton.current.files[0] });
+          setImage({ ...image, imageFile: uploadButton.current.files[0] });
         } else {
           setError(true);
           setTimeout(() => {
@@ -88,7 +88,7 @@ const UploadModal = ({
       price === "" ||
       /(^[0-9]+$)/.test(price) === false ||
       tags.length === 0 ||
-      (selectedFile === null || selectedFile.size < 5)
+      (imageFile === null || imageFile.size < 5)
     ) {
       title === "" &&
         setAlert("Please supply a title for your image", "danger");
@@ -115,12 +115,22 @@ const UploadModal = ({
           setAlert("Please use digits only", "danger");
       tags.length === 0 &&
         setAlert("Please enter atleast one tag for this image", "danger");
-      selectedFile === null &&
+      imageFile === null &&
         setAlert("Please select an image to upload", "danger");
-      // : selectedFile.size < 5000000 &&
+      // : imageFile.size < 5000000 &&
       //   setAlert("Please select an image larger than 5MB", "danger");
     } else {
-      uploadImage({ title, location, description, price });
+      const caption = description;
+      //(Title [string], Caption [text], Location [string], ImageFile [file], Tags [list of strings], Signature [string], Price [Number])
+      uploadImage({
+        title,
+        caption,
+        location,
+        imageFile,
+        tags,
+        signature,
+        price
+      });
       removeModal();
     }
   };
@@ -164,7 +174,7 @@ const UploadModal = ({
                       type='radio'
                       id='orgSig'
                       name='signature'
-                      value='orgSig'
+                      value={account.signature.orgSig}
                       onChange={onChange}
                       defaultChecked
                     />
@@ -176,7 +186,7 @@ const UploadModal = ({
                       type='radio'
                       id='invSig'
                       name='signature'
-                      value='invSig'
+                      value={account.signature.invSig}
                       onChange={onChange}
                     />
                     <label htmlFor='invSig'>
