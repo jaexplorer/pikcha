@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Serilog;
 
 namespace PikchaWebApp
 {
@@ -54,7 +55,6 @@ namespace PikchaWebApp
 
             // for mysql db
             // other service configurations go here
-            var tmp = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<PikchaDbContext>( // replace "YourDbContext" with the class name of your DbContext
                 (serviceProvider, options) => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), // replace with your Connection String
                     mySqlOptions =>
@@ -101,8 +101,6 @@ namespace PikchaWebApp
             {
                 options.LoginPath = "/Identity/Account/Login";
             });
-
-            //services.AddIdentity<PikchaUser, PikchaRole>();
 
             // password policy
             services.Configure<IdentityOptions>(options =>
@@ -168,32 +166,16 @@ namespace PikchaWebApp
 
             app.UseStaticFiles();
 
-            /* app.UseStaticFiles(new StaticFileOptions
-             {
-                 FileProvider = new PhysicalFileProvider(
-             Path.Combine(Directory.GetCurrentDirectory(), "Public")),
-                 RequestPath = "/Public"
-             }); */
-
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<PikchaDbContext>();
 
-                //context.Database.EnsureDeleted();
-
                 context.Database.Migrate();
 
-                //PikchaUser pkUs =  context.PikchaUsers.Include("Images").Include("Images.Views").FirstAsync().Result;
-                //var tmp2 = pkUs.Images.SelectMany(v => v.Views.Select(c => c.Count)).Sum();
-                //var tmp3 = pkUs.Images.Sum(v => v.Views.Sum(c => c.Count));
-                
-                //var tmp = pkUs.Images.Select(v => v.Views.Select(c => c.Count).Sum());
 
                 try
                 {
-                    
-
-                    bool populateDB = false;
+                    bool populateDB = true;
                     if (populateDB)
                     {
                         var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
@@ -207,6 +189,7 @@ namespace PikchaWebApp
                         }
                         catch (Exception ex)
                         {
+                            Log.Error(ex, " Startup, InitDB");
 
                         }
 
@@ -217,6 +200,7 @@ namespace PikchaWebApp
                         }
                         catch (Exception ex)
                         {
+                            Log.Error(ex, " Startup, SeedData");
 
                         }
                     }
@@ -225,13 +209,9 @@ namespace PikchaWebApp
                 }
                 catch (Exception ex)
                 {
-
+                    Log.Error(ex, " Startup, populateDB");
                 }
-
-
             }
-
-
         }
 
         private async Task SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
@@ -354,7 +334,7 @@ namespace PikchaWebApp
                 }
                 //dbContext.SaveChanges();
 
-                ImageProduct imgProd = new ImageProduct()
+                ImageProduct imgownProd = new ImageProduct()
                 {
                     Image = img,
                     IsSale = true,
@@ -362,17 +342,17 @@ namespace PikchaWebApp
                     Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_OWNER,
                     Seller = img.Artist
                 };
-                dbContext.ImageProducts.Add(imgProd);
+                dbContext.ImageProducts.Add(imgownProd);
 
                 // set up some resellers
                 int count = rnd.Next(0, 5);
                 for (int l = 0; l < count; l++)
                 {
-                    int rndBool = rnd.Next(0, 1);
+                    int rndBool = rnd.Next(0, 100);
                     ImageProduct imgPrd = new ImageProduct()
                     {
                         Image = img,
-                        IsSale = rndBool == 1 ? true : false,
+                        IsSale = rndBool <50 ? true : false,
                         Price = rnd.Next(100, 10000),
                         Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_SELLER,
                         Seller = lstUsers[rnd.Next(lstUsers.Count)]

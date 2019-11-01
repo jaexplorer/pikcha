@@ -60,7 +60,7 @@ namespace PikchaWebApp.Data
 
 
             //ImageViews
-            //builder.Entity<ImageView>().HasKey(sc => new { sc.Date, sc.PikchaImageId }); // had navigation property issue with mysql
+            builder.Entity<ImageView>().HasKey(sc => new { sc.Date, sc.PikchaImageId }); 
 
             // pikcha tags
             builder.Entity<ImageTag>().HasKey(sc => new { sc.ImageTagId, sc.PikchaImageId });

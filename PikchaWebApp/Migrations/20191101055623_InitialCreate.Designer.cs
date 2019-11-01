@@ -9,7 +9,7 @@ using PikchaWebApp.Data;
 namespace PikchaWebApp.Migrations
 {
     [DbContext(typeof(PikchaDbContext))]
-    [Migration("20191031210546_InitialCreate")]
+    [Migration("20191101055623_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -285,21 +285,19 @@ namespace PikchaWebApp.Migrations
 
             modelBuilder.Entity("PikchaWebApp.Models.ImageView", b =>
                 {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("Id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Date")
                         .HasColumnType("Date");
 
                     b.Property<string>("PikchaImageId")
                         .HasColumnType("varchar(255)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Date", "PikchaImageId");
 
                     b.HasIndex("PikchaImageId");
 
@@ -607,7 +605,9 @@ namespace PikchaWebApp.Migrations
                 {
                     b.HasOne("PikchaWebApp.Models.PikchaImage", "PikchaImage")
                         .WithMany("Views")
-                        .HasForeignKey("PikchaImageId");
+                        .HasForeignKey("PikchaImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PikchaWebApp.Models.PikchaArtistFollower", b =>

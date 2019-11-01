@@ -39,16 +39,6 @@ namespace PikchaWebApp.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/profile/list
-        /*[HttpGet("list")]
-        public async Task<ActionResult> List()
-        {
-            //var users = await _userManager.Users.ToListAsync();
-            var users = await Task.FromResult(_userManager.Users.ToList());
-            return ReturnOkOrErrorStatus(users);
-            //return new ReturnDataModel() { Data = users };
-        } */
-
         // GET: api/profile/5
         [HttpGet("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -56,9 +46,7 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetUser(string userId)
         {
-            //var user = await _userManager.FindByIdAsync(userId);
             // TO DO :  if the request user is admin, return profile based on userId query
-            //var pikchaUser = await _userManager.GetUserAsync(this.User);
 
             try
             {
@@ -75,8 +63,8 @@ namespace PikchaWebApp.Controllers
             }
             catch(Exception ex)
             {
+                Log.Error(ex, " Profile, GetUser, userId ={userId} ", userId);
                 return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
-
             }
 
 
@@ -94,14 +82,11 @@ namespace PikchaWebApp.Controllers
             try
             {
                 var pikchaUser = await _userManager.GetUserAsync(this.User); ;
-
                 if(pikchaUser == null)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, "User not found.");
                 }
-                //await loggedinUserTask;
                 pikchaUser.CopyPropertiesFrom(userInfo);
-                //pikchaUser.Addr2 = userInfo.
 
                 IdentityResult result = await _userManager.UpdateAsync(pikchaUser);
                 if (result.Succeeded)
@@ -119,7 +104,8 @@ namespace PikchaWebApp.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                Log.Error(ex, " Profile, GetUser, userId ={userId} ", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
             }
 
         }
@@ -155,7 +141,6 @@ namespace PikchaWebApp.Controllers
                     if (avatarContent.Contains(','))
                     {
                         avatarContent = avatarContent.Split(",")[1];
-
                     }
 
                     //string tmp = (string)json["signatureContent"]["data"];
@@ -168,7 +153,7 @@ namespace PikchaWebApp.Controllers
 
                     if (pikchaUser == null)
                     {
-                        return StatusCode(StatusCodes.Status404NotFound, "User not found.");
+                        return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
 
                     }
 
@@ -186,51 +171,22 @@ namespace PikchaWebApp.Controllers
                         return Ok(lgUSer);
 
                     }
-                    // process JSON
+                    else
+                    {
+                        Log.Error(" Profile, UploadAvatarImage, userId ={userId}, filePath={filePath}", userId, filePath);
+                        return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
+
+                    }
                 }
-                //using (var reader = new StreamReader(Request.Body))
-                //{
-                //    var content = await reader.ReadToEndAsync();
-
-                //}
-
-               
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error in uploading the profile image.");
-
-
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                Log.Error(ex, " Profile, UploadAvatarImage, userId ={userId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status404ImageNotFound);
 
             }
-
         }
 
-        // TO DO : This api is not required. 
-        // POST: api/profile/signature
-        //[HttpPost("signature")]
-        //public async Task<ReturnDataModel> UploadSignatureImage([FromBody] IFormFile signatureFile)
-        //{
-
-        //    StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
-        //    Task<string> copyTask = manager.UploadToLocalDirectory(signatureFile, Guid.NewGuid().ToString(), ".jpg", StorageManager.FileCategory.Sign);
-        //    string filePath = copyTask.Result;
-
-        //    // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
-        //    Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
-
-        //    await Task.WhenAll(copyTask, loggedinUserTask);
-
-        //    PikchaUser loggedinUser = loggedinUserTask.Result;
-        //    if (copyTask.IsCompleted)
-        //    {
-        //        loggedinUser.SignatureFileName = filePath;
-        //        await _pikchDbContext.SaveChangesAsync();
-        //    }
-
-        //    return new ReturnDataModel() { Data = filePath };
-        //}
 
         [Authorize]
         [HttpPost("{userId}/promote")]
@@ -288,13 +244,12 @@ namespace PikchaWebApp.Controllers
                     }
                     return StatusCode(StatusCodes.Status500InternalServerError, "Error in promoting the user ");
 
-                }
-
-                   
+                }  
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                Log.Error(ex, " Profile, PromoteUserToArtist, userId ={userId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
 
             }
         }
@@ -319,6 +274,7 @@ namespace PikchaWebApp.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error(ex, " Profile, GetSignature, userId ={userId}", userId);
                 return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
 
             }
@@ -334,7 +290,6 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                //_userManager.GetUsersInRoleAsync("")
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
 
                 var userDB = await _pikchDbContext.PikchaUsers.Include("Following").Include("Following.PikchaUser")
@@ -352,11 +307,9 @@ namespace PikchaWebApp.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-
+                Log.Error(ex, " Profile, LoggedInUserInfo, userId ={userId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
             }
-
-
         }
 
         [Authorize]
@@ -368,8 +321,6 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                // var tmpp = _userManager.GetUserAsync(this.User).Result;
-                // var tmpp2 = _userManager.GetUserAsync(HttpContext.User).Result;
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
                 if(_pikchDbContext.PikchaUsers.Find(artistId) == null)
                 {
@@ -386,12 +337,12 @@ namespace PikchaWebApp.Controllers
                 {
                     lgUSer.Roles = roles.ToList();
                 }
-                //lgUSer.Following = _mapper.ProjectTo<PikchaAuthenticatedUserDTO>(qUser.Following.ToList());
                 return ReturnOkOrErrorStatus(lgUSer);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                Log.Error(ex, " Profile, FollowAnArtist, userId ={userId}, artistId={artistId}", userId, artistId);
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
             }
 
         }
@@ -409,7 +360,7 @@ namespace PikchaWebApp.Controllers
 
                 var folArt = pikchaUser.Following.First(f => f.ArtistsId == artistId);
 
-                _pikchDbContext.Remove(folArt);
+                _pikchDbContext.Followers.Remove(folArt);
                 await _pikchDbContext.SaveChangesAsync();
 
                 var qUser = _pikchDbContext.PikchaUsers.Include("Following.PikchaArtist").First(u => u.Id == pikchaUser.Id);
@@ -420,14 +371,13 @@ namespace PikchaWebApp.Controllers
                 {
                     lgUSer.Roles = roles.ToList();
                 }
-                //lgUSer.Following = _mapper.ProjectTo<PikchaAuthenticatedUserDTO>(qUser.Following.ToList());
                 return ReturnOkOrErrorStatus(lgUSer);
             }
             catch (Exception ex)
             {
-                Log.Debug(ex, "exception thrown");
+                Log.Error(ex, " Profile, UnFollowAnArtist, userId ={userId}, artistId={artistId}", userId, artistId);
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
 
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
 
         }

@@ -85,9 +85,6 @@ namespace PikchaWebApp.Models
     [Table("ImageViews")]
     public class ImageView
     {
-        [Key]
-        [Column("Id")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
 
         [Column(TypeName = "Date")]

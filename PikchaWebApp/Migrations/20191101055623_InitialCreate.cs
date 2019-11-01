@@ -337,20 +337,20 @@ namespace PikchaWebApp.Migrations
                 name: "ImageViews",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
                     Date = table.Column<DateTime>(type: "Date", nullable: false),
-                    Count = table.Column<int>(nullable: false),
-                    PikchaImageId = table.Column<string>(nullable: true)
+                    PikchaImageId = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(nullable: true),
+                    Count = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImageViews", x => x.Id);
+                    table.PrimaryKey("PK_ImageViews", x => new { x.Date, x.PikchaImageId });
                     table.ForeignKey(
                         name: "FK_ImageViews_Images_PikchaImageId",
                         column: x => x.PikchaImageId,
                         principalTable: "Images",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

@@ -12,6 +12,7 @@ using PikchaWebApp.Data;
 using PikchaWebApp.Drivers.Printer;
 using PikchaWebApp.Managers;
 using PikchaWebApp.Models;
+using Serilog;
 
 namespace PikchaWebApp.Controllers
 {
@@ -38,7 +39,7 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                var imgProd = await _pikchDbContext.ImageProducts.Include("Image").Include("Image.Artist").FirstAsync(im => im.Id == productId);
+                var imgProd = await _pikchDbContext.ImageProducts.Include("Image").Include("Image.Views").Include("Image.Products.Seller").Include("Image.Artist").FirstAsync(im => im.Id == productId);
                 if (imgProd == null)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ProductNotFound);
@@ -49,6 +50,9 @@ namespace PikchaWebApp.Controllers
             }
             catch (Exception ex)
             {
+                Log.Error(ex, " Product, GetById, parameters: productId={productId}", productId);
+                //return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
+
                 return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ProductNotFound);
             }
 

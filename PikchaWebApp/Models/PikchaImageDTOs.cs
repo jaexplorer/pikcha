@@ -77,7 +77,7 @@ namespace PikchaWebApp.Models
 
     public class PikchaArtist100ImageFilterDTO
     {
-        public PikchaImage TopImage { get; set; } = new PikchaImage();
+        public PikchaImageFilterDTO TopImage { get; set; } = new PikchaImageFilterDTO();
 
         public PikchaArtistBaseDTO Artist { get; set; } = new PikchaArtistBaseDTO();
 
@@ -86,6 +86,7 @@ namespace PikchaWebApp.Models
         public int TotSold { get; set; } = 0;
         public decimal AvgPrice { get; set; } = 0;
 
+        public List<string> ProductIds { get; set; } = new List<string>();
 
 
         public string Id { get { return this.TopImage.Id; } }
@@ -97,7 +98,7 @@ namespace PikchaWebApp.Models
         //public string Views { get { return this.TopImage.Views; } }
 
 
-       // public List<string> ProductIds { get { return this.TopImage.ProductIds; } }
+       //public List<string> ProductIds { get { return this.TopImage.Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id).ToList(); } }
 
     }
 
