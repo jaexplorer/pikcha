@@ -19,6 +19,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using PikchaWebApp.Drivers.Email;
 using PikchaWebApp.Managers;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Linq;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Serilog;
 
 namespace PikchaWebApp
 {
@@ -30,19 +35,35 @@ namespace PikchaWebApp
         }
 
         public IConfiguration Configuration { get; }
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<PikchaDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
 
-           // services.AddDefaultIdentity<PikchaUser>()  
-            services.AddIdentity<PikchaUser, PikchaRole>()  
-                //.AddRoles<IdentityRole>()
-                //.AddRoleManager<IdentityRole>()
-                // services.AddIdentity(PikchaUser, PikchaRo>()
+            /*services.AddDbContext<PikchaDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"))); */
+
+            // for mysql db
+            // other service configurations go here
+            services.AddDbContext<PikchaDbContext>( // replace "YourDbContext" with the class name of your DbContext
+                (serviceProvider, options) => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), // replace with your Connection String
+                    mySqlOptions =>
+                    {
+                        mySqlOptions.ServerVersion(new Version(8, 0, 17), ServerType.MySql); // replace with your Server Version and Type
+                    }
+            ));
+
+            services.AddIdentity<PikchaUser, IdentityRole>()
                 .AddEntityFrameworkStores<PikchaDbContext>()
                 .AddDefaultTokenProviders(); ;
 
@@ -53,39 +74,22 @@ namespace PikchaWebApp
                 .AddIdentityServerJwt();
 
             services.AddControllersWithViews();
-            services.AddRazorPages();
-
-            /*services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            })); */
+            services.AddRazorPages();           
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
-
-            /*services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(
-                    builder =>
-                    {
-
-                        builder.WithOrigins("http://localhost.com",
-                                            "http://localhost").AllowAnyHeader().AllowAnyMethod(); 
-                    });
-
-            }); */
+                       
 
             // Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new PikchaDTOProfiles());
-            });
 
+                mc.AddProfile(new PikchaDTOProfiles());
+                mc.ForAllMaps((obj, cnfg) => cnfg.ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null)));
+            });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
@@ -93,7 +97,26 @@ namespace PikchaWebApp
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
-            //services.AddIdentity<PikchaUser, PikchaRole>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+            });
+
+            // password policy
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Default Password settings.
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+            });
+
+            services.AddHttpClient(); // for external api requests
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -110,7 +133,7 @@ namespace PikchaWebApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -120,7 +143,6 @@ namespace PikchaWebApp
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
-            app.UseCors("MyPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -144,41 +166,56 @@ namespace PikchaWebApp
 
             app.UseStaticFiles();
 
-            /* app.UseStaticFiles(new StaticFileOptions
-             {
-                 FileProvider = new PhysicalFileProvider(
-             Path.Combine(Directory.GetCurrentDirectory(), "Public")),
-                 RequestPath = "/Public"
-             }); */
-
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<PikchaDbContext>();
+
                 context.Database.Migrate();
 
+
                 try
-                {                 
-                    var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
-                    
-                    var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<PikchaRole>>();
-
-                    InitDB(userManager, roleManager, context);
-                    SeedData(userManager, env, context);                    
-                        
-                }
-                catch(Exception ex)
                 {
+                    bool populateDB = true;
+                    if (populateDB)
+                    {
+                        var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
+
+                        var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                        try
+                        {
+                            Task intTask = InitDB(userManager, roleManager, context);
+                            Task.WaitAll(intTask);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex, " Startup, InitDB");
+
+                        }
+
+                        try
+                        {
+                            Task intTask = SeedData(userManager, env, context);
+                            Task.WaitAll(intTask);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex, " Startup, SeedData");
+
+                        }
+                    }
+
 
                 }
-
-
+                catch (Exception ex)
+                {
+                    Log.Error(ex, " Startup, populateDB");
+                }
             }
         }
 
-        private void SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
+        private async Task SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
         {
-
-            
 
             Random rnd = new Random();
 
@@ -213,40 +250,67 @@ namespace PikchaWebApp
             imageIds.Add("f466feff-5e42-44bd-8418-3902a05e797f");
 
             List<PikchaUser> lstUsers = new List<PikchaUser>();
-            for (int i = 1; i < 4; i++)
+            var userCount = await userManager.Users.CountAsync();
+            if (userCount < 10)
             {
-                var user = new PikchaUser()
+                for (int i = 1; i < 10; i++)
                 {
-                    UserName = "testuser" + i + "@pikcha.com",
-                    Email = "testuser" + i + "@pikcha.com",
-                    BioInfo = "test user" + i + " bio info",
-                    FirstName = "test " + i + " FName",
-                    LastName = "test " + i + " LName",
-                    AvatarFileName = "Uploads/Avatars/Test/profile" + i + ".jpg",
-                    PerCountry = locations[rnd.Next(locations.Count)]
-                };
-                var exUsr = userManager.FindByEmailAsync(user.Email).Result;
-                if(exUsr == null)
-                {
-                    var resl = userManager.CreateAsync(user).Result;
-                    lstUsers.Add(user);
+                    string email = "testuser" + i + "@pikcha.com";
+                    
+                    var exUsr = await userManager.FindByEmailAsync(email);
+                    if (exUsr == null)
+                    {
+                        var user = new PikchaUser()
+                        {
+                            UserName = "Pikcha-testuser" + i + "@pikcha.com",
+                            Email = email,
+                            Bio = "test user" + i + " bio info",
+                            FName = "test " + i + " FName",
+                            LName = "test " + i + " LName",
+                            Country = locations[rnd.Next(locations.Count)],
+                            Avatar = PikchaConstants.PIKCHA_USER_DEFAULT_AVATAR
+                        };
+                        var resl = await userManager.CreateAsync(user);
+                        lstUsers.Add(user);
+                    }
+                    else
+                    {
+                        lstUsers.Add(exUsr);
+                    }
                 }
-                else
+            }
+            else
+            {
+                lstUsers = userManager.Users.ToListAsync().Result;
+            }
+
+            // add followers 
+            for (int i = 1; i < 5; i++)
+            {
+                var artist = lstUsers[i];
+                // make these to artist
+                await userManager.AddToRoleAsync(artist, PikchaConstants.PIKCHA_ROLES_ARTIST_NAME);
+                int count = rnd.Next(3, 8);
+                for (int j = 1; j < count; j++)
                 {
-                    lstUsers.Add(exUsr);
+                    if (i == j)
+                    {
+                        continue;
+                    }
+                    var pkUs = lstUsers[j];
+                    dbContext.Followers.Add(new PikchaArtistFollower() { PikchaArtist = artist, PikchaUser = pkUs });
 
                 }
             }
+            await dbContext.SaveChangesAsync();
 
+            //Thread.Sleep(1000);
 
             for (int i = 0; i < imageIds.Count; i++)
             {
                 string imgId = imageIds[i];
 
                 int daysSince = rnd.Next(20);
-                //List<ImageView> imgViews = new List<ImageView>();
-
-                
 
                 var img = new PikchaImage()
                 {
@@ -254,44 +318,83 @@ namespace PikchaWebApp
                     Caption = "Caption " + i,
                     Title = "Title " + i,
                     Location = locations[rnd.Next(locations.Count)],
-                    Id = (uint)i +1,
-                    PikchaImageId = imgId,
-                    WatermarkedFile = "Uploads/Images/Watermarks/" + imgId + ".jpg",
-                    ThumbnailFile = "Uploads/Images/Thumbnail/" + imgId + ".jpg",
+                    //Id = i +1,
+                    Id = imgId,
+                    Watermark = "Uploads/Images/Watermarks/" + imgId + ".jpg",
+                    Thumbnail = "Uploads/Images/Thumbnail/" + imgId + ".jpg",
                     UploadedAt = DateTime.Now.AddDays(-daysSince).AddHours(-5).AddSeconds(rnd.Next(10) * 100),
                 };
                 dbContext.PikchaImages.Add(img);
-                dbContext.SaveChanges();
+                //dbContext.SaveChanges();
 
                 for (int j = 0; j < daysSince; j++)
                 {
-                    var imgv = new ImageView() { PikchaImageViewId = (uint) (img.Id * 100 + j + 1), Date = DateTime.Now.AddDays(-j), Count = (uint)rnd.Next(100), PikchaImage= img };
+                    var imgv = new ImageView() { Date = DateTime.Now.AddDays(-j), Count = rnd.Next(100), PikchaImage = img };
                     dbContext.ImageViews.Add(imgv);
                 }
-                dbContext.SaveChanges();
+                //dbContext.SaveChanges();
 
+                ImageProduct imgownProd = new ImageProduct()
+                {
+                    Image = img,
+                    IsSale = true,
+                    Price = rnd.Next(100, 10000),
+                    Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_OWNER,
+                    Seller = img.Artist
+                };
+                dbContext.ImageProducts.Add(imgownProd);
+
+                // set up some resellers
+                int count = rnd.Next(0, 5);
+                for (int l = 0; l < count; l++)
+                {
+                    int rndBool = rnd.Next(0, 100);
+                    ImageProduct imgPrd = new ImageProduct()
+                    {
+                        Image = img,
+                        IsSale = rndBool <50 ? true : false,
+                        Price = rnd.Next(100, 10000),
+                        Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_SELLER,
+                        Seller = lstUsers[rnd.Next(lstUsers.Count)]
+                    };
+                    dbContext.ImageProducts.Add(imgPrd);
+                }
             }
+            await dbContext.SaveChangesAsync();
 
         }
-
-
-        private void InitDB(UserManager<PikchaUser> userManager, RoleManager<PikchaRole> roleManager, PikchaDbContext dbContext)
+        private async Task InitDB(UserManager<PikchaUser> userManager, RoleManager<IdentityRole> roleManager, PikchaDbContext dbContext)
         {
             // remove all data if there is
+
             // clear image views
-            var imgvws = dbContext.ImageViews.ToListAsync().Result;
+            var folls = await dbContext.Followers.ToListAsync();
+            dbContext.RemoveRange(folls);
+            await dbContext.SaveChangesAsync();
+
+            var imPrds = await dbContext.ImageProducts.ToListAsync();
+            dbContext.RemoveRange(imPrds);
+            await dbContext.SaveChangesAsync();
+
+            // clear image views
+            var imgvws = await dbContext.ImageViews.ToListAsync();
             dbContext.RemoveRange(imgvws);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
+
+            // clear image tags
+            var imgtags = await dbContext.ImageTags.ToListAsync();
+            dbContext.RemoveRange(imgtags);
+            await dbContext.SaveChangesAsync();
 
             // clear images
-            var imgs = dbContext.PikchaImages.ToListAsync().Result;
+            var imgs = await dbContext.PikchaImages.ToListAsync();
             dbContext.RemoveRange(imgs);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             // clear users
-            var usrs = dbContext.PikchaUsers.ToListAsync().Result;
-            dbContext.RemoveRange(usrs);
-            dbContext.SaveChanges();
+            //var usrs = dbContext.PikchaUsers.ToListAsync().Result;
+            //dbContext.RemoveRange(usrs);
+            //dbContext.SaveChanges();
 
 
             // create roles
@@ -299,18 +402,17 @@ namespace PikchaWebApp
             if (!userExist)
             {
                 // first we create Admin rool    
-                var role = new PikchaRole();
-                role.Id = Guid.NewGuid().ToString();
+                var role = new IdentityRole();
                 role.Name = PikchaConstants.PIKCHA_ROLES_USER_NAME;
                 var t = roleManager.CreateAsync(role).Result;
             }
-            bool photographerExist = roleManager.RoleExistsAsync(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME).Result;
+            bool photographerExist = roleManager.RoleExistsAsync(PikchaConstants.PIKCHA_ROLES_ARTIST_NAME).Result;
             if (!photographerExist)
             {
                 // first we create Admin rool    
-                var role = new PikchaRole();
-                role.Id = Guid.NewGuid().ToString();
-                role.Name = PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME;
+                var role = new IdentityRole();
+                //role.Id = Guid.NewGuid().ToString();
+                role.Name = PikchaConstants.PIKCHA_ROLES_ARTIST_NAME;
                 var s = roleManager.CreateAsync(role).Result;
             }
 
@@ -318,31 +420,38 @@ namespace PikchaWebApp
             if (!adminExist)
             {
                 // first we create Admin rool    
-                var role = new PikchaRole();
-                role.Id = Guid.NewGuid().ToString();
+                var role = new IdentityRole();
+                //role.Id = Guid.NewGuid().ToString();
                 role.Name = PikchaConstants.PIKCHA_ROLES_ADMIN_NAME;
                 var d = roleManager.CreateAsync(role).Result;
             }
 
-            // create admin user
-            var user = new PikchaUser()
+            string email = "admin@pikcha.com";
+            var usr1 = userManager.FindByEmailAsync(email).Result;
+            if (usr1 == null)
             {
-                UserName = "PikchaAdmin",
-                Email = "admin@pikcha.com",
-                BioInfo = "I am the super admin of Pikcha Web",
-                FirstName = "Pikcha admin",
-                LastName = "Super Admin"
-            };
-                        //Here we create a Admin super user who will maintain the website                   
-           string userPWD = "p1KcAd!N0o7";
+                // create admin user
+                var user = new PikchaUser()
+                {
+                    UserName = "PikchaAdmin",
+                    Email = email,
+                    Bio = "I am the super admin of Pikcha Web",
+                    FName = "Pikcha admin",
+                    LName = "Super Admin",
+                    Avatar = PikchaConstants.PIKCHA_USER_DEFAULT_AVATAR
+                };
+                //Here we create a Admin super user who will maintain the website                   
+                string userPWD = "p1KcAd!N0o7";
 
-           IdentityResult chkUser = userManager.CreateAsync(user, userPWD).Result;
+                IdentityResult chkUser = userManager.CreateAsync(user, userPWD).Result;
 
-            //Add default User to Role Admin    
-            if (chkUser.Succeeded)
-            {
-                var result1 = userManager.AddToRoleAsync(user, PikchaConstants.PIKCHA_ROLES_ADMIN_NAME).Result;
+                //Add default User to Role Admin    
+                if (chkUser.Succeeded)
+                {
+                    var result1 = userManager.AddToRoleAsync(user, PikchaConstants.PIKCHA_ROLES_ADMIN_NAME).Result;
+                }
             }
+
 
             //var usert = userManager.FindByEmailAsync("admin@pikcha.com").Result;
 

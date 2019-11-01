@@ -14,12 +14,13 @@ import ProfileDropdown from "./ProfileDropdown";
 import CartDropdown from "./CartDropdown";
 import MenuIcon from "../../../assets/images/menu-black.png";
 import CloseIcon from "../../../assets/images/delete-black.png";
-import { ApplicationPaths } from "../../api-authorization/ApiAuthorizationConstants";
+import { ApplicationPaths } from "../../auth/ApiAuthorizationConstants";
 
 const MobileNavbar = ({
   auth,
   nav,
   cart,
+  account,
   createProfileDropdown,
   createCartDropdown
 }) => {
@@ -27,18 +28,28 @@ const MobileNavbar = ({
 
   const authIcons = (
     <Fragment>
-      <div className='nav-icon'>
-        <img onClick={createCartDropdown} src={CartIcon} alt='' />
-        {cart.products.length !== 0 && <div className='notication'></div>}
-      </div>
-      <div className='nav-icon'>
-        <img src={PeopleIcon} alt='' />
-      </div>
-      <div className='nav-icon profile-pic'>
-        <img onClick={createProfileDropdown} src={PlaceHolder} alt='' />
-      </div>
-      {nav.profileDropdown ? <ProfileDropdown /> : ""}
-      {nav.cartDropdown ? <CartDropdown /> : ""}
+      {account.loadingUser === false && (
+        <Fragment>
+          {/* <div className='nav-icon'>
+            <img onClick={createCartDropdown} src={CartIcon} alt='' />
+            {cart.products.length !== 0 && <div className='notication'></div>}
+            {nav.cartDropdown ? <CartDropdown /> : ""}
+          </div> */}
+          {/* {account.user && account.user.following.length !== 0 && (
+            <div className='nav-icon'>
+              <img src={PeopleIcon} alt='' />
+            </div>
+          )} */}
+          <div className='nav-icon profile-pic'>
+            <img
+              onClick={createProfileDropdown}
+              src={account.user.avatar}
+              alt=''
+            />
+            {nav.profileDropdown && <ProfileDropdown />}
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 
@@ -78,9 +89,9 @@ const MobileNavbar = ({
             <img onClick={() => setMenuOpen(true)} src={MenuIcon} alt='' />
           </div>
           <div className='nav-icons'>
-            <div className='nav-icon'>
+            {/* <div className='nav-icon'>
               <img src={SearchIcon} alt='' />
-            </div>
+            </div> */}
             {auth.isAuthenticated && authIcons}
           </div>
         </Fragment>
@@ -92,7 +103,8 @@ const MobileNavbar = ({
 const mapStateToProps = state => ({
   auth: state.authReducer,
   nav: state.navReducer,
-  cart: state.cartReducer
+  cart: state.cartReducer,
+  account: state.accountReducer
 });
 
 export default connect(

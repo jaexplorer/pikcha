@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import {
-  GET_PHOTOS,
+  PHOTOS_LOADED,
   PHOTO_SELECTED,
   PHOTO_DESELECTED,
   PHOTOS_LOADING,
@@ -17,11 +17,14 @@ export const getPhotos = (count, start) => {
         `api/filter/images?count=${count}&start=${start}`
       );
       dispatch({
-        type: GET_PHOTOS,
+        type: PHOTOS_LOADED,
         payload: res.data
       });
     } catch (err) {
-      dispatch({ type: PHOTOS_ERROR });
+      dispatch({
+        type: PHOTOS_ERROR,
+        payload: err.response
+      });
     }
   };
 };
@@ -43,7 +46,19 @@ export const deselectPhoto = () => {
     });
 };
 
-// SET LOADING
+// Add Photo View
+export const addView = imageId => {
+  return async dispatch => {
+    try {
+      const res = await axios.post(`api/image/${imageId}/view`);
+      console.log("View added", res);
+    } catch (err) {
+      console.log("View add error", err.response);
+    }
+  };
+};
+
+// Set Loading
 export const setLoading = () => {
   return { type: PHOTOS_LOADING };
 };

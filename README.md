@@ -3,88 +3,57 @@
 
 # API Documentation
 
-Other than the authentication endpoints, output of all other endpoints have the following structure
-[ Statuscode="", Status="", Data=""]
-for eg. successfull query [ Statuscode="200", Status="Success", Data= {Results Set}]
-failure query [ Statuscode="1222", Status="Null Exception Occured", Data= ""]
-
-
-* isauthenticated means whether the user needs to login to access the end point
-
-
 
 # Images
 
-### Filter Images - random
+### Filter Images - random/ pikcha100/ artists100/ artistId
 - ENDPOINT : api/filter/images 
 - METHOD : get
 - AUTHENTICATED : false
-- QUERY_PARAMS : Type = random [string, Default=random], Start [int, Optional], Count [int, Optional]
+- QUERY_PARAMS : Type = random/ pikcha100/ artists100 [string, Default=random], Start [int, Optional], Count [int, Optional], ArtistId [int, Optional - required for artistId-Type ]
 - RESULTS : images[]
-- ERROR_CODES : 200, 404, 500
+- ERROR_CODES : 200, 416, 500
 
 Image
- - PikchaImageId
- - Title
- - Caption 
- - Location 
- - ThumbnailFile 
- - WatermarkedFile 
- - ArtisitId
- - ArtistFirstname 
- - ArtistLastname 
- - ArtistPercity 
- - ArtistPercountry 
- - ArtistAvatarfilename 
- - TotalViews
+ - Id 
+ - Title 
+ - Location  
+ - Caption  
+ - Thumbnail  
+ - Watermark  
+ - Views 
+ - Artist [FName, LName, Location, Avatar, AggrImViews ]  
+ - Performance 
+ - TotSold 
+ - AvgPrice 
+ - Height 
+ - ProductIds
+ 
+ 
 
-
-
-### Filter Images - pikcha100
-- ENDPOINT : api/filter/images 
+### Get an Image by product id
+- ENDPOINT : api/product/{productId} 
 - METHOD : get
 - AUTHENTICATED : false
-- QUERY_PARAMS : Type= pikcha100 [string], Start [int, Optional, Default=0], Count [int, Optional, Default=20]
-- RESULTS : images[]
-- ERROR_CODES : 200, 404, 500
-
-Image
- - PikchaImageId
- - Title
- - Location 
- - ThumbnailFile 
- - WatermarkedFile 
- - ArtistFirstname 
- - ArtistLastname 
- - ArtistPercity 
- - ArtistPercountry 
- - ArtistAvatarfilename 
- - TotalViews
-
-
-### Get an Image
-- ENDPOINT : api/image/{imageId} 
-- METHOD : get
-- AUTHENTICATED : false
-
 - RESULTS : image
 - ERROR_CODES : 200, 404, 500
 
 Image
- - PikchaImageId
+ - Id <-- product id
+ - ImageId
  - Title
+ - Caption 
  - Location 
- - ThumbnailFile 
+ - Type 
+ - IsSale 
+ - Price 
+ - AvgPrice 
+ - Watermark 
+ - Views  
  - WatermarkedFile 
- - ArtistFirstname 
- - ArtistLastname 
- - ArtistPercity 
- - ArtistPercountry 
- - ArtistAvatarfilename 
- - TotalViews
- - Width
- - Height
- - Caption
+ - Performance 
+ - TotSold  
+ - Artist 
 
 
 
@@ -92,95 +61,50 @@ Image
 - ENDPOINT : api/image/upload
 - METHOD : post
 - AUTHENTICATED : true
-- PARAMS : Title [string], Caption [text], Location [string], NumberOfPrint [int], ImageFile [file]
+- PARAMS : Title [string], Caption [text], Location [string], ImageFile [file], Tags [list of strings], Signature [string], Price [Number]
 - RESULTS : OK
 - ERROR_CODES : 201, 500
 
 
 ### add view count
-- ENDPOINT : api/image/incrementviewcount
+- ENDPOINT : api/image/{imageId}/view
 - METHOD : post
 - AUTHENTICATED : false
-- PARAMS : imageId [string]
 - RESULTS : OK
 - ERROR_CODES : 201, 500
 
-### Tags
-- ENDPOINT : api/image/tags
-- METHOD : get
-- AUTHENTICATED : false
-- RESULTS : tags[]
-- ERROR_CODES : 200, 500
 
 
 # Artists
 
-### Filter Artists - random
-- ENDPOINT : api/filter/artists 
-- METHOD : get
-- AUTHENTICATED : false
-- QUERY_PARAMS : Type=random [string, Default=random], Start [int, Optional], Count [int, Optional]
-- RESULTS : artists[]
-- ERROR_CODES : 200, 404, 500
-
-Artist
- - FirstName 
- - LastName
- - PerCountry
- - TotalImageViews
- - TopImageTitle
- - TopImageLocation
- - TopImageThumbnailFile
- - TopImageWatermarkedFile
- - TopImageTotalViews
-
-### Filter Artists - artists100
-- ENDPOINT : api/filter/artists 
-- METHOD : get
-- AUTHENTICATED : false
-- QUERY_PARAMS : Type=artists100 [string], Start [int, Optional], Count [int, Optional]
-- RESULTS : artists[]
-- ERROR_CODES : 200, 404, 500
-
-Artist
- - FirstName 
- - LastName
- - PerCountry
- - TotalImageViews
- - TopImageTitle
- - TopImageLocation
- - TopImageThumbnailFile
- - TopImageWatermarkedFile
- - TopImageTotalViews
-
 ### Get an Artist
 - ENDPOINT : api/profile/{userId} 
 - METHOD : get
-- AUTHENTICATED : true
+- AUTHENTICATED : false
 - RESULTS : artist
 - ERROR_CODES : 200, 404, 500
 
 
 ARTIST
- - FirstName
- - LastName 
- - BioInfo 
- - PerAddress1 
- - PerAddress2
- - PerCity 
- - PerPostalCode 
- - PerCountry 
- - ShipAddress1 
- - ShipAddress2 
- - ShipCity 
- - ShipPostalCode 
- - ShipCountry 
- - FacebookLink
- - InstagramLink
- - LinkedInLink
+ - Id
+ - FName 
+ - LName
+ - Email 
+ - Phone 
+ - Avatar 
+ - Bio  
+ - Links <- dictionary of strings
+ - Location 
+ - Views 
+ - Performance 
+ - TotSold 
+ - AvgPrice 
+ - Following <-- list of users
+ - Followers <-- list of users
+ - Roles  <-- list of string
 
 ### Get the loggedin user info 
-- ENDPOINT : api/profile/loggedinuserinfo/{userId} 
+- ENDPOINT : api/profile/{userId}/myinfo 
 - METHOD : get
 - AUTHENTICATED : true
 - RESULTS : loggedinuserinfo
@@ -188,23 +112,60 @@ ARTIST
 
 
 LOGGEDINUSERINFO
- - FirstName
- - LastName 
- - IsPhotoGrapher 
- - LastUploadedOn
+ - Id
+ - FName 
+ - LName
+ - Email 
+ - Phone 
+ - Avatar
+ - Bio 
+ - Links 
+ - Addr1 
+ - Addr2 
+ - City 
+ - Postal 
+ - State 
+ - Country 
+ - Following 
+ - LUploadOn  <--- last uploaded on - to limit one image per day
+ - Roles 
 
+### Update user info
+- ENDPOINT : api/profile/{userId} 
+- METHOD : PUT
+- AUTHENTICATED : true
+- PARAMS : FName, LName, Bio, Links, Addr1 , Addr2, City, Postal,State, Country, PhoneNumber 
+- RESULTS : loggedinuserinfo
+- ERROR_CODES : 200, 404, 500
 
-### Promote a user to a photographer 
-- ENDPOINT : api/profile/promotetophotographer/{userId} 
+### Promote a user to an artist 
+- ENDPOINT : api/profile/{userId}/promote 
 - METHOD : post
 - AUTHENTICATED : true
-- RESULTS : SUCCESS
+- PARAMS : signatureContent [Base64String]
+- RESULTS : loggedinuserinfo
+- ERROR_CODES : 200, 404, 500
+
+### Follow an artist 
+- ENDPOINT : api/profile/{userId}/artist/{artistId}/follow 
+- METHOD : post
+- AUTHENTICATED : true
+- RESULTS : loggedinuserinfo
+- ERROR_CODES : 200, 404, 500
+
+
+### Unfollow an artist 
+- ENDPOINT : api/profile/{userId}/artist/{artistId}/unfollow 
+- METHOD : post
+- AUTHENTICATED : true
+- RESULTS : loggedinuserinfo
 - ERROR_CODES : 200, 404, 500
 
 
 ### Upload user avatar 
-- ENDPOINT : api/profile/avatar
+- ENDPOINT : api/profile/{userId}/avatar
 - METHOD : post
 - AUTHENTICATED : true
-- RESULTS : SUCCESS
+- PARAMS : avatarContent [Base64String]
+- RESULTS : loggedinuserinfo
 - ERROR_CODES : 200, 404, 500

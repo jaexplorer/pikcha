@@ -1,6 +1,6 @@
 // Product
 // ------------------------------------------------------------------- //
-.product-container {
+#product-container {
   font-family: "Montserrat";
 
   .more-content-heading {
@@ -319,7 +319,7 @@
 // Small Devices
 // ---------------------------------------- //
 @media screen and (max-width: 699px) {
-  .product-container {
+  #product-container {
     padding-left: 3rem;
     padding-right: 3rem;
   }

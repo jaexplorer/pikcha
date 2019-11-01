@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { selectPhoto } from "../../../actions/gallery";
+import { selectPhoto, addView } from "../../../actions/gallery";
 import ItemInfo from "./ItemInfo";
 
-const MasonryItem = ({ gallery, selectPhoto, photo }) => {
+const MasonryItem = ({ gallery, selectPhoto, photo, addView }) => {
   const thisPhoto = useRef(null);
   const [isSelected, setSelected] = useState(false);
 
@@ -23,10 +23,13 @@ const MasonryItem = ({ gallery, selectPhoto, photo }) => {
       className='masonry-item'
       ref={thisPhoto}
       onClick={e => {
-        !isSelected && selectPhoto(thisPhoto);
+        if (!isSelected) {
+          selectPhoto(thisPhoto);
+          addView(photo.id);
+        }
       }}
     >
-      <img src={photo.watermarkedFile} alt='' />
+      <img src={photo.watermark} alt='' />
       {isSelected && <ItemInfo photo={photo} />}
     </div>
   );
@@ -38,5 +41,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { selectPhoto }
+  { selectPhoto, addView }
 )(MasonryItem);

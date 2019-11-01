@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using PikchaWebApp.Managers;
 using PikchaWebApp.Models;
 
 namespace PikchaWebApp.Areas.Identity.Pages.Account
@@ -47,6 +48,14 @@ namespace PikchaWebApp.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [Display(Name = "First Name")]
+            public string FName { get; set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LName { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -75,7 +84,7 @@ namespace PikchaWebApp.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new PikchaUser { UserName = Input.Email, Email = Input.Email };
+                var user = new PikchaUser { UserName = Input.Email, Email = Input.Email, FName = Input.FName, LName = Input.LName, Avatar = PikchaConstants.PIKCHA_USER_DEFAULT_AVATAR };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -89,8 +98,8 @@ namespace PikchaWebApp.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                   // await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                     //   $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -109,6 +118,8 @@ namespace PikchaWebApp.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            ReturnUrl = returnUrl;
+
             return Page();
         }
     }

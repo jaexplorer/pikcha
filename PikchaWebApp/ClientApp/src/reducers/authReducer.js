@@ -1,45 +1,34 @@
 import {
-  LOGGED_IN,
-  AUTH_ERROR,
-  LOGGED_OUT,
-  CLEAR_ERRORS,
-  AUTH_LOADING
+  DEAUTHENTICATE,
+  AUTH_LOADING,
+  AUTH_FAILED,
+  AUTH_SUCCESS
 } from "../actions/types";
 
 const initialState = {
   isAuthenticated: false,
-  loading: true,
-  user: null,
-  error: null
+  loading: true
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case LOGGED_IN:
+    case AUTH_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
-        loading: false,
-        user: payload
+        loading: false
       };
-    case AUTH_ERROR:
-    case LOGGED_OUT:
+    case AUTH_FAILED:
+    case DEAUTHENTICATE:
       return {
         ...state,
         isAuthenticated: false,
-        loading: false,
-        user: null,
-        error: payload
+        loading: false
       };
     case AUTH_LOADING:
       return {
         ...state,
         loading: true
-      };
-    case CLEAR_ERRORS:
-      return {
-        ...state,
-        error: null
       };
     default:
       return state;

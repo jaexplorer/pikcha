@@ -5,7 +5,6 @@
   grid-auto-flow: column;
   grid-template-columns: 20% 80%;
   height: 6rem;
-  // background-color: #9370db;
   background-image: linear-gradient(
     120deg,
     #5271c4 0%,
@@ -37,10 +36,26 @@
       li {
         list-style-type: none;
         a {
+          position: relative;
           font-family: "Montserrat";
           font-size: 1.6rem;
           color: #1a1a1a;
           text-decoration: none;
+          z-index: 30;
+
+          &:hover::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            top: -1rem;
+            left: -1.6rem;
+            padding: 1.5rem;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.5);
+            z-index: -1;
+          }
         }
         &:nth-child(2) {
           margin-left: 3rem;
@@ -61,22 +76,29 @@
         justify-items: center;
         grid-auto-flow: column;
         cursor: pointer;
-        img {
-          height: 1.6rem;
-          margin-right: 5rem;
+
+        .navbar-icon {
+          position: relative;
+
+          & > img {
+            height: 1.6rem;
+            margin-right: 5rem;
+          }
+          .notication {
+            position: absolute;
+            top: 1.4rem;
+            left: 2rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgb(235, 59, 71);
+          }
 
           &:last-child {
-            margin-right: 4rem;
+            img {
+              margin-right: 4rem;
+            }
           }
-        }
-        .notication {
-          position: absolute;
-          top: 1.4rem;
-          left: 2rem;
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-          background: rgb(235, 59, 71);
         }
       }
 
@@ -89,11 +111,27 @@
         li {
           list-style-type: none;
           a {
+            position: relative;
             font-family: "Montserrat";
             color: #1a1a1a;
             font-size: 1.2rem;
             text-decoration: none;
             text-transform: uppercase;
+            z-index: 30;
+
+            &:hover::before {
+              content: "";
+              position: absolute;
+              width: 100%;
+              top: -1.2rem;
+              left: -1.6rem;
+              padding: 1.5rem;
+              padding-top: 2rem;
+              padding-bottom: 2rem;
+              border-radius: 50px;
+              background: rgba(230, 230, 230, 0.5);
+              z-index: -1;
+            }
           }
           :first-child {
             margin-right: 3rem;
@@ -108,8 +146,14 @@
         justify-items: right;
         grid-auto-flow: column;
         cursor: pointer;
-        img {
+
+        & > img {
           height: 3rem;
+          width: 3rem;
+          object-position: center center;
+          object-fit: cover;
+          border-radius: 50%;
+          border: rgb(201, 201, 201) 2px solid;
           margin-right: 1.5rem;
         }
       }
@@ -232,8 +276,13 @@
       }
 
       &.profile-pic {
-        img {
+        & > img {
           height: 3.8rem;
+          width: 3.8rem;
+          object-position: center center;
+          object-fit: cover;
+          border-radius: 50%;
+          border: rgb(201, 201, 201) 2px solid;
           cursor: pointer;
         }
       }

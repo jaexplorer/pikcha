@@ -2,28 +2,59 @@
 // ------------------------------------------------------------------- //
 #profile-dropdown {
   position: absolute;
-  top: 6rem;
+  top: 7rem;
   right: 1.6rem;
   width: max-content;
-  z-index: 40;
-  box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
+  z-index: 1200;
+  box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 1);
+
+  .upload-container {
+    background-image: linear-gradient(
+      -130deg,
+      #5271c4 0%,
+      #b19fff 50%,
+      rgba(236, 161, 254, 1) 100%
+    );
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    cursor: pointer;
+
+    img {
+      height: 2rem;
+      margin-right: 2rem;
+    }
+
+    .upload-button {
+      color: white;
+      font-family: "Montserrat";
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      padding-top: 1rem;
+      padding-bottom: 0.8rem;
+    }
+  }
 
   .profile-dropdown-item {
-    background: #1a1a1a;
-    color: white;
+    background: #fafafa;
+    color: #1a1a1a;
     font-family: "Montserrat";
-    font-size: 1.4rem;
-    padding: 1rem;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    padding: 2rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 
     a {
-      color: white;
+      color: #1a1a1a;
       text-decoration: none;
+      margin-right: 3rem;
 
       &:hover {
         color: mediumpurple;
+        cursor: pointer;
       }
     }
 
@@ -32,7 +63,7 @@
       border-top-right-radius: 10px;
     }
 
-    &:nth-child(2n) {
+    &:nth-child(1n) {
       border-top: rgba(147, 112, 216, 0.2) 1px solid;
     }
 
@@ -43,12 +74,11 @@
 
     &:hover {
       color: mediumpurple;
-      cursor: pointer;
     }
 
     img {
       height: 2rem;
-      margin-left: 3rem;
+      margin-right: 2rem;
     }
   }
 }
@@ -70,18 +100,18 @@
 // ------------------------------------------------------------------- //
 #cart-dropdown {
   position: absolute;
-  top: 6rem;
-  right: 15.7rem;
+  top: 5rem;
+  right: 4rem;
   width: max-content;
-  z-index: 40;
-  box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
+  z-index: 1200;
+  box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 1);
 
   .cart-dropdown-item {
-    background: #1a1a1a;
-    color: white;
+    background: #fafafa;
+    color: #1a1a1a;
     font-family: "Montserrat";
     font-size: 1.4rem;
-    padding: 1rem;
+    padding: 2rem;
     display: flex;
     align-items: center;
 
@@ -91,17 +121,19 @@
     }
 
     .cart-product-price {
-      margin-left: 6rem;
+      margin-left: 8rem;
     }
 
     .cart-product-remove {
       display: flex;
       position: relative;
+      margin-left: 2rem;
       img {
         position: relative;
         &:hover {
           cursor: pointer;
         }
+        height: 1.2rem;
       }
 
       &::after {
@@ -110,8 +142,10 @@
         background: mediumpurple;
         height: 30px;
         width: 1px;
-        top: -2px;
-        left: 1.5rem;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        left: 0.5rem;
       }
     }
 
@@ -121,13 +155,13 @@
     }
 
     .cart-checkout {
-      padding: 0.5rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
-      background: white;
+      padding: 1rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      background: mediumpurple;
       border-radius: 5px;
-      color: black;
-      margin-left: 1rem;
+      color: white;
+      margin-left: 2rem;
       font-size: 1rem;
       text-transform: uppercase;
     }
@@ -159,63 +193,5 @@
   #cart-dropdown {
     top: 7rem;
     right: 5rem;
-
-    .cart-dropdown-item {
-      font-size: 1.6rem;
-      padding: 2rem;
-
-      .cart-product-name {
-        font-size: 1.6rem;
-      }
-
-      .cart-product-price {
-        margin-left: 8rem;
-      }
-
-      .cart-product-remove {
-        display: flex;
-        align-items: center;
-        position: relative;
-        margin-left: 1rem;
-        img {
-          height: 2.5rem;
-          &:hover {
-            cursor: pointer;
-          }
-        }
-
-        &::after {
-          content: "";
-          position: absolute;
-          background: mediumpurple;
-          height: 30px;
-          width: 1px;
-          top: -2px;
-          left: 1rem;
-        }
-      }
-
-      .cart-total {
-        margin-left: auto;
-        font-size: 1.6rem;
-      }
-
-      .cart-checkout {
-        padding: 1rem;
-        padding-left: 2rem;
-        padding-right: 2rem;
-        background: white;
-        border-radius: 5px;
-        color: black;
-        margin-left: 2rem;
-        font-size: 1.4rem;
-        text-transform: uppercase;
-      }
-
-      img {
-        height: 2rem;
-        margin-left: 2.5rem;
-      }
-    }
   }
 }

@@ -14,7 +14,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.14.3" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.104.42" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.14.4" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
@@ -33,14 +34,22 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0-rc1.final" />
     <PackageReference Include="SendGrid" Version="9.12.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="Data\Migrations\**" />
     <Content Remove="$(SpaRoot)**" />
-    <None Remove="$(SpaRoot)**" />
+    <Content Remove="Data\Migrations\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <None Remove="Data\Migrations\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -52,10 +61,30 @@
     <Compile Remove="Migrations\20191006132236_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20191006133050_InitialCreate.cs" />
     <Compile Remove="Migrations\20191006133050_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191007094503_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191007094503_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016101414_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016101414_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016103037_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016103037_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016104846_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016104846_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016110421_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016110421_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191016112615_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191016112615_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191020025619_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191020025619_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191031012147_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191031012147_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191031020843_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191031020843_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191031210546_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191031210546_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+    <Folder Include="Areas\Identity\Pages\Account\NotUsedDontDelete\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -116,6 +145,12 @@
     <Content Update="wwwroot\fonts\Montserrat-Regular.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\img\watermark-logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Uploads\Avatars\default-avatar.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\Uploads\Avatars\Test\profile1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -125,12 +160,6 @@
     <Content Update="wwwroot\Uploads\Avatars\Test\profile3.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\Img\watermark-logo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
@@ -151,7 +180,7 @@
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)build\**" />
-      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </ResolvedFileToPublish>
