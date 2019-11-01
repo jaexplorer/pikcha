@@ -1,4 +1,4 @@
-import { GET_ARTIST, ARTIST_LOADING, ARTIST_ERROR } from "../actions/types";
+import { ARTIST_LOADED, ARTIST_LOADING, ARTIST_ERROR } from "../actions/types";
 
 const initialState = {
   artist: null,
@@ -8,7 +8,7 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case GET_ARTIST:
+    case ARTIST_LOADED:
       return {
         ...state,
         artist: payload,

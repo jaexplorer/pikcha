@@ -22,6 +22,7 @@ using PikchaWebApp.Managers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace PikchaWebApp
 {
@@ -47,9 +48,20 @@ namespace PikchaWebApp
                 });
             });
 
-            services.AddDbContext<PikchaDbContext>(options =>
+            /*services.AddDbContext<PikchaDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"))); */
+
+            // for mysql db
+            // other service configurations go here
+            var tmp = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<PikchaDbContext>( // replace "YourDbContext" with the class name of your DbContext
+                (serviceProvider, options) => options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), // replace with your Connection String
+                    mySqlOptions =>
+                    {
+                        mySqlOptions.ServerVersion(new Version(8, 0, 17), ServerType.MySql); // replace with your Server Version and Type
+                    }
+            ));
 
             services.AddIdentity<PikchaUser, IdentityRole>()
                 .AddEntityFrameworkStores<PikchaDbContext>()
@@ -105,6 +117,8 @@ namespace PikchaWebApp
             });
 
             services.AddHttpClient(); // for external api requests
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -177,6 +191,8 @@ namespace PikchaWebApp
 
                 try
                 {
+                    
+
                     bool populateDB = false;
                     if (populateDB)
                     {
@@ -259,19 +275,21 @@ namespace PikchaWebApp
             {
                 for (int i = 1; i < 10; i++)
                 {
-                    var user = new PikchaUser()
-                    {
-                        UserName = "testuser" + i + "@pikcha.com",
-                        Email = "testuser" + i + "@pikcha.com",
-                        Bio = "test user" + i + " bio info",
-                        FName = "test " + i + " FName",
-                        LName = "test " + i + " LName",
-                        Country = locations[rnd.Next(locations.Count)],
-                        Avatar = PikchaConstants.PIKCHA_USER_DEFAULT_AVATAR
-                    };
-                    var exUsr = await userManager.FindByEmailAsync(user.Email);
+                    string email = "testuser" + i + "@pikcha.com";
+                    
+                    var exUsr = await userManager.FindByEmailAsync(email);
                     if (exUsr == null)
                     {
+                        var user = new PikchaUser()
+                        {
+                            UserName = "Pikcha-testuser" + i + "@pikcha.com",
+                            Email = email,
+                            Bio = "test user" + i + " bio info",
+                            FName = "test " + i + " FName",
+                            LName = "test " + i + " LName",
+                            Country = locations[rnd.Next(locations.Count)],
+                            Avatar = PikchaConstants.PIKCHA_USER_DEFAULT_AVATAR
+                        };
                         var resl = await userManager.CreateAsync(user);
                         lstUsers.Add(user);
                     }
@@ -291,7 +309,7 @@ namespace PikchaWebApp
             {
                 var artist = lstUsers[i];
                 // make these to artist
-                await userManager.AddToRoleAsync(artist, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+                await userManager.AddToRoleAsync(artist, PikchaConstants.PIKCHA_ROLES_ARTIST_NAME);
                 int count = rnd.Next(3, 8);
                 for (int j = 1; j < count; j++)
                 {
@@ -331,7 +349,7 @@ namespace PikchaWebApp
 
                 for (int j = 0; j < daysSince; j++)
                 {
-                    var imgv = new ImageViews() { Date = DateTime.Now.AddDays(-j), Count = rnd.Next(100), PikchaImage = img };
+                    var imgv = new ImageView() { Date = DateTime.Now.AddDays(-j), Count = rnd.Next(100), PikchaImage = img };
                     dbContext.ImageViews.Add(imgv);
                 }
                 //dbContext.SaveChanges();
@@ -365,8 +383,6 @@ namespace PikchaWebApp
             await dbContext.SaveChangesAsync();
 
         }
-
-
         private async Task InitDB(UserManager<PikchaUser> userManager, RoleManager<IdentityRole> roleManager, PikchaDbContext dbContext)
         {
             // remove all data if there is
@@ -383,6 +399,11 @@ namespace PikchaWebApp
             // clear image views
             var imgvws = await dbContext.ImageViews.ToListAsync();
             dbContext.RemoveRange(imgvws);
+            await dbContext.SaveChangesAsync();
+
+            // clear image tags
+            var imgtags = await dbContext.ImageTags.ToListAsync();
+            dbContext.RemoveRange(imgtags);
             await dbContext.SaveChangesAsync();
 
             // clear images
@@ -405,13 +426,13 @@ namespace PikchaWebApp
                 role.Name = PikchaConstants.PIKCHA_ROLES_USER_NAME;
                 var t = roleManager.CreateAsync(role).Result;
             }
-            bool photographerExist = roleManager.RoleExistsAsync(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME).Result;
+            bool photographerExist = roleManager.RoleExistsAsync(PikchaConstants.PIKCHA_ROLES_ARTIST_NAME).Result;
             if (!photographerExist)
             {
                 // first we create Admin rool    
                 var role = new IdentityRole();
                 //role.Id = Guid.NewGuid().ToString();
-                role.Name = PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME;
+                role.Name = PikchaConstants.PIKCHA_ROLES_ARTIST_NAME;
                 var s = roleManager.CreateAsync(role).Result;
             }
 

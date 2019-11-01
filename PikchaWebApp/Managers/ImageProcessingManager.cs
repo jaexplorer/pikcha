@@ -16,7 +16,7 @@ namespace PikchaWebApp.Managers
         protected readonly IWebHostEnvironment _hostingEnvironment;
         protected readonly IConfiguration _configuration;
 
-        protected readonly string _watermark_img = "Resources/Img/watermark-logo.png";
+        protected readonly string _watermark_img = PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER +  "img/watermark-logo.png";
 
         public ImageProcessingManager(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
         {
@@ -24,7 +24,12 @@ namespace PikchaWebApp.Managers
             _configuration = configuration;
         }
 
-        public bool ResizeImage(string imageId, IFormFile formFileInfo, string signatureFile, ref PikchaImage pkImage)
+        public Task<bool> ProcessAndUploadImageAsync(string imageId, IFormFile formFileInfo, string signatureFile, ref PikchaImage pkImage)
+        {
+            return Task.FromResult<bool>(ProcessAndUploadImage(imageId, formFileInfo, signatureFile, ref pkImage));
+        }
+
+        private bool ProcessAndUploadImage(string imageId, IFormFile formFileInfo, string signatureFile, ref PikchaImage pkImage)
         {            
             try
             {
@@ -39,7 +44,7 @@ namespace PikchaWebApp.Managers
                         {
                             pkImage.Width = image.Width;
                             pkImage.Height = image.Height;
-
+                            signatureImg.Resize(300, 0);
                             image.Composite(signatureImg, Gravity.Southeast, CompositeOperator.Over);
 
 
@@ -76,12 +81,18 @@ namespace PikchaWebApp.Managers
              }
             catch(Exception e)
             {
+                
                 return false;
             }            
         }
 
 
-        public bool ProcessSignatureFile(string signatureContent, ref string sigFile, ref string invSigFile)
+        public Task<bool> ProcessSignatureFileAsync(string signatureContent, ref string sigFile, ref string invSigFile)
+        {
+            return Task.FromResult<bool>(ProcessSignatureFile(signatureContent, ref sigFile, ref invSigFile));
+        }
+
+        private bool ProcessSignatureFile(string signatureContent, ref string sigFile, ref string invSigFile)
         {
             try
             {  
@@ -98,7 +109,8 @@ namespace PikchaWebApp.Managers
 
                         MagickImage revImg = (MagickImage)image.Clone();
 
-                        revImg.Negate();
+                        //revImg.Negate();
+                        revImg.Opaque(MagickColors.Black, MagickColors.White);
 
                         StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
                         string id = Guid.NewGuid().ToString();

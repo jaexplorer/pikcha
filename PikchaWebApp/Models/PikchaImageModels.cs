@@ -37,11 +37,11 @@ namespace PikchaWebApp.Models
         public string Watermark { get; set; }
 
         [Column("UploadedAt")]
-        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset UploadedAt { get; set; }
 
         [Column("ModifiedAt")]
-        // [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTimeOffset ModifiedAt { get; set; }
 
 
@@ -49,7 +49,7 @@ namespace PikchaWebApp.Models
         public PikchaUser Artist { get; set; }
         
         public IEnumerable<ImageTag> Tags { get; set; }
-        public IEnumerable<ImageViews> Views { get; set; }
+        public IEnumerable<ImageView> Views { get; set; }
         public IEnumerable<ImageProduct> Products { get; set; }
 
         
@@ -83,8 +83,13 @@ namespace PikchaWebApp.Models
     }
 
     [Table("ImageViews")]
-    public class ImageViews
+    public class ImageView
     {
+        [Key]
+        [Column("Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string Id { get; set; }
+
         [Column(TypeName = "Date")]
         [Required]
         public DateTime Date { get; set; }

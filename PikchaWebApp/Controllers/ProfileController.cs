@@ -18,6 +18,7 @@ using Newtonsoft.Json.Linq;
 using PikchaWebApp.Data;
 using PikchaWebApp.Managers;
 using PikchaWebApp.Models;
+using Serilog;
 
 namespace PikchaWebApp.Controllers
 {
@@ -245,7 +246,7 @@ namespace PikchaWebApp.Controllers
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
                 }
-                bool isInAlready = await _userManager.IsInRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+                bool isInAlready = await _userManager.IsInRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_ARTIST_NAME);
                 if(isInAlready)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserAlreadyPromoted);
@@ -267,13 +268,13 @@ namespace PikchaWebApp.Controllers
                     string orgFName = string.Empty;
                     string invFName = string.Empty;
 
-                    manager.ProcessSignatureFile(signatureContent, ref orgFName, ref invFName);
+                    await manager.ProcessSignatureFileAsync(signatureContent, ref orgFName, ref invFName);
 
                     pikchaUser.Sign = orgFName;
                     pikchaUser.InvSign = invFName;
                     await _pikchDbContext.SaveChangesAsync();
 
-                    var result = await _userManager.AddToRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+                    var result = await _userManager.AddToRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_ARTIST_NAME);
 
                     if (result.Succeeded)
                     {
@@ -333,6 +334,7 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
+                //_userManager.GetUsersInRoleAsync("")
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
 
                 var userDB = await _pikchDbContext.PikchaUsers.Include("Following").Include("Following.PikchaUser")
@@ -378,7 +380,7 @@ namespace PikchaWebApp.Controllers
 
                 var qUser = _pikchDbContext.PikchaUsers.Include("Following.PikchaArtist").First(u => u.Id == pikchaUser.Id);
                 var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(qUser);
-                var roles = await _userManager.GetRolesAsync(pikchaUser);
+                var roles = await _userManager.GetRolesAsync(qUser);
 
                 if (roles != null)
                 {
@@ -405,14 +407,14 @@ namespace PikchaWebApp.Controllers
             {
                 var pikchaUser = await _userManager.GetUserAsync(this.User);
 
-                var folArt = pikchaUser.Following.First(f => f.ArtistsId == artistId && f.UserId == userId);
+                var folArt = pikchaUser.Following.First(f => f.ArtistsId == artistId);
 
                 _pikchDbContext.Remove(folArt);
                 await _pikchDbContext.SaveChangesAsync();
 
                 var qUser = _pikchDbContext.PikchaUsers.Include("Following.PikchaArtist").First(u => u.Id == pikchaUser.Id);
                 var lgUSer = _mapper.Map<PikchaAuthenticatedUserDTO>(qUser);
-                var roles = await _userManager.GetRolesAsync(pikchaUser);
+                var roles = await _userManager.GetRolesAsync(qUser);
 
                 if (roles != null)
                 {
@@ -423,6 +425,8 @@ namespace PikchaWebApp.Controllers
             }
             catch (Exception ex)
             {
+                Log.Debug(ex, "exception thrown");
+
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
 

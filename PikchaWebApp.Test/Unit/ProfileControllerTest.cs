@@ -119,7 +119,7 @@ namespace PikchaWebApp.Test.Unit
             var roleManager = _fixture.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var role = new IdentityRole();
             //role.Id = Guid.NewGuid().ToString();
-            role.Name = PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME;
+            role.Name = PikchaConstants.PIKCHA_ROLES_ARTIST_NAME;
             var s = roleManager.CreateAsync(role).Result;
 
             // create a file
@@ -155,7 +155,7 @@ namespace PikchaWebApp.Test.Unit
 
                 var qUsr = result.Value as PikchaAuthenticatedUserDTO;
 
-                Assert.Contains(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME, qUsr.Roles);
+                Assert.Contains(PikchaConstants.PIKCHA_ROLES_ARTIST_NAME, qUsr.Roles);
 
                 return pkUser;
             }
@@ -175,11 +175,6 @@ namespace PikchaWebApp.Test.Unit
 
             var result = await profCntrl.GetSignature(artist.Id) as ObjectResult;
             Assert.Equal(200, result.StatusCode);
-
-            //File.Exists(result.Value.)
-            //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
-
-            //Assert.Contains(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME, qUsr.Roles);
 
         }
 
@@ -213,10 +208,7 @@ namespace PikchaWebApp.Test.Unit
 
 
             Assert.True(qUsr.Following.Count > 0);
-
-            //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
-
-            //Assert.True(File.Exists(qUsr.Avatar));
+            Assert.True(qUsr.Following.Find(u => u.Id == pkArtist.Id) != null);
 
         }
 
@@ -236,7 +228,10 @@ namespace PikchaWebApp.Test.Unit
             var profCntrl = CreateAuthenticatedProfileController(pkUser);
             var fresult = await profCntrl.FollowAnArtist(pkArtist.Id, pkUser.Id) as ObjectResult;
 
+            var qUsr = fresult.Value as PikchaAuthenticatedUserDTO;
+
             Assert.Equal(200, fresult.StatusCode);
+            Assert.True(qUsr.Following.Find(u => u.Id == pkArtist.Id) != null);
 
             if (idType == "invalid")
             {
@@ -247,7 +242,11 @@ namespace PikchaWebApp.Test.Unit
 
             var result = await profCntrl.UnFollowAnArtist(pkArtist.Id, pkUser.Id) as ObjectResult;
             Assert.Equal(statusCode, result.StatusCode);
+            
+            
+            var qUsr2 = fresult.Value as PikchaAuthenticatedUserDTO;
 
+            Assert.True(qUsr2.Following.Find(u => u.Id == pkArtist.Id) == null);
             //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
 
             //Assert.True(File.Exists(qUsr.Avatar));

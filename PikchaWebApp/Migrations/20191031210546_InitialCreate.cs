@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PikchaWebApp.Migrations
@@ -94,6 +95,17 @@ namespace PikchaWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Printers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Printers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tags",
                 columns: table => new
                 {
@@ -110,7 +122,7 @@ namespace PikchaWebApp.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -162,8 +174,8 @@ namespace PikchaWebApp.Migrations
                     Height = table.Column<int>(nullable: false),
                     Thumbnail = table.Column<string>(nullable: true),
                     Watermark = table.Column<string>(nullable: true),
-                    UploadedAt = table.Column<DateTimeOffset>(nullable: false),
-                    ModifiedAt = table.Column<DateTimeOffset>(nullable: false),
+                    UploadedAt = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
+                    ModifiedAt = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
                     ArtistId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -182,7 +194,7 @@ namespace PikchaWebApp.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -268,10 +280,11 @@ namespace PikchaWebApp.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     IsSale = table.Column<bool>(nullable: false),
-                    Price = table.Column<decimal>(nullable: false),
+                    Price = table.Column<decimal>(type: "DECIMAL(13,2)", nullable: false),
                     Type = table.Column<string>(nullable: true),
                     ImageId = table.Column<string>(nullable: true),
-                    SellerId = table.Column<string>(nullable: true)
+                    SellerId = table.Column<string>(nullable: true),
+                    PrinterId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -280,6 +293,12 @@ namespace PikchaWebApp.Migrations
                         name: "FK_ImageProducts_Images_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ImageProducts_Printers_PrinterId",
+                        column: x => x.PrinterId,
+                        principalTable: "Printers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -318,19 +337,20 @@ namespace PikchaWebApp.Migrations
                 name: "ImageViews",
                 columns: table => new
                 {
+                    Id = table.Column<string>(nullable: false),
                     Date = table.Column<DateTime>(type: "Date", nullable: false),
-                    PikchaImageId = table.Column<string>(nullable: false),
-                    Count = table.Column<int>(nullable: false)
+                    Count = table.Column<int>(nullable: false),
+                    PikchaImageId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ImageViews", x => new { x.Date, x.PikchaImageId });
+                    table.PrimaryKey("PK_ImageViews", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ImageViews_Images_PikchaImageId",
                         column: x => x.PikchaImageId,
                         principalTable: "Images",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -353,6 +373,11 @@ namespace PikchaWebApp.Migrations
                 name: "IX_ImageProducts_ImageId",
                 table: "ImageProducts",
                 column: "ImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImageProducts_PrinterId",
+                table: "ImageProducts",
+                column: "PrinterId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ImageProducts_SellerId",
@@ -393,8 +418,7 @@ namespace PikchaWebApp.Migrations
                 name: "RoleNameIndex",
                 table: "PikchaRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PikchaUserClaims_UserId",
@@ -420,8 +444,7 @@ namespace PikchaWebApp.Migrations
                 name: "UserNameIndex",
                 table: "PikchaUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -458,6 +481,9 @@ namespace PikchaWebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "PikchaUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Printers");
 
             migrationBuilder.DropTable(
                 name: "Tags");

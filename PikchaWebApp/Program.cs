@@ -15,6 +15,7 @@ namespace PikchaWebApp
         public static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
+           //.WriteTo.File(path: "Logs\\log.txt")
            .Enrich.FromLogContext()
            .WriteTo.Console()
            .CreateLogger();

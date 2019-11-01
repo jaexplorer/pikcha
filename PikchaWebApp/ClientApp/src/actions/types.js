@@ -12,6 +12,8 @@ export const LOGGED_OUT = "LOGGED_OUT";
 export const USER_ERROR = "USER_ERROR";
 export const SIGNATURE_LOADING = "SIGNATURE_LOADING";
 export const SIGNATURE_LOADED = "SIGNATURE_LOADED";
+export const ARTIST_FOLLOWED = "ARTIST_FOLLOWED";
+export const ARTIST_UNFOLLOWED = "ARTIST_UNFOLLOWED";
 
 // Alert Types
 export const SET_ALERT = "SET_ALERT";
@@ -49,7 +51,7 @@ export const SET_FINISH = "SET_FINISH";
 export const CLEAR_CUSTOMISATIONS = "CLEAR_CUSTOMISATIONS";
 
 // Artist Types
-export const GET_ARTIST = "GET_ARTIST";
+export const ARTIST_LOADED = "ARTIST_LOADED";
 export const ARTIST_LOADING = "ARTIST_LOADING";
 export const ARTIST_ERROR = "ARTIST_ERROR";
 

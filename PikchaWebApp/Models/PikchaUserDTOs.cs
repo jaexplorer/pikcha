@@ -69,7 +69,7 @@ namespace PikchaWebApp.Models
     public class PikchaArtistBaseDTO : PikchaUserBaseDTO
     {
         public string Location { get; set; } = string.Empty;
-        public string AggrImViews { get; set; }
+        public string AggrImViews { get; set; } = "0";
     }
 
 }

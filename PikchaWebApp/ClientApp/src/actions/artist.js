@@ -1,6 +1,7 @@
 import axios from "axios";
+import { setAlert } from "./alert";
 
-import { GET_ARTIST, ARTIST_LOADING, ARTIST_ERROR } from "./types";
+import { ARTIST_LOADED, ARTIST_LOADING, ARTIST_ERROR } from "./types";
 
 // Get Artist
 export const getArtist = id => {
@@ -9,11 +10,12 @@ export const getArtist = id => {
       dispatch(setLoading());
       const res = await axios.get(`api/profile/${id}`);
       dispatch({
-        type: GET_ARTIST,
+        type: ARTIST_LOADED,
         payload: res.data
       });
     } catch (err) {
-      dispatch({ type: ARTIST_ERROR });
+      dispatch({ type: ARTIST_ERROR, payload: err.response.data });
+      dispatch(setAlert(err.response.data, "danger"));
     }
   };
 };

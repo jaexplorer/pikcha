@@ -46,6 +46,18 @@ export const deselectPhoto = () => {
     });
 };
 
+// Add Photo View
+export const addView = imageId => {
+  return async dispatch => {
+    try {
+      const res = await axios.post(`api/image/${imageId}/view`);
+      console.log("View added", res);
+    } catch (err) {
+      console.log("View add error", err.response);
+    }
+  };
+};
+
 // Set Loading
 export const setLoading = () => {
   return { type: PHOTOS_LOADING };

@@ -57,9 +57,13 @@ namespace PikchaWebApp.Models
 
         public List<PikchaArtistFollower> Following { get; set; } = new List<PikchaArtistFollower>();
         public List<PikchaArtistFollower> Followers { get; set; } = new List<PikchaArtistFollower>();
-        
 
-        [NotMapped]
+        /// <summary>
+        /// Navigation property for the roles this user belongs to.
+        /// </summary>
+        //public ICollection<IdentityUserRole<int>> Roles { get; } = new List<IdentityUserRole<int>>();
+
+       /* [NotMapped]
         public PikchaImage TopImage
         {
             get
@@ -82,9 +86,9 @@ namespace PikchaWebApp.Models
                     return new PikchaImage() { Title = "N/A", Location = "N/A" };
                 }
             }
-        }
+        }*/
 
-        [NotMapped]
+        /*[NotMapped]
         public int AggrImViews
         {
             get
@@ -107,7 +111,7 @@ namespace PikchaWebApp.Models
                     return 0;
                 }
             }
-        }
+        } */
     }
 
     [Table("ArtistFollowers")]

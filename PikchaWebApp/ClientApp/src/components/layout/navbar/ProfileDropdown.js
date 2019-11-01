@@ -37,7 +37,7 @@ const ProfileDropdown = ({ account, removeProfileDropdown, createModal }) => {
         <img src={UploadIcon} alt='' />
         <div className='upload-button'>Upload</div>
       </div>
-      {account.user.roles === "artist" && (
+      {account.user.roles.includes("Artist") && (
         <div onClick={removeProfileDropdown} className='profile-dropdown-item'>
           <img src={ProfileIcon} alt='' />
           <Link to={`/profile/${account.user.id}`}>Profile</Link>

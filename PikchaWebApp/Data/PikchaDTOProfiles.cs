@@ -29,7 +29,7 @@ namespace PikchaWebApp.Data
                     dest => dest.ProductIds, opt =>  opt.MapFrom(src => src.Products.Select(p => p.Id)))
                 ;
 
-            CreateMap<PikchaUser, PikchaImageFilterDTO>()
+            /*CreateMap<PikchaUser, PikchaImageFilterDTO>()
                   .ForMember(
                       dest => dest.Artist,
                       opt => opt.MapFrom(src =>
@@ -51,27 +51,57 @@ namespace PikchaWebApp.Data
                    .ForMember(
                       dest => dest.Watermark, opt => opt.MapFrom(src => src.TopImage.Watermark))
 
+                   ; */
+
+            CreateMap<PikchaUser, PikchaArtist100ImageFilterDTO>()
+                  /*.ForMember(
+                      dest => dest.Artist,
+                      opt => opt.MapFrom(src =>
+                          new PikchaArtistBaseDTO() { Avatar = src.Avatar ?? string.Empty, Id = src.Id, FName = src.FName, LName = src.LName, Location = src.City ?? string.Empty + ", " + src.Country ?? string.Empty, AggrImViews = "0" })) */
+                  .ForMember(
+                      dest => dest.TopImage, opt => opt.MapFrom(src => src.Images.OrderByDescending(v => v.Views.Count()) .First()))
+               
+               
+                   /*.AfterMap((src, dest) =>
+                       dest.Caption = dest.TopImage.Caption)
+                   .AfterMap((src, dest) =>
+                       dest.Height = "0")
+                   .AfterMap((src, dest) =>
+                       dest.Location = dest.TopImage.Location)
+                   .AfterMap((src, dest) =>
+                       dest.Id = dest.TopImage.Id)
+                   .AfterMap((src, dest) =>
+                       dest.Thumbnail = dest.TopImage.Thumbnail)
+                   .AfterMap((src, dest) =>
+                       dest.Title = dest.TopImage.Title)
+                   .AfterMap((src, dest) =>
+                       dest.Id = dest.TopImage.Id)
+                   .AfterMap((src, dest) =>
+                       dest.TotSold = 0)
+                   .AfterMap((src, dest) =>
+                       dest.Watermark = dest.TopImage.Watermark) */
+
                    ;
 
 
-                //CreateMap<PikchaImage, Pikcha100ImageDTO>()
-                //    .ForMember(
-                //    dest => dest.TotalViews,
-                //    opt => opt.MapFrom(src =>
-                //        src.Views.Sum(y => y.Count)))
-                //    .ForMember(
-                //    dest => dest.Height, opt => opt.MapFrom(src => "0"))
-                //   // .ForAllMembers(opt => opt.NullSubstitute(string.Empty))
-                //    ;
+            //CreateMap<PikchaImage, Pikcha100ImageDTO>()
+            //    .ForMember(
+            //    dest => dest.TotalViews,
+            //    opt => opt.MapFrom(src =>
+            //        src.Views.Sum(y => y.Count)))
+            //    .ForMember(
+            //    dest => dest.Height, opt => opt.MapFrom(src => "0"))
+            //   // .ForAllMembers(opt => opt.NullSubstitute(string.Empty))
+            //    ;
 
-                //CreateMap<PikchaImage, PikchaImageDescriptionDTO>()
-                //    .ForMember(
-                //    dest => dest.TotalViews,
-                //    opt => opt.MapFrom(src =>
-                //        src.Views.Sum(y => y.Count)))
-                //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
+            //CreateMap<PikchaImage, PikchaImageDescriptionDTO>()
+            //    .ForMember(
+            //    dest => dest.TotalViews,
+            //    opt => opt.MapFrom(src =>
+            //        src.Views.Sum(y => y.Count)))
+            //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
 
-                ;
+            ;
             //CreateMap<PikchaUser, PikchaImageBaseDTO>()
             //.ForAllMembers(opt => opt.NullSubstitute(string.Empty));
         }
@@ -88,7 +118,7 @@ namespace PikchaWebApp.Data
                 opt => opt.MapFrom(src => src.City ?? string.Empty + ", " + src.Country?? string.Empty))
                  .ForMember(
                 dest => dest.AggrImViews,
-                opt => opt.MapFrom(src => src.AggrImViews.ToString()));
+                opt => opt.MapFrom(src => src.Images.Count().ToString()));
             //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
             ;
 
