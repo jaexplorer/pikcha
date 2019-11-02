@@ -12,35 +12,58 @@ import PeopleIcon from "../../../assets/images/people-black.png";
 import PlaceHolder from "../../../assets/images/placeholder.png";
 import ProfileDropdown from "./ProfileDropdown";
 import CartDropdown from "./CartDropdown";
-import { ApplicationPaths } from "../../api-authorization/ApiAuthorizationConstants";
+import { ApplicationPaths } from "../../auth/ApiAuthorizationConstants";
 
 const MobileNavbar = ({
   auth,
   nav,
   cart,
+  account,
   createProfileDropdown,
   createCartDropdown
 }) => {
   const authLinks = (
     <div className='navbar-right'>
-      <div className='navbar-icons'>
-        <img onClick={createCartDropdown} src={CartIcon} alt='' />
-        {cart.products.length !== 0 && <div className='notication'></div>}
-        <img src={PeopleIcon} alt='' />
-      </div>
-      <div id='navbar-display-pic'>
-        <img onClick={createProfileDropdown} src={PlaceHolder} alt='' />
-      </div>
-      {nav.profileDropdown ? <ProfileDropdown /> : ""}
-      {nav.cartDropdown ? <CartDropdown /> : ""}
+      {account.loadingUser === false && (
+        <Fragment>
+          <div className='navbar-icons'>
+            {/* <div className='navbar-icon'>
+              <img src={SearchIcon} alt='' />
+            </div> */}
+
+            {/* <div className='navbar-icon'>
+              <img onClick={createCartDropdown} src={CartIcon} alt='' />
+              {cart.products.length !== 0 && <div className='notication'></div>}
+              {nav.cartDropdown && <CartDropdown />}
+            </div> */}
+            {/* {account.user && account.user.following.length !== 0 && (
+              <div className='navbar-icon'>
+                <img src={PeopleIcon} alt='' />
+              </div>
+            )} */}
+          </div>
+
+          <div id='navbar-display-pic'>
+            <img
+              onClick={createProfileDropdown}
+              src={account.user.avatar}
+              alt=''
+            />
+            {nav.profileDropdown && <ProfileDropdown />}
+          </div>
+        </Fragment>
+      )}
     </div>
   );
 
   const guestLinks = (
     <div className='navbar-right'>
-      <div className='navbar-icons'>
-        <img src={SearchIcon} alt='' />
-      </div>
+      {/* <div className='navbar-icons'>
+        <div className='navbar-icon'>
+          <img src={SearchIcon} alt='' />
+        </div>
+      </div> */}
+
       <div id='navbar-right-links'>
         <li>
           <Link to={ApplicationPaths.Register}>Signup</Link>
@@ -77,7 +100,8 @@ const MobileNavbar = ({
 const mapStateToProps = state => ({
   auth: state.authReducer,
   nav: state.navReducer,
-  cart: state.cartReducer
+  cart: state.cartReducer,
+  account: state.accountReducer
 });
 
 export default connect(

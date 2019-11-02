@@ -1,4 +1,4 @@
-﻿version: '3.7'
+version: '3.7'
 
 networks:
   pikcha-net:
@@ -14,28 +14,39 @@ services:
     ports:
       - 8000:80
     environment:
-      DB_CONNECTION_STRING: Server=mssql_image;Database=master;User Id=sa;Password=My_password123;
+      DB_CONNECTION_STRING: server=mysql_image;port=3306;database=pikcha_db;uid=root;pwd=MySecret;
     depends_on:
-      - mssql_image
+      - mysql_image
     networks:
       - pikcha-net
-      
-  mssql_image:
-    container_name: msdb_c
-    image: "mcr.microsoft.com/mssql/server" 
-    restart: always
+   
+  mysql_image:
+    container_name: mysql_c
+    image: mysql/mysql-server:8.0.17
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4
     ports:
-      - 1433:1433
+      - 3306:3306
+    restart: always
     volumes:
-      - dbvol:/var/lib/mssql
+      - dbvol:/var/lib/mysql
+      - ./_MySQL_Init_Script:/docker-entrypoint-initdb.d
     networks:
       - pikcha-net
     environment:
-            SA_PASSWORD: "My_password123"
-            ACCEPT_EULA: "Y"
-            MSSQL_PID: "Express"
+      MYSQL_ROOT_PASSWORD: HkQuvuw2s3UXKd      
+      MYSQL_USER: pikcha_dbuser
+      MYSQL_PASSWORD: xKnrHCWQ8PPKq
+      MYSQL_DATABASE: pikcha_db
 
-   
+  adminer:
+    image: adminer
+    container_name: myadmin_c
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - pikcha-net
+
 volumes:
   dbvol:
 

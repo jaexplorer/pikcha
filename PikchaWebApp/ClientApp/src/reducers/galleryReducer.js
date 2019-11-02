@@ -1,5 +1,5 @@
 import {
-  GET_PHOTOS,
+  PHOTOS_LOADED,
   PHOTO_SELECTED,
   PHOTO_DESELECTED,
   PHOTOS_LOADING,
@@ -18,24 +18,17 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case GET_PHOTOS:
-      payload.data.forEach(d => {
+    case PHOTOS_LOADED:
+      payload.forEach(d => {
         const randomised = Math.random() * (30 - 15) + 15;
         d.height = randomised;
       });
       return {
         ...state,
-        photos:
-          state.photos == null
-            ? payload
-            : {
-                status: state.photos.status,
-                statuscode: state.photos.statuscode,
-                data: [...state.photos.data, ...payload.data]
-              },
+        photos: state.photos == null ? payload : [...state.photos, ...payload],
+
         loading: false,
-        start: state.start + state.count,
-        hasMore: payload.data.length ? true : false
+        start: state.start + state.count
       };
     case PHOTO_SELECTED:
       return {
@@ -48,11 +41,12 @@ export default (state = initialState, { type, payload }) => {
         selected: null
       };
     case PHOTOS_ERROR:
-      console.error(payload);
+      !payload.data === "You have reached the end." && console.error(payload);
       return {
         ...state,
         error: payload,
-        loading: false
+        loading: false,
+        hasMore: !payload.data === "You have reached the end."
       };
     case PHOTOS_LOADING:
       return {

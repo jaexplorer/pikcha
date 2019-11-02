@@ -1863,29 +1863,39 @@
                 <li><a href="/authentication/register">Signup </a></li>
                 <li><a href="/authentication/login">Login</a></li></div></div></div></div>
         <div class="auth-container"><div class="auth-wrapper">
-            <form class="auth-form" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                <div class="form-logo"><img src="data:image/png;base64,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" alt=""></div>
-            <div class="form-title">Sign up</div>
-                <!--<div class="input-wrapper">
-                    <div asp-validation-summary="All" class="text-danger"></div>
-                    <input type="text" asp-for="Input.Email" name="name" placeholder="Name" value="">
 
-                </div> -->
-            <div class="input-wrapper">
-                <input asp-for="Input.Email" placeholder="Email" value="">
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="input-wrapper">
-                <input  asp-for="Input.Password" placeholder="Password" value="">
-                <span asp-validation-for="Input.Password" class="text-danger"></span></div>
-            <div class="input-wrapper">
-                <input asp-for="Input.ConfirmPassword" placeholder="Confirm Password" value="">
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span></div>
-                <div class="form-btn">
-            <input type="submit" value="Register"></div>
-                <div class="text-center"><a href="/Identity/Account/Login">Already have an account?</a></div>
-              </form>
-            </div></div></div></div>
+                                        <form class="auth-form" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                            <div class="form-logo"><img src="data:image/png;base64,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" alt=""></div>
+                                            <div class="form-title">Sign up</div>
+
+                                            <div asp-validation-summary="All" class="text-danger"></div>
+
+                                            <div class="input-wrapper">
+                                                <input asp-for="Input.FName" placeholder="First Name" value="">
+                                                <span asp-validation-for="Input.FName" class="text-danger"></span>
+                                            </div>
+                                            <div class="input-wrapper">
+                                                <input asp-for="Input.LName" placeholder="Last Name" value="">
+                                                <span asp-validation-for="Input.LName" class="text-danger"></span>
+                                            </div>
+                                            <div class="input-wrapper">
+                                                <input asp-for="Input.Email" placeholder="Email" value="">
+                                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                            </div>
+                                            <div class="input-wrapper">
+                                                <input asp-for="Input.Password" placeholder="Password" value="">
+                                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                            </div>
+                                            <div class="input-wrapper">
+                                                <input asp-for="Input.ConfirmPassword" placeholder="Confirm Password" value="">
+                                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-btn">
+                                                <input type="submit" value="Register">
+                                            </div>
+                                            <div class="text-center"><a href="/Identity/Account/Login">Already have an account?</a></div>
+                                        </form>
+</div></div></div></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

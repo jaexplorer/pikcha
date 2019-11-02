@@ -1,19 +1,211 @@
-import { CREATE_DP_MODAL, REMOVE_DP_MODAL } from "./types";
+import AuthorizeService from "../components/auth/AuthorizeService";
+import axios from "axios";
 
-// Create upload display picture model
-export const createModal = () => {
-  return dispatch => {
-    dispatch({
-      type: CREATE_DP_MODAL
-    });
+import {
+  USER_LOADING,
+  USER_UPDATED,
+  USER_LOADED,
+  LOGGED_OUT,
+  USER_ERROR,
+  SIGNATURE_LOADED,
+  SIGNATURE_LOADING,
+  ARTIST_FOLLOWED,
+  ARTIST_UNFOLLOWED
+} from "./types";
+
+export const loadUser = () => {
+  return async dispatch => {
+    try {
+      dispatch(setUserLoading());
+      const token = await AuthorizeService.getAccessToken();
+      const user = await AuthorizeService.getUser();
+      const res = await axios.get(`api/profile/${user.sub}/myinfo`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: USER_ERROR, payload: err.response });
+    }
   };
 };
 
-// Remove upload display picture model
-export const removeModal = () => {
-  return dispatch => {
-    dispatch({
-      type: REMOVE_DP_MODAL
-    });
+export const updateUserDetails = formData => {
+  return async dispatch => {
+    try {
+      dispatch(setUserLoading());
+      const token = await AuthorizeService.getAccessToken();
+      const user = await AuthorizeService.getUser();
+      const res = await axios.put(`api/profile/${user.sub}`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      dispatch({
+        type: USER_UPDATED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: USER_ERROR, payload: err.response });
+    }
   };
+};
+
+export const updateProfilePicture = formData => {
+  return async dispatch => {
+    try {
+      dispatch(setUserLoading());
+      const token = await AuthorizeService.getAccessToken();
+      const user = await AuthorizeService.getUser();
+      const res = await axios.post(`api/profile/${user.sub}/avatar`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      dispatch({
+        type: USER_UPDATED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: USER_ERROR, payload: err.response });
+    }
+  };
+};
+
+export const promoteToArtist = formData => {
+  return async dispatch => {
+    try {
+      dispatch(setUserLoading());
+      const token = await AuthorizeService.getAccessToken();
+      const user = await AuthorizeService.getUser();
+      const res = await axios.post(
+        `api/profile/${user.sub}/promote`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      dispatch({
+        type: USER_UPDATED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: USER_ERROR, payload: err.response });
+    }
+  };
+};
+
+export const loadSignature = () => {
+  return async dispatch => {
+    try {
+      dispatch(setSignatureLoading());
+      const token = await AuthorizeService.getAccessToken();
+      const user = await AuthorizeService.getUser();
+      const res = await axios.get(`api/profile/${user.sub}/signature`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      dispatch({
+        type: SIGNATURE_LOADED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: USER_ERROR, payload: err.response });
+    }
+  };
+};
+
+export const uploadImage = formData => {
+  return async dispatch => {
+    try {
+      const token = await AuthorizeService.getAccessToken();
+      const res = await axios.post(`api/image/upload`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data"
+        }
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err.response);
+    }
+  };
+};
+
+export const followArtist = (userId, artistId) => {
+  return async dispatch => {
+    try {
+      const token = await AuthorizeService.getAccessToken();
+      const res = await axios.post(
+        `api/profile/${userId}/artist/${artistId}/follow`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      dispatch(setUserLoading());
+      dispatch({
+        type: USER_UPDATED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: USER_ERROR, payload: err.response });
+    }
+  };
+};
+
+export const unfollowArtist = (userId, artistId) => {
+  return async dispatch => {
+    try {
+      const token = await AuthorizeService.getAccessToken();
+      const res = await axios.post(
+        `api/profile/${userId}/artist/${artistId}/unfollow`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      dispatch(setUserLoading());
+      dispatch({
+        type: USER_UPDATED,
+        payload: res.data
+      });
+    } catch (err) {
+      dispatch({ type: USER_ERROR, payload: err.response });
+    }
+  };
+};
+
+// Deauthenticate user
+export const logout = () => {
+  return async dispatch => {
+    dispatch({ type: LOGGED_OUT });
+  };
+};
+
+// Set User Loading
+export const setUserLoading = () => {
+  return { type: USER_LOADING };
+};
+
+// Set Signature Loading
+export const setSignatureLoading = () => {
+  return { type: SIGNATURE_LOADING };
 };

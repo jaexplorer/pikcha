@@ -16,11 +16,11 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status416RequestedRangeNotSatisfiable)]
-        protected ActionResult ReturnOkOrNotFound(object value)
+        protected ActionResult ReturnOkOrErrorStatus(object value)
         {
             if(value == null)
             {
-                return StatusCode(StatusCodes.Status416RequestedRangeNotSatisfiable, PikchaMessages.MESS_Status416RequestedRangeNotSatisfiable);
+                return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404NotFound);
                 //return NotFound();
             }
             var enumerableObj = value as System.Collections.IList;
@@ -32,6 +32,8 @@ namespace PikchaWebApp.Controllers
             }
             return Ok(value);
         }
+
+
 
        
     }

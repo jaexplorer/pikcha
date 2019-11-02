@@ -1,9 +1,19 @@
-// Login / Register Types
-export const LOGGED_IN = "LOGGED_IN";
-export const AUTH_ERROR = "AUTH_ERROR";
-export const LOGGED_OUT = "LOGGED_OUT";
-export const CLEAR_ERRORS = "CLEAR_ERRORS";
+// Auth Types
+export const DEAUTHENTICATE = "DEAUTHENTICATE";
 export const AUTH_LOADING = "AUTH_LOADING";
+export const AUTH_FAILED = "AUTH_FAILED";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
+
+// Account Types
+export const USER_LOADING = "USER_LOADING";
+export const USER_LOADED = "USER_LOADED";
+export const USER_UPDATED = "USER_UPDATED";
+export const LOGGED_OUT = "LOGGED_OUT";
+export const USER_ERROR = "USER_ERROR";
+export const SIGNATURE_LOADING = "SIGNATURE_LOADING";
+export const SIGNATURE_LOADED = "SIGNATURE_LOADED";
+export const ARTIST_FOLLOWED = "ARTIST_FOLLOWED";
+export const ARTIST_UNFOLLOWED = "ARTIST_UNFOLLOWED";
 
 // Alert Types
 export const SET_ALERT = "SET_ALERT";
@@ -16,11 +26,18 @@ export const CREATE_CART_DROPDOWN = "CREATE_CART_DROPDOWN";
 export const REMOVE_CART_DROPDOWN = "REMOVE_CART_DROPDOWN";
 
 // Gallery Types
-export const GET_PHOTOS = "GET_PHOTOS";
+export const PHOTOS_LOADED = "PHOTOS_LOADED";
 export const PHOTOS_LOADING = "PHOTOS_LOADING";
 export const PHOTOS_ERROR = "PHOTOS_ERROR";
 export const PHOTO_SELECTED = "PHOTO_SELECTED";
 export const PHOTO_DESELECTED = "PHOTO_DESELECTED";
+
+// Pikcha100 && Artist100
+export const PIKCHA100_LOADED = "PIKCHA100_LOADED";
+export const ARTIST100_LOADED = "ARTIST100_LOADED";
+export const PIKCHA100_LOADING = "PIKCHA100_LOADING";
+export const ARTIST100_LOADING = "ARTIST100_LOADING";
+export const TOP100_ERROR = "TOP100_ERROR";
 
 // Product Types
 export const GET_PRODUCT = "GET_PRODUCT";
@@ -34,7 +51,7 @@ export const SET_FINISH = "SET_FINISH";
 export const CLEAR_CUSTOMISATIONS = "CLEAR_CUSTOMISATIONS";
 
 // Artist Types
-export const GET_ARTIST = "GET_ARTIST";
+export const ARTIST_LOADED = "ARTIST_LOADED";
 export const ARTIST_LOADING = "ARTIST_LOADING";
 export const ARTIST_ERROR = "ARTIST_ERROR";
 
@@ -43,6 +60,6 @@ export const PRODUCT_ADDED = "PRODUCT_ADDED";
 export const PRODUCT_REMOVED = "PRODUCT_REMOVED";
 export const CLEAR_CART = "CLEAR_CART";
 
-// Account Types
-export const CREATE_DP_MODAL = "CREATE_DP_MODAL";
-export const REMOVE_DP_MODAL = "REMOVE_DP_MODAL";
+// Modal Types
+export const CREATE_MODAL = "CREATE_MODAL";
+export const REMOVE_MODAL = "REMOVE_MODAL";

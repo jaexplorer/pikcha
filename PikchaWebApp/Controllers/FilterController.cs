@@ -8,6 +8,9 @@ using PikchaWebApp.Data;
 using PikchaWebApp.Models;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using PikchaWebApp.Managers;
+using Serilog;
+using Microsoft.AspNetCore.Identity;
 
 namespace PikchaWebApp.Controllers
 {
@@ -25,107 +28,110 @@ namespace PikchaWebApp.Controllers
 
         [HttpGet("images")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status416RangeNotSatisfiable)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> Images(string Type="random", int Start=0, int Count=20 )
+        public async Task<ActionResult> Images(string Type = "random", int Start = 0, int Count = 20, string ArtistId = "")
         {
             try
-            {               
-
-                if (Type == "pikcha100")
-                {
-                    //var pikcha100imgTsks = _mapper.ProjectTo<Pikcha100ImageDTO>(_pikchDbContext.PikchaImages).OrderByDescending(im => im.TotalViews).Skip(Start).Take(Count).ToListAsync();
-                    var pikcha100imgs = await _mapper.ProjectTo<Pikcha100ImageDTO>(_pikchDbContext.PikchaImages).OrderByDescending(im => im.TotalViews).Skip(Start).Take(Count).ToListAsync();
-                    return ReturnOkOrNotFound(pikcha100imgs);
-
-                    // return new ReturnDataModel() { Data = pikcha100imgs };
-
-                   /* await pikcha100imgTsks;
-
-                    if (pikcha100imgTsks.IsCompleted)
-                    {
-                        return ReturnOkOrNotFound(pikcha100imgTsks.Result);
-                    }
-
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */
-                }
-
-                //List<PikchaImage> images = _pikchDbContext.PikchaImages.Include(img => img.Artist).Skip(Start).Take(Count).OrderBy(r => Guid.NewGuid()).ToList();
-                var images = await _mapper.ProjectTo<PikchaRandomImageDTO>(_pikchDbContext.PikchaImages).OrderByDescending(im => im.TotalViews).Skip(Start).Take(Count).ToListAsync();
-                return ReturnOkOrNotFound(images);
-                /*await imagesTsk;
-
-                if (imagesTsk.IsCompleted)
-                {
-                    return ReturnOkOrNotFound(imagesTsk.Result);
-                }
-
-                return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */
-            }
-            catch(Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-
-            }
-        }
-
-        
-        [HttpGet("artists")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> Artists(string Type = "random", int Start = 0, int Count = 20)
-        {
-            try
-            {               // var bImg = art.TopImage;
-                if (Type == "artists100")
+                switch (Type)
                 {
-                    // DONT DELETE - This query is required to make sure that pikchaimageviews are included 
-                    var art = _pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews").ToList();
-
-
-                    var artists100 =await _mapper.ProjectTo<Pikcha100ArtistDTO>(_pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews")).OrderByDescending(im => im.FirstName).Skip(Start).Take(Count).ToListAsync();
-                    return ReturnOkOrNotFound(artists100);
-                    /* await artists100Tsk;
-
-                    if (artists100Tsk.IsCompleted)
-                    {
-                        return ReturnOkOrNotFound(artists100Tsk.Result);
-                    }
-
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */
-
-                    //return new ReturnDataModel() { Data = artists100 };
+                    case "pikcha100":
+                        return await ProcessPikcha100(Start, Count);
+                    //break;
+                    case "artist100":
+                        return await ProcessArtists100(Start, Count);
+                    case "artistId":
+                        return await ProcessArtistsId(ArtistId, Start, Count);
+                    default:
+                        return await ProcessRandomImages(Start, Count);
                 }
-
-                // DONT DELETE - This query is required to make sure that pikchaimageviews are included 
-                var art2 = _pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews").ToList();
-
-                var artists = await _mapper.ProjectTo<Pikcha100ArtistDTO>(_pikchDbContext.PikchaUsers.Include("PikchaImages").Include("PikchaImages.PikchaImageViews")).OrderByDescending(im => im.FirstName).Skip(Start).Take(Count).ToListAsync();
-                return ReturnOkOrNotFound(artists);
-
-               // var artists = await _pikchDbContext.PikchaUsers.Skip(Start).Take(Count).OrderBy(r => Guid.NewGuid()).ToListAsync();
-               // return ReturnOkOrNotFound(artists);
-                /*await artistTsk;
-
-                if (artistTsk.IsCompleted)
-                {
-                    return ReturnOkOrNotFound(artistTsk.Result);
-                }
-
-                return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed."); */
-                //return new ReturnDataModel() { Data = artists };
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-               // return new ReturnDataModel() { Statuscode = (int) STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = ex.Message };
+                Log.Error(ex, " Filter, Images, parameters: type={Type}, Start={Start}, Count={Count}", Type, Start, Count);
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
 
             }
-                       
+        }
+
+        private async Task<ActionResult> ProcessPikcha100(int start, int count)
+        {
+            var pikcha100imgs = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaImages.Include("Views").OrderByDescending(i => i.Views.Count()).Skip(start).Take(count)).ToListAsync();
+            return ReturnOkOrErrorStatus(pikcha100imgs);
+        }
+
+        private async Task<ActionResult> ProcessArtists100(int start, int count)
+        {
+            /*var artists100 = (from user in _pikchDbContext.PikchaUsers.Where(i => i.Images.Count > 0).OrderByDescending(i => i.Images.Sum(v => v.Views.Sum(c => c.Count))).Include( p => p.Images).ThenInclude(r => r.Products)
+                                    select new PikchaArtist100ImageFilterDTO()
+                                    {
+                                        Artist = new PikchaArtistBaseDTO()
+                                        {
+                                            Avatar = user.Avatar,
+                                            FName = user.FName,
+                                            LName = user.LName,
+                                            Id = user.Id,
+                                            Location = string.Concat(string.IsNullOrEmpty(user.City) ? string.Empty : user.City + ", ", string.IsNullOrEmpty(user.Country) ? string.Empty : user.Country),
+                                            Email = user.Email,
+                                            AggrImViews = (from img in user.Images
+                                                           join iv in _pikchDbContext.ImageViews on img.Id equals iv.PikchaImage.Id
+                                                           select iv
+                                                        ).Sum(v => v.Count).ToString()
+                                        },
+
+                                        TopImage = _mapper.Map<PikchaImageFilterDTO>(user.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First()),
+                                        Views = user.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First().Views.Sum(v => v.Count).ToString(),
+                                        ProductIds = user.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First().Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id).ToList()
+                                    }).Skip(start).Take(count).ToList(); */
+
+            var artists100 = (from user in _pikchDbContext.PikchaUsers.Where(i => i.Images.Count > 0).OrderByDescending(i => i.Images.Sum(v => v.Views.Sum(c => c.Count))).Include(p => p.Images).ThenInclude(r => r.Products)
+                              select new PikchaArtist100ImageFilterDTO()
+                              {
+                                  Artist = new PikchaArtistBaseDTO()
+                                  {
+                                      Avatar = user.Avatar,
+                                      FName = user.FName,
+                                      LName = user.LName,
+                                      Id = user.Id,
+                                      Location = string.Concat(string.IsNullOrEmpty(user.City) ? string.Empty : user.City + ", ", string.IsNullOrEmpty(user.Country) ? string.Empty : user.Country),
+                                      Email = user.Email,
+                                      AggrImViews = (from img in user.Images
+                                                     join iv in _pikchDbContext.ImageViews on img.Id equals iv.PikchaImage.Id
+                                                     select iv
+                                                  ).Sum(v => v.Count).ToString()
+                                  },
+
+
+                                  TopImage = _mapper.Map<PikchaImageFilterDTO>(user.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First()),
+
+
+                                  Views = user.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First().Views.Sum(v => v.Count).ToString(),
+                                  ProductIds = user.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First().Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id).ToList()
+
+
+                              }).Skip(0).Take(20).ToList();
+
+            return ReturnOkOrErrorStatus(artists100);
+            //return OK(artists100);
         }
 
 
+        private async Task<ActionResult> ProcessArtistsId(string artistId, int start, int count)
+        {
+            if (artistId == "")
+            {
+                return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ArtistNotFound);
+            }
+            var artists100 = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaImages.Include("Artist").Include("Views").Where(i => i.Artist.Id == artistId).AsQueryable().Skip(start).Take(count)).ToListAsync();
+            return ReturnOkOrErrorStatus(artists100);
+        }
+
+        private async Task<ActionResult> ProcessRandomImages(int start, int count)
+        {
+            var images = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaImages.Skip(start).Take(count)).ToListAsync();
+            return ReturnOkOrErrorStatus(images);
+        }
     }
 
 }

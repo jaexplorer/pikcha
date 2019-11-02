@@ -1,6 +1,6 @@
 // Account
 // ------------------------------------------------------------------- //
-.account-container {
+#account-container {
   font-family: "Montserrat";
   .account-title {
     font-size: 2rem;
@@ -32,6 +32,8 @@
         color: #fafafa;
         font-size: 1.4rem;
         padding: 1rem;
+        border-radius: 10px;
+        text-transform: capitalize;
       }
     }
   }
@@ -45,13 +47,23 @@
 
   .display-picture {
     position: relative;
-    img {
+    & > img {
       height: 15rem;
+      width: 15rem;
+      object-position: center center;
+      object-fit: cover;
+      border-radius: 50%;
+      border: rgb(201, 201, 201) 2px solid;
     }
 
     .edit {
       position: absolute;
-      background: mediumpurple;
+      background-image: linear-gradient(
+        -130deg,
+        #5271c4 0%,
+        #b19fff 50%,
+        rgba(236, 161, 254, 1) 100%
+      );
       bottom: 0;
       right: 0;
       width: 4rem;
@@ -59,6 +71,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 10px;
       img {
         height: 2rem;
         cursor: pointer;
@@ -120,6 +133,9 @@
   .email {
     .input-wrapper {
       width: 39rem;
+      .input-field {
+        text-transform: lowercase !important;
+      }
     }
   }
 
@@ -231,7 +247,13 @@
   justify-content: flex-end;
 
   input {
-    background: #1a1a1a;
+    background-image: linear-gradient(
+      -130deg,
+      #5271c4 0%,
+      #b19fff 50%,
+      rgba(236, 161, 254, 1) 100%
+    );
+    border-radius: 10px;
     color: white;
     border: none;
     padding-left: 2rem;
@@ -268,7 +290,7 @@
       position: relative;
       font-size: 1rem;
       margin-top: 2.5rem;
-      margin-bottom: 3.5rem;
+      margin-bottom: 3.6rem;
 
       &::before {
         content: "";
@@ -325,12 +347,49 @@
       }
     }
   }
+
+  .prompt {
+    width: 12rem;
+    height: max-content;
+    padding: 2rem;
+    background-image: linear-gradient(
+      -130deg,
+      #5271c4 0%,
+      #b19fff 50%,
+      #eca1fe 100%
+    );
+    border-radius: 10px;
+    font-family: "Montserrat";
+    color: white;
+    text-align: center;
+    cursor: pointer;
+
+    .prompt-title {
+      text-transform: uppercase;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .prompt-text {
+      font-size: 1.2rem;
+      margin-bottom: 3rem;
+    }
+
+    .prompt-action {
+      z-index: 20;
+      position: relative;
+      img {
+        height: 2rem;
+      }
+      margin-bottom: 1rem;
+    }
+  }
 }
 
 // Small Devices
 // ---------------------------------------- //
 @media screen and (max-width: 699px) {
-  .account-container {
+  #account-container {
     padding-left: 3rem;
     padding-right: 3rem;
     margin-left: 20%;
