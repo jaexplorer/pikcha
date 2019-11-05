@@ -43,8 +43,18 @@ namespace PikchaWebApp.Managers
                         using (MagickImage signatureImg = new MagickImage( PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER +  signatureFile))
                         {
                             pkImage.Width = image.Width;
-                            pkImage.Height = image.Height;
-                            signatureImg.Resize(300, 0);
+                            
+                            pkImage.Height = image.Height;  
+                            if(pkImage.Width > pkImage.Height)
+                            {
+                                signatureImg.Resize((int)(pkImage.Width / 10), 0); // 10 % width of the original image
+
+                            }
+                            else
+                            {
+                                signatureImg.Resize( 0,(int)(pkImage.Height / 10)); // 10 % width of the original image
+
+                            }
                             image.Composite(signatureImg, Gravity.Southeast, CompositeOperator.Over);
 
 
@@ -53,13 +63,29 @@ namespace PikchaWebApp.Managers
                             if (image.Width > image.Height)
                             {
 
-                                image.Resize(1600, 0);
-                                waterImage.Resize(image.Width, 0);
+                                image.Resize(1024, 0);
+                                if(pkImage.Width > 1920)
+                                {
+                                    waterImage.Resize(1920, 0);
+
+                                }
+                                else
+                                {
+                                    waterImage.Resize(pkImage.Width, 0);
+
+                                }
                             }
                             else
                             {
-                                image.Resize(0, 1600);
-                                waterImage.Resize(0, image.Height);
+                                image.Resize(0, 1024);
+                                if(pkImage.Height> 1920)
+                                {
+                                    waterImage.Resize(0, 1920);
+                                }
+                                else
+                                {
+                                    waterImage.Resize(0, pkImage.Height);
+                                }
                             }
 
                             StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
@@ -68,7 +94,15 @@ namespace PikchaWebApp.Managers
                             // Read the watermark that will be put on top of the image
                             using (MagickImage watermark = new MagickImage(_watermark_img))
                             {
-                                //watermark.Resize(100, 0);
+                                if(waterImage.Width > waterImage.Height)
+                                {
+                                    watermark.Resize((int)(waterImage.Width / 5), 0); // 20 % width of the original image
+                                }
+                                else
+                                {
+                                    watermark.Resize(0, (int)(waterImage.Height / 5)); // 20 % width of the original image
+
+                                }
                                 // Draw the watermark in the center
                                 waterImage.Composite(watermark, Gravity.Center, CompositeOperator.Over);
                                 pkImage.Watermark = manager.UploadWaterMark(waterImage, imageId, StorageManager.FileCategory.PikchaImage);

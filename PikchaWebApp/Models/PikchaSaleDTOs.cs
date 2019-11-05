@@ -29,7 +29,7 @@ namespace PikchaWebApp.Models
 
         public decimal Performance { get; set; } = 0;
         public int TotSold { get; set; } = 0;
-        public PikchaUserBaseDTO Artist { get; set; } = new PikchaUserBaseDTO();
+        public UserBaseDTO Artist { get; set; } = new UserBaseDTO();
 
         public List<ProductSellerDTO> Sellers { get; set; } = new List<ProductSellerDTO>();
     }

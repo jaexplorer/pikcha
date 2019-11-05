@@ -66,7 +66,7 @@ namespace PikchaWebApp.Controllers
             /*var artists100 = (from user in _pikchDbContext.PikchaUsers.Where(i => i.Images.Count > 0).OrderByDescending(i => i.Images.Sum(v => v.Views.Sum(c => c.Count))).Include( p => p.Images).ThenInclude(r => r.Products)
                                     select new PikchaArtist100ImageFilterDTO()
                                     {
-                                        Artist = new PikchaArtistBaseDTO()
+                                        Artist = new ArtistBaseDTO()
                                         {
                                             Avatar = user.Avatar,
                                             FName = user.FName,
@@ -85,10 +85,10 @@ namespace PikchaWebApp.Controllers
                                         ProductIds = user.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First().Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id).ToList()
                                     }).Skip(start).Take(count).ToList(); */
 
-            var artists100 = (from user in _pikchDbContext.PikchaUsers.Where(i => i.Images.Count > 0).OrderByDescending(i => i.Images.Sum(v => v.Views.Sum(c => c.Count))).Include(p => p.Images).ThenInclude(r => r.Products)
+           /* var artists100 = (from user in _pikchDbContext.PikchaUsers.Where(i => i.Images.Count > 0).OrderByDescending(i => i.Images.Sum(v => v.Views.Sum(c => c.Count))).Include(p => p.Images).ThenInclude(r => r.Products)
                               select new PikchaArtist100ImageFilterDTO()
                               {
-                                  Artist = new PikchaArtistBaseDTO()
+                                  Artist = new ArtistBaseDTO()
                                   {
                                       Avatar = user.Avatar,
                                       FName = user.FName,
@@ -110,7 +110,16 @@ namespace PikchaWebApp.Controllers
                                   ProductIds = user.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First().Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id).ToList()
 
 
-                              }).Skip(0).Take(20).ToList();
+                              }).Skip(0).Take(20).ToList(); */
+
+            var images = _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Images.Artist")
+                    .OrderByDescending(u => u.Images.Sum(i => i.Views.Sum(v => v.Count)))
+                    .Skip(start).Take(count)
+                    //.Select(u => u.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First())
+                    .SelectMany(u => u.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).Take(1))
+                    ;
+
+            var artists100 = await _mapper.ProjectTo<PikchaImageFilterDTO>(images).ToListAsync();
 
             return ReturnOkOrErrorStatus(artists100);
             //return OK(artists100);

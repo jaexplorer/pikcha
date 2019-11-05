@@ -71,15 +71,16 @@ namespace PikchaWebApp.Models
         public string Watermark { get; set; } = string.Empty;
         public string Views { get; set; } =  string.Empty;
 
-        public PikchaArtistBaseDTO Artist { get; set; } = new PikchaArtistBaseDTO();
+        public ArtistBaseDTO Artist { get; set; } = new ArtistBaseDTO();
 
     }
 
+    /*
     public class PikchaArtist100ImageFilterDTO
     {
         public PikchaImageFilterDTO TopImage { get; set; } = new PikchaImageFilterDTO();
 
-        public PikchaArtistBaseDTO Artist { get; set; } = new PikchaArtistBaseDTO();
+        public ArtistBaseDTO Artist { get; set; } = new ArtistBaseDTO();
 
         public string Views { get; set; } = string.Empty;
         public decimal Performance { get; set; } = 0;
@@ -99,6 +100,34 @@ namespace PikchaWebApp.Models
 
 
        //public List<string> ProductIds { get { return this.TopImage.Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id).ToList(); } }
+
+    }
+    */
+
+    public class PikchaArtist100ImageFilterDTO
+    {
+        public PikchaImageFilterDTO TopImage { get; set; } = new PikchaImageFilterDTO();
+
+        public ArtistBaseDTO Artist { get; set; } = new ArtistBaseDTO();
+
+        public string Views { get; set; } = string.Empty;
+        public decimal Performance { get; set; } = 0;
+        public int TotSold { get; set; } = 0;
+        public decimal AvgPrice { get; set; } = 0;
+
+        public List<string> ProductIds { get; set; } = new List<string>();
+
+
+        public string Id { get { return this.TopImage.Id; } }
+        public string Title { get { return this.TopImage.Title; } }
+        public string Location { get { return this.TopImage.Location; } }
+        public string Thumbnail { get { return this.TopImage.Thumbnail; } }
+        public string Watermark { get { return this.TopImage.Watermark; } }
+        public string Caption { get { return this.TopImage.Caption; } }
+        //public string Views { get { return this.TopImage.Views; } }
+
+
+        //public List<string> ProductIds { get { return this.TopImage.Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id).ToList(); } }
 
     }
 

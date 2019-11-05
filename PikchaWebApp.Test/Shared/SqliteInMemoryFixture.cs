@@ -29,6 +29,7 @@ namespace PikchaWebApp.Test.Shared
                 .AddMemoryCache()
                 .AddLogging()
                 .AddDbContext<PikchaDbContext>(b => b.UseSqlite(_connection));
+                //.AddDbContext<PikchaDbContext>(b => b.UseMySql();
 
             // services.AddDefaultIdentity<PikchaUser>()
             //.AddEntityFrameworkStores<PikchaDbContext>();

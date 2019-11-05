@@ -14,6 +14,8 @@ namespace PikchaWebApp.Managers
         public const string MESS_Status404_UserAlreadyPromoted = "User is already promoted.";
         public const string MESS_Status404_ProductNotFound = "Product not found.";
         public const string MESS_Status404_ArtistNotFound = "Artist not found.";
+        public const string MESS_Status404_UserAlreadyUnfollowed = "User is already unfollowed the artist.";
+        public const string MESS_Status404_UserCantFollowHimself = "You can't follow yourself.";
 
         public const string MESS_Status404ImageNotFound = "Image not found.";
         public const string MESS_Status404SignatureNotFound = "Signature not found.";

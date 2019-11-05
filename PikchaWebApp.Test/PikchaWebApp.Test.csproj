@@ -28,6 +28,12 @@
     <None Update="wwwroot\TestPhotos\black-white.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="wwwroot\TestPhotos\d01de11c-3317-4dff-b3f7-7f71f68b8210-inv.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="wwwroot\TestPhotos\d01de11c-3317-4dff-b3f7-7f71f68b8210-org.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

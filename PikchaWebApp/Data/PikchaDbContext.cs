@@ -30,7 +30,7 @@ namespace PikchaWebApp.Data
         public DbSet<ImageTag> ImageTags { get; set; }
         public DbSet<ImageView> ImageViews { get; set; }
 
-        public DbSet<PikchaArtistFollower> Followers { get; set; }
+        public DbSet<ArtistFollower> Followers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -46,12 +46,19 @@ namespace PikchaWebApp.Data
             
             builder.Entity<PikchaImage>()
             .Property(b => b.UploadedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+            //.HasDefaultValueSql("CURRENT_TIMESTAMP(6)") // mysql
+            //.HasDefaultValueSql("getdate()") //mssql
+            .HasDefaultValueSql("date('now')") //sqlite
+
+
+            ;
 
             builder.Entity<PikchaImage>()
             .Property(b => b.ModifiedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-           
+            //.HasDefaultValueSql("CURRENT_TIMESTAMP(6)")
+            .HasDefaultValueSql("date('now')") //sqlite
+            ;
+
             builder.Entity<PikchaUser>()
                 .Property(b => b.Links)
                 .HasConversion(
@@ -77,15 +84,15 @@ namespace PikchaWebApp.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Pikcha followers
-            builder.Entity<PikchaArtistFollower>().HasKey(sc => new { sc.ArtistsId, sc.UserId });
-            builder.Entity<PikchaArtistFollower>()
+            builder.Entity<ArtistFollower>().HasKey(sc => new { sc.ArtistsId, sc.UserId });
+            builder.Entity<ArtistFollower>()
                 .HasOne<PikchaUser>(sc => sc.PikchaUser)
                 .WithMany(s => s.Following)
                 .HasForeignKey(sc => sc.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
             
-            builder.Entity<PikchaArtistFollower>()
-                .HasOne<PikchaUser>(sc => sc.PikchaArtist)
+            builder.Entity<ArtistFollower>()
+                .HasOne<PikchaUser>(sc => sc.Artist)
                 .WithMany(s => s.Followers)
                 .HasForeignKey(sc => sc.ArtistsId)
                 .OnDelete(DeleteBehavior.Restrict);

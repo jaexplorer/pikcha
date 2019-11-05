@@ -68,7 +68,7 @@ namespace PikchaWebApp.Test.Unit
 
             Assert.Equal(statusCode, result2.StatusCode);
 
-            var qUsr = result2.Value as PikchaArtistDTO;
+            var qUsr = result2.Value as ArtistDTO;
             Assert.Equal(userId, qUsr.Id);
             return;
 
@@ -144,16 +144,24 @@ namespace PikchaWebApp.Test.Unit
             }
             using (var ms = new MemoryStream())
             {
+                //ms.Position = 0;
+
                 img.ImageFile.CopyTo(ms);
-                //var fileBytes = ms.ToArray();
-                //string imgContent = Convert.ToBase64String(fileBytes);
-                profCntrl.HttpContext.Request.Body = ms; ;
+                var fileBytes = ms.ToArray();
+                string imgContent = Convert.ToBase64String(fileBytes);
+
+                var json = "{ \"signatureContent\": \""+ imgContent +"\"}";
+                var bytes = System.Text.Encoding.UTF8.GetBytes(json.ToCharArray());
+                var stream = new MemoryStream(bytes);
+                
+                //ms.Position = 0;
+                profCntrl.HttpContext.Request.Body = stream;
 
                 // act on the Base64 data
                 var result = await profCntrl.PromoteUserToArtist(pkUser.Id) as ObjectResult;
                 Assert.Equal(statusCode, result.StatusCode);
 
-                var qUsr = result.Value as PikchaAuthenticatedUserDTO;
+                var qUsr = result.Value as AuthenticatedUserDTO;
 
                 Assert.Contains(PikchaConstants.PIKCHA_ROLES_ARTIST_NAME, qUsr.Roles);
 
@@ -204,7 +212,7 @@ namespace PikchaWebApp.Test.Unit
             var result = await profCntrl.FollowAnArtist(pkArtist.Id, pkUser.Id) as ObjectResult;
             Assert.Equal(statusCode, result.StatusCode);
 
-            var qUsr = result.Value as PikchaAuthenticatedUserDTO;
+            var qUsr = result.Value as AuthenticatedUserDTO;
 
 
             Assert.True(qUsr.Following.Count > 0);
@@ -228,7 +236,7 @@ namespace PikchaWebApp.Test.Unit
             var profCntrl = CreateAuthenticatedProfileController(pkUser);
             var fresult = await profCntrl.FollowAnArtist(pkArtist.Id, pkUser.Id) as ObjectResult;
 
-            var qUsr = fresult.Value as PikchaAuthenticatedUserDTO;
+            var qUsr = fresult.Value as AuthenticatedUserDTO;
 
             Assert.Equal(200, fresult.StatusCode);
             Assert.True(qUsr.Following.Find(u => u.Id == pkArtist.Id) != null);
@@ -244,7 +252,7 @@ namespace PikchaWebApp.Test.Unit
             Assert.Equal(statusCode, result.StatusCode);
             
             
-            var qUsr2 = fresult.Value as PikchaAuthenticatedUserDTO;
+            var qUsr2 = result.Value as AuthenticatedUserDTO;
 
             Assert.True(qUsr2.Following.Find(u => u.Id == pkArtist.Id) == null);
             //var qUsr = result.Value as PikchaAuthenticatedUserDTO;

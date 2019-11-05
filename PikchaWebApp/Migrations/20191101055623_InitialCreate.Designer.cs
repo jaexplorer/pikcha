@@ -304,7 +304,7 @@ namespace PikchaWebApp.Migrations
                     b.ToTable("ImageViews");
                 });
 
-            modelBuilder.Entity("PikchaWebApp.Models.PikchaArtistFollower", b =>
+            modelBuilder.Entity("PikchaWebApp.Models.ArtistFollower", b =>
                 {
                     b.Property<string>("ArtistsId")
                         .HasColumnType("varchar(255)");
@@ -610,9 +610,9 @@ namespace PikchaWebApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PikchaWebApp.Models.PikchaArtistFollower", b =>
+            modelBuilder.Entity("PikchaWebApp.Models.ArtistFollower", b =>
                 {
-                    b.HasOne("PikchaWebApp.Models.PikchaUser", "PikchaArtist")
+                    b.HasOne("PikchaWebApp.Models.PikchaUser", "Artist")
                         .WithMany("Followers")
                         .HasForeignKey("ArtistsId")
                         .OnDelete(DeleteBehavior.Restrict)

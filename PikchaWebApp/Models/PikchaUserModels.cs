@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PikchaWebApp.Models
 {
@@ -55,8 +51,8 @@ namespace PikchaWebApp.Models
 
         public List<PikchaImage> Images { get; set; }
 
-        public List<PikchaArtistFollower> Following { get; set; } = new List<PikchaArtistFollower>();
-        public List<PikchaArtistFollower> Followers { get; set; } = new List<PikchaArtistFollower>();
+        public List<ArtistFollower> Following { get; set; } = new List<ArtistFollower>();
+        public List<ArtistFollower> Followers { get; set; } = new List<ArtistFollower>();
 
         /// <summary>
         /// Navigation property for the roles this user belongs to.
@@ -115,7 +111,7 @@ namespace PikchaWebApp.Models
     }
 
     [Table("ArtistFollowers")]
-    public class PikchaArtistFollower
+    public class ArtistFollower
     {
         public string UserId { get; set; }
 
@@ -123,7 +119,7 @@ namespace PikchaWebApp.Models
 
         public string ArtistsId { get; set; }
 
-        public PikchaUser PikchaArtist { get; set; }
+        public PikchaUser Artist { get; set; }
 
     }
 
