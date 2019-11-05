@@ -57,7 +57,7 @@ namespace PikchaWebApp.Controllers
 
         private async Task<ActionResult> ProcessPikcha100(int start, int count)
         {
-            var pikcha100imgs = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaImages.Include("Views").OrderByDescending(i => i.Views.Count()).Skip(start).Take(count)).ToListAsync();
+            var pikcha100imgs = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaImages.Include("Views").OrderByDescending(i => i.Views.Sum(v =>v.Count)).Skip(start).Take(count)).ToListAsync();
             return ReturnOkOrErrorStatus(pikcha100imgs);
         }
 
