@@ -68,7 +68,7 @@ namespace PikchaWebApp.Test.Unit
 
             Assert.Equal(statusCode, result2.StatusCode);
 
-            var qUsr = result2.Value as PikchaArtistDTO;
+            var qUsr = result2.Value as ArtistDTO;
             Assert.Equal(userId, qUsr.Id);
             return;
 
@@ -104,130 +104,87 @@ namespace PikchaWebApp.Test.Unit
         }
 
         // NEED to convert an image into Base64 and send it inside the bodydata
-        //[Theory]
-        //[InlineData("valid", StatusCodes.Status200OK)]
-        ////[InlineData("invalid", StatusCodes.Status500InternalServerError)]
-        //public async Task<PikchaUser> Post_Promote_Photo_Grapher_Test(string idType, int statusCode)
-        //{
-        //    // create a new user
-        //    string userId = Guid.NewGuid().ToString();
-        //    var pkUser = await MockHelpers.CreateNewUser(31, userId, "test31@test.com", "Password@123", _fixture);
+        [Theory]
+        [InlineData("valid", StatusCodes.Status200OK)]
+        //[InlineData("invalid", StatusCodes.Status500InternalServerError)]
+        public async Task<PikchaUser> Post_Promote_Photo_Grapher_Test(string idType, int statusCode)
+        {
+            // create a new user
+            string userId = Guid.NewGuid().ToString();
+            var pkUser = await MockHelpers.CreateNewUser(31, userId, "test31@test.com", "Password@123", _fixture);
 
-        //    var profCntrl = CreateAuthenticatedProfileController(pkUser);
+            var profCntrl = CreateAuthenticatedProfileController(pkUser);
 
-        //    // create a photo grapaher role
-        //    var roleManager = _fixture.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        //    var role = new IdentityRole();
-        //    //role.Id = Guid.NewGuid().ToString();
-        //    role.Name = PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME;
-        //    var s = roleManager.CreateAsync(role).Result;
+            // create a photo grapaher role
+            var roleManager = _fixture.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var role = new IdentityRole();
+            //role.Id = Guid.NewGuid().ToString();
+            role.Name = PikchaConstants.PIKCHA_ROLES_ARTIST_NAME;
+            var s = roleManager.CreateAsync(role).Result;
 
-        //    // create a file
-        //    string imagePath = "TestPhotos/black-white.jpg";
-        //    var img = MockHelpers.CreateImage(DateTime.Now.ToShortDateString(), "Caption 1", "location 1", imagePath);
+            // create a file
+            string imagePath = "wwwroot/TestPhotos/black-white.jpg";
+            var img = MockHelpers.CreateImage(DateTime.Now.ToShortDateString(), "Caption 1", "location 1", imagePath);
 
-        //    if(idType == "invalid")
-        //    {
-        //        using (var ms = new MemoryStream())
-        //        {
-        //            img.ImageFile.CopyTo(ms);
-        //            var fileBytes = ms.ToArray();
-        //            string imgContent = Convert.ToBase64String(fileBytes);
-        //            var result2 = await profCntrl.PromoteUserToArtist(Guid.NewGuid().ToString(), imgContent) as ObjectResult;
-        //            Assert.Equal(statusCode, result2.StatusCode);
+            if (idType == "invalid")
+            {
+                using (var ms = new MemoryStream())
+                {
+                    img.ImageFile.CopyTo(ms);
+                    //var fileBytes = ms.ToArray();
+                    //string imgContent = Convert.ToBase64String(fileBytes);
+                    profCntrl.HttpContext.Request.Body = ms; ;
 
-        //            return pkUser;
-        //        }
+                    var result2 = await profCntrl.PromoteUserToArtist(Guid.NewGuid().ToString()) as ObjectResult;
+                    Assert.Equal(statusCode, result2.StatusCode);
 
-        //    }
-        //    using (var ms = new MemoryStream())
-        //    {
-        //        img.ImageFile.CopyTo(ms);
-        //        var fileBytes = ms.ToArray();
-        //        string imgContent = Convert.ToBase64String(fileBytes);
-        //        // act on the Base64 data
-        //        var result = await profCntrl.PromoteUserToArtist(pkUser.Id, imgContent) as ObjectResult;
-        //        Assert.Equal(statusCode, result.StatusCode);
+                    return pkUser;
+                }
 
-        //        var qUsr = result.Value as PikchaAuthenticatedUserDTO;
+            }
+            using (var ms = new MemoryStream())
+            {
+                //ms.Position = 0;
 
-        //        Assert.Contains(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME, qUsr.Roles);
+                img.ImageFile.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                string imgContent = Convert.ToBase64String(fileBytes);
 
-        //        return pkUser;
-        //    }
+                var json = "{ \"signatureContent\": \""+ imgContent +"\"}";
+                var bytes = System.Text.Encoding.UTF8.GetBytes(json.ToCharArray());
+                var stream = new MemoryStream(bytes);
+                
+                //ms.Position = 0;
+                profCntrl.HttpContext.Request.Body = stream;
 
-        //}
+                // act on the Base64 data
+                var result = await profCntrl.PromoteUserToArtist(pkUser.Id) as ObjectResult;
+                Assert.Equal(statusCode, result.StatusCode);
+
+                var qUsr = result.Value as AuthenticatedUserDTO;
+
+                Assert.Contains(PikchaConstants.PIKCHA_ROLES_ARTIST_NAME, qUsr.Roles);
+
+                return pkUser;
+            }
+
+        }
 
 
         // NEED to convert an image into Base64 and send it inside the bodydata for uploading signature
 
-        //[Fact]
-        //[InlineData("invalid", StatusCodes.Status500InternalServerError)]
-        //public async Task Get_Signature()
-        //{
-        //    var artist = await Post_Promote_Photo_Grapher_Test("valid", 200);
+        [Fact]
+        [InlineData("invalid", StatusCodes.Status500InternalServerError)]
+        public async Task Get_Signature()
+        {
+            var artist = await Post_Promote_Photo_Grapher_Test("valid", 200);
 
-        //    var profCntrl = CreateAuthenticatedProfileController(artist);
+            var profCntrl = CreateAuthenticatedProfileController(artist);
 
-        //    var result = await profCntrl.GetSignature(artist.Id) as ObjectResult;
-        //    Assert.Equal(200, result.StatusCode);
+            var result = await profCntrl.GetSignature(artist.Id) as ObjectResult;
+            Assert.Equal(200, result.StatusCode);
 
-        //    //File.Exists(result.Value.)
-        //    //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
-
-        //    //Assert.Contains(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME, qUsr.Roles);
-
-        //}
-
-        // NEED to convert an image into Base64 and send it inside the bodydata for uploading avatar
-
-
-        //[Theory]
-        //[InlineData("valid", StatusCodes.Status200OK)]
-        ////[InlineData("invalid", StatusCodes.Status500InternalServerError)]
-        //public async Task Post_Upload_Avatar_Image_Test(string idType, int statusCode)
-        //{
-        //    // create a new user
-        //    string userId = Guid.NewGuid().ToString();
-        //    var pkUser = await MockHelpers.CreateNewUser(41, userId, "test41@test.com", "Password@123", _fixture);
-
-        //    var profCntrl = CreateAuthenticatedProfileController(pkUser);
-
-        //    // create a photo grapaher role
-
-        //    // create a file
-        //    var img = MockHelpers.CreateImage(DateTime.Now.ToShortDateString(), "Caption 1", "location 1");
-
-        //    if (idType == "invalid")
-        //    {
-        //        using (var ms = new MemoryStream())
-        //        {
-        //            img.ImageFile.CopyTo(ms);
-        //            var fileBytes = ms.ToArray();
-        //            string imgContent = Convert.ToBase64String(fileBytes);
-        //            //var result2 = await profCntrl.UploadAvatarImage(Guid.NewGuid().ToString(), imgContent) as ObjectResult;
-        //            //Assert.Equal(statusCode, result2.StatusCode);
-
-        //            return;
-        //        }
-
-        //    }
-
-        //    using (var ms = new MemoryStream())
-        //    {
-        //        img.ImageFile.CopyTo(ms);
-        //        var fileBytes = ms.ToArray();
-        //        string imgContent = Convert.ToBase64String(fileBytes);
-        //        //var result = await profCntrl.UploadAvatarImage(pkUser.Id, imgContent) as ObjectResult;
-        //        //Assert.Equal(statusCode, result.StatusCode);
-
-        //        //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
-
-        //        //Assert.True(File.Exists(qUsr.Avatar));
-        //    }
-
-
-        //}
+        }
 
 
         [Theory]
@@ -255,14 +212,11 @@ namespace PikchaWebApp.Test.Unit
             var result = await profCntrl.FollowAnArtist(pkArtist.Id, pkUser.Id) as ObjectResult;
             Assert.Equal(statusCode, result.StatusCode);
 
-            var qUsr = result.Value as PikchaAuthenticatedUserDTO;
+            var qUsr = result.Value as AuthenticatedUserDTO;
 
 
             Assert.True(qUsr.Following.Count > 0);
-
-            //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
-
-            //Assert.True(File.Exists(qUsr.Avatar));
+            Assert.True(qUsr.Following.Find(u => u.Id == pkArtist.Id) != null);
 
         }
 
@@ -282,7 +236,10 @@ namespace PikchaWebApp.Test.Unit
             var profCntrl = CreateAuthenticatedProfileController(pkUser);
             var fresult = await profCntrl.FollowAnArtist(pkArtist.Id, pkUser.Id) as ObjectResult;
 
+            var qUsr = fresult.Value as AuthenticatedUserDTO;
+
             Assert.Equal(200, fresult.StatusCode);
+            Assert.True(qUsr.Following.Find(u => u.Id == pkArtist.Id) != null);
 
             if (idType == "invalid")
             {
@@ -293,7 +250,11 @@ namespace PikchaWebApp.Test.Unit
 
             var result = await profCntrl.UnFollowAnArtist(pkArtist.Id, pkUser.Id) as ObjectResult;
             Assert.Equal(statusCode, result.StatusCode);
+            
+            
+            var qUsr2 = result.Value as AuthenticatedUserDTO;
 
+            Assert.True(qUsr2.Following.Find(u => u.Id == pkArtist.Id) == null);
             //var qUsr = result.Value as PikchaAuthenticatedUserDTO;
 
             //Assert.True(File.Exists(qUsr.Avatar));

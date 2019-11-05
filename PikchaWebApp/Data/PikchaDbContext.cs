@@ -21,12 +21,16 @@ namespace PikchaWebApp.Data
         }
 
         public DbSet<PikchaUser> PikchaUsers { get; set; }
+        //public DbSet<IdentityUserRole<string>> PikchaUserRoles { get; set; }
+
+        
         public DbSet<PikchaImage> PikchaImages { get; set; }
         public DbSet<ImageProduct> ImageProducts { get; set; }
-        public DbSet<Tag> ImageTags { get; set; }
-        public DbSet<ImageViews> ImageViews { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<ImageTag> ImageTags { get; set; }
+        public DbSet<ImageView> ImageViews { get; set; }
 
-        public DbSet<PikchaArtistFollower> Followers { get; set; }
+        public DbSet<ArtistFollower> Followers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -39,15 +43,22 @@ namespace PikchaWebApp.Data
             builder.Entity<IdentityUserLogin<string>>().ToTable("PikchaUserLogins");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("PikchaRoleClaims");
             builder.Entity<IdentityUserToken<string>>().ToTable("PikchaUserTokens");
-            /*
+            
             builder.Entity<PikchaImage>()
             .Property(b => b.UploadedAt)
-            .HasDefaultValueSql("getdate()");
+            //.HasDefaultValueSql("CURRENT_TIMESTAMP(6)") // mysql
+            //.HasDefaultValueSql("getdate()") //mssql
+            .HasDefaultValueSql("date('now')") //sqlite
+
+
+            ;
 
             builder.Entity<PikchaImage>()
             .Property(b => b.ModifiedAt)
-            .HasDefaultValueSql("getdate()");
-            */
+            //.HasDefaultValueSql("CURRENT_TIMESTAMP(6)")
+            .HasDefaultValueSql("date('now')") //sqlite
+            ;
+
             builder.Entity<PikchaUser>()
                 .Property(b => b.Links)
                 .HasConversion(
@@ -56,7 +67,7 @@ namespace PikchaWebApp.Data
 
 
             //ImageViews
-            builder.Entity<ImageViews>().HasKey(sc => new { sc.Date, sc.PikchaImageId });
+            builder.Entity<ImageView>().HasKey(sc => new { sc.Date, sc.PikchaImageId }); 
 
             // pikcha tags
             builder.Entity<ImageTag>().HasKey(sc => new { sc.ImageTagId, sc.PikchaImageId });
@@ -73,15 +84,15 @@ namespace PikchaWebApp.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Pikcha followers
-            builder.Entity<PikchaArtistFollower>().HasKey(sc => new { sc.ArtistsId, sc.UserId });
-            builder.Entity<PikchaArtistFollower>()
+            builder.Entity<ArtistFollower>().HasKey(sc => new { sc.ArtistsId, sc.UserId });
+            builder.Entity<ArtistFollower>()
                 .HasOne<PikchaUser>(sc => sc.PikchaUser)
                 .WithMany(s => s.Following)
                 .HasForeignKey(sc => sc.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
             
-            builder.Entity<PikchaArtistFollower>()
-                .HasOne<PikchaUser>(sc => sc.PikchaArtist)
+            builder.Entity<ArtistFollower>()
+                .HasOne<PikchaUser>(sc => sc.Artist)
                 .WithMany(s => s.Followers)
                 .HasForeignKey(sc => sc.ArtistsId)
                 .OnDelete(DeleteBehavior.Restrict);

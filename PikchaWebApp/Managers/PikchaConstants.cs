@@ -10,7 +10,7 @@ namespace PikchaWebApp.Managers
 
         // pikcha roles
         public const string PIKCHA_ROLES_USER_NAME = "User"; 
-        public const string PIKCHA_ROLES_PHOTOGRAPHER_NAME = "Artist"; 
+        public const string PIKCHA_ROLES_ARTIST_NAME = "Artist"; 
         public const string PIKCHA_ROLES_ADMIN_NAME = "Picka-admin";
         public const string PIKCHA_USER_DEFAULT_AVATAR = @"Uploads/Avatars/default-avatar.jpg";
 

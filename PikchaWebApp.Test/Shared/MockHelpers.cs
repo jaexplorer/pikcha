@@ -199,7 +199,7 @@ namespace PikchaWebApp.Test
             Task.FromResult(IdentityResult.Success));
 
             List<string> roles = new List<string>();
-            roles.Add(PikchaConstants.PIKCHA_ROLES_PHOTOGRAPHER_NAME);
+            roles.Add(PikchaConstants.PIKCHA_ROLES_ARTIST_NAME);
             MockUserStore.Setup(x => x.GetRolesAsync(It.IsAny<PikchaUser>(), It.IsAny<CancellationToken>())).ReturnsAsync(
             (PikchaUser userName, CancellationToken token) => roles);
 

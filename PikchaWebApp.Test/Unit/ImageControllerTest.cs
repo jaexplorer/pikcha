@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using System.Linq;
+using System.IO;
 
 namespace PikchaWebApp.Test.Unit
 {
@@ -74,7 +75,7 @@ namespace PikchaWebApp.Test.Unit
             Assert.Equal(201, response.StatusCode); //success
 
         }
-    
+
         [Theory]
         [InlineData("valid", StatusCodes.Status200OK)]
         [InlineData("invalid", StatusCodes.Status500InternalServerError)]
@@ -110,7 +111,7 @@ namespace PikchaWebApp.Test.Unit
 
             var imgContr = new ImageController(_webHostEnvironment.Object, _configurationManager.Object, _userManager, _fixture.Context, _imapper);
 
-            if(idType == "invalid")
+            if (idType == "invalid")
             {
                 var response = await imgContr.GetById(Guid.NewGuid().ToString()) as ObjectResult;
                 Assert.Equal(statusCode, response.StatusCode);
@@ -118,7 +119,7 @@ namespace PikchaWebApp.Test.Unit
             }
             // upload an image
 
-            
+
 
             var filtContr = new FilterController(_fixture.Context, _imapper);
 
@@ -145,11 +146,11 @@ namespace PikchaWebApp.Test.Unit
 
             var imgContr = new ImageController(_webHostEnvironment.Object, _configurationManager.Object, _userManager, _fixture.Context, _imapper);
 
-            var pkImg =  _fixture.Context.PikchaImages.First();
-            
-            var responseV = await imgContr.IncrementViewCount(pkImg.Id) as StatusCodeResult;
+            var pkImg = _fixture.Context.PikchaImages.First();
 
-            Assert.Equal(201, responseV.StatusCode);
+            var responseV = await imgContr.IncrementViewCount(pkImg.Id) as ObjectResult;
+
+            Assert.Equal(200, responseV.StatusCode);
 
             Assert.True(pkImg.Views.Count() > 0);
 
@@ -175,5 +176,56 @@ namespace PikchaWebApp.Test.Unit
         }
 
 
+        [Fact]
+        public async Task Create_Images_For_DBSeeding()
+        {
+
+            //await createImages();
+        }
+
+        private async Task createImages()
+        {
+            // create a new user
+            var pkUser = await MockHelpers.CreateNewUser(41, Guid.NewGuid().ToString(), "test1@test.com", "Password@123", _fixture);
+
+            var authImgContr = CreateAuthenticatedImageController(pkUser);
+
+            DirectoryInfo d = new DirectoryInfo(@"C:\Users\tshanmuganat\Documents\hr-photos");//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles(); //Getting Text files
+            Random rnd = new Random();
+
+            foreach (FileInfo file in Files)
+            {               
+                var img = MockHelpers.CreateImage(DateTime.Now.ToShortDateString(), "Caption 1", "location 1", file.FullName);
+               
+                if(rnd.Next(1,100)>50)
+                {
+                    img.Signature = @"TestPhotos\d01de11c-3317-4dff-b3f7-7f71f68b8210-inv.png";
+
+                }
+                else
+                {
+                    img.Signature = @"TestPhotos\d01de11c-3317-4dff-b3f7-7f71f68b8210-org.png";
+
+                }
+
+                ActionResult upRes = await authImgContr.UploadImage(img);
+
+            }
+
+
+            DirectoryInfo dir = new DirectoryInfo(@"C:\Users\tshanmuganat\Documents\Projects\pikcha\dev\PikchaWebApp\PikchaWebApp.Test\bin\Debug\netcoreapp3.0\wwwroot\Uploads\Images\Thumbnail");//Assuming Test is your Folder
+            FileInfo[] dFiles = dir.GetFiles(""); //Getting Text files
+            string str = "";
+            foreach (FileInfo file in dFiles)
+            {
+                str = str + ", " + file.Name;
+            }
+
+            using (System.IO.StreamWriter file =new System.IO.StreamWriter(System.IO.File.Create("uploadedImages.txt")))
+            {
+                file.WriteLine(str);
+            }
+        }
     }
 }

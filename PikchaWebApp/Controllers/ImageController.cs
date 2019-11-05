@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using PikchaWebApp.Data;
 using PikchaWebApp.Managers;
 using PikchaWebApp.Models;
+using Serilog;
 
 namespace PikchaWebApp.Controllers
 {
@@ -41,7 +42,7 @@ namespace PikchaWebApp.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize]
-        public async Task<ActionResult> UploadImage([FromBody] ImageViewModel imgViewModel )
+        public async Task<ActionResult> UploadImage([FromForm] ImageViewModel imgViewModel )
         {
             try
             {  //
@@ -61,31 +62,23 @@ namespace PikchaWebApp.Controllers
                 }
 
                 string imageId = Guid.NewGuid().ToString();
-                PikchaImage pkImg = new PikchaImage();
+                PikchaImage pkImg = new PikchaImage() { Id = imageId };
                 pkImg.CopyPropertiesFrom(imgViewModel);
-                pkImg.Id = imageId;
-                pkImg.UploadedAt = DateTime.Now;
-                pkImg.ModifiedAt = DateTime.Now;
-
-               
+                               
                 ImageProcessingManager imgManager = new ImageProcessingManager(_hostingEnvironment, _configuration);
 
-                bool status = imgManager.ResizeImage(imageId, imgViewModel.ImageFile, imgViewModel.Signature, ref pkImg);
-
-                // add image tags
-                //AddImageTags(ref pkImg, imgViewModel.Tags);
-
+                bool status = await imgManager.ProcessAndUploadImageAsync(imageId, imgViewModel.ImageFile, imgViewModel.Signature, ref pkImg);
+                
                 if (status)
                 {
                     try
                     {
-                       //Task<PikchaUser> loggedinUserTask = _userManager.GetUserAsync(this.User);
-
-                       // await Task.WhenAll(loggedinUserTask);
-
-
                         pkImg.Artist = loggedinUser;
-                        await _pikchDbContext.AddAsync(pkImg);
+                        await _pikchDbContext.PikchaImages.AddAsync(pkImg);
+                        await _pikchDbContext.SaveChangesAsync();
+
+                        // add image tags
+                        await AddImageTags(pkImg, imgViewModel.Tags);
 
                         // add new product owned by owner of the image
                         decimal price = 0;
@@ -98,43 +91,32 @@ namespace PikchaWebApp.Controllers
                                 Image = pkImg,
                                  Seller = loggedinUser
                         };
-
-                        await _pikchDbContext.SaveChangesAsync();
                         
-                        //return new ReturnDataModel() { Data = pkImg };
+                        await _pikchDbContext.ImageProducts.AddAsync(imgPrd);
+                        await _pikchDbContext.SaveChangesAsync();                        
                         return StatusCode(StatusCodes.Status201Created);
-
-
-                        /*if (loggedinUserTask.IsCompleted)
-                        {
-                            pkImg.Artist = loggedinUser;
-                            await _pikchDbContext.AddAsync(pkImg);
-                            await _pikchDbContext.SaveChangesAsync();
-                            //return new ReturnDataModel() { Data = pkImg };
-                            return Ok();
-                            //return CreatedAtAction(nameof(GetById), new { imageId = pkImg.Id }, pkImg);
-                        } */
 
                     }
                     catch (Exception ex)
                     {
-                        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-                        //return new ReturnDataModel() { Statuscode = (int) STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = e.Message };
-
+                        Log.Error(ex, " Image, UploadImage, parameters: viewmodel={imgViewModel}, fileName={fileName}", imgViewModel != null ? "Not null" : "Null",  (imgViewModel != null  && imgViewModel.ImageFile != null)? imgViewModel.ImageFile.FileName : "Null"   );
+                        return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
                     }
 
+                }
+                else
+                {
+                    Log.Error(" Image, UploadImage, Image processing is failed., parameters: viewmodel={imgViewModel}, fileName={fileName}", imgViewModel != null ? "Not null" : "Null", (imgViewModel != null && imgViewModel.ImageFile != null) ? imgViewModel.ImageFile.FileName : "Null");
+                    return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500ImageProcessingError);
                 }
             }
             catch(Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-
-                //return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = e.Message };
+                Log.Error(ex, " Image, UploadImage, ");
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
 
             }
-            return StatusCode(StatusCodes.Status500InternalServerError, "Internal Error Occurred.");
 
-            //return new ReturnDataModel() { Statuscode= (int)STATUS_CODES.ExceptionThrown, Status="Error Occured", Data = "" };
         }
 
         [HttpGet("{imageId}")]
@@ -145,8 +127,7 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                //var pkImg = await _pikchDbContext.Images.FirstAsync( im => im.Id == imageId);
-                var pkImg = await _pikchDbContext.PikchaImages.FirstAsync( im => im.Id == imageId);
+                var pkImg = await _pikchDbContext.PikchaImages.Include("Products").FirstAsync( im => im.Id == imageId);
                 if(pkImg == null)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404NotFound);
@@ -154,25 +135,12 @@ namespace PikchaWebApp.Controllers
                 }
                 var image =  _mapper.Map<PikchaImageFilterDTO>(pkImg);
                 return ReturnOkOrErrorStatus(image);
-                /*
-                var imageTsk = _pikchDbContext.Images.Include(img => img.Artist).FirstAsync(i => i.Id == imageId);
-
-                await imageTsk;
-
-                if (imageTsk.IsCompleted)
-                {
-                    return ReturnOkOrErrorStatus(imageTsk.Result);
-                }
-
-                return StatusCode(StatusCodes.Status500InternalServerError, "Task is not completed.");
-                */
-                //return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Success", Data = image };
+                
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-
-                //return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = ex.Message };
+                Log.Error(ex, " Image, GetById, ");
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
             }
 
         }
@@ -187,17 +155,15 @@ namespace PikchaWebApp.Controllers
             try
             {
 
-                List<Tag> tags = await _pikchDbContext.ImageTags.OrderBy(t => t.Name).ToListAsync();
+                List<Tag> tags = await _pikchDbContext.Tags.OrderBy(t => t.Name).ToListAsync();
                 return ReturnOkOrErrorStatus(tags);
 
-               // return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = tags };
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-
-               // return new ReturnDataModel() { Statuscode = (int)STATUS_CODES.ExceptionThrown, Status = "Error Occured", Data = ex.Message };
-
+                Log.Error(ex, " Image, Tags, ");
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
+                
             }
         }
         
@@ -210,7 +176,6 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                //var tmp = _pikchDbContext.ImageViews.Count();
                 try
                 {
                     var imgVw = await _pikchDbContext.ImageViews.FirstAsync(i => i.PikchaImage.Id == imageId && i.Date == DateTime.Today.Date);
@@ -219,7 +184,7 @@ namespace PikchaWebApp.Controllers
                         PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
                         if (pImg != null)
                         {
-                            _pikchDbContext.ImageViews.Add(new ImageViews() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
+                            _pikchDbContext.ImageViews.Add(new ImageView() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
                         }
                     }
                     else
@@ -232,11 +197,9 @@ namespace PikchaWebApp.Controllers
                     PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
                     if (pImg != null)
                     {
-                        _pikchDbContext.ImageViews.Add(new ImageViews() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
+                        _pikchDbContext.ImageViews.Add(new ImageView() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
                     }
                 }
-
-               
 
                 await _pikchDbContext.SaveChangesAsync();
 
@@ -249,13 +212,15 @@ namespace PikchaWebApp.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                Log.Error(ex, " Image, IncrementViewCount, ");
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
+
             }
             
         }
 
         // PRIVATE 
-        private void AddImageTags(ref PikchaImage pkImg, List<string> tags)
+        private async Task AddImageTags(PikchaImage pkImg, List<string> tags)
         {
             try
             {
@@ -265,16 +230,14 @@ namespace PikchaWebApp.Controllers
                 }
                 List<ImageTag> imgTags = new List<ImageTag>();
                 // get all tags from 
-                var tagsInDb = _pikchDbContext.ImageTags.Where(c => tags.Contains(c.Name)).ToList(); // single DB query
+                var tagsInDb = _pikchDbContext.Tags.Where(c => tags.Contains(c.Name)).ToList(); // single DB query
                 foreach (var tag in tags)
                 {
                     var tagInDb = tagsInDb.SingleOrDefault(t => t.Name == tag); // runs in memory
-                    if (tagInDb != null)
+                    if (tagInDb == null)
                     {
                         Tag newTag = new Tag() { Name = tag };
-                        // _pikchDbContext.ImageTags.add();
-                        _pikchDbContext.AddAsync(newTag);
-                        _pikchDbContext.SaveChangesAsync();
+                        await _pikchDbContext.Tags.AddAsync(newTag);
                         imgTags.Add(new ImageTag() { Tag = newTag, PikchaImage = pkImg });
 
                     }
@@ -283,13 +246,16 @@ namespace PikchaWebApp.Controllers
                         imgTags.Add(new ImageTag() { Tag = tagInDb, PikchaImage = pkImg });
                     }
                 }
+
+                await _pikchDbContext.ImageTags.AddRangeAsync(imgTags);
+                await _pikchDbContext.SaveChangesAsync();
+
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                Log.Error(ex, " Image, AddImageTags, ");
 
             }
-
-
         }
 
 

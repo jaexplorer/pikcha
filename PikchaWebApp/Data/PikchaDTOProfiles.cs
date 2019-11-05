@@ -21,112 +21,56 @@ namespace PikchaWebApp.Data
             CreateMap<PikchaImage, PikchaImageFilterDTO>()
                 .ForMember(
                     dest => dest.Views,
-                    opt => opt.MapFrom(src =>
-                        src.Views.Sum(y => y.Count).ToString()))
+                    opt => opt.MapFrom(src => src.Views.Count()==0 ? "0" : src.Views.Sum(y => y.Count).ToString()))
                 .ForMember(
                     dest => dest.Height, opt => opt.MapFrom( src => "0"))
                 .ForMember(
-                    dest => dest.ProductIds, opt =>  opt.MapFrom(src => src.Products.Select(p => p.Id)))
+                    dest => dest.ProductIds, opt =>  opt.MapFrom(src => src.Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id)))
                 ;
 
-            CreateMap<PikchaUser, PikchaImageFilterDTO>()
+            CreateMap<PikchaUser, PikchaArtist100ImageFilterDTO>()                  
                   .ForMember(
-                      dest => dest.Artist,
-                      opt => opt.MapFrom(src =>
-                          new PikchaArtistBaseDTO() { Avatar = src.Avatar ?? string.Empty, Id = src.Id, FName = src.FName, LName = src.LName, Location = src.City?? string.Empty + ", " + src.Country?? string.Empty, AggrImViews = src.AggrImViews.ToString() }))
-                  .ForMember(
-                      dest => dest.Caption, opt => opt.MapFrom(src => src.TopImage.Caption))
-                   .ForMember(
-                      dest => dest.Height, opt => opt.MapFrom(src => "0"))
-                   .ForMember(
-                      dest => dest.Location, opt => opt.MapFrom(src => src.TopImage.Location))
-                   .ForMember(
-                      dest => dest.Id, opt => opt.MapFrom(src => src.TopImage.Id))
-                   .ForMember(
-                      dest => dest.Thumbnail, opt => opt.MapFrom(src => src.TopImage.Thumbnail))
-                   .ForMember(
-                      dest => dest.Title, opt => opt.MapFrom(src => src.TopImage.Title))
-                   .ForMember(
-                      dest => dest.TotSold, opt => opt.MapFrom(src => 0))
-                   .ForMember(
-                      dest => dest.Watermark, opt => opt.MapFrom(src => src.TopImage.Watermark))
-
-                   ;
-
-
-                //CreateMap<PikchaImage, Pikcha100ImageDTO>()
-                //    .ForMember(
-                //    dest => dest.TotalViews,
-                //    opt => opt.MapFrom(src =>
-                //        src.Views.Sum(y => y.Count)))
-                //    .ForMember(
-                //    dest => dest.Height, opt => opt.MapFrom(src => "0"))
-                //   // .ForAllMembers(opt => opt.NullSubstitute(string.Empty))
-                //    ;
-
-                //CreateMap<PikchaImage, PikchaImageDescriptionDTO>()
-                //    .ForMember(
-                //    dest => dest.TotalViews,
-                //    opt => opt.MapFrom(src =>
-                //        src.Views.Sum(y => y.Count)))
-                //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
-
-                ;
-            //CreateMap<PikchaUser, PikchaImageBaseDTO>()
-            //.ForAllMembers(opt => opt.NullSubstitute(string.Empty));
+                      dest => dest.TopImage, opt => opt.MapFrom(src => src.Images.OrderByDescending(v => v.Views.Count()) .First()))
+               
+            ;
         }
 
         private void InitUserDTOs()
         {
 
-            CreateMap<PikchaUser, PikchaUserBaseDTO>()              
+            CreateMap<PikchaUser, UserBaseDTO>()              
                 ;
 
-            CreateMap<PikchaUser, PikchaArtistBaseDTO>()
+            CreateMap<PikchaUser, ArtistBaseDTO>()
                  .ForMember(
                 dest => dest.Location,
-                opt => opt.MapFrom(src => src.City ?? string.Empty + ", " + src.Country?? string.Empty))
+                opt => opt.MapFrom(src => string.Concat( string.IsNullOrEmpty( src.City) ? string.Empty : src.City + ", ", string.IsNullOrEmpty(src.Country) ? string.Empty : src.Country)))
                  .ForMember(
+                dest => dest.Phone,
+                opt => opt.MapFrom(src => string.IsNullOrEmpty(src.PhoneNumber) ? string.Empty : src.PhoneNumber))
+                  .ForMember(
                 dest => dest.AggrImViews,
-                opt => opt.MapFrom(src => src.AggrImViews.ToString()));
-            //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
+                opt => opt.MapFrom(src => src.Images.Sum(i => i.Views.Sum(v => v.Count))))
             ;
 
-            CreateMap<PikchaUser, PikchaArtistDTO>()
+            CreateMap<PikchaUser, ArtistDTO>()
                 .ForMember(
                 dest => dest.Followers,
                 opt => opt.MapFrom(src => src.Following.Select(y => y.PikchaUser).ToList()))
 
                  .ForMember(
                 dest => dest.Following,
-                opt => opt.MapFrom(src => src.Following.Select(y => y.PikchaArtist).ToList()))
-                //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
+                opt => opt.MapFrom(src => src.Following.Select(y => y.Artist).ToList()))
                 ;
 
-            //CreateMap<PikchaUser, PikchaArtistDTO>()
-            //.ForAllMembers(opt => opt.NullSubstitute(new { }))
-
-            /*.ForMember(
-            dest => dest.Views,
-            opt => opt.MapFrom(src =>
-                //src.Images.Select(y => y.Views.Sum( p => p.Count)).Sum()))
-                src.TopImage.Views.Sum(p => p.Count)))
-
-            .ForMember(
-            dest => dest.BestImageTotalViews,
-            opt => opt.MapFrom(src =>
-                src.TopImage.Views.Sum(p => p.Count))) */
-            ;
-
-            CreateMap<PikchaUser, PikchaAuthenticatedUserDTO>()
-                .ForMember(
+            CreateMap<PikchaUser, AuthenticatedUserDTO>()
+               .ForMember(
                 dest => dest.LUploadOn,
-                opt => opt.MapFrom(src => src.Images.OrderByDescending(i => i.UploadedAt).First() == null ? DateTime.MinValue : src.Images.OrderByDescending(i => i.UploadedAt).First().UploadedAt))
-
+                opt => opt.MapFrom(src => src.Images.Count== 0 ? DateTimeOffset.MinValue : src.Images.OrderByDescending(i => i.UploadedAt).First().UploadedAt))
+               
                  .ForMember(
                 dest => dest.Following,
-                opt => opt.MapFrom(src => src.Following.Select(y => y.PikchaArtist).ToList()))
-                //.ForAllMembers(opt => opt.NullSubstitute(string.Empty))
+                opt => opt.MapFrom(src => src.Following.Select(y => y.Artist)))
                  ;
 
         }
@@ -137,7 +81,7 @@ namespace PikchaWebApp.Data
                 .ForMember(
                     dest => dest.Artist,
                     opt => opt.MapFrom(src =>
-                        new PikchaUserBaseDTO() { Avatar = src.Image.Artist.Avatar?? string.Empty, Id = src.Image.Artist.Id, FName = src.Image.Artist.FName, LName = src.Image.Artist.LName }))
+                        new UserBaseDTO() { Avatar = src.Image.Artist.Avatar?? string.Empty, Id = src.Image.Artist.Id, FName = src.Image.Artist.FName, LName = src.Image.Artist.LName }))
                  .ForMember(
                       dest => dest.Caption, opt => opt.MapFrom(src => src.Image.Caption))
                  .ForMember(
@@ -147,8 +91,20 @@ namespace PikchaWebApp.Data
                  .ForMember(
                       dest => dest.Title, opt => opt.MapFrom(src => src.Image.Title))
                  .ForMember(
-                      dest => dest.Views, opt => opt.MapFrom(src =>  src.Image.Views.Count()))
+                      dest => dest.Watermark, opt => opt.MapFrom(src => src.Image.Watermark))
+                 .ForMember(
+                      dest => dest.Views, opt => opt.MapFrom(src =>  src.Image.Views.Sum(v => v.Count).ToString()))
+                 .ForMember(
+                      dest => dest.Height, opt => opt.MapFrom(src => "0"))
+                 .ForMember(
+                      dest => dest.Sellers, opt => opt.MapFrom(src => src.Image.Products.Where(p=> p.IsSale ==true).Select(p => p)))
                 ;
+
+
+            CreateMap<ImageProduct, ProductSellerDTO>()
+                 .ForMember(
+                      dest => dest.SellerId, opt => opt.MapFrom(src => src.Seller.Id))
+            ;
 
         }
     }

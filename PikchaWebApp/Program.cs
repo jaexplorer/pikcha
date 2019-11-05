@@ -6,6 +6,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace PikchaWebApp
 {
@@ -13,11 +14,30 @@ namespace PikchaWebApp
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            Log.Logger = new LoggerConfiguration()
+           //.WriteTo.File(path: "Logs\\log.txt")
+           .Enrich.FromLogContext()
+           .WriteTo.Console()
+           .CreateLogger();
+
+            try
+            {
+                //Log.Information("Starting up ... ");
+                CreateWebHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Application start-up failed");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+             .UseSerilog()
                 .UseStartup<Startup>();
     }
 }

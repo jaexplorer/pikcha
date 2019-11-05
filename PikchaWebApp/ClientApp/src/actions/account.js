@@ -137,7 +137,7 @@ export const uploadImage = formData => {
       const res = await axios.post(`api/image/upload`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
+              "Content-Type": "multipart/form-data"
         }
       });
       console.log(res);

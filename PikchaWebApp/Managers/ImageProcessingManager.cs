@@ -16,7 +16,7 @@ namespace PikchaWebApp.Managers
         protected readonly IWebHostEnvironment _hostingEnvironment;
         protected readonly IConfiguration _configuration;
 
-        protected readonly string _watermark_img = "Resources/Img/watermark-logo.png";
+        protected readonly string _watermark_img = PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER +  "img/watermark-logo.png";
 
         public ImageProcessingManager(IWebHostEnvironment hostingEnvironment, IConfiguration configuration)
         {
@@ -24,7 +24,12 @@ namespace PikchaWebApp.Managers
             _configuration = configuration;
         }
 
-        public bool ResizeImage(string imageId, IFormFile formFileInfo, string signatureFile, ref PikchaImage pkImage)
+        public Task<bool> ProcessAndUploadImageAsync(string imageId, IFormFile formFileInfo, string signatureFile, ref PikchaImage pkImage)
+        {
+            return Task.FromResult<bool>(ProcessAndUploadImage(imageId, formFileInfo, signatureFile, ref pkImage));
+        }
+
+        private bool ProcessAndUploadImage(string imageId, IFormFile formFileInfo, string signatureFile, ref PikchaImage pkImage)
         {            
             try
             {
@@ -38,8 +43,18 @@ namespace PikchaWebApp.Managers
                         using (MagickImage signatureImg = new MagickImage( PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER +  signatureFile))
                         {
                             pkImage.Width = image.Width;
-                            pkImage.Height = image.Height;
+                            
+                            pkImage.Height = image.Height;  
+                            if(pkImage.Width > pkImage.Height)
+                            {
+                                signatureImg.Resize((int)(pkImage.Width / 10), 0); // 10 % width of the original image
 
+                            }
+                            else
+                            {
+                                signatureImg.Resize( 0,(int)(pkImage.Height / 10)); // 10 % width of the original image
+
+                            }
                             image.Composite(signatureImg, Gravity.Southeast, CompositeOperator.Over);
 
 
@@ -48,13 +63,29 @@ namespace PikchaWebApp.Managers
                             if (image.Width > image.Height)
                             {
 
-                                image.Resize(1600, 0);
-                                waterImage.Resize(image.Width, 0);
+                                image.Resize(1024, 0);
+                                if(pkImage.Width > 1920)
+                                {
+                                    waterImage.Resize(1920, 0);
+
+                                }
+                                else
+                                {
+                                    waterImage.Resize(pkImage.Width, 0);
+
+                                }
                             }
                             else
                             {
-                                image.Resize(0, 1600);
-                                waterImage.Resize(0, image.Height);
+                                image.Resize(0, 1024);
+                                if(pkImage.Height> 1920)
+                                {
+                                    waterImage.Resize(0, 1920);
+                                }
+                                else
+                                {
+                                    waterImage.Resize(0, pkImage.Height);
+                                }
                             }
 
                             StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
@@ -63,7 +94,15 @@ namespace PikchaWebApp.Managers
                             // Read the watermark that will be put on top of the image
                             using (MagickImage watermark = new MagickImage(_watermark_img))
                             {
-                                //watermark.Resize(100, 0);
+                                if(waterImage.Width > waterImage.Height)
+                                {
+                                    watermark.Resize((int)(waterImage.Width / 5), 0); // 20 % width of the original image
+                                }
+                                else
+                                {
+                                    watermark.Resize(0, (int)(waterImage.Height / 5)); // 20 % width of the original image
+
+                                }
                                 // Draw the watermark in the center
                                 waterImage.Composite(watermark, Gravity.Center, CompositeOperator.Over);
                                 pkImage.Watermark = manager.UploadWaterMark(waterImage, imageId, StorageManager.FileCategory.PikchaImage);
@@ -76,12 +115,18 @@ namespace PikchaWebApp.Managers
              }
             catch(Exception e)
             {
+                
                 return false;
             }            
         }
 
 
-        public bool ProcessSignatureFile(string signatureContent, ref string sigFile, ref string invSigFile)
+        public Task<bool> ProcessSignatureFileAsync(string signatureContent, ref string sigFile, ref string invSigFile)
+        {
+            return Task.FromResult<bool>(ProcessSignatureFile(signatureContent, ref sigFile, ref invSigFile));
+        }
+
+        private bool ProcessSignatureFile(string signatureContent, ref string sigFile, ref string invSigFile)
         {
             try
             {  
@@ -98,7 +143,8 @@ namespace PikchaWebApp.Managers
 
                         MagickImage revImg = (MagickImage)image.Clone();
 
-                        revImg.Negate();
+                        //revImg.Negate();
+                        revImg.Opaque(MagickColors.Black, MagickColors.White);
 
                         StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
                         string id = Guid.NewGuid().ToString();

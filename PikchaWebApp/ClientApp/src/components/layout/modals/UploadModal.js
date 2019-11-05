@@ -122,15 +122,17 @@ const UploadModal = ({
     } else {
       const caption = description;
       //(Title [string], Caption [text], Location [string], ImageFile [file], Tags [list of strings], Signature [string], Price [Number])
-      uploadImage({
-        title,
-        caption,
-        location,
-        imageFile,
-        tags,
-        signature,
-        price
-      });
+        var formData = new FormData();
+        formData.append("title", title);
+        formData.append("caption", caption);
+        formData.append("location", location);
+        formData.append("imageFile", imageFile);
+        for (var i = 0; i < tags.length; i++) {
+            formData.append('tags[]', tags[i]);
+        }
+        formData.append("signature", signature);
+        formData.append("price", price);
+        uploadImage(formData);
       removeModal();
     }
   };

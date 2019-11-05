@@ -134,7 +134,7 @@ LOGGEDINUSERINFO
 - ENDPOINT : api/profile/{userId} 
 - METHOD : PUT
 - AUTHENTICATED : true
-- PARAMS : FName, LName, Bio, Links, Addr1 , Addr2, City, Postal,State, Country
+- PARAMS : FName, LName, Bio, Links, Addr1 , Addr2, City, Postal,State, Country, PhoneNumber 
 - RESULTS : loggedinuserinfo
 - ERROR_CODES : 200, 404, 500
 

@@ -40,7 +40,19 @@ namespace PikchaWebApp.Models
 
         [Column("Seller")]
         public PikchaUser Seller { get; set; }
+
+        [Column("Printer")]
+        public Printer Printer { get; set; }
     }
 
+
+    [Table("Printers")]
+    public class Printer
+    {
+        [Key]
+        [Column("Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public string Id { get; set; }
+    }
 
 }

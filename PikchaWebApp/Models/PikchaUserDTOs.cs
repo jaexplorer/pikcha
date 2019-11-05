@@ -9,7 +9,7 @@ namespace PikchaWebApp.Models
     {
     }
 
-    public class PikchaArtistDTO : PikchaArtistBaseDTO
+    public class ArtistDTO : ArtistBaseDTO
     {
         public string Bio { get; set; } = string.Empty;
         public Dictionary<string, string> Links { get; set; } = new Dictionary<string, string>();
@@ -19,15 +19,15 @@ namespace PikchaWebApp.Models
         public int TotSold { get; set; } = 0;
         public decimal AvgPrice { get; set; } = 0;
         
-        public List<PikchaUserBaseDTO> Following { get; set; } = new List<PikchaUserBaseDTO>();
-        public List<PikchaUserBaseDTO> Followers { get; set; } = new List<PikchaUserBaseDTO>();
+        public List<UserBaseDTO> Following { get; set; } = new List<UserBaseDTO>();
+        public List<UserBaseDTO> Followers { get; set; } = new List<UserBaseDTO>();
 
         public List<string> Roles { get; set; } = new List<string>();
 
     }
 
 
-    public class PikchaAuthenticatedUserDTO : PikchaUserBaseDTO
+    public class AuthenticatedUserDTO : UserBaseDTO
     {
         public string Bio { get; set; } = string.Empty;
         public Dictionary<string, string> Links { get; set; } = new Dictionary<string, string>();
@@ -44,7 +44,7 @@ namespace PikchaWebApp.Models
 
         public string Country { get; set; } = string.Empty;
 
-        public List<PikchaUserBaseDTO> Following { get; set; } = new List<PikchaUserBaseDTO>();
+        public List<UserBaseDTO> Following { get; set; } = new List<UserBaseDTO>();
 
         public DateTimeOffset LUploadOn { get; set; } = DateTimeOffset.MinValue;
 
@@ -53,7 +53,7 @@ namespace PikchaWebApp.Models
     }
 
 
-    public class PikchaUserBaseDTO
+    public class UserBaseDTO
     {
         public string Id { get; set; } = string.Empty;
         public string FName { get; set; } = string.Empty;
@@ -66,10 +66,15 @@ namespace PikchaWebApp.Models
 
     }
 
-    public class PikchaArtistBaseDTO : PikchaUserBaseDTO
+    public class ArtistBaseDTO : UserBaseDTO
     {
         public string Location { get; set; } = string.Empty;
-        public string AggrImViews { get; set; }
+        public string AggrImViews { get; set; } = "0";
+    }
+
+    public class Artist100BaseDTO : ArtistBaseDTO
+    {
+
     }
 
 }
