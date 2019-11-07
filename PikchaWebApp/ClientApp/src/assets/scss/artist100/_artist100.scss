@@ -1,124 +1,164 @@
-// Artist100
-// ------------------------------------------------------------------- //
-#artist100-container {
-  font-family: "Montserrat";
+// Artist 100
+// ------------------------------------------------------------------- /
+.artist100-container {
+  width: calc(100% - 4rem);
+  height: 100%;
+  background: #f4f7fb;
+  box-shadow: 5px 15px 30px -10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  margin-left: 2rem;
+  padding: 3rem;
+  margin-bottom: 2rem;
+}
 
-  .artist-container {
-    display: flex;
-    align-items: center;
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.5rem;
-    border-bottom: 2px solid rgba(147, 112, 219, 0.24);
-    height: 16rem;
+.artist-row {
+  display: flex;
+  align-items: center;
+  min-height: 16vw;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  animation: fadeIn 0.6s;
+  justify-content: space-between;
+  border-bottom: #ebebeb solid 1px;
 
-    &:last-child {
-      border-bottom: none;
+  &:last-of-type {
+    padding-bottom: 6rem;
+    border-bottom: none;
+  }
+
+  .artist-rank {
+    font-weight: bold;
+    font-size: 1.8rem;
+  }
+
+  .artist-picture {
+    margin-left: 3rem;
+    img {
+      height: 16rem;
+      width: 16rem;
+      object-position: center center;
+      object-fit: cover;
+      border-radius: 50%;
+      border: rgb(201, 201, 201) 2px solid;
+      cursor: pointer;
     }
+  }
 
-    .artist-rank {
+  .artist-information {
+    margin-left: 3rem;
+    margin-right: 3rem;
+    flex: 1 0 auto;
+
+    .artist-name {
+      font-size: 1.6rem;
       font-weight: bold;
-      font-size: 1.8rem;
+      margin-bottom: 0.3rem;
+      opacity: 0.6;
     }
+    .artist-location {
+      font-size: 1.2rem;
+      margin-bottom: 1.4rem;
+      opacity: 0.6;
+    }
+    .artist-stats {
+      font-size: 1.2rem;
+      opacity: 0.6;
+    }
+  }
+
+  .top-photo-information {
+    margin-left: auto;
+    height: 16rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: right;
+
+    .top-photo-name {
+      font-weight: bold;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+    .top-photo-info {
+      font-size: 1.2rem;
+      opacity: 0.6;
+    }
+  }
+
+  .artist-top-photo {
+    margin-left: 3rem;
+    display: block;
+    width: 16rem;
+    height: 16rem;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    flex: 0 0 auto;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-position: center center;
+      object-fit: cover;
+      cursor: pointer;
+    }
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 1099px) {
+  .artist-row {
+    .artist-picture {
+      img {
+        height: 12rem;
+        width: 12rem;
+      }
+    }
+    .artist-top-photo {
+      height: 12rem;
+      width: 12rem;
+    }
+  }
+}
+
+@media screen and (max-width: 899px) {
+  .artist-row {
+    flex-direction: column;
 
     .artist-picture {
-      margin-left: 2rem;
+      margin: 0;
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+
       img {
-        height: 7rem;
-        width: 7rem;
-        object-position: center center;
-        object-fit: cover;
-        border-radius: 50%;
-        border: rgb(201, 201, 201) 2px solid;
-        cursor: pointer;
+        height: 12rem;
+        width: 12rem;
       }
     }
 
     .artist-information {
-      margin-left: 1.5rem;
+      text-align: center;
 
       .artist-name {
-        font-size: 1.6rem;
-        font-weight: bold;
-        margin-bottom: 0.3rem;
+        font-size: 2.4rem;
       }
-      .artist-location {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        margin-bottom: 0.3rem;
-      }
-      .artist-stats {
-        .artist-photos-sold {
-          font-size: 1rem;
-        }
-        .artist-photo-views {
-          font-size: 1rem;
-        }
-      }
-    }
-
-    .divider {
-      margin-left: auto;
-      margin-right: auto;
-      width: 1px;
-      height: 60px;
-      background: mediumpurple;
-      display: none;
     }
 
     .top-photo-information {
-      margin-left: auto;
-
-      .top-photo-name {
-        font-weight: bold;
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        margin-bottom: 0.5rem;
-      }
-      .top-photo-views {
-        font-size: 1rem;
-      }
-      .top-photo-avg-price {
-        font-size: 1rem;
-      }
-      .top-photo-location {
-        font-size: 1rem;
-      }
+      text-align: center;
+      margin: 0;
+      order: 4;
+      margin-top: 3rem;
+      height: max-content;
     }
 
     .artist-top-photo {
-      margin-left: 2rem;
-      display: block;
-      width: 12rem;
-      height: 12rem;
-      background: #1a1a1a;
-      border-radius: 10px;
-      overflow: hidden;
-      img {
-        height: 100%;
-        width: 100%;
-        object-position: center center;
-        object-fit: cover;
-        cursor: pointer;
-      }
-    }
-  }
-}
-// Small Devices
-// ---------------------------------------- //
-@media screen and (max-width: 699px) {
-  #artist100-container {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-}
-
-@media screen and (max-width: 559px) {
-  #artist100-container {
-    .artist-container {
-      .artist-top-photo {
-        width: 8rem;
-        height: 8rem;
-      }
+      margin-left: 0;
+      margin-top: 3rem;
+      width: 100%;
+      height: calc(100vw - 12rem);
     }
   }
 }

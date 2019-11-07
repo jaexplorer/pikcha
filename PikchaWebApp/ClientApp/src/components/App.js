@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import "../assets/scss/main/main.css";
 import { Provider } from "react-redux";
 import store from "../store";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import NavBar from "./layout/navbar/Navbar";
-import Alerts from "./layout/Alerts";
+import Alerts from "./Alerts";
+import Modal from "./layout/modal/Modal";
+import SideMenu from "./layout/account/SideMenu";
+import Routes from "./routes/Routes";
+import SmoothScroll from "./SmoothScroll";
 import { authenticate } from "../actions/auth";
-import Routes from "./Routes/Routes";
-import ModalManager from "./layout/modals/ModalManager";
 
 const App = () => {
   useEffect(() => {
@@ -19,12 +21,13 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <div className='frame-container'>
-          <NavBar />
-          <Alerts />
+        <NavBar />
+        <Route strict path='/account' component={SideMenu} />
+        <Alerts />
+        <Modal />
+        <SmoothScroll>
           <Routes />
-          <ModalManager />
-        </div>
+        </SmoothScroll>
       </Router>
     </Provider>
   );

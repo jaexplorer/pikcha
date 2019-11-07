@@ -1,135 +1,164 @@
-// Profile
-// ------------------------------------------------------------------- //
-#pikcha100-container {
-  font-family: "Montserrat";
+// Pikcha 100
+// ------------------------------------------------------------------- /
+.pikcha100-container {
+  width: calc(100% - 4rem);
+  height: 100%;
+  background: #f4f7fb;
+  box-shadow: 5px 15px 30px -10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  margin-left: 2rem;
+  padding: 3rem;
+  margin-bottom: 2rem;
+}
 
-  .pikcha-container {
-    display: flex;
-    align-items: center;
-    // justify-content: space-between;
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.5rem;
-    border-bottom: 2px solid rgba(147, 112, 219, 0.24);
+.pikcha-row {
+  display: flex;
+  align-items: center;
+  min-height: 16vw;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  animation: fadeIn 0.6s;
+  justify-content: space-between;
+  border-bottom: #ebebeb solid 1px;
+
+  &:last-of-type {
+    padding-bottom: 6rem;
+    border-bottom: none;
+  }
+
+  .pikcha-rank {
+    font-weight: bold;
+    font-size: 1.8rem;
+  }
+
+  .pikcha-photo {
+    margin-left: 3rem;
+    display: block;
+    width: 16rem;
     height: 16rem;
+    background: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
 
-    &:last-child {
-      border-bottom: none;
+    img {
+      height: 100%;
+      width: 100%;
+      object-position: center center;
+      object-fit: cover;
+      cursor: pointer;
     }
+  }
 
-    .pikcha-rank {
+  .pikcha-info {
+    display: flex;
+    flex-direction: column;
+    height: 16rem;
+    justify-content: space-between;
+    margin-left: 3rem;
+    padding-right: 3rem;
+    margin-right: auto;
+
+    .photo-name {
+      font-size: 1.6rem;
+      opacity: 0.6;
       font-weight: bold;
-      font-size: 1.8rem;
+      margin-bottom: 1rem;
     }
 
-    .pikcha-photo {
-      margin-left: 2rem;
-      display: block;
-      width: 12rem;
-      height: 12rem;
-      background: #1a1a1a;
-      border-radius: 10px;
-      overflow: hidden;
-
-      img {
-        height: 100%;
-        width: 100%;
-        object-position: center center;
-        object-fit: cover;
-        cursor: pointer;
-      }
+    .photo-info {
+      font-size: 1.2rem;
+      opacity: 0.6;
     }
 
-    .pikcha-photo-information {
-      margin-left: 2rem;
+    .artist-info {
+      display: flex;
+      margin-top: auto;
 
-      .pikcha-photo-name {
-        font-weight: bold;
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        margin-bottom: 0.5rem;
-      }
-      .pikcha-photo-views {
-        font-size: 1rem;
-      }
-      .pikcha-photo-turnover {
-        font-size: 1rem;
-      }
-      .pikcha-photo-avg-price {
-        font-size: 1rem;
-      }
-      .pikcha-photo-location {
-        font-size: 1rem;
-      }
-    }
-
-    .pikcha-photo-graph {
-      margin-left: auto;
-      display: block;
-      width: 8rem;
-      height: 8rem;
-      background: mediumpurple;
-      border-radius: 10px;
-    }
-
-    .divider {
-      margin-left: auto;
-      margin-right: auto;
-      width: 1px;
-      height: 60px;
-      background: mediumpurple;
-    }
-
-    .artist-picture {
-      img {
-        height: 6rem;
-        width: 6rem;
-        object-position: center center;
-        object-fit: cover;
+      .artist-picture {
+        width: 3.5rem;
+        height: 3.5rem;
         border-radius: 50%;
-        border: rgb(201, 201, 201) 2px solid;
-        cursor: pointer;
-      }
-    }
+        overflow: hidden;
+        border: #ebebeb 1px solid;
+        margin-right: 1rem;
 
-    .artist-information {
-      margin-left: 1.5rem;
-      .artist-name {
-        font-size: 1.6rem;
-        font-weight: bold;
-        margin-bottom: 0.3rem;
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          object-position: center center;
+        }
       }
-      .artist-location {
-        font-size: 0.8rem;
-        text-transform: uppercase;
+
+      .artist-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 3.5rem;
+
+        .artist-name {
+          font-size: 1.4rem;
+          font-weight: bold;
+          opacity: 0.6;
+        }
+
+        .artist-location {
+          font-size: 1.2rem;
+          opacity: 0.6;
+        }
       }
     }
+  }
+
+  .photo-statistics {
+    margin-left: 3rem;
+    border-radius: 10px;
+    overflow: hidden;
+
+    display: block;
+    width: 16rem;
+    height: 16rem;
+    background-image: linear-gradient(
+      45deg,
+      #081c69 0%,
+      #44159b 50%,
+      #770fc6 100%
+    );
   }
 }
 
 // Small Devices
 // ---------------------------------------- //
 @media screen and (max-width: 899px) {
-  #pikcha100-container {
-    .pikcha-container {
-      .pikcha-photo-graph {
-        display: none;
+  .pikcha-row {
+    flex-direction: column;
+    &:first-child {
+      padding-top: 0;
+    }
+    .pikcha-photo {
+      margin-left: 0;
+      margin-top: 3rem;
+      width: 100%;
+      height: calc(100vw - 12rem);
+    }
+
+    .pikcha-info {
+      margin-left: 0;
+      margin-top: 3rem;
+      height: 18rem;
+
+      .photo-name {
+        font-size: 2rem;
+        margin: 0;
+      }
+
+      .artist-info {
+        margin: 0;
       }
     }
-  }
-}
-@media screen and (max-width: 699px) {
-  #pikcha100-container {
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-}
 
-@media screen and (max-width: 559px) {
-  #pikcha100-container {
-    .pikcha-container {
-      .artist-information {
-        display: none;
-      }
+    .photo-statistics {
+      display: none;
     }
   }
 }

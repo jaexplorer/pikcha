@@ -1,18 +1,14 @@
-import React, { Fragment } from "react";
-import SideBar from "../layout/Sidebar";
-import BackArrow from "../layout/BackArrow";
-import MainComponent from "../MainComponent";
+import React from "react";
 
 const NotFound = () => {
   return (
-    <Fragment>
-      <SideBar />
-      <BackArrow />
-      <MainComponent container='notFound-container'>
-        <h1>Not Found</h1>
-        <p>The page you are looking for does not exist</p>
-      </MainComponent>
-    </Fragment>
+    <div className='notFound-container'>
+      <div className='page-title'>404</div>
+      <div className='notFound-title'>Not Found</div>
+      <div className='notFound-text'>
+        The page you are looking for does not exist
+      </div>
+    </div>
   );
 };
 

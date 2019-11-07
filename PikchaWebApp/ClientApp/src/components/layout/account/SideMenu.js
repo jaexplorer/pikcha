@@ -1,12 +1,16 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { createModal } from "../../../actions/modal";
-import nextIcon from "../../../assets/images/next-white.png";
+import { createPromoteModal } from "../../../actions/modal";
+import NextIcon from "../../../assets/images/rightarrow-black.png";
+import ProfileIcon from "../../../assets/images/profile-black.png";
+import PhotosIcon from "../../../assets/images/photos-black.png";
+import OrdersIcon from "../../../assets/images/shopping-list-black.png";
+import PaymentIcon from "../../../assets/images/wallet-black.png";
+import SettingsIcon from "../../../assets/images/settings-black.png";
 
-const SideMenu = ({ account, createModal }) => {
+const SideMenu = ({ account, createPromoteModal }) => {
   const menu = React.createRef();
-  const menu2 = React.createRef();
 
   useEffect(() => {
     const checkCurrent = () => {
@@ -15,13 +19,6 @@ const SideMenu = ({ account, createModal }) => {
           ? a.classList.add("current")
           : a.classList.remove("current");
       });
-      if (account.user.roles.includes("Photographer")) {
-        [...menu2.current.children].forEach(a => {
-          a.href === window.location.href
-            ? a.classList.add("current")
-            : a.classList.remove("current");
-        });
-      }
     };
     checkCurrent();
   });
@@ -32,47 +29,40 @@ const SideMenu = ({ account, createModal }) => {
         ? a.classList.add("current")
         : a.classList.remove("current");
     });
-    if (account.user.roles.includes("Artist")) {
-      [...menu2.current.children].forEach(a => {
-        a.href === window.location.href
-          ? a.classList.add("current")
-          : a.classList.remove("current");
-      });
-    }
   };
 
   return (
-    <div id='side-menu'>
+    <div className={`side-nav ${!account.user && "inactive"}`}>
       <div className='side-menu-container'>
         <div className='side-menu-heading'>Your Space</div>
         <div onClick={() => setCurrent()} className='side-menu' ref={menu}>
-          <Link to='/account'>My Details</Link>
-          <Link to='/account/photos'>My Photos</Link>
-          <Link to='/account/orders'>My Orders</Link>
-          <Link to='/account/payment'>Payment Details</Link>
-          <Link to='/account/settings'>Settings</Link>
+          <Link to='/account'>
+            <div className='link'>My Details</div>
+            <img src={ProfileIcon} alt='' />
+          </Link>
+          <Link to='/account/photos'>
+            <div className='link'>My Photos</div>
+            <img src={PhotosIcon} alt='' />
+          </Link>
+          <Link to='/account/orders'>
+            <div className='link'>My Orders</div>
+            <img src={OrdersIcon} alt='' />
+          </Link>
+          <Link to='/account/payment'>
+            <div className='link'>Payment Details</div>
+            <img src={PaymentIcon} alt='' />
+          </Link>
+          <Link to='/account/settings'>
+            <div className='link'>Settings</div>
+            <img src={SettingsIcon} alt='' />
+          </Link>
         </div>
       </div>
-      {account.user.roles.includes("Artist") ? (
-        <div className='side-menu-container'>
-          <div className='side-menu-heading'>For Artists</div>
-          <div onClick={() => setCurrent()} className='side-menu' ref={menu2}>
-            <Link to='/account/bank'>Bank Details</Link>
-            <Link to='/account/socials'>Socials</Link>
-            <Link to='/account/artist-photos'>My Photos</Link>
-            <Link to='/account/stats'>Statistics</Link>
-            <Link to='/account/artist-settings'>Settings</Link>
-          </div>
-        </div>
-      ) : (
-        <div onClick={() => createModal("RoleChangeModal")} className='prompt'>
-          <div className='prompt-title'>Become an Artist!</div>
-          <div className='prompt-text'>
-            It's a great way to earn money, launch your photography career and
-            have a chance to be in the top 100.
-          </div>
+      {account.user && !account.user.roles.includes("Artist") && (
+        <div onClick={() => createPromoteModal()} className='prompt'>
+          <div className='prompt-title'>Become an Artist</div>
           <div className='prompt-action'>
-            <img src={nextIcon} alt='' />
+            <img src={NextIcon} alt='' />
           </div>
         </div>
       )}
@@ -86,5 +76,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createModal }
+  { createPromoteModal }
 )(SideMenu);

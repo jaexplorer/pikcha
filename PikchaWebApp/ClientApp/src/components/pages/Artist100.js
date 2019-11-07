@@ -1,38 +1,43 @@
-import React, { useEffect, Fragment } from "react";
-import SideBar from "../layout/Sidebar";
-import ArtistItem from "../layout/artist100/ArtistItem";
-import Header from "../layout/Header";
-import MainComponent from "../MainComponent";
+import React, { Fragment, useEffect } from "react";
 import { connect } from "react-redux";
-import { getArtist100 } from "../../actions/top100";
+import { getArtist100, resetArtist100 } from "../../actions/artist100";
+import InfiniteScroll from "react-infinite-scroll-component";
+import ArtistRow from "../layout/artist100/ArtistRow";
+import Loader from "../Loader";
 
-const Artist100 = ({ getArtist100, top100 }) => {
+const Artist100 = ({ artist100, getArtist100, resetArtist100 }) => {
   useEffect(() => {
-    getArtist100();
+    getArtist100(artist100.count, artist100.start);
+    return () => resetArtist100();
   }, []);
 
   return (
     <Fragment>
-      <SideBar />
-      <Header subtitle='Top 100' title='Artist 100' />
-      {top100.artistloading ? (
-        <h2 className='loading'>Loading...</h2>
-      ) : (
-        <MainComponent container='artist100-container'>
-          {top100.artist100.map((artistItem, index) => (
-            <ArtistItem artistItem={artistItem} key={index} rank={index + 1} />
+      <div className='page-title'>Artist 100</div>
+      <div className='artist100-container'>
+        <InfiniteScroll
+          dataLength={artist100.top100.length}
+          next={() => getArtist100(artist100.count, artist100.start)}
+          hasMore={artist100.hasMore}
+          loader={<Loader />}
+          endMessage={
+            <h4 className='end-message'>Yay! You have seen them all</h4>
+          }
+        >
+          {artist100.top100.map((row, index) => (
+            <ArtistRow key={index + 1} rank={index + 1} row={row} />
           ))}
-        </MainComponent>
-      )}
+        </InfiniteScroll>
+      </div>
     </Fragment>
   );
 };
 
 const mapStateToProps = state => ({
-  top100: state.top100Reducer
+  artist100: state.artist100Reducer
 });
 
 export default connect(
   mapStateToProps,
-  { getArtist100 }
+  { getArtist100, resetArtist100 }
 )(Artist100);

@@ -1,16 +1,14 @@
 import {
-  PHOTOS_LOADED,
-  PHOTO_SELECTED,
-  PHOTO_DESELECTED,
-  PHOTOS_LOADING,
-  PHOTOS_ERROR
+  GALLERY_LOADED,
+  GALLERY_LOADING,
+  GALLERY_ERROR,
+  GALLERY_RESET
 } from "../actions/types";
 
 const initialState = {
-  photos: null,
+  photos: [],
   count: 15,
   start: 1,
-  selected: null,
   loading: true,
   error: null,
   hasMore: true
@@ -18,29 +16,18 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case PHOTOS_LOADED:
+    case GALLERY_LOADED:
       payload.forEach(d => {
         const randomised = Math.random() * (30 - 15) + 15;
         d.height = randomised;
       });
       return {
         ...state,
-        photos: state.photos == null ? payload : [...state.photos, ...payload],
-
+        photos: [...state.photos, ...payload],
         loading: false,
         start: state.start + state.count
       };
-    case PHOTO_SELECTED:
-      return {
-        ...state,
-        selected: payload
-      };
-    case PHOTO_DESELECTED:
-      return {
-        ...state,
-        selected: null
-      };
-    case PHOTOS_ERROR:
+    case GALLERY_ERROR:
       !payload.data === "You have reached the end." && console.error(payload);
       return {
         ...state,
@@ -48,11 +35,13 @@ export default (state = initialState, { type, payload }) => {
         loading: false,
         hasMore: !payload.data === "You have reached the end."
       };
-    case PHOTOS_LOADING:
+    case GALLERY_LOADING:
       return {
         ...state,
         loading: true
       };
+    case GALLERY_RESET:
+      return initialState;
 
     default:
       return state;

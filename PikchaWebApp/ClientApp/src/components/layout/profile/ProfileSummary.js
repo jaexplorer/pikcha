@@ -1,13 +1,17 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import ProfilePic from "../../../assets/images/profilePic.png";
-import { createModal } from "../../../actions/modal";
+import ProfilePic from "../../../assets/images/placeholder.png";
+import {
+  createUploadImageModal,
+  createPromoteModal
+} from "../../../actions/modal";
 import { followArtist, unfollowArtist } from "../../../actions/account";
 
 const ProfileSummary = ({
-  artist,
+  profile,
   account,
-  createModal,
+  createUploadImageModal,
+  createPromoteModal,
   followArtist,
   unfollowArtist
 }) => {
@@ -23,17 +27,18 @@ const ProfileSummary = ({
     fName,
     lName,
     aggrImViews,
-    email,
-    phone,
     avatar
-  } = artist.artist;
+  } = profile;
 
-  const determineAction = () => {
-    if (account.loadingUser === false && artist.artist.id === account.user.id) {
+  const followAction = () => {
+    if (!account.user) {
+      return "";
+    }
+    if (account.user.id === profile.id) {
       if (account.user.roles.includes("Artist")) {
         return (
           <div
-            onClick={() => createModal("UploadModal")}
+            onClick={() => createUploadImageModal()}
             className='artist-action'
           >
             Upload
@@ -41,25 +46,28 @@ const ProfileSummary = ({
         );
       } else {
         return (
-          <div
-            onClick={() => createModal("RoleChangeModal")}
-            className='artist-action'
-          >
-            Upload
+          <div onClick={() => createPromoteModal()} className='artist-action'>
+            Become an Artist
           </div>
         );
       }
     } else if (
-      account.loadingUser === false &&
       account.user.following.some(f => {
-        return f.id === artist.artist.id;
+        return f.id === profile.id;
       })
     ) {
-      return <div className='artist-action'>Followed</div>;
+      return (
+        <div
+          onClick={() => unfollowArtist(account.user.id, profile.id)}
+          className='artist-action'
+        >
+          Followed
+        </div>
+      );
     } else {
       return (
         <div
-          onClick={() => followArtist(account.user.id, artist.artist.id)}
+          onClick={() => followArtist(account.user.id, profile.id)}
           className='artist-action'
         >
           Follow
@@ -74,38 +82,39 @@ const ProfileSummary = ({
         <div className='artist-picture'>
           <img src={avatar} alt='' />
         </div>
-        <div className='artist-details'>
-          <div className='artist-name'>
-            {fName} {lName}
+        <div className='artist-info'>
+          <div className='artist-details'>
+            <div className='artist-name'>
+              {fName} {lName}
+            </div>
+            <div className='artist-location'>{location}</div>
           </div>
-          <div className='artist-location'>{location}</div>
+          {followAction()}
         </div>
-        {determineAction()}
-
-        <div className='artist-description'>{bio}</div>
       </div>
       <div className='second-container'>
-        <div className='artist-description'>{bio}</div>
+        <div className='artist-description'>
+          <div className='about-me'>About me</div>
+          {bio}
+        </div>
         <div className='artist-stats'>
           <div className='artist-views'>{aggrImViews} Views</div>
           <div className='artist-followers'>{followers.length} Followers</div>
           <div className='photos-sold'>{totSold} Photos Sold</div>
           <div className='average-price'>${avgPrice} Average Price</div>
         </div>
-        {following.length > 0 && (
-          <div className='following'>
-            <div className='following-title'>Following</div>
-            <div className='following-container'>
-              <div className='following-wrapper'>
-                {following.map(followed => (
-                  <div className='followed'>
-                    <img src={ProfilePic} alt='' />
-                  </div>
-                ))}
-              </div>
+        <div className='following'>
+          <div className='following-title'>Following</div>
+          <div className='following-container'>
+            <div className='following-wrapper'>
+              {following.map(followed => (
+                <div className='followed'>
+                  <img src={followed.avatar} alt='' />
+                </div>
+              ))}
             </div>
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
@@ -117,5 +126,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createModal, followArtist, unfollowArtist }
+  { createUploadImageModal, followArtist, unfollowArtist, createPromoteModal }
 )(ProfileSummary);

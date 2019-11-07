@@ -1,42 +1,50 @@
-import {
-  CREATE_PROFILE_DROPDOWN,
-  REMOVE_PROFILE_DROPDOWN,
-  CREATE_CART_DROPDOWN,
-  REMOVE_CART_DROPDOWN
-} from "./types";
+import { DROPDOWN_OPEN, DROPDOWN_CLOSED } from "./types";
 
-// Create Profile Dropdown
-export const createProfileDropdown = () => {
+// Open Menu
+export const openMenu = () => {
   return dispatch => {
     dispatch({
-      type: CREATE_PROFILE_DROPDOWN
+      type: DROPDOWN_OPEN,
+      payload: "Menu"
     });
   };
 };
 
-// Remove Profile Dropdown
-export const removeProfileDropdown = () => {
+// Open Cart
+export const openCart = () => {
   return dispatch => {
     dispatch({
-      type: REMOVE_PROFILE_DROPDOWN
+      type: DROPDOWN_OPEN,
+      payload: "Cart"
     });
   };
 };
 
-// Create Cart Dropdown
-export const createCartDropdown = () => {
+// Open Profile
+export const openProfile = () => {
   return dispatch => {
     dispatch({
-      type: CREATE_CART_DROPDOWN
+      type: DROPDOWN_OPEN,
+      payload: "Profile"
     });
   };
 };
 
-// Remove Cart Dropdown
-export const removeCartDropdown = () => {
+// Open Following
+export const openFollowing = () => {
   return dispatch => {
     dispatch({
-      type: REMOVE_CART_DROPDOWN
+      type: DROPDOWN_OPEN,
+      payload: "Following"
+    });
+  };
+};
+
+// Close Dropdown
+export const closeDropdown = () => {
+  return dispatch => {
+    dispatch({
+      type: DROPDOWN_CLOSED
     });
   };
 };

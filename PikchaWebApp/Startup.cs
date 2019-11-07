@@ -187,7 +187,7 @@ namespace PikchaWebApp
 
                 try
                 {
-                    bool populateDB = true;
+                    bool populateDB = false;
                     if (populateDB)
                     {
                         var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();

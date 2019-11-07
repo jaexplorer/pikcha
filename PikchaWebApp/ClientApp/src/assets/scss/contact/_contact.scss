@@ -1,85 +1,78 @@
 // Contact
 // ------------------------------------------------------------------- //
-#contact-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 
-  // Contact Details Container
-  // ---------------------------------------- //
-  .contact-details-container {
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-rows: 1fr 1fr;
-    grid-template-columns: 1fr 1fr;
-    font-family: "Montserrat";
-    background-image: linear-gradient(
-      -120deg,
-      #5271c4 0%,
-      #b19fff 10%,
-      rgba(236, 161, 254, 0.5) 25%,
-      #fafafa 50%
-    );
-    padding: 3rem;
-    grid-gap: 2rem;
-    margin-bottom: 2rem;
-    width: 100%;
+// Contact Details Container
+// ---------------------------------------- //
+.contact-details-container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  font-family: "Montserrat";
+  padding: 3rem;
+  grid-gap: 3rem;
+  width: 100%;
+  justify-items: center;
+  margin-bottom: 6rem;
+  text-align: center;
+  // background: #f2f5fb;
 
-    .phone-contact {
-      .phone-contact-title {
-        font-size: 1rem;
-        text-transform: uppercase;
-      }
-      .phone-contact-text {
-        font-size: 1.4rem;
-        margin-top: 0.5rem;
-      }
+  .phone-contact {
+    .phone-contact-title {
+      font-size: 1.2rem;
+      text-transform: uppercase;
     }
-
-    .fax-contact {
-      .fax-contact-title {
-        font-size: 1rem;
-        text-transform: uppercase;
-      }
-      .fax-contact-text {
-        font-size: 1.4rem;
-        margin-top: 0.5rem;
-      }
-    }
-
-    .address-contact {
-      .address-contact-title {
-        font-size: 1rem;
-        text-transform: uppercase;
-      }
-      .address-contact-text {
-        font-size: 1.4rem;
-        margin-top: 0.5rem;
-      }
-    }
-
-    .email-contact {
-      .email-contact-title {
-        font-size: 1rem;
-        text-transform: uppercase;
-      }
-      .email-contact-text {
-        font-size: 1.4rem;
-        margin-top: 0.5rem;
-      }
+    .phone-contact-text {
+      font-size: 1.8rem;
+      margin-top: 0.5rem;
     }
   }
 
-  // Contact Map Container
-  // ---------------------------------------- //
-  .contact-map-container {
-    width: 100%;
-    overflow: hidden;
-
-    img {
-      width: 100%;
+  .fax-contact {
+    margin-top: 2rem;
+    .fax-contact-title {
+      font-size: 1.2rem;
+      text-transform: uppercase;
     }
+    .fax-contact-text {
+      font-size: 1.8rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .address-contact {
+    .address-contact-title {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+    .address-contact-text {
+      font-size: 1.8rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .email-contact {
+    margin-top: 2rem;
+
+    .email-contact-title {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+    .email-contact-text {
+      font-size: 1.8rem;
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+// Contact Map Container
+// ---------------------------------------- //
+.contact-map-container {
+  width: 100%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
   }
 }
 

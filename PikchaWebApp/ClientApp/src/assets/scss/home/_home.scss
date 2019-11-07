@@ -1,0 +1,61 @@
+// Home
+// ------------------------------------------------------------------- //
+.hero-container {
+  height: calc(100vh - 20rem);
+  background: red;
+  display: flex;
+  border-bottom: white solid 1px;
+  .primary-hero {
+    width: 75vw;
+    height: 100%;
+    background: mediumpurple;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+  }
+  .secondary-hero {
+    height: calc(100% + 10rem);
+    width: 25vw;
+    background: midnightblue;
+    position: relative;
+    top: -10rem;
+    border-left: white solid 1px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+    }
+  }
+}
+// 3 columns
+// ---------------------------------------- //
+@media screen and (max-width: 999px) {
+  .hero-container {
+    display: flex;
+    flex-direction: row-reverse;
+    .primary-hero {
+      flex: 2;
+    }
+    .secondary-hero {
+      flex: 1;
+      border-left: none;
+      border-top: white solid 1px;
+      border-right: white solid 1px;
+    }
+  }
+}
+
+// 2 columns
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  .hero-container {
+    .secondary-hero {
+      display: none;
+    }
+  }
+}

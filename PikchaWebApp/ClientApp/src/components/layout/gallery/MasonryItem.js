@@ -1,45 +1,35 @@
 import React, { useRef, useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { selectPhoto, addView } from "../../../actions/gallery";
 import ItemInfo from "./ItemInfo";
 
-const MasonryItem = ({ gallery, selectPhoto, photo, addView }) => {
-  const thisPhoto = useRef(null);
-  const [isSelected, setSelected] = useState(false);
+const MasonryItem = ({ photo }) => {
+  const [selected, setSelected] = useState(false);
+  const item = useRef(null);
 
   useEffect(() => {
-    setSelected(gallery.selected === thisPhoto);
-    if (isSelected) {
-      thisPhoto.current.classList.add("selected");
-      thisPhoto.current.style.height = "45rem";
-    } else {
-      thisPhoto.current.classList.remove("selected");
-      thisPhoto.current.style.height = photo.height + "rem";
-    }
-  }, [gallery.selected, isSelected, photo.height]);
+    const handleClick = e => {
+      // console.log(e.path.contains(item.current));
+      setSelected(item.current.contains(e.target.parentElement));
+    };
+
+    document.addEventListener("click", handleClick);
+    item.current.addEventListener("contextmenu", e => {
+      e.preventDefault();
+    });
+
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
 
   return (
     <div
-      className='masonry-item'
-      ref={thisPhoto}
-      onClick={e => {
-        if (!isSelected) {
-          selectPhoto(thisPhoto);
-          addView(photo.id);
-        }
-      }}
+      className={`masonry-item ${selected && "selected"}`}
+      style={{ height: photo.height + "rem" }}
+      ref={item}
+      onContextMenu={e => e.preventDefault}
     >
-      <img src={photo.watermark} alt='' />
-      {isSelected && <ItemInfo photo={photo} />}
+      <img src={photo.thumbnail} alt='' />
+      {selected && <ItemInfo photo={photo} onChange={e => setSelected(e)} />}
     </div>
   );
 };
 
-const mapStateToProps = state => ({
-  gallery: state.galleryReducer
-});
-
-export default connect(
-  mapStateToProps,
-  { selectPhoto, addView }
-)(MasonryItem);
+export default MasonryItem;
