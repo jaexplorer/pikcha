@@ -78,7 +78,7 @@ Image
 # Artists
 
 ### Get an Artist
-- ENDPOINT : api/profile/{userId} 
+- ENDPOINT : api/profile/artist/{userId} 
 - METHOD : get
 - AUTHENTICATED : false
 - RESULTS : artist

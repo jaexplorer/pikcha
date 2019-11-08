@@ -39,8 +39,8 @@ namespace PikchaWebApp.Controllers
             _mapper = mapper;
         }
 
-        // GET: api/profile/5
-        [HttpGet("{userId}")]
+        // GET: api/profile/artist/5
+        [HttpGet("artist/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -50,13 +50,16 @@ namespace PikchaWebApp.Controllers
 
             try
             {
-                var pikchaUser = await _pikchDbContext.PikchaUsers.Include("Following").Include("Following.PikchaUser").Include("Following.Artist").FirstAsync(u => u.Id == userId);
-                var userDTO = _mapper.Map<ArtistDTO>(pikchaUser);
+                //var pikchaUser = await _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following").Include("Following.PikchaUser").Include("Following.Artist").FirstAsync(u => u.Id == userId);
+                var pikchaUserQuery =  _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following").Include("Following.PikchaUser").Include("Following.Artist").Where(u => u.Id == userId);
+                //var userDTO = _mapper.Map<ArtistDTO>(pikchaUserQuery);
+                var userDTO = await _mapper.ProjectTo<ArtistDTO>(pikchaUserQuery).FirstAsync();
 
+                var pikchaUser = await _pikchDbContext.PikchaUsers.FindAsync(userDTO.Id);
                 var roles = await _userManager.GetRolesAsync(pikchaUser);
                 if (userDTO != null && roles != null)
                 {
-                    userDTO.Roles = roles.ToList();
+                    //userDTO.Roles = roles.ToList();
                 }
 
                 return ReturnOkOrErrorStatus(userDTO);
@@ -66,8 +69,6 @@ namespace PikchaWebApp.Controllers
                 Log.Error(ex, " Profile, GetUser, userId ={userId} ", userId);
                 return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
             }
-
-
         }
 
 

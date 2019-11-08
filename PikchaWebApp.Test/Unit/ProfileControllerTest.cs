@@ -217,7 +217,15 @@ namespace PikchaWebApp.Test.Unit
 
             Assert.True(qUsr.Following.Count > 0);
             Assert.True(qUsr.Following.Find(u => u.Id == pkArtist.Id) != null);
+                        
 
+            // check the artist profile for following 
+
+            var profArtGetRes = await profCntrl.GetUser(pkArtist.Id) as ObjectResult;
+            var prfUsr = profArtGetRes.Value as ArtistDTO;
+
+            Assert.True(prfUsr.Followers.Count > 0);
+            Assert.True(prfUsr.Followers.Find(u => u.Id == qUsr.Id) != null);
         }
 
         [Theory]

@@ -44,23 +44,20 @@ namespace PikchaWebApp.Data
             CreateMap<PikchaUser, ArtistBaseDTO>()
                  .ForMember(
                 dest => dest.Location,
-                opt => opt.MapFrom(src => string.Concat( string.IsNullOrEmpty( src.City) ? string.Empty : src.City + ", ", string.IsNullOrEmpty(src.Country) ? string.Empty : src.Country)))
-                 .ForMember(
-                dest => dest.Phone,
-                opt => opt.MapFrom(src => string.IsNullOrEmpty(src.PhoneNumber) ? string.Empty : src.PhoneNumber))
+                opt => opt.MapFrom(src => string.Concat( string.IsNullOrEmpty( src.City) ? string.Empty : src.City + ", ", string.IsNullOrEmpty(src.Country) ? string.Empty : src.Country)))                
                   .ForMember(
                 dest => dest.AggrImViews,
-                opt => opt.MapFrom(src => src.Images.Sum(i => i.Views.Sum(v => v.Count))))
+                opt => opt.MapFrom(src => src.Images.Select(v => v.Views).Count()>0? src.Images.Sum(i => i.Views.Sum(v => v.Count)).ToString() : "0"))
             ;
 
             CreateMap<PikchaUser, ArtistDTO>()
                 .ForMember(
                 dest => dest.Followers,
-                opt => opt.MapFrom(src => src.Following.Select(y => y.PikchaUser).ToList()))
+                opt => opt.MapFrom(src => src.Followers.Select(y => y.PikchaUser)))
 
                  .ForMember(
                 dest => dest.Following,
-                opt => opt.MapFrom(src => src.Following.Select(y => y.Artist).ToList()))
+                opt => opt.MapFrom(src => src.Following.Select(y => y.Artist)))
                 ;
 
             CreateMap<PikchaUser, AuthenticatedUserDTO>()

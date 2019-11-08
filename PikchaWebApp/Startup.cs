@@ -187,10 +187,11 @@ namespace PikchaWebApp
 
                 try
                 {
-                    bool populateDB = true;
-                    if (populateDB)
+                    var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
+
+                    //bool populateDB = true;
+                    if (userManager.Users.Count() ==0) // if users are already populated, no need to init DB
                     {
-                        var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
 
                         var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
@@ -420,7 +421,7 @@ namespace PikchaWebApp
             // remove all data if there is
 
             // clear image views
-            var folls = await dbContext.Followers.ToListAsync();
+           /* var folls = await dbContext.Followers.ToListAsync();
             dbContext.RemoveRange(folls);
             await dbContext.SaveChangesAsync();
 
@@ -446,7 +447,7 @@ namespace PikchaWebApp
             // clear users
             //var usrs = dbContext.PikchaUsers.ToListAsync().Result;
             //dbContext.RemoveRange(usrs);
-            //dbContext.SaveChanges();
+            //dbContext.SaveChanges(); */
 
 
             // create roles

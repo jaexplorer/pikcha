@@ -60,7 +60,7 @@ namespace PikchaWebApp.Models
 
         public string LName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string Phone { get; set; } = string.Empty; // need to add a mapping
+        public string PhoneNumber { get; set; } = string.Empty; 
         public string Avatar { get; set; } = @"Uploads\Avatars\default-avatar.jpg";
 
 
@@ -71,10 +71,6 @@ namespace PikchaWebApp.Models
         public string Location { get; set; } = string.Empty;
         public string AggrImViews { get; set; } = "0";
     }
-
-    public class Artist100BaseDTO : ArtistBaseDTO
-    {
-
-    }
+       
 
 }
