@@ -40,33 +40,28 @@ namespace PikchaWebApp.Controllers
         }
 
         // GET: api/profile/artist/5
-        [HttpGet("artist/{userId}")]
+        [HttpGet("artist/{artistId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> GetUser(string userId)
+        public async Task<ActionResult> GetArtist(string artistId)
         {
-            // TO DO :  if the request user is admin, return profile based on userId query
+            // TO DO :  if the request user is admin, return profile based on artistId query
 
             try
             {
-                //var pikchaUser = await _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following").Include("Following.PikchaUser").Include("Following.Artist").FirstAsync(u => u.Id == userId);
-                var pikchaUserQuery =  _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following").Include("Following.PikchaUser").Include("Following.Artist").Where(u => u.Id == userId);
-                //var userDTO = _mapper.Map<ArtistDTO>(pikchaUserQuery);
-                var userDTO = await _mapper.ProjectTo<ArtistDTO>(pikchaUserQuery).FirstAsync();
-
-                var pikchaUser = await _pikchDbContext.PikchaUsers.FindAsync(userDTO.Id);
-                var roles = await _userManager.GetRolesAsync(pikchaUser);
-                if (userDTO != null && roles != null)
-                {
-                    //userDTO.Roles = roles.ToList();
-                }
+                var pikchaUser = await _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following.Artist").Include("Followers.PikchaUser").FirstAsync(u => u.Id == artistId);
+                var userDTO = _mapper.Map<ArtistDTO>(pikchaUser);
+                
+               // var pikchaUserQuery =  _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following").Include("Following.PikchaUser").Include("Following.Artist").Where(u => u.Id == artistId);
+                //var userDTO = await _mapper.ProjectTo<ArtistDTO>(pikchaUserQuery).FirstAsync();
+                //var userDTO = await _mapper.ProjectTo<ArtistDTO>(pikchaUserQuery).FirstAsync();
 
                 return ReturnOkOrErrorStatus(userDTO);
             }
             catch(Exception ex)
             {
-                Log.Error(ex, " Profile, GetUser, userId ={userId} ", userId);
+                Log.Error(ex, " Profile, GetArtist, artistId ={artistId} ", artistId);
                 return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
             }
         }
@@ -105,11 +100,48 @@ namespace PikchaWebApp.Controllers
             }
             catch (Exception ex)
             {
-                Log.Error(ex, " Profile, GetUser, userId ={userId} ", userId);
+                Log.Error(ex, " Profile, GetArtist, userId ={userId} ", userId);
                 return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
             }
 
         }
+
+        [HttpPut("artist/{artistId}/links")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
+        public async Task<ActionResult> UpdateLinks(string userId, [FromBody] LinkVM sLink)
+        {
+            try
+            {
+                var pikchaUser = await _userManager.GetUserAsync(this.User); ;
+                if (pikchaUser == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
+                }
+                pikchaUser.Links[sLink.Type] = sLink.Url;                
+
+                IdentityResult result = await _userManager.UpdateAsync(pikchaUser);
+                if (result.Succeeded)
+                {
+                    //var pikchaUserQuery = _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following").Include("Following.PikchaUser").Include("Following.Artist").Where(u => u.Id == pikchaUser.Id);
+                    //var userDTO = await _mapper.ProjectTo<ArtistDTO>(pikchaUserQuery).FirstAsync();
+                    var pikchaUserDb = await _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following.Artist").Include("Followers.PikchaUser").FirstAsync(u => u.Id ==pikchaUser.Id);
+                    var userDTO = _mapper.Map<ArtistDTO>(pikchaUserDb);
+                    return ReturnOkOrErrorStatus(userDTO);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error in updating the user information.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, " Profile, GetArtist, userId ={userId} ", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
+            }
+        }
+
+
+
 
         // DELETE: api/profile/5
         [HttpDelete("{userId}")]
@@ -183,6 +215,73 @@ namespace PikchaWebApp.Controllers
             catch (Exception ex)
             {
                 Log.Error(ex, " Profile, UploadAvatarImage, userId ={userId}", userId);
+                return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status404ImageNotFound);
+
+            }
+        }
+
+
+        [HttpPost("artist/{artistId}/cover")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
+        public async Task<ActionResult> UploadCoverImage(string artistId)
+        {
+            try
+            {
+                PikchaUser pikchaUser = await _userManager.GetUserAsync(this.User);
+                if (pikchaUser == null)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);
+                }
+
+               /* bool isArtist = await _userManager.IsInRoleAsync(pikchaUser, PikchaConstants.PIKCHA_ROLES_ARTIST_NAME);
+                if(! isArtist)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ArtistNotFound);
+                } */
+                using (var streamReader = new HttpRequestStreamReader(Request.Body, Encoding.UTF8))
+                using (var jsonReader = new JsonTextReader(streamReader))
+                {
+                    var json = await JObject.LoadAsync(jsonReader);
+
+                    string coverContent = (string)json["coverContent"];
+                    if (coverContent.Contains(','))
+                    {
+                        coverContent = coverContent.Split(",")[1];
+                    }
+
+                    //string tmp = (string)json["signatureContent"]["data"];
+                    ImageProcessingManager manager = new ImageProcessingManager(_hostingEnvironment, _configuration);
+                    // = "";
+                    string filePath = string.Empty;
+                    manager.ProcessCoverImage(coverContent, ref filePath);
+                    // get the PikchaUser from ClaimsPrincipal {{this.User}} and save the file location
+
+                    if (!string.IsNullOrEmpty(filePath))
+                    {
+                        pikchaUser.Cover = filePath;
+                        await _pikchDbContext.SaveChangesAsync();
+
+                        //var pikchaUserQuery = _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following").Include("Following.PikchaUser").Include("Following.Artist").Where(u => u.Id == artistId);
+                        // var userDTO = await _mapper.ProjectTo<ArtistDTO>(pikchaUserQuery).FirstAsync();
+                        var pikchaUserDb = await _pikchDbContext.PikchaUsers.Include("Images.Views").Include("Following.Artist").Include("Followers.PikchaUser").FirstAsync(u => u.Id == pikchaUser.Id);
+                        var userDTO = _mapper.Map<ArtistDTO>(pikchaUserDb);
+                        return ReturnOkOrErrorStatus(userDTO);
+
+                    }
+                    else
+                    {
+                        Log.Error(" Profile, UploadCoverImage, userId ={userId}, filePath={filePath}", artistId, filePath);
+                        return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status500InternalServerError);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, " Profile, UploadCoverImage, userId ={userId}", artistId);
                 return StatusCode(StatusCodes.Status500InternalServerError, PikchaMessages.MESS_Status404ImageNotFound);
 
             }
@@ -448,11 +547,15 @@ namespace PikchaWebApp.Controllers
         public string State { get; set; }
         public string Country { get; set; }
         public string PhoneNumber { get; set; }
-        public Dictionary<string, string> Links { get; set; }
+        //public Dictionary<string, string> Links { get; set; }
 
     }
+    public class LinkVM
+    {
+        public string Type { get; set; }
+        public string Url { get; set; }
 
-
+    }
 
 
 }

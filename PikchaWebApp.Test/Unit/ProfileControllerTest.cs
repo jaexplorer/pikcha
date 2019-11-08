@@ -58,13 +58,13 @@ namespace PikchaWebApp.Test.Unit
 
             if (idType == "invalid")
             {
-                var result = await profContr.GetUser(Guid.NewGuid().ToString()) as ObjectResult;
+                var result = await profContr.GetArtist(Guid.NewGuid().ToString()) as ObjectResult;
 
                 Assert.Equal(statusCode, result.StatusCode);
                 return;
             }
 
-            var result2 = await profContr.GetUser(pkUser.Id) as ObjectResult;
+            var result2 = await profContr.GetArtist(pkUser.Id) as ObjectResult;
 
             Assert.Equal(statusCode, result2.StatusCode);
 
@@ -102,6 +102,44 @@ namespace PikchaWebApp.Test.Unit
             Assert.Equal(updateFName, updUsr.FName);
 
         }
+
+        [Fact]
+        public async Task Update_Links_Success()
+        {
+            // create a new user
+            string userId = Guid.NewGuid().ToString();
+            var pkUser = await MockHelpers.CreateNewUser(1, userId, "test1@test.com", "Password@123", _fixture);
+
+            // get user manager
+            var profContr = CreateAuthenticatedProfileController(pkUser);
+
+
+            LinkVM updtModel = new LinkVM()
+            {
+                 Type = "Facebook",
+                 Url = "https://facebook.com/"
+            };
+            var result = await profContr.UpdateLinks(pkUser.Id, updtModel) as ObjectResult;
+            var qUsr = result.Value as ArtistDTO;
+
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+            Assert.True(qUsr.Links.ContainsKey(updtModel.Type));
+            Assert.True(qUsr.Links.ContainsValue(updtModel.Url));
+
+
+            LinkVM updtModel2 = new LinkVM()
+            {
+                Type = "Facebook",
+                Url = "https://facebook.com/2"
+            };
+            var result2 = await profContr.UpdateLinks(pkUser.Id, updtModel2) as ObjectResult;
+            var qUsr2 = result2.Value as ArtistDTO;
+
+            Assert.True(qUsr2.Links.ContainsValue(updtModel2.Url));
+
+            Assert.Equal(StatusCodes.Status200OK, result.StatusCode);
+        }
+
 
         // NEED to convert an image into Base64 and send it inside the bodydata
         [Theory]
@@ -170,6 +208,100 @@ namespace PikchaWebApp.Test.Unit
 
         }
 
+        [Theory]
+        [InlineData("valid", StatusCodes.Status200OK)]
+        public async Task Post_UploadAvatarImage(string idType, int statusCode)
+        {
+            // TODO : Add login function
+            // Arrange
+             var configurationSection = new Mock<IConfigurationSection>();
+
+            configurationSection.Setup(a => a.Value).Returns("uploads/avatars");
+            _configurationManager.Setup(a => a.GetSection("UploadDirectories:Avatar")).Returns(configurationSection.Object);
+
+            // create a new user
+            string userId = Guid.NewGuid().ToString();
+            var pkUser = await MockHelpers.CreateNewUser(51, userId, "test51@test.com", "Password@123", _fixture);
+            var profCntrl = CreateAuthenticatedProfileController(pkUser);
+
+            // create a file
+            string imagePath = "wwwroot/TestPhotos/black-white.jpg";
+            var img = MockHelpers.CreateImage(DateTime.Now.ToShortDateString(), "Caption 1", "location 1", imagePath);
+
+            using (var ms = new MemoryStream())
+            {
+                //ms.Position = 0;
+
+                img.ImageFile.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                string imgContent = Convert.ToBase64String(fileBytes);
+
+                var json = "{ \"avatarContent\": \"" + imgContent + "\"}";
+                var bytes = System.Text.Encoding.UTF8.GetBytes(json.ToCharArray());
+                var stream = new MemoryStream(bytes);
+
+                //ms.Position = 0;
+                profCntrl.HttpContext.Request.Body = stream;
+
+                // act on the Base64 data
+                var result = await profCntrl.UploadAvatarImage(pkUser.Id) as ObjectResult;
+                Assert.Equal(statusCode, result.StatusCode);
+
+                var qUsr = result.Value as AuthenticatedUserDTO;
+
+                Assert.True(File.Exists( PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER + qUsr.Avatar));
+                    
+
+            }
+        }
+
+        [Theory]
+        [InlineData("valid", StatusCodes.Status200OK)]
+        public async Task Post_UploadCoverImage(string idType, int statusCode)
+        {
+            // TODO : Add login function
+            // Arrange
+            var configurationSection = new Mock<IConfigurationSection>();
+
+            configurationSection.Setup(a => a.Value).Returns("uploads/covers");
+            _configurationManager.Setup(a => a.GetSection("UploadDirectories:Cover")).Returns(configurationSection.Object);
+
+           // create an artist
+            var artist = await Post_Promote_Photo_Grapher_Test("valid", 200);
+          
+            var profCntrl = CreateAuthenticatedProfileController(artist);
+
+            // create a file
+            string imagePath = "wwwroot/TestPhotos/black-white.jpg";
+            var img = MockHelpers.CreateImage(DateTime.Now.ToShortDateString(), "Caption 1", "location 1", imagePath);
+
+            using (var ms = new MemoryStream())
+            {
+                //ms.Position = 0;
+
+                img.ImageFile.CopyTo(ms);
+                var fileBytes = ms.ToArray();
+                string imgContent = Convert.ToBase64String(fileBytes);
+
+                var json = "{ \"coverContent\": \"" + imgContent + "\"}";
+                var bytes = System.Text.Encoding.UTF8.GetBytes(json.ToCharArray());
+                var stream = new MemoryStream(bytes);
+
+                //ms.Position = 0;
+                profCntrl.HttpContext.Request.Body = stream;
+
+                // act on the Base64 data
+                var result = await profCntrl.UploadCoverImage(artist.Id) as ObjectResult;
+                Assert.Equal(statusCode, result.StatusCode);
+
+                var qUsr = result.Value as ArtistDTO;
+
+                Assert.True(File.Exists(PikchaConstants.PIKCHA_IMAGE_UPLOAD_ROOT_FOLDER + qUsr.Avatar));
+
+
+            }
+        }
+
 
         // NEED to convert an image into Base64 and send it inside the bodydata for uploading signature
 
@@ -221,7 +353,7 @@ namespace PikchaWebApp.Test.Unit
 
             // check the artist profile for following 
 
-            var profArtGetRes = await profCntrl.GetUser(pkArtist.Id) as ObjectResult;
+            var profArtGetRes = await profCntrl.GetArtist(pkArtist.Id) as ObjectResult;
             var prfUsr = profArtGetRes.Value as ArtistDTO;
 
             Assert.True(prfUsr.Followers.Count > 0);
@@ -341,7 +473,7 @@ namespace PikchaWebApp.Test.Unit
         //          var controller = new ProfileController(_webHostEnvironment.Object, _configurationManager.Object, userManager, _fixture.Context);
 
         //          // Act
-        //          var result = await controller.GetUser(user1Result.Result.Id);
+        //          var result = await controller.GetArtist(user1Result.Result.Id);
 
         //          var viewResult = Assert.IsType<ReturnDataModel>(result);
         //          Assert.NotNull(viewResult.Data);
@@ -395,57 +527,7 @@ namespace PikchaWebApp.Test.Unit
         //  }
 
 
-        //  [Fact]
-        //  public async Task Post_UploadAvatarImage()
-        //  {
-        //      // TODO : Add login function
-        //      // Arrange
-        //      /* var configurationSection = new Mock<IConfigurationSection>();
-
-        //      configurationSection.Setup(a => a.Value).Returns("uploads/avatars");
-        //      _configurationManager.Setup(a => a.GetSection("UploadDirectories.Avatar")).Returns(configurationSection.Object);
-
-        //      IFormFile avatarFile = MockHelpers.CreateNewImageFile("TestPhotos/profile-photo.jpg", "profile-photo.jpg", "profile-photo");
-
-        //      string userId = "testuser4";
-        //      string email = "testuser4@test.thananji.com";
-        //      // create two test users
-        //      Task<PikchaUser> user1Result = MockHelpers.CreateNewUser(userId, email, "Test@123", _fixture);
-        //      if (user1Result.IsCompleted)
-        //      {
-        //          var userManager = _fixture.ServiceProvider.GetRequiredService<UserManager<PikchaUser>>();
-        //          var signInManager = _fixture.ServiceProvider.GetRequiredService<SignInManager<PikchaUser>>();
-
-        //          if(await userManager.CheckPasswordAsync(user1Result.Result, ""))
-        //          {
-
-        //          }
-        //          await signInManager.SignInAsync(user1Result.Result, isPersistent: false);
-
-        //          var controller = new UserProfileController(_webHostEnvironment.Object, _configurationManager.Object, userManager, _fixture.Context);
-        //          var result = await controller.UploadAvatarImage(avatarFile);
-
-        //          var viewResult = Assert.IsType<ReturnDataModel>(result);
-        //          Assert.NotNull(viewResult.Data);
-        //          var filePath = Assert.IsType<string>(viewResult.Data);
-
-        //          Assert.Contains("uploads/avatars", filePath);
-
-        //          // get the user from DB and check whether it is updated
-        //          PikchaUser dUser = _fixture.Context.Users.Find(userId);
-        //          Assert.Contains("uploads/avatars", dUser.Avatar);
-
-
-
-        //          // get the PikchUser (get it from user manager and make sure it is updated in user manager as well
-        //          PikchaUser pUser = MockHelpers.FindUserById(userId, _fixture).Result;
-        //          Assert.Contains("uploads/avatars", pUser.Avatar);
-
-        //          // delete the user
-        //          //await MockHelpers.DeleteUser(pUser, _fixture);
-        //          */
-        //      Assert.True(true);
-        //  }
+        
 
 
         //  [Fact]

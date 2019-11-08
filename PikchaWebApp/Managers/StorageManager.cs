@@ -15,7 +15,7 @@ namespace PikchaWebApp.Managers
 {
     public class StorageManager
     {
-        public enum FileCategory { Avatar = 1, Signature = 2, PikchaImage =3 };
+        public enum FileCategory { Avatar = 1, Signature = 2, PikchaImage =3, CoverPhoto =4 };
 
         protected readonly IWebHostEnvironment _hostingEnvironment;
         protected readonly IConfiguration _configuration;
@@ -84,9 +84,10 @@ namespace PikchaWebApp.Managers
             string uploadDirectory = "Uploads/Default";
             switch (fileCategory)
             {
-                case FileCategory.Avatar: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.Avatar"]) ? "Uploads/Avatars" : _configuration["UploadDirectories.Avatar"]; break;
-                case FileCategory.Signature: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.Sign"]) ? "Uploads/Signatures" : _configuration["UploadDirectories.Sign"]; break;
-                case FileCategory.PikchaImage: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories.PikchaImage"]) ? "Uploads/Images" : _configuration["UploadDirectories.PikchaImage"]; break;
+                case FileCategory.Avatar: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories:Avatar"]) ? "Uploads/Avatars" : _configuration["UploadDirectories:Avatar"]; break;
+                case FileCategory.Signature: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories:Sign"]) ? "Uploads/Signatures" : _configuration["UploadDirectories:Sign"]; break;
+                case FileCategory.PikchaImage: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories:PikchaImage"]) ? "Uploads/Images" : _configuration["UploadDirectories:PikchaImage"]; break;
+                case FileCategory.CoverPhoto: uploadDirectory = string.IsNullOrEmpty(_configuration["UploadDirectories:Cover"]) ? "Uploads/Covers" : _configuration["UploadDirectories:Cover"]; break;
             }
             try
             {

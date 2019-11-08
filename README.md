@@ -78,12 +78,12 @@ Image
 # Artists
 
 ### Get an Artist
-- ENDPOINT : api/profile/artist/{userId} 
+- ENDPOINT : api/profile/artist/{artistId}
 - METHOD : get
 - AUTHENTICATED : false
 - RESULTS : artist
 - ERROR_CODES : 200, 404, 500
-
+- {artistId}  <-- {userId}
 
 ARTIST
  - Id
@@ -102,6 +102,7 @@ ARTIST
  - Following <-- list of users
  - Followers <-- list of users
  - Roles  <-- list of string
+ - Sig <- signature file
 
 ### Get the loggedin user info 
 - ENDPOINT : api/profile/{userId}/myinfo 
@@ -168,4 +169,21 @@ LOGGEDINUSERINFO
 - AUTHENTICATED : true
 - PARAMS : avatarContent [Base64String]
 - RESULTS : loggedinuserinfo
+- ERROR_CODES : 200, 404, 500
+
+
+### Upload artist cover photo 
+- ENDPOINT : api/profile/artist/{artistId}/cover
+- METHOD : post
+- AUTHENTICATED : true
+- PARAMS : coverContent [Base64String]
+- RESULTS : artistProfileInfo
+- ERROR_CODES : 200, 404, 500
+
+### add social links 
+- ENDPOINT : api/profile/artist/{artistId}/links
+- METHOD : PUT
+- AUTHENTICATED : true
+- PARAMS : Type [string], Url[string] --> [FORMBODY]
+- RESULTS : artistProfileInfo
 - ERROR_CODES : 200, 404, 500

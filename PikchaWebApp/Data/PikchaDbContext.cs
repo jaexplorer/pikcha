@@ -46,17 +46,17 @@ namespace PikchaWebApp.Data
             
             builder.Entity<PikchaImage>()
             .Property(b => b.UploadedAt)
-            //.HasDefaultValueSql("CURRENT_TIMESTAMP(6)") // mysql
+            .HasDefaultValueSql("CURRENT_TIMESTAMP(6)") // mysql
             //.HasDefaultValueSql("getdate()") //mssql
-            .HasDefaultValueSql("date('now')") //sqlite
+            //.HasDefaultValueSql("date('now')") //sqlite
 
 
             ;
 
             builder.Entity<PikchaImage>()
             .Property(b => b.ModifiedAt)
-            //.HasDefaultValueSql("CURRENT_TIMESTAMP(6)")
-            .HasDefaultValueSql("date('now')") //sqlite
+            .HasDefaultValueSql("CURRENT_TIMESTAMP(6)")
+            //.HasDefaultValueSql("date('now')") //sqlite
             ;
 
             builder.Entity<PikchaUser>()
