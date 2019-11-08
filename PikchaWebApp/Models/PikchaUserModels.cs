@@ -23,6 +23,9 @@ namespace PikchaWebApp.Models
         [Column("InvSign")]
         public string InvSign { get; set; }
 
+        [Column("Cover")]
+        public string Cover { get; set; }
+
         [Column("Bio")]
         public string Bio { get; set; }
         
@@ -47,7 +50,7 @@ namespace PikchaWebApp.Models
         public string Country { get; set; }
 
         [Column("Links")]
-        public Dictionary<string, string> Links { get; set; } 
+        public Dictionary<string, string> Links { get; set; } = new Dictionary<string, string>();
 
         public List<PikchaImage> Images { get; set; }
 

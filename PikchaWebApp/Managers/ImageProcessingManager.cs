@@ -189,6 +189,35 @@ namespace PikchaWebApp.Managers
             }
         }
 
+        public bool ProcessCoverImage(string coverContent, ref string coverFile)
+        {
+            try
+            {
+                var imageDataByteArray = Convert.FromBase64String(coverContent);
+
+                using (var memoryStream = new MemoryStream(imageDataByteArray))
+                {
+                    memoryStream.Position = 0;
+                    //await formFileInfo.CopyToAsync(memoryStream);
+                    //formFileInfo.CopyTo(memoryStream);
+
+                    using (MagickImage image = new MagickImage(memoryStream.ToArray()))
+                    {
+                        StorageManager manager = new StorageManager(_hostingEnvironment, _configuration);
+                        string id = Guid.NewGuid().ToString();
+                        coverFile = manager.UploadMagickImage(image, string.Empty, id, PikchaConstants.PIKCHA_IMAGE_SAVE_EXTENTION, StorageManager.FileCategory.CoverPhoto);
+
+                        return true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+
         public bool ValidateImage(IFormFile formFileInfo)
         {
 

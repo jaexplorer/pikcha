@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PikchaWebApp.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,9 @@ namespace PikchaWebApp.Models
         public List<UserBaseDTO> Following { get; set; } = new List<UserBaseDTO>();
         public List<UserBaseDTO> Followers { get; set; } = new List<UserBaseDTO>();
 
-        public List<string> Roles { get; set; } = new List<string>();
+        public string Cover { get; set; } = string.Empty;
+        public string Sign { get; set; } = string.Empty;
+
 
     }
 
@@ -47,8 +50,11 @@ namespace PikchaWebApp.Models
         public List<UserBaseDTO> Following { get; set; } = new List<UserBaseDTO>();
 
         public DateTimeOffset LUploadOn { get; set; } = DateTimeOffset.MinValue;
+        public string Email { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
 
         public List<string> Roles { get; set; } = new List<string>();
+
 
     }
 
@@ -59,9 +65,7 @@ namespace PikchaWebApp.Models
         public string FName { get; set; } = string.Empty;
 
         public string LName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Phone { get; set; } = string.Empty; // need to add a mapping
-        public string Avatar { get; set; } = @"Uploads\Avatars\default-avatar.jpg";
+        public string Avatar { get; set; } = PikchaConstants.PIKCHA_USER_DEFAULT_AVATAR;
 
 
     }
@@ -71,10 +75,6 @@ namespace PikchaWebApp.Models
         public string Location { get; set; } = string.Empty;
         public string AggrImViews { get; set; } = "0";
     }
-
-    public class Artist100BaseDTO : ArtistBaseDTO
-    {
-
-    }
+       
 
 }
