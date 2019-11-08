@@ -3326,23 +3326,42 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   width: calc(100% - 4rem);
   height: 100%;
   background: #f4f7fb;
   -webkit-box-shadow: 5px 10px 30px -10px rgba(0, 0, 0, 0.5);
           box-shadow: 5px 10px 30px -10px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  overflow: hidden;
   margin-left: 2rem;
-  padding: 3rem;
   margin-top: 2rem;
   -webkit-animation: fadeIn 0.6s;
           animation: fadeIn 0.6s;
 }
 
-.profile-summary-container .first-container {
+.profile-summary-container .cover-photo {
+  width: 100%;
+  height: 20rem;
+  background-image: linear-gradient(45deg, #081c69 0%, #44159b 50%, #770fc6 100%);
+}
+
+.profile-summary-container .summary-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 3rem;
+  width: 100%;
+  position: relative;
+}
+
+.profile-summary-container .summary-content .first-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3350,22 +3369,35 @@ a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  position: absolute;
+  top: -8rem;
+  height: calc(100% + 5rem);
 }
 
-.profile-summary-container .first-container .artist-picture {
+.profile-summary-container .summary-content .first-container .artist-picture {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  position: relative;
   padding: 2rem;
+  z-index: 1;
 }
 
-.profile-summary-container .first-container .artist-picture > img {
+.profile-summary-container .summary-content .first-container .artist-picture::before {
+  content: "";
+  position: absolute;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  z-index: -1;
+  top: 0.5rem;
+  background: #f4f7fb;
+}
+
+.profile-summary-container .summary-content .first-container .artist-picture > img {
   height: 12rem;
   width: 12rem;
   -o-object-position: center center;
@@ -3373,10 +3405,55 @@ a {
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 50%;
-  border: #ebebeb 1px solid;
+  border: #ebebeb 2px solid;
+  z-index: 1;
 }
 
-.profile-summary-container .first-container .artist-details .artist-name {
+.profile-summary-container .summary-content .first-container .artist-picture .edit {
+  position: absolute;
+  background-image: linear-gradient(45deg, #081c69 0%, #44159b 50%, #770fc6 100%);
+  bottom: 2rem;
+  right: 2rem;
+  width: 4rem;
+  height: 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.profile-summary-container .summary-content .first-container .artist-picture .edit img {
+  height: 2rem;
+  cursor: pointer;
+}
+
+.profile-summary-container .summary-content .first-container .artist-info {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.profile-summary-container .summary-content .first-container .artist-info .artist-details {
+  position: relative;
+  z-index: 1;
+}
+
+.profile-summary-container .summary-content .first-container .artist-info .artist-details .artist-name {
   text-align: center;
   font-weight: bold;
   font-size: 1.8rem;
@@ -3385,13 +3462,27 @@ a {
   opacity: 0.6;
 }
 
-.profile-summary-container .first-container .artist-details .artist-location {
+.profile-summary-container .summary-content .first-container .artist-info .artist-details .artist-location {
   text-align: center;
   opacity: 0.6;
   font-size: 1rem;
 }
 
-.profile-summary-container .first-container .artist-action {
+.profile-summary-container .summary-content .first-container .artist-info .artist-details .socials {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.profile-summary-container .summary-content .first-container .artist-info .artist-details .socials img {
+  height: 2rem;
+}
+
+.profile-summary-container .summary-content .first-container .artist-info .artist-action {
   background-image: linear-gradient(45deg, #081c69 0%, #44159b 50%, #770fc6 100%);
   border-radius: 10px;
   color: white;
@@ -3402,7 +3493,7 @@ a {
   height: 4rem;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 2rem;
+  margin-top: 3rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3416,22 +3507,7 @@ a {
           animation: fadeIn 0.6s;
 }
 
-.profile-summary-container .first-container .artist-description {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding-right: 4rem;
-  height: 16rem;
-  border-radius: 10px;
-  font-size: 1rem;
-  opacity: 0.6;
-  display: none;
-}
-
-.profile-summary-container .second-container {
+.profile-summary-container .summary-content .second-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3442,37 +3518,61 @@ a {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-left: 4rem;
-  width: 100%;
+  margin-left: 20rem;
+  width: calc(100% - 20rem);
 }
 
-.profile-summary-container .second-container .artist-description {
+.profile-summary-container .summary-content .second-container .artist-description {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  padding-right: 4rem;
-  height: 16rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 14rem;
   border-radius: 10px;
-  font-size: 1rem;
-  padding-left: 2rem;
+  padding: 2rem;
   background: #ebebeb;
-  opacity: 0.6;
 }
 
-.profile-summary-container .second-container .artist-description .about-me {
+.profile-summary-container .summary-content .second-container .artist-description .about-me-container {
+  padding-right: 2rem;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+}
+
+.profile-summary-container .summary-content .second-container .artist-description .about-me-container .about-title {
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
 }
 
-.profile-summary-container .second-container .artist-stats {
+.profile-summary-container .summary-content .second-container .artist-description .about-me-container .about-text {
+  font-size: 1.2rem;
+  opacity: 0.6;
+}
+
+.profile-summary-container .summary-content .second-container .artist-description .signature {
+  width: 10rem;
+  height: 100%;
+  background-image: linear-gradient(45deg, #081c69 0%, #44159b 50%, #770fc6 100%);
+  border-radius: 10px;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+}
+
+.profile-summary-container .summary-content .second-container .artist-description .signature img {
+  width: 100%;
+  height: 100%;
+  -o-object-position: center center;
+     object-position: center center;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.profile-summary-container .summary-content .second-container .artist-stats {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3482,13 +3582,14 @@ a {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font-size: 1rem;
+  font-size: 1.2rem;
   height: 4rem;
   opacity: 0.6;
+  margin-top: 2.5rem;
 }
 
-.profile-summary-container .second-container .following {
-  height: 4rem;
+.profile-summary-container .summary-content .second-container .following {
+  height: 5rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3501,32 +3602,21 @@ a {
   width: 100%;
 }
 
-.profile-summary-container .second-container .following .following-title {
+.profile-summary-container .summary-content .second-container .following .following-title {
   font-size: 1.2rem;
   font-weight: bold;
   opacity: 0.6;
 }
 
-.profile-summary-container .second-container .following .following-container {
+.profile-summary-container .summary-content .second-container .following .following-container {
   margin-left: 2rem;
   width: 100%;
   height: 100%;
   position: relative;
-}
-
-.profile-summary-container .second-container .following .following-container .following-wrapper {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   overflow: scroll;
 }
 
-.profile-summary-container .second-container .following .following-container .following-wrapper::-webkit-scrollbar {
+.profile-summary-container .summary-content .second-container .following .following-container::-webkit-scrollbar {
   width: 0px;
   /* Remove scrollbar space */
   background: transparent;
@@ -3534,75 +3624,53 @@ a {
   height: 0px;
 }
 
-.profile-summary-container .second-container .following .following-container .following-wrapper .followed {
+.profile-summary-container .summary-content .second-container .following .following-container .following-wrapper {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: scroll;
+  height: 100%;
+}
+
+.profile-summary-container .summary-content .second-container .following .following-container .following-wrapper::-webkit-scrollbar {
+  width: 0px;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+  height: 0px;
+}
+
+.profile-summary-container .summary-content .second-container .following .following-container .following-wrapper .followed {
   margin-left: 2rem;
   border-radius: 50%;
   overflow: hidden;
   border: #ebebeb 1px solid;
 }
 
-.profile-summary-container .second-container .following .following-container .following-wrapper .followed img {
-  width: 4rem;
-  height: 4rem;
+.profile-summary-container .summary-content .second-container .following .following-container .following-wrapper .followed img {
+  width: 5rem;
+  height: 5rem;
 }
 
 @media screen and (max-width: 899px) {
-  .profile-summary-container {
+  .profile-summary-container .summary-content {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-  }
-  .profile-summary-container .first-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
-    width: 100%;
-  }
-  .profile-summary-container .first-container .artist-picture {
-    padding-left: 0;
-  }
-  .profile-summary-container .first-container .artist-picture img {
-    height: 8rem;
-    width: 8rem;
-  }
-  .profile-summary-container .first-container .artist-info {
-    padding: 2rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    padding-left: 0;
-    padding-right: 0;
-    width: 100%;
   }
-  .profile-summary-container .first-container .artist-info .artist-action {
-    margin-top: 0;
-    margin-left: auto;
+  .profile-summary-container .summary-content .first-container {
+    position: relative;
+    width: 20rem;
+    top: -11rem;
+    height: 23rem;
   }
-  .profile-summary-container .second-container {
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+  .profile-summary-container .summary-content .second-container {
     margin-left: 0;
-  }
-  .profile-summary-container .second-container .artist-stats {
-    width: 100%;
-    height: 6rem;
-  }
-  .profile-summary-container .second-container .artist-description {
     width: 100%;
   }
 }

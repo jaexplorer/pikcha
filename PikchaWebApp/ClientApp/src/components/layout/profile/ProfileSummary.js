@@ -1,9 +1,14 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
-import ProfilePic from "../../../assets/images/placeholder.png";
+import FacebookIcon from "../../../assets/images/facebook-black.png";
+import InstagramIcon from "../../../assets/images/instagram-black.png";
+import TwitterIcon from "../../../assets/images/twitter-black.png";
+import CameraIcon from "../../../assets/images/camera-white.png";
+
 import {
   createUploadImageModal,
-  createPromoteModal
+  createPromoteModal,
+  createDPModal
 } from "../../../actions/modal";
 import { followArtist, unfollowArtist } from "../../../actions/account";
 
@@ -12,6 +17,7 @@ const ProfileSummary = ({
   account,
   createUploadImageModal,
   createPromoteModal,
+  createDPModal,
   followArtist,
   unfollowArtist
 }) => {
@@ -78,42 +84,62 @@ const ProfileSummary = ({
 
   return (
     <div className='profile-summary-container'>
-      <div className='first-container'>
-        <div className='artist-picture'>
-          <img src={avatar} alt='' />
-        </div>
-        <div className='artist-info'>
-          <div className='artist-details'>
-            <div className='artist-name'>
-              {fName} {lName}
-            </div>
-            <div className='artist-location'>{location}</div>
-          </div>
-          {followAction()}
-        </div>
-      </div>
-      <div className='second-container'>
-        <div className='artist-description'>
-          <div className='about-me'>About me</div>
-          {bio}
-        </div>
-        <div className='artist-stats'>
-          <div className='artist-views'>{aggrImViews} Views</div>
-          <div className='artist-followers'>{followers.length} Followers</div>
-          <div className='photos-sold'>{totSold} Photos Sold</div>
-          <div className='average-price'>${avgPrice} Average Price</div>
-        </div>
-        <div className='following'>
-          <div className='following-title'>Following</div>
-          <div className='following-container'>
-            <div className='following-wrapper'>
-              {following.map(followed => (
-                <div className='followed'>
-                  <img src={followed.avatar} alt='' />
+      <div className='cover-photo'></div>
+      <div className='summary-content'>
+        <div className='first-container'>
+          <div className='artist-picture'>
+            {account.user && account.user.id === profile.id ? (
+              <Fragment>
+                <img src={account.user.avatar} alt='' />
+                <div onClick={() => createDPModal()} className='edit'>
+                  <img src={CameraIcon} alt='' />
                 </div>
-              ))}
-            </div>
+              </Fragment>
+            ) : (
+              <img src={avatar} alt='' />
+            )}
           </div>
+          <div className='artist-info'>
+            <div className='artist-details'>
+              <div className='artist-name'>
+                {fName} {lName}
+              </div>
+              <div className='artist-location'>Melbourne, Australia</div>
+              <div className='socials'>
+                <img src={FacebookIcon} alt='' />
+                <img src={InstagramIcon} alt='' />
+                <img src={TwitterIcon} alt='' />
+              </div>
+            </div>
+            {followAction()}
+          </div>
+        </div>
+        <div className='second-container'>
+          <div className='artist-description'>
+            <div className='about-me-container'>
+              <div className='about-title'>About me</div>
+              <div className='about-text'>{bio}</div>
+            </div>
+            <div className='signature'></div>
+          </div>
+          <div className='artist-stats'>
+            <div className='artist-views'>{aggrImViews} Views</div>
+            <div className='artist-followers'>{followers.length} Followers</div>
+            <div className='photos-sold'>{totSold} Photos Sold</div>
+            <div className='average-price'>${avgPrice} Average Price</div>
+          </div>
+          {/* <div className='following'>
+            <div className='following-title'>Following</div>
+            <div className='following-container'>
+              <div className='following-wrapper'>
+                {following.map(followed => (
+                  <div className='followed'>
+                    <img src={followed.avatar} alt='' />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div> */}
         </div>
       </div>
     </div>
@@ -126,5 +152,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createUploadImageModal, followArtist, unfollowArtist, createPromoteModal }
+  {
+    createUploadImageModal,
+    createDPModal,
+    followArtist,
+    unfollowArtist,
+    createPromoteModal
+  }
 )(ProfileSummary);
