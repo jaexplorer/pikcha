@@ -1,40 +1,51 @@
 // Account
 // ------------------------------------------------------------------- //
-#account-container {
-  font-family: "Montserrat";
-  .account-title {
-    font-size: 2rem;
-    margin-bottom: 3rem;
-  }
-  .account-form {
-    .form-section {
-      margin-bottom: 4rem;
+.account-container {
+  position: relative;
+  width: calc(100% - 24rem);
+  background: #f4f7fb;
+  box-shadow: 5px 15px 30px -10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 3rem;
+  margin: 2rem;
+  margin-left: 22rem;
+  animation: fadeIn 0.6s;
+}
+.account-title {
+  font-size: 3rem;
+  font-weight: bold;
+  opacity: 0.6;
+  margin-bottom: 4rem;
+}
+.account-form {
+  .form-section {
+    margin-bottom: 8rem;
 
-      .section-title {
-        font-size: 1.5rem;
-        text-transform: uppercase;
-        font-weight: bold;
-        padding-bottom: 1rem;
-        border-bottom: 2px solid rgba(147, 112, 219, 0.24);
-        margin-bottom: 2rem;
-      }
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: bold;
+      opacity: 0.6;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #ebebeb;
+      margin-bottom: 2rem;
+    }
 
-      .input-title {
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        margin-bottom: 1rem;
-      }
-      .input-field {
-        background: #1a1a1a;
-        border: none;
-        min-height: 4rem;
-        width: 100%;
-        color: #fafafa;
-        font-size: 1.4rem;
-        padding: 1rem;
-        border-radius: 10px;
-        text-transform: capitalize;
-      }
+    .input-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      opacity: 0.6;
+    }
+    .input-field {
+      background: #1a1a1a;
+      border: none;
+      min-height: 4rem;
+      width: 100%;
+      color: rgba(255, 255, 255, 1);
+      font-size: 1.4rem;
+      padding: 1rem;
+      border-radius: 10px;
+      text-transform: capitalize;
+      opacity: 0.7;
     }
   }
 }
@@ -53,16 +64,16 @@
       object-position: center center;
       object-fit: cover;
       border-radius: 50%;
-      border: rgb(201, 201, 201) 2px solid;
+      border: #ebebeb 1px solid;
     }
 
     .edit {
       position: absolute;
       background-image: linear-gradient(
-        -130deg,
-        #5271c4 0%,
-        #b19fff 50%,
-        rgba(236, 161, 254, 1) 100%
+        45deg,
+        #081c69 0%,
+        #44159b 50%,
+        #770fc6 100%
       );
       bottom: 0;
       right: 0;
@@ -126,7 +137,7 @@
   }
 }
 
-.contact-details-container {
+.contact-information-container {
   display: flex;
   justify-content: space-between;
 
@@ -146,7 +157,7 @@
 }
 
 @media screen and (max-width: 1099px) {
-  .contact-details-container {
+  .contact-information-container {
     .email {
       width: 100%;
       .input-wrapper {
@@ -156,7 +167,7 @@
   }
 }
 @media screen and (max-width: 699px) {
-  .contact-details-container {
+  .contact-information-container {
     flex-direction: column;
 
     .phone {
@@ -231,7 +242,7 @@
     }
   }
 }
-@media screen and (max-width: 699px) {
+@media screen and (max-width: 1099px) {
   .shipping-details-container {
     flex-direction: column;
 
@@ -248,154 +259,32 @@
 
   input {
     background-image: linear-gradient(
-      -130deg,
-      #5271c4 0%,
-      #b19fff 50%,
-      rgba(236, 161, 254, 1) 100%
+      45deg,
+      #081c69 0%,
+      #44159b 50%,
+      #770fc6 100%
     );
     border-radius: 10px;
     color: white;
     border: none;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 4rem;
+    padding-right: 4rem;
     font-size: 1.2rem;
     height: 4rem;
-    text-transform: uppercase;
     font-weight: bold;
     cursor: pointer;
-  }
-}
-
-// Side Menu
-// ---------------------------------------- //
-#side-menu {
-  width: 20%;
-  padding-left: 2rem;
-  padding-top: 11.5rem;
-
-  .side-menu-container {
-    display: flex;
-    flex-direction: column;
-    font-family: "Montserrat";
-
-    .side-menu-heading {
-      font-size: 1.5rem;
-      text-transform: uppercase;
-      font-weight: bold;
-    }
-
-    .side-menu {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      font-size: 1rem;
-      margin-top: 2.5rem;
-      margin-bottom: 3.6rem;
-
-      &::before {
-        content: "";
-        position: absolute;
-        width: 1px;
-        height: 95%;
-        background: #1a1a1a;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        left: 0.6rem;
-      }
-
-      a {
-        color: #1a1a1a;
-        text-decoration: none;
-        margin-left: 2rem;
-        margin-top: 2.5rem;
-        position: relative;
-
-        &:first-child {
-          margin-top: 0;
-        }
-
-        &::before {
-          content: "";
-          position: absolute;
-          left: -1.6rem;
-          display: block;
-          width: 0.5rem;
-          height: 0.5rem;
-          background: #1a1a1a;
-          border-radius: 50%;
-          top: 0;
-          bottom: 0;
-          margin: auto;
-        }
-
-        &.current {
-          &::before {
-            content: "";
-            position: absolute;
-            left: -1.8rem;
-            display: block;
-            width: 0.9rem;
-            height: 0.9rem;
-            background: #1a1a1a;
-            border-radius: 50%;
-            top: 0;
-            bottom: 0;
-            margin: auto;
-          }
-        }
-      }
-    }
-  }
-
-  .prompt {
-    width: 12rem;
-    height: max-content;
-    padding: 2rem;
-    background-image: linear-gradient(
-      -130deg,
-      #5271c4 0%,
-      #b19fff 50%,
-      #eca1fe 100%
-    );
-    border-radius: 10px;
-    font-family: "Montserrat";
-    color: white;
-    text-align: center;
-    cursor: pointer;
-
-    .prompt-title {
-      text-transform: uppercase;
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-    }
-
-    .prompt-text {
-      font-size: 1.2rem;
-      margin-bottom: 3rem;
-    }
-
-    .prompt-action {
-      z-index: 20;
-      position: relative;
-      img {
-        height: 2rem;
-      }
-      margin-bottom: 1rem;
-    }
   }
 }
 
 // Small Devices
 // ---------------------------------------- //
 @media screen and (max-width: 699px) {
-  #account-container {
-    padding-left: 3rem;
-    padding-right: 3rem;
-    margin-left: 20%;
-  }
-
-  #side-menu {
-    padding-top: 15.4rem;
+  .account-container {
+    width: calc(100% - 12rem);
+    margin-left: 12rem;
   }
 }
+
+// Side Menu
+// ---------------------------------------- //
+@import "./sidemenu";

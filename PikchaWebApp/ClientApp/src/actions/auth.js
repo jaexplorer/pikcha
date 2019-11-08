@@ -1,6 +1,5 @@
-import AuthorizeService from "../components/auth/AuthorizeService";
+import AuthorizeService from "../auth/AuthorizeService";
 import { loadUser, logout } from "./account";
-import { setAlert } from "./alert";
 
 import {
   DEAUTHENTICATE,
@@ -16,11 +15,10 @@ export const authenticate = () => {
 
     const isAuthenticated = await AuthorizeService.isAuthenticated();
     if (isAuthenticated) {
+      dispatch(loadUser());
       dispatch({
         type: AUTH_SUCCESS
       });
-      dispatch(loadUser());
-      dispatch(setAlert("Successfully authenticated", "info"));
     } else {
       dispatch({
         type: AUTH_FAILED
@@ -34,7 +32,6 @@ export const deauthenticate = () => {
   return async dispatch => {
     dispatch(logout());
     dispatch({ type: DEAUTHENTICATE });
-    dispatch(setAlert("Logged out", "info"));
   };
 };
 

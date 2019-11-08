@@ -1,39 +1,21 @@
-import {
-  CREATE_PROFILE_DROPDOWN,
-  REMOVE_PROFILE_DROPDOWN,
-  CREATE_CART_DROPDOWN,
-  REMOVE_CART_DROPDOWN
-} from "../actions/types";
+import { DROPDOWN_OPEN, DROPDOWN_CLOSED } from "../actions/types";
 
 const initialState = {
-  profileDropdown: false,
-  cartDropdown: false
+  dropDown: false
 };
 
-export default (state = initialState, { type }) => {
+export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case CREATE_PROFILE_DROPDOWN:
+    case DROPDOWN_OPEN:
       return {
         ...state,
-        profileDropdown: true
+        dropDown: payload
       };
 
-    case REMOVE_PROFILE_DROPDOWN:
+    case DROPDOWN_CLOSED:
       return {
         ...state,
-        profileDropdown: false
-      };
-
-    case CREATE_CART_DROPDOWN:
-      return {
-        ...state,
-        cartDropdown: true
-      };
-
-    case REMOVE_CART_DROPDOWN:
-      return {
-        ...state,
-        cartDropdown: false
+        dropDown: false
       };
 
     default:

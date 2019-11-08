@@ -1,0 +1,204 @@
+// Promote Modal
+// ------------------------------------------------------------------- //
+#role-change-modal-container {
+  position: relative;
+  height: max-content;
+  width: 100%;
+  max-width: 60rem;
+  background: #f4f7fb;
+  box-shadow: 5px 10px 30px -20px rgba(0, 0, 0, 0.5);
+  margin-top: 23rem;
+  margin-bottom: 10rem;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 1000;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    align-items: center;
+    height: 10rem;
+    margin-bottom: 2rem;
+    background-image: linear-gradient(
+      45deg,
+      #081c69 0%,
+      #44159b 50%,
+      #770fc6 100%
+    );
+
+    .modal-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    img {
+      height: 1.4rem;
+      cursor: pointer;
+    }
+  }
+
+  .header-text {
+    padding: 2rem;
+    font-size: 1.4rem;
+    background-image: linear-gradient(
+      45deg,
+      #081c69 0%,
+      #44159b 50%,
+      #770fc6 100%
+    );
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+  }
+
+  .role-change-form {
+    width: 100%;
+    padding: 2rem;
+
+    .form-section {
+      margin-bottom: 4rem;
+
+      .section-title {
+        font-size: 1.6rem;
+        font-weight: bold;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #ebebeb;
+        margin-bottom: 2rem;
+        opacity: 0.6;
+      }
+
+      .section-text {
+        font-size: 1.2rem;
+        opacity: 0.6;
+        margin-bottom: 2rem;
+      }
+
+      .signature-border {
+        width: 100%;
+        border: #1a1a1a 2rem solid;
+        border-radius: 10px;
+        overflow: hidden;
+
+        .signature-container {
+          width: 100%;
+          height: max-content;
+
+          .sigCanvas {
+            width: 100%;
+            height: 40rem;
+          }
+        }
+      }
+
+      .signature-clear {
+        background: #1a1a1a;
+        padding: 1rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        color: white;
+        text-align: center;
+        margin-top: 1rem;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .input-wrapper {
+        font-size: 1rem;
+      }
+
+      #checkmark {
+        display: none;
+
+        &:checked + .check svg {
+          stroke: mediumpurple;
+
+          path {
+            stroke-dashoffset: 60;
+            transition: all 0.3s linear;
+          }
+
+          polyline {
+            stroke-dashoffset: 42;
+            transition: all 0.2s linear;
+            transition-delay: 0.15s;
+          }
+        }
+      }
+
+      .check {
+        cursor: pointer;
+        position: relative;
+        margin: auto;
+        width: 1.5rem;
+        height: 1.5rem;
+        left: 1.2rem;
+        top: 0.4rem;
+        margin-right: 3rem;
+
+        &:hover::before {
+          opacity: 1;
+        }
+
+        &:hover svg {
+          stroke: mediumpurple;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: -1.8rem;
+          left: -1.25rem;
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+          background: rgba(34, 50, 84, 0.03);
+          opacity: 0;
+          transition: opacity 0.2s ease;
+        }
+        svg {
+          position: relative;
+          z-index: 1;
+          fill: none;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke: #c8ccd4;
+          stroke-width: 1.5;
+          transform: translate3d(0, 0, 0);
+          transition: all 0.2s ease;
+
+          path {
+            stroke-dasharray: 60;
+            stroke-dashoffset: 0;
+          }
+
+          polyline {
+            stroke-dasharray: 22;
+            stroke-dashoffset: 66;
+          }
+        }
+      }
+    }
+
+    .form-btn {
+      display: flex;
+      justify-content: center;
+
+      input {
+        width: 100%;
+        background-image: linear-gradient(
+          45deg,
+          #081c69 0%,
+          #44159b 50%,
+          #770fc6 100%
+        );
+        cursor: pointer;
+      }
+    }
+  }
+}

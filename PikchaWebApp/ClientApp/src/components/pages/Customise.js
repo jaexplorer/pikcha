@@ -1,21 +1,7 @@
-import React, { Fragment } from "react";
-import SideBar from "../layout/Sidebar";
-import MainComponent from "../MainComponent";
-import CustomiseProduct from "../layout/customise/CustomiseProduct";
-import CustomiseSummary from "../layout/customise/CustomiseSummary";
-import BackArrow from "../layout/BackArrow";
+import React from "react";
 
 const Customise = () => {
-  return (
-    <Fragment>
-      <SideBar />
-      <BackArrow />
-      <MainComponent container='customise-container'>
-        <CustomiseProduct />
-        <CustomiseSummary />
-      </MainComponent>
-    </Fragment>
-  );
+  return <div></div>;
 };
 
 export default Customise;

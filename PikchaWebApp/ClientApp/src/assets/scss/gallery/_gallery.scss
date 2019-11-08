@@ -1,14 +1,19 @@
 // Gallery
 // ------------------------------------------------------------------- //
 .infinite-scroll-component {
-  margin-bottom: 6rem;
+  .end-message {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 4rem;
+    opacity: 0.6;
+  }
 }
 
 .masonry {
   display: flex;
   flex-direction: row;
   width: 100%;
-  overflow: auto;
+  padding: 2rem;
 
   .masonry-col {
     flex: 1;
@@ -20,8 +25,8 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 
     &:first-child {
       margin-left: 0rem;
@@ -39,11 +44,14 @@
       transition: all 0.8s ease;
       background-color: #1a1a1a;
       position: relative;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
       border-radius: 10px;
       overflow: hidden;
+      animation: fadeIn 1s;
+      cursor: pointer;
 
       &.selected {
+        height: 45rem !important;
         & > img {
           opacity: 0.6;
         }
@@ -55,6 +63,10 @@
         width: 100%;
         object-fit: cover;
         object-position: 50% 50%;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
       }
     }
   }
@@ -65,23 +77,15 @@
     .masonry-col {
       flex: 1;
 
-      &:first-child {
-        margin-left: 1rem;
-      }
-
-      &:last-child {
-        margin-right: 1rem;
-      }
-
       &.selected {
         flex-basis: 100%;
 
         &:first-child {
-          margin-right: -0.5rem;
+          margin-right: -1rem;
         }
 
         &:last-child {
-          margin-left: -0.5rem;
+          margin-left: -1rem;
         }
       }
     }
@@ -91,6 +95,8 @@
 // Masonry Item Info
 // ---------------------------------------- //
 .masonry-item {
+  position: relative;
+
   .itemInfo-back-arrow {
     position: absolute;
     top: 3rem;
@@ -114,14 +120,19 @@
   }
 
   .itemInfo-popup {
-    background: #fafafa;
+    background: #f4f7fb;
     position: absolute;
-    top: 100%;
-    left: 100%;
-    transform: translate(calc(-100% + 0.5px), -100%);
+    bottom: 0;
+    right: 0;
     width: 70%;
     height: 35rem;
     border-top-left-radius: 10px;
+    transition: all 0.6s cubic-bezier(0.4, 0.01, 0, 1);
+
+    &.inactive {
+      bottom: -40rem;
+      transition: all 0.6s cubic-bezier(0.4, 0.01, 0, 1);
+    }
 
     &::before {
       content: "";
@@ -130,7 +141,7 @@
       top: -3rem;
       width: 6rem;
       height: 6rem;
-      background: #fafafa;
+      background: #f4f7fb;
       border-radius: 50%;
     }
 

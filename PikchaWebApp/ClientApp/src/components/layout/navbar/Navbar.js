@@ -1,22 +1,16 @@
-import React, { useState, useEffect } from "react";
-import DesktopNavbar from "./DesktopNavbar";
-import MobileNavbar from "./MobileNavbar";
+import React, { Fragment } from "react";
+import NavbarTop from "./NavbarTop";
+import NavbarBottom from "./NavbarBottom";
+import Dropdown from "./dropdown/Dropdown";
 
 const Navbar = () => {
-  const [mobile, setMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      window.innerWidth >= 700 ? setMobile(false) : setMobile(true);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  return mobile ? <MobileNavbar /> : <DesktopNavbar />;
+  return (
+    <div className='nav'>
+      <NavbarTop />
+      <Dropdown />
+      <NavbarBottom />
+    </div>
+  );
 };
 
 export default Navbar;

@@ -1,19 +1,22 @@
-import React, { useRef, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useState, useEffect, useRef } from "react";
 import MasonryItem from "./MasonryItem";
 
-const MasonryColumn = ({ gallery, photos }) => {
+const MasonryColumn = ({ photos }) => {
+  const [selected, setSelected] = useState(false);
   const column = useRef(null);
 
   useEffect(() => {
-    gallery.selected !== null &&
-    column.current.contains(gallery.selected.current)
-      ? column.current.classList.add("selected")
-      : column.current.classList.remove("selected");
-  });
+    const handleClick = e => {
+      setSelected(column.current.contains(e.target.parentElement));
+    };
+
+    document.addEventListener("click", handleClick);
+
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
 
   return (
-    <div className='masonry-col' ref={column}>
+    <div className={`masonry-col ${selected && "selected"}`} ref={column}>
       {photos.map((photo, index) => (
         <MasonryItem key={index} photo={photo} />
       ))}
@@ -21,8 +24,4 @@ const MasonryColumn = ({ gallery, photos }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  gallery: state.galleryReducer
-});
-
-export default connect(mapStateToProps)(MasonryColumn);
+export default MasonryColumn;

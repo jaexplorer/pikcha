@@ -1,11 +1,28 @@
-import { CREATE_MODAL, REMOVE_MODAL } from "./types";
+import { MODAL_CREATED, MODAL_REMOVED } from "./types";
 
-// Create modal based on type
-export const createModal = type => {
+export const createDPModal = () => {
   return dispatch => {
     dispatch({
-      type: CREATE_MODAL,
-      payload: type
+      type: MODAL_CREATED,
+      payload: "DP"
+    });
+  };
+};
+
+export const createPromoteModal = () => {
+  return dispatch => {
+    dispatch({
+      type: MODAL_CREATED,
+      payload: "Promote"
+    });
+  };
+};
+
+export const createUploadImageModal = () => {
+  return dispatch => {
+    dispatch({
+      type: MODAL_CREATED,
+      payload: "UploadImage"
     });
   };
 };
@@ -14,7 +31,7 @@ export const createModal = type => {
 export const removeModal = () => {
   return dispatch => {
     dispatch({
-      type: REMOVE_MODAL
+      type: MODAL_REMOVED
     });
   };
 };

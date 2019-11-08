@@ -1,5 +1,6 @@
-import AuthorizeService from "../components/auth/AuthorizeService";
+import AuthorizeService from "../auth/AuthorizeService";
 import axios from "axios";
+import { setAlert } from "./alert";
 
 import {
   USER_LOADING,
@@ -8,9 +9,7 @@ import {
   LOGGED_OUT,
   USER_ERROR,
   SIGNATURE_LOADED,
-  SIGNATURE_LOADING,
-  ARTIST_FOLLOWED,
-  ARTIST_UNFOLLOWED
+  SIGNATURE_LOADING
 } from "./types";
 
 export const loadUser = () => {
@@ -31,6 +30,7 @@ export const loadUser = () => {
       });
     } catch (err) {
       dispatch({ type: USER_ERROR, payload: err.response });
+      dispatch(setAlert(err.response, "error"));
     }
   };
 };
@@ -52,8 +52,10 @@ export const updateUserDetails = formData => {
         type: USER_UPDATED,
         payload: res.data
       });
+      dispatch(setAlert("User Updated", "info"));
     } catch (err) {
       dispatch({ type: USER_ERROR, payload: err.response });
+      dispatch(setAlert(err.response, "error"));
     }
   };
 };
@@ -75,8 +77,10 @@ export const updateProfilePicture = formData => {
         type: USER_UPDATED,
         payload: res.data
       });
+      dispatch(setAlert("Profile Picture Updated", "info"));
     } catch (err) {
       dispatch({ type: USER_ERROR, payload: err.response });
+      dispatch(setAlert(err.response, "error"));
     }
   };
 };
@@ -102,8 +106,10 @@ export const promoteToArtist = formData => {
         type: USER_UPDATED,
         payload: res.data
       });
+      dispatch(setAlert("Successfully been promoted to an Artist!", "success"));
     } catch (err) {
       dispatch({ type: USER_ERROR, payload: err.response });
+      dispatch(setAlert(err.response, "error"));
     }
   };
 };
@@ -126,6 +132,7 @@ export const loadSignature = () => {
       });
     } catch (err) {
       dispatch({ type: USER_ERROR, payload: err.response });
+      dispatch(setAlert(err.response, "error"));
     }
   };
 };
@@ -137,12 +144,12 @@ export const uploadImage = formData => {
       const res = await axios.post(`api/image/upload`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data"
         }
       });
-      console.log(res);
+      dispatch(setAlert("Successfully uploaded", "success"));
     } catch (err) {
-      console.log(err.response);
+      dispatch(setAlert(err.response, "error"));
     }
   };
 };
@@ -164,8 +171,10 @@ export const followArtist = (userId, artistId) => {
         type: USER_UPDATED,
         payload: res.data
       });
+      dispatch(setAlert("User Followed", "info"));
     } catch (err) {
       dispatch({ type: USER_ERROR, payload: err.response });
+      dispatch(setAlert(err.response, "error"));
     }
   };
 };
@@ -187,8 +196,10 @@ export const unfollowArtist = (userId, artistId) => {
         type: USER_UPDATED,
         payload: res.data
       });
+      dispatch(setAlert("User Unfollowed", "info"));
     } catch (err) {
       dispatch({ type: USER_ERROR, payload: err.response });
+      dispatch(setAlert(err.response, "error"));
     }
   };
 };

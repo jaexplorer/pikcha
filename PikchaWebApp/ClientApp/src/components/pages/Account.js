@@ -1,24 +1,12 @@
 import React, { Fragment } from "react";
-import SideMenu from "../layout/account/SideMenu";
-import BackArrow from "../layout/BackArrow";
-import AccountRoutes from "../Routes/AccountRoutes";
-import MainComponent from "../MainComponent";
+import AccountRoutes from "../routes/subroutes/AccountRoutes";
 import { connect } from "react-redux";
+import Loader from "../Loader";
 
 const Account = ({ match, account }) => {
   return (
     <Fragment>
-      <BackArrow />
-      {account.loadingUser ? (
-        <h2 className='loading'>Loading...</h2>
-      ) : (
-        <Fragment>
-          <SideMenu />
-          <MainComponent container='account-container'>
-            <AccountRoutes match={match} />
-          </MainComponent>
-        </Fragment>
-      )}
+      {account.user ? <AccountRoutes match={match} /> : <Loader />}
     </Fragment>
   );
 };

@@ -1,57 +1,53 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import SideBar from "../layout/Sidebar";
-import MasonryGallery from "../layout/gallery/MasonryGallery";
-import BackArrow from "../layout/BackArrow";
+import { getProfile, resetProfile } from "../../actions/profile";
 import NotFound from "./NotFound";
-import { getArtist } from "../../actions/artist";
-import MainComponent from "../MainComponent";
+import Loader from "../Loader";
 import ProfileSummary from "../layout/profile/ProfileSummary";
+import MasonaryGallery from "../layout/gallery/MasonryGallery";
 
-const Profile = ({ artist, getArtist }) => {
+const Profile = ({ profile, getProfile, resetProfile }) => {
   const [url, setUrl] = useState(window.location.pathname);
 
   useEffect(() => {
     const profileId = window.location.pathname.split("/");
-    getArtist(profileId[2]);
+    getProfile(profileId[2]);
+
+    return () => {
+      resetProfile();
+    };
   }, []);
 
   useEffect(() => {
     if (window.location.pathname !== url) {
       setUrl(window.location.pathname);
       const profileId = window.location.pathname.split("/");
-      getArtist(profileId[2]);
+      getProfile(profileId[2]);
     }
   }, [window.location.pathname]);
 
-  if (artist.error !== null) {
+  if (profile.profileError !== null) {
     return <Redirect to='/notFound' component={NotFound} />;
   }
 
   return (
     <Fragment>
-      <SideBar />
-      <BackArrow />
-      {artist.loading ? (
-        <h2 className='loading'>Loading...</h2>
+      {profile.artist ? (
+        <ProfileSummary profile={profile.artist} />
       ) : (
-        <Fragment>
-          <MainComponent container='profile-container'>
-            <ProfileSummary artist={artist} />
-            <MasonryGallery />
-          </MainComponent>
-        </Fragment>
+        <Loader />
       )}
+      <MasonaryGallery />
     </Fragment>
   );
 };
 
 const mapStateToProps = state => ({
-  artist: state.artistReducer
+  profile: state.profileReducer
 });
 
 export default connect(
   mapStateToProps,
-  { getArtist }
+  { getProfile, resetProfile }
 )(Profile);

@@ -13,32 +13,20 @@
 // Mobile Font Queries
 // ---------------------------------------- //
 @import "../scaling/scaling";
-
-// Preloader (Temp)
-// ---------------------------------------- //
-.loading {
-  text-align: center;
-  color: #9370db;
-  font-family: "Montserrat";
-  font-size: 1.6rem;
-  margin-top: 6rem;
-}
-
-// Everything Else
-// ---------------------------------------- //
 @import "../navbar/navbar";
-@import "../sidebar/sidebar";
-@import "../auth/auth";
-@import "../profile/profile";
-@import "../artist100/artist100";
+@import "../menu/menu";
+@import "../pageTitle/pageTitle";
 @import "../pikcha100/pikcha100";
-@import "../about/about";
+@import "../artist100/artist100";
 @import "../contact/contact";
+@import "../about/about";
+@import "../home/home";
 @import "../gallery/gallery";
-@import "../header/header";
-@import "../product/product";
-@import "../customise/customise";
-@import "../notFound/notFound";
+@import "../dropdown/dropdown";
+@import "../auth/auth";
+@import "../animation/animation";
 @import "../account/account";
-@import "../modals/modals";
 @import "../alerts/alerts";
+@import "../modals/modals";
+@import "../profile/profile";
+@import "../notFound/notFound";

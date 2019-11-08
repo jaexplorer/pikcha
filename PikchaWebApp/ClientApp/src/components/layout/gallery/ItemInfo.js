@@ -1,18 +1,12 @@
-// TODO: Integrate Stats, photo description(short), socials, expand image and price
-
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BackArrow from "../../../assets/images/backArrow-white.png";
 import InfoButton from "../../../assets/images/info-white.png";
-import InstagramIcon from "../../../assets/images/instagram-white.png";
-import TwitterIcon from "../../../assets/images/twitter-white.png";
 import DeleteIcon from "../../../assets/images/delete-black.png";
-import ArtistPlaceholder from "../../../assets/images/placeholder.png";
-
+import { addView } from "../../../actions/gallery";
 import { connect } from "react-redux";
-import { deselectPhoto } from "../../../actions/gallery";
 
-const ItemInfo = ({ deselectPhoto, photo }) => {
+const ItemInfo = ({ photo, onChange, addView }) => {
   const [popup, setPopup] = useState(false);
 
   // Decontructing photo
@@ -30,13 +24,17 @@ const ItemInfo = ({ deselectPhoto, photo }) => {
     artist
   } = photo;
 
+  useEffect(() => {
+    addView(pictureId);
+  }, []);
+
   // Decontructing artist
   const { id: artistId, fName, lName, email, phone, avatar } = artist;
 
   return (
     <Fragment>
       <div className='itemInfo-back-arrow'>
-        <img onClick={deselectPhoto} src={BackArrow} alt='' />
+        <img onClick={() => onChange(false)} src={BackArrow} alt='' />
       </div>
       <div className='itemInfo-info-button'>
         <img
@@ -47,44 +45,48 @@ const ItemInfo = ({ deselectPhoto, photo }) => {
           alt=''
         />
       </div>
-      {popup && (
-        <div className='itemInfo-popup'>
-          <div className='popup-artist'>
-            <Link to={`/profile/${artistId}`}>
-              <img src={avatar} alt='' />
-            </Link>
+      <div className={`itemInfo-popup ${popup ? "active" : "inactive"}`}>
+        <div className='popup-artist'>
+          <Link to={`/profile/${artistId}`}>
+            <img src={avatar} alt='' />
+          </Link>
+        </div>
+        <div className='popup-artist-name'>
+          {fName} {lName}
+        </div>
+        <div className='popup-content-container'>
+          <div className='popup-photo-name'>
+            {title.slice(0, 30)}
+            {title.length > 30 ? "..." : ""}
           </div>
-          <div className='popup-artist-name'>
-            {fName} {lName}
+          <div className='popup-photo-stats'>
+            <span>
+              {performance >= 0 ? "Up " : "Down "}
+              {performance}%
+            </span>
+            <span>{totSold} Sold</span>
           </div>
-          <div className='popup-content-container'>
-            <div className='popup-photo-name'>{title}</div>
-            <div className='popup-photo-stats'>
-              <span>
-                {performance >= 0 ? "Up " : "Down "}
-                {performance}%
-              </span>
-              <span>{totSold} Sold</span>
+          <div className='popup-photo-description'>
+            {caption.slice(0, 150)}
+            {caption.length > 150 ? "..." : ""}
+          </div>
+          <div className='popup-photo-action'>
+            <div className='photo-purchase'>
+              <Link to={`/product/${pictureId}`}>View</Link>
             </div>
-            <div className='popup-photo-description'>{caption}</div>
-            <div className='popup-photo-action'>
-              <div className='photo-purchase'>
-                <Link to={`/product/${pictureId}`}>View</Link>
-              </div>
-              <span>${avgPrice}</span>
-            </div>
-          </div>
-          <div className='popup-delete'>
-            <img
-              onClick={() => {
-                setPopup(false);
-              }}
-              src={DeleteIcon}
-              alt=''
-            />
+            <span>${avgPrice}</span>
           </div>
         </div>
-      )}
+        <div className='popup-delete'>
+          <img
+            onClick={() => {
+              setPopup(false);
+            }}
+            src={DeleteIcon}
+            alt=''
+          />
+        </div>
+      </div>
     </Fragment>
   );
 };
@@ -95,5 +97,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deselectPhoto }
+  { addView }
 )(ItemInfo);

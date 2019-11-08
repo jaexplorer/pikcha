@@ -1,11 +1,10 @@
 import axios from "axios";
 
 import {
-  PHOTOS_LOADED,
-  PHOTO_SELECTED,
-  PHOTO_DESELECTED,
-  PHOTOS_LOADING,
-  PHOTOS_ERROR
+  GALLERY_LOADED,
+  GALLERY_LOADING,
+  GALLERY_ERROR,
+  GALLERY_RESET
 } from "./types";
 
 // Get Photos
@@ -17,33 +16,16 @@ export const getPhotos = (count, start) => {
         `api/filter/images?count=${count}&start=${start}`
       );
       dispatch({
-        type: PHOTOS_LOADED,
+        type: GALLERY_LOADED,
         payload: res.data
       });
     } catch (err) {
       dispatch({
-        type: PHOTOS_ERROR,
+        type: GALLERY_ERROR,
         payload: err.response
       });
     }
   };
-};
-
-// Select Photo
-export const selectPhoto = photo => {
-  return dispatch =>
-    dispatch({
-      type: PHOTO_SELECTED,
-      payload: photo
-    });
-};
-
-// Deselect Photo
-export const deselectPhoto = () => {
-  return dispatch =>
-    dispatch({
-      type: PHOTO_DESELECTED
-    });
 };
 
 // Add Photo View
@@ -60,5 +42,13 @@ export const addView = imageId => {
 
 // Set Loading
 export const setLoading = () => {
-  return { type: PHOTOS_LOADING };
+  return { type: GALLERY_LOADING };
+};
+
+// Reset Gallery
+export const resetGallery = () => {
+  return dispatch =>
+    dispatch({
+      type: GALLERY_RESET
+    });
 };

@@ -10,9 +10,8 @@ import Product from "../pages/Product";
 import Customise from "../pages/Customise";
 import Account from "../pages/Account";
 import NotFound from "../pages/NotFound";
-import { ApplicationPaths } from "../auth/ApiAuthorizationConstants";
-import ApiAuthorizationRoutes from "../auth/ApiAuthorizationRoutes";
-import AuthorizeRoute from "../auth/AuthorizeRoute";
+import { ApplicationPaths } from "../../auth/ApiAuthorizationConstants";
+import ApiAuthorizationRoutes from "../../auth/ApiAuthorizationRoutes";
 
 const Routes = () => {
   return (
@@ -24,16 +23,12 @@ const Routes = () => {
       <Route exact path='/artist100' component={Artist100} />
       <Route exact path='/profile/:userid' component={Profile} />
       <Route exact path='/product/:productid' component={Product} />
+      <Route exact path='/customise/:productid' component={Customise} />
+      <Route strict path='/account' component={Account} />
       <Route
         path={ApplicationPaths.ApiAuthorizationPrefix}
         component={ApiAuthorizationRoutes}
       />
-      <AuthorizeRoute
-        exact
-        path='/customise/:productid'
-        component={Customise}
-      />
-      <Route strict path='/account' component={Account} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -1,20 +1,18 @@
-import { CREATE_MODAL, REMOVE_MODAL } from "../actions/types";
+import { MODAL_CREATED, MODAL_REMOVED } from "../actions/types";
 
 const initialState = {
-  type: null,
-  active: false
+  type: false
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case CREATE_MODAL:
+    case MODAL_CREATED:
       return {
         ...state,
-        active: true,
         type: payload
       };
 
-    case REMOVE_MODAL:
+    case MODAL_REMOVED:
       return initialState;
 
     default:

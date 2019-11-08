@@ -1,12 +1,11 @@
-// TODO: Uploading Profile Picture, Integrate with backend
 import React, { useState, Fragment } from "react";
 import { connect } from "react-redux";
-import { createModal } from "../../../../actions/modal";
+import { createDPModal } from "../../../../actions/modal";
 import CameraIcon from "../../../../assets/images/camera-white.png";
 import { setAlert } from "../../../../actions/alert";
 import { updateUserDetails } from "../../../../actions/account";
 
-const MyDetails = ({ createModal, account, setAlert, updateUserDetails }) => {
+const MyDetails = ({ account, setAlert, updateUserDetails, createDPModal }) => {
   // Component State
   const [user, setUser] = useState({
     fName: account.user.fName,
@@ -53,7 +52,7 @@ const MyDetails = ({ createModal, account, setAlert, updateUserDetails }) => {
   };
 
   return (
-    <Fragment>
+    <div className='account-container'>
       <div className='account-title'>My Account</div>
       <form className='account-form' onSubmit={onSubmit}>
         <div className='form-section'>
@@ -61,7 +60,7 @@ const MyDetails = ({ createModal, account, setAlert, updateUserDetails }) => {
           <div className='person-details-container'>
             <div className='display-picture'>
               <img src={account.user.avatar} alt='' />
-              <div onClick={() => createModal("DPModal")} className='edit'>
+              <div onClick={() => createDPModal()} className='edit'>
                 <img src={CameraIcon} alt='' />
               </div>
             </div>
@@ -105,7 +104,7 @@ const MyDetails = ({ createModal, account, setAlert, updateUserDetails }) => {
 
         <div className='form-section'>
           <div className='section-title'>Contact Information</div>
-          <div className='contact-details-container'>
+          <div className='contact-information-container'>
             <div className='email'>
               <div className='input-wrapper'>
                 <div className='input-title'>Email</div>
@@ -204,7 +203,7 @@ const MyDetails = ({ createModal, account, setAlert, updateUserDetails }) => {
                 </div>
                 <div className='zip'>
                   <div className='input-wrapper'>
-                    <div className='input-title'>postal Code</div>
+                    <div className='input-title'>Postcode</div>
                     <input
                       className='input-field'
                       type='text'
@@ -223,7 +222,7 @@ const MyDetails = ({ createModal, account, setAlert, updateUserDetails }) => {
           <input type='submit' value='Save' />
         </div>
       </form>
-    </Fragment>
+    </div>
   );
 };
 
@@ -233,5 +232,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { createModal, setAlert, updateUserDetails }
+  { updateUserDetails, setAlert, createDPModal }
 )(MyDetails);

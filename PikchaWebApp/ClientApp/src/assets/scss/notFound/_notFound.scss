@@ -1,21 +1,20 @@
 // Not Found
 // ------------------------------------------------------------------- //
-#notFound-container {
-  font-family: "Montserrat";
-  h1 {
-    font-size: 2rem;
-  }
-  p {
-    font-size: 1.4rem;
-    margin-top: 2rem;
-  }
-}
+.notFound-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-// Small Devices
-// ---------------------------------------- //
-@media screen and (max-width: 699px) {
-  #notFound-container {
-    padding-left: 3rem;
-    padding-right: 3rem;
+  .notFound-title {
+    font-size: 3rem;
+    font-weight: bold;
+    opacity: 0.6;
+    margin-bottom: 1rem;
+  }
+  .notFound-text {
+    font-size: 1.2rem;
+    opacity: 0.6;
   }
 }

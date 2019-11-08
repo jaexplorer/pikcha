@@ -1,24 +1,22 @@
 import { combineReducers } from "redux";
-import authReducer from "./authReducer";
-import alertReducer from "./alertReducer";
 import navReducer from "./navReducer";
 import galleryReducer from "./galleryReducer";
-import productReducer from "./productReducer";
-import cartReducer from "./cartReducer";
-import artistReducer from "./artistReducer";
-import modalReducer from "./modalReducer";
 import accountReducer from "./accountReducer";
-import top100Reducer from "./top100Reducer";
+import authReducer from "./authReducer";
+import alertReducer from "./alertReducer";
+import modalReducer from "./modalReducer";
+import pikcha100Reducer from "./pikcha100Reducer";
+import artist100Reducer from "./artist100Reducer";
+import profileReducer from "./profileReducer";
 
 export default combineReducers({
+  galleryReducer,
+  accountReducer,
+  navReducer,
   authReducer,
   alertReducer,
-  navReducer,
-  galleryReducer,
-  productReducer,
-  cartReducer,
-  artistReducer,
   modalReducer,
-  accountReducer,
-  top100Reducer
+  pikcha100Reducer,
+  artist100Reducer,
+  profileReducer
 });
