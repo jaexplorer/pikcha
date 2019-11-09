@@ -1,13 +1,24 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { getProfile, resetProfile } from "../../actions/profile";
+import {
+  getProfile,
+  resetProfile,
+  getArtistPhotos,
+  resetArtistPhotos
+} from "../../actions/profile";
 import NotFound from "./NotFound";
 import Loader from "../Loader";
 import ProfileSummary from "../layout/profile/ProfileSummary";
 import MasonaryGallery from "../layout/gallery/MasonryGallery";
 
-const Profile = ({ profile, getProfile, resetProfile }) => {
+const Profile = ({
+  profile,
+  getProfile,
+  resetProfile,
+  getArtistPhotos,
+  resetArtistPhotos
+}) => {
   const [url, setUrl] = useState(window.location.pathname);
 
   useEffect(() => {
@@ -33,12 +44,20 @@ const Profile = ({ profile, getProfile, resetProfile }) => {
 
   return (
     <Fragment>
-      {profile.artist ? (
-        <ProfileSummary profile={profile.artist} />
+      {!profile.profileLoading ? (
+        <Fragment>
+          <ProfileSummary profile={profile.artist} />
+          <MasonaryGallery
+            gallery={profile}
+            getPhotos={(count, start) =>
+              getArtistPhotos(profile.artist.id, count, start)
+            }
+            resetGallery={() => resetArtistPhotos()}
+          />
+        </Fragment>
       ) : (
         <Loader />
       )}
-      <MasonaryGallery />
     </Fragment>
   );
 };
@@ -49,5 +68,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getProfile, resetProfile }
+  { getProfile, resetProfile, getArtistPhotos, resetArtistPhotos }
 )(Profile);

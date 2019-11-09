@@ -1,0 +1,153 @@
+// Cover Modal
+// ------------------------------------------------------------------- //
+#coverModal-container {
+  position: absolute;
+  height: max-content;
+  width: max-content;
+  background: #f4f7fb;
+  z-index: 600;
+  box-shadow: 5px 15px 30px -10px rgba(0, 0, 0, 0.5);
+  top: 23rem;
+  margin-bottom: 10rem;
+  border-radius: 10px;
+  overflow: hidden;
+
+  .upload-error {
+    font-size: 1.2rem;
+    color: white;
+    background: rgb(181, 68, 68);
+    margin-bottom: 2rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      height: 1rem;
+      cursor: pointer;
+    }
+  }
+
+  .coverModal-header {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    align-items: center;
+    height: 10rem;
+    margin-bottom: 2rem;
+    background-image: linear-gradient(
+      45deg,
+      #081c69 0%,
+      #44159b 50%,
+      #770fc6 100%
+    );
+
+    .upload-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: white;
+    }
+    img {
+      height: 1.4rem;
+      cursor: pointer;
+    }
+  }
+
+  .uploadCover-form {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+
+    .form-buttons {
+      display: flex;
+      flex-direction: column;
+
+      .upload-button {
+        background: #1a1a1a;
+        padding: 2rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+        border-radius: 10px;
+        cursor: pointer;
+
+        input[type="file"] {
+          display: none;
+        }
+      }
+
+      .form-btn {
+        background: #1a1a1a;
+        padding: 1rem;
+        padding-left: 4rem;
+        padding-right: 4rem;
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        border-radius: 10px;
+        input {
+          background: none;
+        }
+      }
+    }
+
+    .image-preview {
+      margin-left: 2rem;
+      height: 30rem;
+      width: 60rem;
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+
+      img {
+        object-position: center center;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.cropper-view-box {
+  outline: 1px solid white !important;
+  outline-color: mediumpurple !important;
+}
+
+.cropper-point {
+  background-color: white !important;
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 1099px) {
+  #coverModal-container {
+    .uploadCover-form {
+      flex-direction: column-reverse;
+      .form-buttons {
+        margin-top: 2rem;
+      }
+      .image-preview {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 699px) {
+  #coverModal-container {
+    .uploadCover-form {
+      .image-preview {
+        width: 40rem;
+      }
+    }
+  }
+}

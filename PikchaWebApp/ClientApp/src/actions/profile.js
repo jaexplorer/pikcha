@@ -1,4 +1,6 @@
 import axios from "axios";
+import AuthorizeService from "../auth/AuthorizeService";
+import { setAlert } from "./alert";
 
 import {
   PROFILE_LOADED,
@@ -8,7 +10,8 @@ import {
   ARTIST_PHOTOS_LOADED,
   ARTIST_PHOTOS_LOADING,
   ARTIST_PHOTOS_ERROR,
-  ARTIST_PHOTOS_RESET
+  ARTIST_PHOTOS_RESET,
+  PROFILE_UPDATED
 } from "./types";
 
 // Get Profile
@@ -16,7 +19,7 @@ export const getProfile = id => {
   return async dispatch => {
     try {
       dispatch(setProfileLoading());
-      const res = await axios.get(`api/profile/${id}`);
+      const res = await axios.get(`api/profile/artist/${id}`);
       dispatch({
         type: PROFILE_LOADED,
         payload: res.data
@@ -44,6 +47,34 @@ export const getArtistPhotos = (artistId, count, start) => {
         type: ARTIST_PHOTOS_ERROR,
         payload: err.response
       });
+    }
+  };
+};
+
+export const updateCoverPicture = formData => {
+  return async dispatch => {
+    try {
+      dispatch(setProfileLoading());
+      const token = await AuthorizeService.getAccessToken();
+      const res = await axios.post(
+        `api/profile/artist/${formData.id}/cover`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      dispatch({
+        type: PROFILE_UPDATED,
+        payload: res.data
+      });
+      dispatch(setAlert("Cover Picture Updated", "info"));
+    } catch (err) {
+      dispatch({ type: PROFILE_ERROR, payload: err.response });
+      dispatch(setAlert(err.response, "error"));
     }
   };
 };

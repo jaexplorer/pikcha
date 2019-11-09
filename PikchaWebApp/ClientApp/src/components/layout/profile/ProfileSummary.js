@@ -8,7 +8,8 @@ import CameraIcon from "../../../assets/images/camera-white.png";
 import {
   createUploadImageModal,
   createPromoteModal,
-  createDPModal
+  createDPModal,
+  createCoverModal
 } from "../../../actions/modal";
 import { followArtist, unfollowArtist } from "../../../actions/account";
 
@@ -18,6 +19,7 @@ const ProfileSummary = ({
   createUploadImageModal,
   createPromoteModal,
   createDPModal,
+  createCoverModal,
   followArtist,
   unfollowArtist
 }) => {
@@ -33,7 +35,9 @@ const ProfileSummary = ({
     fName,
     lName,
     aggrImViews,
-    avatar
+    avatar,
+    cover,
+    sign
   } = profile;
 
   const followAction = () => {
@@ -84,7 +88,14 @@ const ProfileSummary = ({
 
   return (
     <div className='profile-summary-container'>
-      <div className='cover-photo'></div>
+      <div className='cover-photo'>
+        <img src={cover} alt='' />
+        {account.user && account.user.id === profile.id && (
+          <div onClick={() => createCoverModal()} className='edit'>
+            <img src={CameraIcon} alt='' />
+          </div>
+        )}
+      </div>
       <div className='summary-content'>
         <div className='first-container'>
           <div className='artist-picture'>
@@ -104,7 +115,7 @@ const ProfileSummary = ({
               <div className='artist-name'>
                 {fName} {lName}
               </div>
-              <div className='artist-location'>Melbourne, Australia</div>
+              <div className='artist-location'>{location}</div>
               <div className='socials'>
                 <img src={FacebookIcon} alt='' />
                 <img src={InstagramIcon} alt='' />
@@ -120,7 +131,9 @@ const ProfileSummary = ({
               <div className='about-title'>About me</div>
               <div className='about-text'>{bio}</div>
             </div>
-            <div className='signature'></div>
+            <div className='signature'>
+              <img src={sign} alt='' />
+            </div>
           </div>
           <div className='artist-stats'>
             <div className='artist-views'>{aggrImViews} Views</div>
@@ -157,6 +170,7 @@ export default connect(
     createDPModal,
     followArtist,
     unfollowArtist,
-    createPromoteModal
+    createPromoteModal,
+    createCoverModal
   }
 )(ProfileSummary);

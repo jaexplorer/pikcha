@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { getPhotos, resetGallery } from "../../../actions/gallery";
+import PropTypes from "prop-types";
 import MasonryColumn from "./MasonryColumn";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../../Loader";
@@ -49,7 +48,9 @@ const MasonryGallery = ({ getPhotos, gallery, resetGallery }) => {
         next={() => getPhotos(gallery.count, gallery.start)}
         hasMore={gallery.hasMore}
         loader={<Loader />}
-        endMessage={<h4 className='end-message'>Yay! You have seen it all</h4>}
+        endMessage={
+          <h4 className='end-message'>Yay! You have seen them all</h4>
+        }
       >
         <div className='masonry'>{separatePhotos()}</div>
       </InfiniteScroll>
@@ -57,11 +58,10 @@ const MasonryGallery = ({ getPhotos, gallery, resetGallery }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  gallery: state.galleryReducer
-});
+MasonryGallery.propTypes = {
+  gallery: PropTypes.object.isRequired,
+  getPhotos: PropTypes.func.isRequired,
+  resetGallery: PropTypes.func.isRequired
+};
 
-export default connect(
-  mapStateToProps,
-  { getPhotos, resetGallery }
-)(MasonryGallery);
+export default MasonryGallery;

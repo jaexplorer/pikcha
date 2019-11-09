@@ -1211,6 +1211,16 @@ a {
   cursor: pointer;
 }
 
+.masonry .masonry-col .masonry-item .fullscreen {
+  position: absolute;
+  top: 2.5rem;
+  right: 3rem;
+}
+
+.masonry .masonry-col .masonry-item .fullscreen img {
+  height: 2rem;
+}
+
 .masonry .masonry-col .masonry-item.selected {
   height: 45rem !important;
 }
@@ -1329,28 +1339,6 @@ a {
   top: 3.5rem;
   font-family: "Montserrat";
   font-size: 1.2rem;
-}
-
-.masonry-item .itemInfo-popup .popup-socials {
-  position: absolute;
-  left: -5rem;
-  top: 4rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  height: 25%;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.masonry-item .itemInfo-popup .popup-socials img {
-  height: 2rem;
-  cursor: pointer;
 }
 
 .masonry-item .itemInfo-popup .popup-content-container {
@@ -3322,6 +3310,182 @@ a {
   cursor: pointer;
 }
 
+#coverModal-container {
+  position: absolute;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  background: #f4f7fb;
+  z-index: 600;
+  -webkit-box-shadow: 5px 15px 30px -10px rgba(0, 0, 0, 0.5);
+          box-shadow: 5px 15px 30px -10px rgba(0, 0, 0, 0.5);
+  top: 23rem;
+  margin-bottom: 10rem;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#coverModal-container .upload-error {
+  font-size: 1.2rem;
+  color: white;
+  background: #b54444;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#coverModal-container .upload-error img {
+  height: 1rem;
+  cursor: pointer;
+}
+
+#coverModal-container .coverModal-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 10rem;
+  margin-bottom: 2rem;
+  background-image: linear-gradient(45deg, #081c69 0%, #44159b 50%, #770fc6 100%);
+}
+
+#coverModal-container .coverModal-header .upload-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+#coverModal-container .coverModal-header img {
+  height: 1.4rem;
+  cursor: pointer;
+}
+
+#coverModal-container .uploadCover-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 2rem;
+}
+
+#coverModal-container .uploadCover-form .form-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#coverModal-container .uploadCover-form .form-buttons .upload-button {
+  background: #1a1a1a;
+  padding: 2rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#coverModal-container .uploadCover-form .form-buttons .upload-button input[type="file"] {
+  display: none;
+}
+
+#coverModal-container .uploadCover-form .form-buttons .form-btn {
+  background: #1a1a1a;
+  padding: 1rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 10px;
+}
+
+#coverModal-container .uploadCover-form .form-buttons .form-btn input {
+  background: none;
+}
+
+#coverModal-container .uploadCover-form .image-preview {
+  margin-left: 2rem;
+  height: 30rem;
+  width: 60rem;
+  background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#coverModal-container .uploadCover-form .image-preview img {
+  -o-object-position: center center;
+     object-position: center center;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.cropper-view-box {
+  outline: 1px solid white !important;
+  outline-color: mediumpurple !important;
+}
+
+.cropper-point {
+  background-color: white !important;
+}
+
+@media screen and (max-width: 1099px) {
+  #coverModal-container .uploadCover-form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+  }
+  #coverModal-container .uploadCover-form .form-buttons {
+    margin-top: 2rem;
+  }
+  #coverModal-container .uploadCover-form .image-preview {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 699px) {
+  #coverModal-container .uploadCover-form .image-preview {
+    width: 40rem;
+  }
+}
+
 .profile-summary-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -3347,6 +3511,41 @@ a {
   width: 100%;
   height: 20rem;
   background-image: linear-gradient(45deg, #081c69 0%, #44159b 50%, #770fc6 100%);
+  position: relative;
+}
+
+.profile-summary-container .cover-photo > img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center center;
+     object-position: center center;
+}
+
+.profile-summary-container .cover-photo .edit {
+  position: absolute;
+  background-image: linear-gradient(45deg, #081c69 0%, #44159b 50%, #770fc6 100%);
+  top: 2rem;
+  right: 2rem;
+  width: 4rem;
+  height: 4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 10px;
+  z-index: 2;
+}
+
+.profile-summary-container .cover-photo .edit img {
+  height: 2rem;
+  cursor: pointer;
 }
 
 .profile-summary-container .summary-content {
@@ -3370,8 +3569,9 @@ a {
       -ms-flex-direction: column;
           flex-direction: column;
   position: absolute;
+  width: 16rem;
   top: -8rem;
-  height: calc(100% + 5rem);
+  height: 34rem;
 }
 
 .profile-summary-container .summary-content .first-container .artist-picture {
@@ -3465,7 +3665,7 @@ a {
 .profile-summary-container .summary-content .first-container .artist-info .artist-details .artist-location {
   text-align: center;
   opacity: 0.6;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .profile-summary-container .summary-content .first-container .artist-info .artist-details .socials {
@@ -3520,6 +3720,7 @@ a {
           justify-content: space-between;
   margin-left: 20rem;
   width: calc(100% - 20rem);
+  height: 23rem;
 }
 
 .profile-summary-container .summary-content .second-container .artist-description {
@@ -3546,6 +3747,7 @@ a {
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  opacity: 0.6;
 }
 
 .profile-summary-container .summary-content .second-container .artist-description .about-me-container .about-text {
@@ -3556,11 +3758,11 @@ a {
 .profile-summary-container .summary-content .second-container .artist-description .signature {
   width: 10rem;
   height: 100%;
-  background-image: linear-gradient(45deg, #081c69 0%, #44159b 50%, #770fc6 100%);
   border-radius: 10px;
   -webkit-box-flex: 0;
       -ms-flex: 0 0 auto;
           flex: 0 0 auto;
+  padding: 2rem;
 }
 
 .profile-summary-container .summary-content .second-container .artist-description .signature img {

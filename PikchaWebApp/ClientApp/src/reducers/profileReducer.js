@@ -6,7 +6,8 @@ import {
   ARTIST_PHOTOS_LOADED,
   ARTIST_PHOTOS_LOADING,
   ARTIST_PHOTOS_ERROR,
-  ARTIST_PHOTOS_RESET
+  ARTIST_PHOTOS_RESET,
+  PROFILE_UPDATED
 } from "../actions/types";
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case PROFILE_UPDATED:
     case PROFILE_LOADED:
       return {
         ...state,
@@ -49,6 +51,10 @@ export default (state = initialState, { type, payload }) => {
         profileError: null
       };
     case ARTIST_PHOTOS_LOADED:
+      payload.forEach(d => {
+        const randomised = Math.random() * (30 - 15) + 15;
+        d.height = randomised;
+      });
       return {
         ...state,
         photos: [...state.photos, ...payload],
