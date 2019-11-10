@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Serilog;
+using System.Net.Http;
 
 namespace PikchaWebApp
 {
@@ -168,11 +169,20 @@ namespace PikchaWebApp
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
+
+               /* var _clientFactory = serviceScope.ServiceProvider.GetRequiredService<IHttpClientFactory>();
+
+                PrinterManager printManager = new PrinterManager(_clientFactory, "");
+
+                */
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<PikchaDbContext>();
 
                 context.Database.Migrate();
 
-                var _mapper = serviceScope.ServiceProvider.GetRequiredService<IMapper>();
+             
+
+               // var _mapper = serviceScope.ServiceProvider.GetRequiredService<IMapper>();
 
                 /*var images = context.PikchaUsers.Include("Images.Views").Include("Images.Artist")
                     .OrderByDescending(u => u.Images.Sum(i => i.Views.Sum(v => v.Count)))
@@ -226,6 +236,7 @@ namespace PikchaWebApp
                 }
             }
         }
+
 
         private async Task SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
         {

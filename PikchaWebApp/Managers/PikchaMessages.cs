@@ -25,6 +25,11 @@ namespace PikchaWebApp.Managers
         public const string MESS_Status500ImageProcessingError = "Image processing occured. Please try again later.";
 
 
+        // printers
+        public const string MESS_Status200_MessageRecievedSuccess = "Message recieved successfully.";
+        public const string CODE_Status200_MessageRecievedSuccess = "1001";
+
+
 
     }
 }

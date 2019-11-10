@@ -59,35 +59,81 @@ namespace PikchaWebApp.Controllers
         }
 
 
-        [HttpGet("quote/{userId}")]
+        [HttpGet("{printerCode}/templates")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> GetQuote(string userId)
+        public async Task<ActionResult> GetTemplates(string printerCode)
         {
             try
             {
-                var pikchaUser = await _userManager.GetUserAsync(this.User);
-                Dictionary<string, int> qtItems = new Dictionary<string, int>();
-                qtItems.Add("1111", 1);
-                qtItems.Add("1122", 2);
-                qtItems.Add("1133", 3);
+                PrinterManager printManager = new PrinterManager(_clientFactory, printerCode);
+                List<ProductTemplate> templates = await printManager.GetProductTemplates();
 
-                PrinterManager printManager = new PrinterManager(_clientFactory);
-                var quoteReq = await printManager.GetQuote(pikchaUser, qtItems);
-
-                //_userManager.Users.First();
-
-                return Ok();
+                return ReturnOkOrErrorStatus(templates);
             }
             catch (Exception ex)
             {
+                Log.Error(ex, " Product, GetTemplates, parameters: printerCode={printerCode}", printerCode);
+
                 return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ProductNotFound);
 
             }
         }
 
-       
+
+
+        [HttpGet("{printerCode}/quote")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetQuote()
+        {
+            try
+            {
+                QuoteRequest quoteRequest = new QuoteRequest();
+                PrinterManager printManager = new PrinterManager(_clientFactory, "JONDO");
+                QuoteResult quoteReslt = await printManager.GetQuote(quoteRequest);
+
+                return ReturnOkOrErrorStatus(quoteReslt);
+            }
+            catch (Exception ex)
+            {
+                // TO DO : need to add params
+                Log.Error(ex, " Product, GetQuote, parameters: ");
+
+                return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ProductNotFound);
+
+            }
+        }
+
+
+        [HttpGet("{printerCode}/order")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> CreateOrder()
+        {
+            try
+            {
+                OrderRequest orderRequest = new OrderRequest();
+                PrinterManager printManager = new PrinterManager(_clientFactory, "JONDO");
+                OrderResult quoteReslt = await printManager.CreateOrder(orderRequest);
+
+                return ReturnOkOrErrorStatus(quoteReslt);
+            }
+            catch (Exception ex)
+            {
+                // TO DO : need to add params
+                Log.Error(ex, " Product, CreateOrder, parameters: ");
+
+                return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ProductNotFound);
+
+            }
+        }
+
 
     }
+
+
 }

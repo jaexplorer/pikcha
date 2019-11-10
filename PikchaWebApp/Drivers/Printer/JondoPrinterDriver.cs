@@ -1,8 +1,11 @@
-﻿using System;
+﻿using PikchaWebApp.Managers;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -10,16 +13,30 @@ namespace PikchaWebApp.Drivers.Printer
 {
     public class JondoPrinterDriver : PrinterDriver
     {
-        string jondo_dpq_url = "https://staging.jondohd.com/integration/api/dpqApiV2.php";
+        string JONDO_DPQ_URL = "https://staging.jondohd.com/integration/api/dpqApiV2.php";
+        string JONDO_CONFIG = "Drivers/Printer/JondoPrinterConfig.json";
+
+        private List<ProductTemplate> _productTemplates;
+
         public JondoPrinterDriver(IHttpClientFactory clientFactory) : base(clientFactory)
         {
-           
+          
         }
+
+        public override async Task<List<ProductTemplate>> GetProductTemplates()
+        {
+            return await GetTemplates();
+        }
+
+       
 
         public override async Task<QuoteResult> GetQuote(QuoteRequest quoteRequest)
         {
+
+            return GenerateDummyQuoteResult(quoteRequest);
+            /*
             QuoteResult qtResult = new QuoteResult();
-            var request = new HttpRequestMessage(HttpMethod.Post, jondo_dpq_url);
+            var request = new HttpRequestMessage(HttpMethod.Post, JONDO_DPQ_URL);
             //request.Headers.Add("Accept", "application/vnd.github.v3+json");
             //request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
             //request.Properties
@@ -48,7 +65,91 @@ namespace PikchaWebApp.Drivers.Printer
                // Branches = Array.Empty<GitHubBranch>();
             }
 
-            return qtResult;
+            return qtResult; */
+
+
+        }
+
+        public override async Task<OrderResult> CreateOrder(OrderRequest orderRequest)
+        {
+            return GenerateDummyOrderResult(orderRequest);
+        }
+
+
+        private QuoteResult GenerateDummyQuoteResult(QuoteRequest quoteRequest)
+        {
+            //string reqCode = quoteRequest[]
+            List<QuoteResultItem> resItms = new List<QuoteResultItem>();
+            resItms.Add(new QuoteResultItem()
+            {
+                BaseFreight = "7.65",
+                Carrier = "Fedex",
+                EstDeliveryOn = DateTime.Now.AddDays(5).ToShortDateString(),
+                Name = "Fedex International Priority",
+                Tax = "0",
+                TotFreight = "7.65",
+                Type = "intPriority"
+            });
+
+            resItms.Add(new QuoteResultItem()
+            {
+                BaseFreight = "6.05",
+                Carrier = "Fedex",
+                EstDeliveryOn = DateTime.Now.AddDays(8).ToShortDateString(),
+                Name = "Fedex International Economy",
+                Tax = "0",
+                TotFreight = "6.05",
+                Type = "intEconomy"
+            });
+
+            resItms.Add(new QuoteResultItem()
+            {
+                BaseFreight = "7.05",
+                Carrier = "USPS",
+                EstDeliveryOn = DateTime.Now.AddDays(6).ToShortDateString(),
+                Name = "USPS Priority Mail International",
+                Tax = "0",
+                TotFreight = "7.05",
+                Type = "priorityMailInternational"
+            });
+
+            QuoteResult result = new QuoteResult()
+            {
+                StatusCode = PikchaMessages.CODE_Status200_MessageRecievedSuccess,
+                ErrorCode = "",
+                QuoteResults = resItms
+            };
+
+            return result;
+        }
+
+
+        private OrderResult GenerateDummyOrderResult(OrderRequest quoteRequest)
+        {
+            
+
+            OrderResult result = new OrderResult()
+            {
+                StatusCode = PikchaMessages.CODE_Status200_MessageRecievedSuccess,
+                ErrorCode = "",
+            };
+
+            return result;
+        }
+
+
+        private async Task<List<ProductTemplate>> GetTemplates()
+        {
+            if(_productTemplates == null)
+            {
+                using (FileStream fs = File.OpenRead(JONDO_CONFIG))
+                {
+                    _productTemplates = await JsonSerializer.DeserializeAsync<List<ProductTemplate>>(fs);
+                }
+            }
+            
+            return _productTemplates;
+            
         }
 
         private string CreateDPQXMLRequest(QuoteRequest quoteRequest)
@@ -240,6 +341,7 @@ namespace PikchaWebApp.Drivers.Printer
             return srcTree.Root.ToString();
         }
 
+       
     }
 
 
