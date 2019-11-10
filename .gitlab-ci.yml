@@ -1,10 +1,12 @@
-version: '3.7'
+stages:
+  - build-test
 
-networks:
+build-test-job:
+ stage: build-test
+ networks:
   pikcha-net:
    driver: bridge
-
-services:
+ services:
   webapp:
     container_name: web_c
     image: pikchaweb:latest
@@ -33,7 +35,9 @@ services:
             ACCEPT_EULA: "Y"
             MSSQL_PID: "Express"
 
-   
-volumes:
+ volumes:
   dbvol:
+ only:
+    - backend
+
 
