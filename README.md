@@ -187,3 +187,95 @@ LOGGEDINUSERINFO
 - PARAMS : Type [string], Url[string] --> [FORMBODY]
 - RESULTS : artistProfileInfo
 - ERROR_CODES : 200, 404, 500
+
+
+# Printers
+### Get printing templates 
+- ENDPOINT : api/product/{printerCode}/templates
+- METHOD : get 
+- AUTHENTICATED : no <-- should it be true?
+- PARAMS : NILL
+- RESULTS : List<ProductTemplate>
+- ERROR_CODES : 200, 404, 500
+
+{printerCode} == JONDO
+
+ProductTemplate
+ - Code
+ - Width
+ - Height
+ - Material
+ - Frame
+ - Border
+ - Finish
+
+
+
+### Get printer quote 
+- ENDPOINT : api/product/{printerCode}/quote
+- METHOD : POST 
+- AUTHENTICATED : no <-- should it be true?
+- PARAMS : QuoteRequest --> [Body]
+- RESULTS : QuoteResult
+- ERROR_CODES : 200, 404, 500
+
+ {printerCode} == JONDO
+
+QuoteRequest
+ - Addr1
+ - Addr2
+ - City
+ - Postal
+ - State
+ - Country
+ - List<QuoteItem>  <-- we can request quotes for multiple templates at a time. but for us, one code is enough.
+
+
+ QuoteItem
+  - Code <-- from the selected template
+  - Qty
+
+
+QuoteResult
+- ShippingClass
+- QuoteId
+- RefNumber
+- City
+- State
+- Country
+- List<QuoteResultItem>
+
+
+QuoteResultItem
+ - Carrier
+ - Name
+ - Type
+ - EstDeliveryOn
+ - BaseFreight
+ - Tax
+ - TotFreight 
+
+
+ ### create a printing order request 
+- ENDPOINT : api/product/{printerCode}/order
+- METHOD : POST 
+- AUTHENTICATED : true
+- PARAMS : OrderRequest --> [Body]
+- RESULTS : OK()
+- ERROR_CODES : 200, 404, 500
+
+
+OrderRequest
+ - FirstName
+ - LastName
+ - Addr1
+ - Addr2
+ - City
+ - Postal
+ - State
+ - Country
+ - List<OrderItem> 
+
+ OrderItem
+  - Code
+  - Qty

@@ -81,17 +81,14 @@ namespace PikchaWebApp.Controllers
             }
         }
 
-
-
-        [HttpGet("{printerCode}/quote")]
+        [HttpPost("{printerCode}/quote")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> GetQuote()
+        public async Task<ActionResult> GetQuote([FromBody] QuoteRequest quoteRequest)
         {
             try
             {
-                QuoteRequest quoteRequest = new QuoteRequest();
                 PrinterManager printManager = new PrinterManager(_clientFactory, "JONDO");
                 QuoteResult quoteReslt = await printManager.GetQuote(quoteRequest);
 
@@ -108,15 +105,14 @@ namespace PikchaWebApp.Controllers
         }
 
 
-        [HttpGet("{printerCode}/order")]
+        [HttpPost("{printerCode}/order")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> CreateOrder()
+        public async Task<ActionResult> CreateOrder([FromBody] OrderRequest orderRequest)
         {
             try
             {
-                OrderRequest orderRequest = new OrderRequest();
                 PrinterManager printManager = new PrinterManager(_clientFactory, "JONDO");
                 OrderResult quoteReslt = await printManager.CreateOrder(orderRequest);
 
