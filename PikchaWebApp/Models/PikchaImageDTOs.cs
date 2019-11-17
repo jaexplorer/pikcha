@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PikchaWebApp.Managers;
 
 namespace PikchaWebApp.Models
 {
@@ -20,7 +21,7 @@ namespace PikchaWebApp.Models
         public string Caption { get; set; } = string.Empty;
         public decimal Performance { get; set; } = 0;
         public int TotSold { get; set; } = 0;
-        public decimal AvgPrice { get; set; } = 0;
+        public string AvgPrice { get; set; } = "0";
 
         public string Height { get; set; } = string.Empty;
         
@@ -34,7 +35,9 @@ namespace PikchaWebApp.Models
         public string Location { get; set; } = string.Empty;
         public string Thumbnail { get; set; } = string.Empty;
         public string Watermark { get; set; } = string.Empty;
-        public string Views { get; set; } =  string.Empty;
+        
+        public string Views { get; set; } =  "0.1 k";     
+      
 
         public ArtistBaseDTO Artist { get; set; } = new ArtistBaseDTO();
 

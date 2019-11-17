@@ -80,6 +80,7 @@ namespace PikchaWebApp.Migrations
                     Avatar = table.Column<string>(nullable: true),
                     Sign = table.Column<string>(nullable: true),
                     InvSign = table.Column<string>(nullable: true),
+                    Cover = table.Column<string>(nullable: true),
                     Bio = table.Column<string>(nullable: true),
                     Addr1 = table.Column<string>(nullable: true),
                     Addr2 = table.Column<string>(nullable: true),
@@ -190,6 +191,50 @@ namespace PikchaWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Invoices",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    PrintRefId = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Company = table.Column<string>(nullable: true),
+                    Addr1 = table.Column<string>(nullable: true),
+                    Addr2 = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    Postal = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    Country = table.Column<string>(nullable: true),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    ShipCost = table.Column<decimal>(type: "DECIMAL(13,2)", nullable: false),
+                    ShipType = table.Column<string>(nullable: true),
+                    ShipCarrier = table.Column<string>(nullable: true),
+                    EstDelivOn = table.Column<DateTime>(nullable: false),
+                    ShipStatus = table.Column<string>(nullable: true),
+                    DBNum = table.Column<int>(nullable: false),
+                    Discount = table.Column<decimal>(type: "DECIMAL(13,2)", nullable: false),
+                    PaidAmount = table.Column<decimal>(type: "DECIMAL(13,2)", nullable: false),
+                    PaidAt = table.Column<DateTime>(nullable: false),
+                    InvDate = table.Column<DateTime>(nullable: false),
+                    InvStatus = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ModifiedAt = table.Column<DateTimeOffset>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.ComputedColumn),
+                    CustomerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invoices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Invoices_PikchaUsers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "PikchaUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PikchaUserClaims",
                 columns: table => new
                 {
@@ -280,8 +325,13 @@ namespace PikchaWebApp.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     IsSale = table.Column<bool>(nullable: false),
-                    Price = table.Column<decimal>(type: "DECIMAL(13,2)", nullable: false),
+                    SetPrice = table.Column<decimal>(type: "DECIMAL(13,2)", nullable: false),
+                    FinPrice = table.Column<decimal>(type: "DECIMAL(13,2)", nullable: false),
                     Type = table.Column<string>(nullable: true),
+                    Material = table.Column<string>(nullable: true),
+                    Frame = table.Column<string>(nullable: true),
+                    Border = table.Column<string>(nullable: true),
+                    Finish = table.Column<string>(nullable: true),
                     ImageId = table.Column<string>(nullable: true),
                     SellerId = table.Column<string>(nullable: true),
                     PrinterId = table.Column<string>(nullable: true)
@@ -339,7 +389,6 @@ namespace PikchaWebApp.Migrations
                 {
                     Date = table.Column<DateTime>(type: "Date", nullable: false),
                     PikchaImageId = table.Column<string>(nullable: false),
-                    Id = table.Column<string>(nullable: true),
                     Count = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -351,6 +400,34 @@ namespace PikchaWebApp.Migrations
                         principalTable: "Images",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InvoiceDetails",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "DECIMAL(13,2)", nullable: false),
+                    Qty = table.Column<int>(nullable: false),
+                    Discount = table.Column<decimal>(type: "DECIMAL(13,2)", nullable: false),
+                    InvoiceId = table.Column<string>(nullable: true),
+                    ImageProductId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InvoiceDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InvoiceDetails_ImageProducts_ImageProductId",
+                        column: x => x.ImageProductId,
+                        principalTable: "ImageProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_InvoiceDetails_Invoices_InvoiceId",
+                        column: x => x.InvoiceId,
+                        principalTable: "Invoices",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -398,6 +475,21 @@ namespace PikchaWebApp.Migrations
                 name: "IX_ImageViews_PikchaImageId",
                 table: "ImageViews",
                 column: "PikchaImageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceDetails_ImageProductId",
+                table: "InvoiceDetails",
+                column: "ImageProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceDetails_InvoiceId",
+                table: "InvoiceDetails",
+                column: "InvoiceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoices_CustomerId",
+                table: "Invoices",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
@@ -456,13 +548,13 @@ namespace PikchaWebApp.Migrations
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
-                name: "ImageProducts");
-
-            migrationBuilder.DropTable(
                 name: "ImageTags");
 
             migrationBuilder.DropTable(
                 name: "ImageViews");
+
+            migrationBuilder.DropTable(
+                name: "InvoiceDetails");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
@@ -483,16 +575,22 @@ namespace PikchaWebApp.Migrations
                 name: "PikchaUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Printers");
+                name: "Tags");
 
             migrationBuilder.DropTable(
-                name: "Tags");
+                name: "ImageProducts");
+
+            migrationBuilder.DropTable(
+                name: "Invoices");
+
+            migrationBuilder.DropTable(
+                name: "PikchaRoles");
 
             migrationBuilder.DropTable(
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "PikchaRoles");
+                name: "Printers");
 
             migrationBuilder.DropTable(
                 name: "PikchaUsers");

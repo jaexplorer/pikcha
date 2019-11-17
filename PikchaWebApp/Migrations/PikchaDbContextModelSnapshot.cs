@@ -249,6 +249,22 @@ namespace PikchaWebApp.Migrations
                         .HasColumnName("Id")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
+                    b.Property<string>("Border")
+                        .HasColumnName("Border")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<decimal>("FinPrice")
+                        .HasColumnName("FinPrice")
+                        .HasColumnType("DECIMAL(13,2)");
+
+                    b.Property<string>("Finish")
+                        .HasColumnName("Finish")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Frame")
+                        .HasColumnName("Frame")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("ImageId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
@@ -256,15 +272,19 @@ namespace PikchaWebApp.Migrations
                         .HasColumnName("IsSale")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnName("Price")
-                        .HasColumnType("DECIMAL(13,2)");
+                    b.Property<string>("Material")
+                        .HasColumnName("Material")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("PrinterId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("SellerId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<decimal>("SetPrice")
+                        .HasColumnName("SetPrice")
+                        .HasColumnType("DECIMAL(13,2)");
 
                     b.Property<string>("Type")
                         .HasColumnName("Type")
@@ -307,14 +327,160 @@ namespace PikchaWebApp.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
-                    b.Property<string>("Id")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
                     b.HasKey("Date", "PikchaImageId");
 
                     b.HasIndex("PikchaImageId");
 
                     b.ToTable("ImageViews");
+                });
+
+            modelBuilder.Entity("PikchaWebApp.Models.Invoice", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Addr1")
+                        .HasColumnName("Addr1")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Addr2")
+                        .HasColumnName("Addr2")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("City")
+                        .HasColumnName("City")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Company")
+                        .HasColumnName("Company")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Country")
+                        .HasColumnName("Country")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<int>("DBNum")
+                        .HasColumnName("DBNum")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnName("Discount")
+                        .HasColumnType("DECIMAL(13,2)");
+
+                    b.Property<DateTime>("EstDelivOn")
+                        .HasColumnName("EstDelivOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnName("FirstName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTime>("InvDate")
+                        .HasColumnName("InvDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("InvStatus")
+                        .HasColumnName("InvStatus")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("LastName")
+                        .HasColumnName("LastName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<DateTimeOffset>("ModifiedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnName("ModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal>("PaidAmount")
+                        .HasColumnName("PaidAmount")
+                        .HasColumnType("DECIMAL(13,2)");
+
+                    b.Property<DateTime>("PaidAt")
+                        .HasColumnName("PaidAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnName("PhoneNumber")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Postal")
+                        .HasColumnName("Postal")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("PrintRefId")
+                        .HasColumnName("PrintRefId")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ShipCarrier")
+                        .HasColumnName("ShipCarrier")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<decimal>("ShipCost")
+                        .HasColumnName("ShipCost")
+                        .HasColumnType("DECIMAL(13,2)");
+
+                    b.Property<string>("ShipStatus")
+                        .HasColumnName("ShipStatus")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("ShipType")
+                        .HasColumnName("ShipType")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("State")
+                        .HasColumnName("State")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("PikchaWebApp.Models.InvoiceDetail", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<decimal>("Discount")
+                        .HasColumnName("Discount")
+                        .HasColumnType("DECIMAL(13,2)");
+
+                    b.Property<string>("ImageProductId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("InvoiceId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<int>("Qty")
+                        .HasColumnName("Qty")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnName("UnitPrice")
+                        .HasColumnType("DECIMAL(13,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageProductId");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("InvoiceDetails");
                 });
 
             modelBuilder.Entity("PikchaWebApp.Models.PikchaImage", b =>
@@ -625,6 +791,24 @@ namespace PikchaWebApp.Migrations
                         .HasForeignKey("PikchaImageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PikchaWebApp.Models.Invoice", b =>
+                {
+                    b.HasOne("PikchaWebApp.Models.PikchaUser", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+                });
+
+            modelBuilder.Entity("PikchaWebApp.Models.InvoiceDetail", b =>
+                {
+                    b.HasOne("PikchaWebApp.Models.ImageProduct", "ImageProduct")
+                        .WithMany()
+                        .HasForeignKey("ImageProductId");
+
+                    b.HasOne("PikchaWebApp.Models.Invoice", "Invoice")
+                        .WithMany("InvDetails")
+                        .HasForeignKey("InvoiceId");
                 });
 
             modelBuilder.Entity("PikchaWebApp.Models.PikchaImage", b =>

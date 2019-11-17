@@ -113,6 +113,7 @@ namespace PikchaWebApp.Drivers.Printer
         public string State { get; set; } = string.Empty;
 
         public string Country { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
 
         public List<OrderItem> QuoteItems = new List<OrderItem>();
     }

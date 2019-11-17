@@ -163,6 +163,10 @@
               "target": "Package",
               "version": "[7.0.0, )"
             },
+            "FlexLabs.EntityFrameworkCore.Upsert": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "Magick.NET-Q8-AnyCPU": {
               "target": "Package",
               "version": "[7.14.4, )"
