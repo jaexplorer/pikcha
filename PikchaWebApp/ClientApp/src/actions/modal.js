@@ -9,6 +9,15 @@ export const createDPModal = () => {
   };
 };
 
+export const createCoverModal = () => {
+  return dispatch => {
+    dispatch({
+      type: MODAL_CREATED,
+      payload: "Cover"
+    });
+  };
+};
+
 export const createPromoteModal = () => {
   return dispatch => {
     dispatch({

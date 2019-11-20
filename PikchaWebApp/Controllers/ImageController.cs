@@ -86,7 +86,7 @@ namespace PikchaWebApp.Controllers
                         ImageProduct imgPrd = new ImageProduct()
                         {
                              IsSale = true,
-                              Price = price,
+                              FinPrice = price,
                                Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_OWNER,
                                 Image = pkImg,
                                  Seller = loggedinUser
@@ -176,38 +176,62 @@ namespace PikchaWebApp.Controllers
         {
             try
             {
-                try
-                {
-                    var imgVw = await _pikchDbContext.ImageViews.FirstAsync(i => i.PikchaImage.Id == imageId && i.Date == DateTime.Today.Date);
-                    if (imgVw == null)
-                    {
-                        PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
-                        if (pImg != null)
-                        {
-                            _pikchDbContext.ImageViews.Add(new ImageView() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
-                        }
-                    }
-                    else
-                    {
-                        imgVw.Count = imgVw.Count + 1;
-                    }
-                }
-                catch
-                {
-                    PikchaImage pImg = _pikchDbContext.PikchaImages.First(i => i.Id == imageId);
-                    if (pImg != null)
-                    {
-                        _pikchDbContext.ImageViews.Add(new ImageView() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
-                    }
-                }
 
-                await _pikchDbContext.SaveChangesAsync();
+                await _pikchDbContext.ImageViews
+                            .Upsert(new ImageView
+                            {
+                                PikchaImageId = imageId,
+                                Date = DateTime.UtcNow.Date,
+                                Count = 1,
+                            })
+                            .On(v => new { v.PikchaImageId, v.Date })
+                            .WhenMatched(v => new ImageView
+                            {
+                                Count = v.Count + 1,
+                            })
+                            .RunAsync();
 
-                // get the totla pikcha view count
-                var views = await _pikchDbContext.ImageViews.Where(i => i.PikchaImage.Id == imageId).SumAsync( c => c.Count);
+
+                //_pikchDbContext.Upsert(new ImageView
+                //{
+                //    PikchaImageId = imageId,
+                //    Date = DateTime.UtcNow.Date,
+                //    Count = 1,
+                //})
+                //  .On(v => new { v.PikchaImageId, v.Date })
+                //  .WhenMatched(v => new ImageView
+                //  {
+                //      Count = v.Count + 1,
+                //  })
+                //  .RunAsync();
+
+
+                ////var imgVw = await _pikchDbContext.ImageViews.Where(i => i.PikchaImage.Id == imageId && i.Date == DateTime.Today.Date).FirstOrDefaultAsync();
+                //var imgVw3 = await _pikchDbContext.ImageViews.AddOrUpdate(i => i.PikchaImage.Id == imageId && i.Date == DateTime.Today.Date).FirstOrDefaultAsync();
+                //if (imgVw == null)
+                //{
+                //    PikchaImage pImg = await _pikchDbContext.PikchaImages.Where(i => i.Id == imageId).FirstOrDefaultAsync();
+                //    if (pImg != null)
+                //    {
+                //       await _pikchDbContext.ImageViews.AddAsync(new ImageView() { PikchaImage = pImg, Date = DateTime.Today, Count = 1 });
+                //    }
+                //    else
+                //    {
+                //        return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404ImageNotFound);
+                //    }
+                //}
+                //else
+                //{
+                //    imgVw.Count = imgVw.Count + 1;
+                //}
+                //await _pikchDbContext.SaveChangesAsync();
+                
+                //// get the total pikcha view count
+                //var totViews = await _pikchDbContext.ImageViews.Where(i => i.PikchaImage.Id == imageId).SumAsync(c => c.Count);
 
                 //return StatusCode(StatusCodes.Status201Created);
-                return Ok(views);
+                return Ok();
+                
 
             }
             catch (Exception ex)

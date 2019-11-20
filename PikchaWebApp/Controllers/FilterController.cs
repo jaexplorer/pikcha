@@ -132,7 +132,7 @@ namespace PikchaWebApp.Controllers
             {
                 return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ArtistNotFound);
             }
-            var artists100 = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaImages.Include("Artist").Include("Views").Where(i => i.Artist.Id == artistId).AsQueryable().Skip(start).Take(count)).ToListAsync();
+            var artists100 = await _mapper.ProjectTo<PikchaImageFilterDTO>(_pikchDbContext.PikchaImages.Include("Artist").Include("Views").Where(i => i.Artist.Id == artistId).OrderByDescending(i => i.Views.Sum(v => v.Count)).AsQueryable().Skip(start).Take(count)).ToListAsync();
             return ReturnOkOrErrorStatus(artists100);
         }
 

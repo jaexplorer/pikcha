@@ -15,6 +15,7 @@
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="AWSSDK.S3" Version="3.3.104.42" />
+    <PackageReference Include="FlexLabs.EntityFrameworkCore.Upsert" Version="3.0.0" />
     <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="7.14.4" />
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.0.0" />
@@ -81,6 +82,20 @@
     <Compile Remove="Migrations\20191031020843_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20191031210546_InitialCreate.cs" />
     <Compile Remove="Migrations\20191031210546_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191101055623_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191101055623_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191108034127_AddingCoverImage.cs" />
+    <Compile Remove="Migrations\20191108034127_AddingCoverImage.Designer.cs" />
+    <Compile Remove="Migrations\20191115232913_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191115232913_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191115233021_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191115233021_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191115233557_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191115233557_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191115234114_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191115234114_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20191116210926_InitialCreate.cs" />
+    <Compile Remove="Migrations\20191116210926_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -133,6 +148,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Drivers\Printer\JondoPrinterConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\css\pikcha_main.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -180,7 +198,7 @@
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)build\**" />
-      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </ResolvedFileToPublish>

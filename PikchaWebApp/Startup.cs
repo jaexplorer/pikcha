@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Serilog;
+using System.Net.Http;
 
 namespace PikchaWebApp
 {
@@ -168,20 +169,30 @@ namespace PikchaWebApp
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
+
+               /* var _clientFactory = serviceScope.ServiceProvider.GetRequiredService<IHttpClientFactory>();
+
+                PrinterManager printManager = new PrinterManager(_clientFactory, "");
+
+                */
+
                 var context = serviceScope.ServiceProvider.GetRequiredService<PikchaDbContext>();
 
                 context.Database.Migrate();
 
-                var _mapper = serviceScope.ServiceProvider.GetRequiredService<IMapper>();
 
-                /*var images = context.PikchaUsers.Include("Images.Views").Include("Images.Artist")
-                    .OrderByDescending(u => u.Images.Sum(i => i.Views.Sum(v => v.Count)))
-                    .Skip(0).Take(3)
-                    //.Select(u => u.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First())
-                    .SelectMany(u => u.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).Take(1))
-                    //.ToList(); 
-                    ;
-                var imagesDTOs = _mapper.ProjectTo<PikchaImageFilterDTO>(images).ToList(); */
+
+                //var _mapper = serviceScope.ServiceProvider.GetRequiredService<IMapper>();
+
+                //var images = context.PikchaUsers.Include("Images.Views").Include("Images.Artist")
+                //    .Include("Images.Products").Include("Images.Products.InvoiceItems")
+                //    .OrderByDescending(u => u.Images.Sum(i => i.Views.Sum(v => v.Count)))
+                //    .Skip(0).Take(3)
+                //    //.Select(u => u.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).First())
+                //    .SelectMany(u => u.Images.OrderByDescending(i => i.Views.Sum(v => v.Count)).Take(1))
+                //    //.ToList(); 
+                //    ;
+                //var imagesDTOs = _mapper.ProjectTo<PikchaImageFilterDTO>(images).ToList();
 
 
 
@@ -226,6 +237,7 @@ namespace PikchaWebApp
                 }
             }
         }
+
 
         private async Task SeedData(UserManager<PikchaUser> userManager, IWebHostEnvironment env, PikchaDbContext dbContext)
         {
@@ -358,6 +370,28 @@ namespace PikchaWebApp
             titles.Add("From its medieval origins to the digital era");
             titles.Add("Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit");
 
+
+            List<string> materials = new List<string>();
+            materials.Add("Canvas");
+            materials.Add("Paper");
+            materials.Add("Wood");
+
+            List<string> frames = new List<string>();
+            frames.Add("None");
+            frames.Add("Wooden");
+
+            List<string> borders = new List<string>();
+            borders.Add("0");
+            borders.Add("0.5");
+            borders.Add("1");
+            borders.Add("1.5");
+
+            List<string> finishes = new List<string>();
+            finishes.Add("None");
+            finishes.Add("Wooden");
+            finishes.Add("Paper");
+
+
             for (int i = 0; i < imageIds.Count; i++)
             {
                 string imgId = imageIds[i];
@@ -391,7 +425,7 @@ namespace PikchaWebApp
                 {
                     Image = img,
                     IsSale = true,
-                    Price = rnd.Next(100, 10000),
+                    FinPrice = rnd.Next(100, 10000),
                     Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_OWNER,
                     Seller = img.Artist
                 };
@@ -402,15 +436,46 @@ namespace PikchaWebApp
                 for (int l = 0; l < count; l++)
                 {
                     int rndBool = rnd.Next(0, 100);
+
+                    PikchaUser seller = lstUsers[rnd.Next(lstUsers.Count)];
+
+                    int finalPrice = rnd.Next(100, 10000);
+
                     ImageProduct imgPrd = new ImageProduct()
                     {
                         Image = img,
                         IsSale = rndBool <50 ? true : false,
-                        Price = rnd.Next(100, 10000),
+                        FinPrice = finalPrice,
                         Type = PikchaConstants.PIKCHA_PRODUCT_TYPE_SELLER,
-                        Seller = lstUsers[rnd.Next(lstUsers.Count)]
+                        Seller = seller,
+                        Material = materials[rnd.Next(materials.Count)],
+                        Border = borders[rnd.Next(borders.Count)],
+                         Finish = finishes[rnd.Next(finishes.Count)],
+                          Frame = frames[rnd.Next(frames.Count)]
                     };
+
                     dbContext.ImageProducts.Add(imgPrd);
+                    
+                    // create the invoice for seller
+                    
+                    InvoiceDetail invItem = new InvoiceDetail()
+                    {
+                         Qty =1,
+                          UnitPrice = rnd.Next( 7*finalPrice/10, 2 * finalPrice),
+                           ImageProduct = imgPrd,
+                            Discount =0
+                            
+                    };
+
+                    Invoice inv = new Invoice()
+                    {
+                        Addr1 = "",
+                        Customer = seller,
+                        ShipCost = rnd.Next(12,35)                         
+                    };
+                    inv.InvDetails = new List<InvoiceDetail>();
+                    inv.InvDetails.Add(invItem);
+                    dbContext.Invoices.Add(inv);
                 }
             }
             await dbContext.SaveChangesAsync();

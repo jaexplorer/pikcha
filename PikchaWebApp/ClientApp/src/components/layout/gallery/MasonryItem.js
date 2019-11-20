@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import ItemInfo from "./ItemInfo";
+import FullscreenIcon from "../../../assets/images/fullscreen-white.png";
 
 const MasonryItem = ({ photo }) => {
   const [selected, setSelected] = useState(false);
@@ -27,6 +28,11 @@ const MasonryItem = ({ photo }) => {
       onContextMenu={e => e.preventDefault}
     >
       <img src={photo.thumbnail} alt='' />
+      {selected && (
+        <div className='fullscreen'>
+          <img src={FullscreenIcon} alt='' />
+        </div>
+      )}
       {selected && <ItemInfo photo={photo} onChange={e => setSelected(e)} />}
     </div>
   );

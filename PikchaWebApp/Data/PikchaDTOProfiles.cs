@@ -1,4 +1,5 @@
-﻿using PikchaWebApp.Models;
+﻿using PikchaWebApp.Managers;
+using PikchaWebApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +22,23 @@ namespace PikchaWebApp.Data
             CreateMap<PikchaImage, PikchaImageFilterDTO>()
                 .ForMember(
                     dest => dest.Views,
-                    opt => opt.MapFrom(src => src.Views.Count()==0 ? "0" : src.Views.Sum(y => y.Count).ToString()))
+                    opt => opt.MapFrom(src => src.Views.Count()== 0 ? "0.1 k" : src.Views.Sum(y => y.Count).ToHumanReadableNumber()))
                 .ForMember(
                     dest => dest.Height, opt => opt.MapFrom( src => "0"))
                 .ForMember(
                     dest => dest.ProductIds, opt =>  opt.MapFrom(src => src.Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id)))
-                ;
-          
+                 .ForMember(
+                    dest => dest.TotSold, opt => opt.MapFrom(src => src.Products.Sum(p => p.InvoiceItems.Count())))
+                 //.ForMember(
+                 //   //dest => dest.AvgPrice, opt => opt.MapFrom(src => src.Products.Average(p => p.InvoiceItems.Sum( i => i.Qty * i.UnitPrice))))
+                 //   dest => dest.AvgPrice, opt => opt.MapFrom(src =>  string.Format(new System.Globalization.CultureInfo("en-AU"), "{0:C}", src.Products.Average(p => p.InvoiceItems.Sum( i => i.Qty * i.UnitPrice))> 0 ? src.Products.Average(p => p.InvoiceItems.Sum(i => i.Qty * i.UnitPrice)): 0 )))
+
+                 .ForMember(
+                    //dest => dest.AvgPrice, opt => opt.MapFrom(src => src.Products.Average(p => p.InvoiceItems.Sum( i => i.Qty * i.UnitPrice))))
+                    dest => dest.MinPrice, opt => opt.MapFrom(src => string.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", src.Products.Where(p => p.IsSale ==true).Min(p => p.FinPrice) > 0 ? src.Products.Where(p => p.IsSale == true).Min(p => p.FinPrice) : 0)))
+
+            ;
+
         }
 
         private void InitUserDTOs()
@@ -44,7 +55,7 @@ namespace PikchaWebApp.Data
                 
                   .ForMember(
                 dest => dest.AggrImViews,
-                opt => opt.MapFrom(src => src.Images.Select(v => v.Views).Count()>0? src.Images.Sum(i => i.Views.Sum(v => v.Count)).ToString() : "0"))
+                opt => opt.MapFrom(src => src.Images.Select(v => v.Views).Count()>0? src.Images.Sum(i => i.Views.Sum(v => v.Count)).ToHumanReadableNumber() : "0.1 k"))
             ;
 
             CreateMap<PikchaUser, ArtistDTO>()
@@ -62,7 +73,7 @@ namespace PikchaWebApp.Data
 
                 .ForMember(
                 dest => dest.AggrImViews,
-                opt => opt.MapFrom(src => src.Images.Select(v => v.Views).Count() > 0 ? src.Images.Sum(i => i.Views.Sum(v => v.Count)).ToString() : "0"))
+                opt => opt.MapFrom(src => src.Images.Select(v => v.Views).Count() > 0 ? src.Images.Sum(i => i.Views.Sum(v => v.Count)).ToHumanReadableNumber() : "0.1 k"))
                 ;
 
             CreateMap<PikchaUser, AuthenticatedUserDTO>()
@@ -101,7 +112,6 @@ namespace PikchaWebApp.Data
                  .ForMember(
                       dest => dest.Sellers, opt => opt.MapFrom(src => src.Image.Products.Where(p=> p.IsSale ==true).Select(p => p)))
                 ;
-
 
             CreateMap<ImageProduct, ProductSellerDTO>()
                  .ForMember(
