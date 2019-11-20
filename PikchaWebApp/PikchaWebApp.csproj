@@ -45,6 +45,7 @@
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="Data\Migrations\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+    <Content Remove="wwwroot\Uploads\Signatures\69393ec2-8d32-4470-87ac-131e40a11b0c-inv.png" />
   </ItemGroup>
 
   <ItemGroup>
