@@ -22,6 +22,7 @@ namespace PikchaWebApp.Models
         public decimal Performance { get; set; } = 0;
         public int TotSold { get; set; } = 0;
         public string AvgPrice { get; set; } = "0";
+        public string MinPrice { get; set; } = "0";
 
         public string Height { get; set; } = string.Empty;
         

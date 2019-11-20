@@ -29,9 +29,13 @@ namespace PikchaWebApp.Data
                     dest => dest.ProductIds, opt =>  opt.MapFrom(src => src.Products.Where(p => p.IsSale == true).OrderBy(p => p.Type).Select(p => p.Id)))
                  .ForMember(
                     dest => dest.TotSold, opt => opt.MapFrom(src => src.Products.Sum(p => p.InvoiceItems.Count())))
+                 //.ForMember(
+                 //   //dest => dest.AvgPrice, opt => opt.MapFrom(src => src.Products.Average(p => p.InvoiceItems.Sum( i => i.Qty * i.UnitPrice))))
+                 //   dest => dest.AvgPrice, opt => opt.MapFrom(src =>  string.Format(new System.Globalization.CultureInfo("en-AU"), "{0:C}", src.Products.Average(p => p.InvoiceItems.Sum( i => i.Qty * i.UnitPrice))> 0 ? src.Products.Average(p => p.InvoiceItems.Sum(i => i.Qty * i.UnitPrice)): 0 )))
+
                  .ForMember(
                     //dest => dest.AvgPrice, opt => opt.MapFrom(src => src.Products.Average(p => p.InvoiceItems.Sum( i => i.Qty * i.UnitPrice))))
-                    dest => dest.AvgPrice, opt => opt.MapFrom(src =>  string.Format(new System.Globalization.CultureInfo("en-AU"), "{0:C}", src.Products.Average(p => p.InvoiceItems.Sum( i => i.Qty * i.UnitPrice))> 0 ? src.Products.Average(p => p.InvoiceItems.Sum(i => i.Qty * i.UnitPrice)): 0 )))
+                    dest => dest.MinPrice, opt => opt.MapFrom(src => string.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", src.Products.Where(p => p.IsSale ==true).Min(p => p.FinPrice) > 0 ? src.Products.Where(p => p.IsSale == true).Min(p => p.FinPrice) : 0)))
 
             ;
 

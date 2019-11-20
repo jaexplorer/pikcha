@@ -10,7 +10,7 @@
 - ENDPOINT : api/filter/images 
 - METHOD : get
 - AUTHENTICATED : false
-- QUERY_PARAMS : Type = random/ pikcha100/ artists100 [string, Default=random], Start [int, Optional], Count [int, Optional], ArtistId [int, Optional - required for artistId-Type ]
+- QUERY_PARAMS : Type = random/ pikcha100/ artists100 [string, Default=random], Start [int, Optional], Count [int, Optional], ArtistId [string, Optional - required for artistId-Type ]
 - RESULTS : images[]
 - ERROR_CODES : 200, 416, 500
 
@@ -26,6 +26,7 @@ Image
  - Performance 
  - TotSold 
  - AvgPrice 
+ - MinPrice <-- min price among the products ready to sell (artist's + resellers)
  - Height 
  - ProductIds
  
