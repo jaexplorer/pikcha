@@ -32,6 +32,9 @@ namespace PikchaWebApp.Data
 
         public DbSet<ArtistFollower> Followers { get; set; }
 
+        public DbSet<Invoice> Invoices { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -49,8 +52,6 @@ namespace PikchaWebApp.Data
             .HasDefaultValueSql("CURRENT_TIMESTAMP(6)") // mysql
             //.HasDefaultValueSql("getdate()") //mssql
             //.HasDefaultValueSql("date('now')") //sqlite
-
-
             ;
 
             builder.Entity<PikchaImage>()
@@ -96,6 +97,7 @@ namespace PikchaWebApp.Data
                 .WithMany(s => s.Followers)
                 .HasForeignKey(sc => sc.ArtistsId)
                 .OnDelete(DeleteBehavior.Restrict);
+
         }
 
     }

@@ -1,0 +1,39 @@
+[
+  {
+    "Code": "8001",
+    "Width": "14",
+    "Height": "18",
+    "Material": "Canvas",
+    "Frame": "Wooden",
+    "Border": "1",
+    "Finish": "None"
+  },
+  {
+    "Code": "8002",
+    "Width": "14",
+    "Height": "28",
+    "Material": "Canvas",
+    "Frame": "None",
+    "Border": "1",
+    "Finish": "Wooden"
+  },
+  {
+    "Code": "8003",
+    "Width": "16",
+    "Height": "20",
+    "Material": "Canvas",
+    "Frame": "Wooden",
+    "Border": "0",
+    "Finish": "None"
+  },
+  {
+    "Code": "8004",
+    "Width": "16",
+    "Height": "20",
+    "Material": "Paper",
+    "Frame": "None",
+    "Border": "0",
+    "Finish": "None"
+  }
+
+]

@@ -13,9 +13,26 @@ namespace PikchaWebApp.Drivers.Printer
         {
             _clientFactory = clientFactory;
         }
+
+        public abstract Task<List<ProductTemplate>> GetProductTemplates();
         public abstract Task<QuoteResult> GetQuote(QuoteRequest quoteRequest);
+        public abstract Task<OrderResult> CreateOrder(OrderRequest orderRequest);
+
+
     }
 
+
+    public class ProductTemplate
+    {
+        public string Code { get; set; }
+        public string Width { get; set; }
+        public string Height { get; set; }
+        public string Material { get; set; }
+        public string Frame { get; set; }
+        public string Border { get; set; }
+        public string Finish { get; set; }
+        public int Qty { get; set; } = 0;
+    }
 
     public class QuoteRequest
     {
@@ -63,6 +80,16 @@ namespace PikchaWebApp.Drivers.Printer
         public string StatusCode { get; set; } = string.Empty;
         public string ErrorCode { get; set; } = string.Empty;
         public string ErrorMessage { get; set; } = string.Empty;
+        public string ShippingClass { get; set; } = string.Empty;
+        public string QuoteId { get; set; } = string.Empty;
+        public string RefNumber { get; set; } = string.Empty;
+
+        public string City { get; set; } = string.Empty;
+
+        public string State { get; set; } = string.Empty;
+
+        public string Country { get; set; } = string.Empty;
+
 
         public List<QuoteResultItem> QuoteResults { get; set; } = new List<QuoteResultItem>();
 
@@ -86,6 +113,7 @@ namespace PikchaWebApp.Drivers.Printer
         public string State { get; set; } = string.Empty;
 
         public string Country { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = string.Empty;
 
         public List<OrderItem> QuoteItems = new List<OrderItem>();
     }
@@ -95,5 +123,12 @@ namespace PikchaWebApp.Drivers.Printer
         public string Code { get; set; } = string.Empty;
         public int Qty { get; set; } = 1;
 
+    }
+
+    public class OrderResult
+    {
+        public string StatusCode { get; set; } = string.Empty;
+        public string ErrorCode { get; set; } = string.Empty;
+        public string ErrorMessage { get; set; } = string.Empty;
     }
 }

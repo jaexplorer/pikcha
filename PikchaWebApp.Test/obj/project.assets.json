@@ -76,6 +76,18 @@
           "build/netstandard1.0/coverlet.collector.targets": {}
         }
       },
+      "FlexLabs.EntityFrameworkCore.Upsert/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "3.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/FlexLabs.EntityFrameworkCore.Upsert.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/FlexLabs.EntityFrameworkCore.Upsert.dll": {}
+        }
+      },
       "IdentityModel/4.0.0": {
         "type": "package",
         "dependencies": {
@@ -4065,6 +4077,7 @@
           "AWSSDK.S3": "3.3.104.42",
           "AutoMapper": "9.0.0",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
+          "FlexLabs.EntityFrameworkCore.Upsert": "3.0.0",
           "Magick.NET-Q8-AnyCPU": "7.14.4",
           "Microsoft.AspNetCore.ApiAuthorization.IdentityServer": "3.0.0",
           "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "3.0.0",
@@ -4266,6 +4279,21 @@
         "build/netstandard1.0/coverlet.core.pdb",
         "coverlet.collector.1.0.1.nupkg.sha512",
         "coverlet.collector.nuspec"
+      ]
+    },
+    "FlexLabs.EntityFrameworkCore.Upsert/3.0.0": {
+      "sha512": "SvapmVR0rXXH3ZB65nz+t/7fZBSWr4KXjAShSBWeE6KISJuTen6cbRdO+QZgbxBELaONAczv3EI3Mkqjbx9OUA==",
+      "type": "package",
+      "path": "flexlabs.entityframeworkcore.upsert/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "flexlabs.entityframeworkcore.upsert.3.0.0.nupkg.sha512",
+        "flexlabs.entityframeworkcore.upsert.nuspec",
+        "lib/netstandard2.0/FlexLabs.EntityFrameworkCore.Upsert.dll",
+        "lib/netstandard2.0/FlexLabs.EntityFrameworkCore.Upsert.xml",
+        "lib/netstandard2.1/FlexLabs.EntityFrameworkCore.Upsert.dll",
+        "lib/netstandard2.1/FlexLabs.EntityFrameworkCore.Upsert.xml"
       ]
     },
     "IdentityModel/4.0.0": {

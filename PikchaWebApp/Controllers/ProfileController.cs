@@ -481,7 +481,8 @@ namespace PikchaWebApp.Controllers
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_ArtistNotFound);
                 }
 
-                var pikchaUser = await _userManager.GetUserAsync(this.User);
+                var pikchaLgUser = await _userManager.GetUserAsync(this.User);
+                var pikchaUser = await _pikchDbContext.PikchaUsers.Include("Following").FirstAsync( u => u.Id == pikchaLgUser.Id);
                 if (pikchaUser == null)
                 {
                     return StatusCode(StatusCodes.Status404NotFound, PikchaMessages.MESS_Status404_UserNotFound);

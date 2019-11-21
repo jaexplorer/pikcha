@@ -85,7 +85,7 @@ namespace PikchaWebApp.Models
     [Table("ImageViews")]
     public class ImageView
     {
-        public string Id { get; set; }
+        //public string Id { get; set; }
 
         [Column(TypeName = "Date")]
         [Required]

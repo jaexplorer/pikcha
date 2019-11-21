@@ -12,15 +12,25 @@ namespace PikchaWebApp.Managers
     {
         protected readonly PrinterDriver _printer;
 
-        public PrinterManager(IHttpClientFactory clientFactory)
+        public PrinterManager(IHttpClientFactory clientFactory, string printerCode)
         {
+            // if printerCode == JONDO
             _printer =  new JondoPrinterDriver(clientFactory);
         }
 
-        public async Task<QuoteResult> GetQuote(PikchaUser user, Dictionary<string, int> itms)
+        public async Task<List<ProductTemplate>> GetProductTemplates()
         {
-            QuoteRequest qtReq = GenerateRequest(user, itms);
-            return await _printer.GetQuote(qtReq);
+            return await _printer.GetProductTemplates();
+        }
+
+        public async Task<QuoteResult> GetQuote(QuoteRequest quoteRequest)
+        {
+            return await _printer.GetQuote(quoteRequest);
+        }
+
+        public async Task<OrderResult> CreateOrder(OrderRequest orderRequest)
+        {
+            return await _printer.CreateOrder(orderRequest);
         }
 
         private QuoteRequest GenerateRequest(PikchaUser user, Dictionary<string, int> itms)
