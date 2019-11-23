@@ -62,7 +62,6 @@ const CoverModal = ({ removeModal, updateCoverPicture, profile }) => {
 
   return (
     <div className='modal-container'>
-      {console.log(profile)}
       <div id='coverModal-container' ref={modalContainer}>
         <div className='coverModal-header'>
           <div className='upload-title'>Update Cover Picture</div>
@@ -109,7 +108,6 @@ const mapStateToProps = state => ({
   profile: state.profileReducer
 });
 
-export default connect(
-  mapStateToProps,
-  { removeModal, updateCoverPicture }
-)(CoverModal);
+export default connect(mapStateToProps, { removeModal, updateCoverPicture })(
+  CoverModal
+);

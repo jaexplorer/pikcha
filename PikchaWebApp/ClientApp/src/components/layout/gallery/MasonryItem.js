@@ -1,14 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
+import { connect } from "react-redux";
 import ItemInfo from "./ItemInfo";
 import FullscreenIcon from "../../../assets/images/fullscreen-white.png";
+import { createFullscreenModal } from "../../../actions/modal";
 
-const MasonryItem = ({ photo }) => {
+const MasonryItem = ({ photo, createFullscreenModal }) => {
   const [selected, setSelected] = useState(false);
   const item = useRef(null);
 
   useEffect(() => {
     const handleClick = e => {
-      // console.log(e.path.contains(item.current));
       setSelected(item.current.contains(e.target.parentElement));
     };
 
@@ -29,7 +30,10 @@ const MasonryItem = ({ photo }) => {
     >
       <img src={photo.thumbnail} alt='' />
       {selected && (
-        <div className='fullscreen'>
+        <div
+          className='fullscreen'
+          onClick={() => createFullscreenModal(photo.watermark)}
+        >
           <img src={FullscreenIcon} alt='' />
         </div>
       )}
@@ -38,4 +42,4 @@ const MasonryItem = ({ photo }) => {
   );
 };
 
-export default MasonryItem;
+export default connect(null, { createFullscreenModal })(MasonryItem);

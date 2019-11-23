@@ -1,7 +1,8 @@
 import { MODAL_CREATED, MODAL_REMOVED } from "../actions/types";
 
 const initialState = {
-  type: false
+  type: false,
+  data: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -9,7 +10,8 @@ export default (state = initialState, { type, payload }) => {
     case MODAL_CREATED:
       return {
         ...state,
-        type: payload
+        type: payload.type,
+        data: payload.data
       };
 
     case MODAL_REMOVED:

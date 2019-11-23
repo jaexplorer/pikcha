@@ -12,7 +12,7 @@
   display: flex;
   justify-content: center;
   overflow-y: scroll;
-  // background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   padding-left: 3rem;
   padding-right: 3rem;
   animation: fadeIn 0.6s;
@@ -38,3 +38,7 @@
 // Upload Cover Modal
 // ---------------------------------------- //
 @import "./coverModal";
+
+// Fullscreen Modal
+// ---------------------------------------- //
+@import "./fullscreenModal";

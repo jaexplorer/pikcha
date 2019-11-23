@@ -64,7 +64,12 @@
       flex-direction: column;
 
       .upload-button {
-        background: #1a1a1a;
+        background-image: linear-gradient(
+          45deg,
+          #081c69 0%,
+          #44159b 50%,
+          #770fc6 100%
+        );
         padding: 2rem;
         padding-left: 4rem;
         padding-right: 4rem;
@@ -82,7 +87,12 @@
       }
 
       .form-btn {
-        background: #1a1a1a;
+        background-image: linear-gradient(
+          45deg,
+          #081c69 0%,
+          #44159b 50%,
+          #770fc6 100%
+        );
         padding: 1rem;
         padding-left: 4rem;
         padding-right: 4rem;

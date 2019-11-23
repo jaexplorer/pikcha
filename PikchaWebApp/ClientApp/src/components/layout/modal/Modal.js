@@ -4,6 +4,7 @@ import DPModal from "./modals/DPModal";
 import PromoteModal from "./modals/PromoteModal";
 import UploadModal from "./modals/UploadModal";
 import CoverModal from "./modals/CoverModal";
+import FullscreenModal from "./modals/FullscreenModal";
 
 const Modal = ({ modal }) => {
   return (
@@ -12,6 +13,7 @@ const Modal = ({ modal }) => {
       {modal.type === "Promote" && <PromoteModal />}
       {modal.type === "UploadImage" && <UploadModal />}
       {modal.type === "Cover" && <CoverModal />}
+      {modal.type === "Fullscreen" && <FullscreenModal />}
     </Fragment>
   );
 };

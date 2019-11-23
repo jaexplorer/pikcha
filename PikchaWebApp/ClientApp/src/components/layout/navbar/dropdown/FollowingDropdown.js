@@ -21,7 +21,11 @@ const FollowingDropdown = ({ account, closeDropdown }) => {
   });
   return (
     <div className='following-dropdown' ref={dropdown}>
-      <div className='following-title'>Following</div>
+      <div className='following-title'>
+        {account.user.following.length
+          ? "Following"
+          : "Followed Artists will appear here"}
+      </div>
       <div className='following-container'>
         <div className='following-wrapper'>
           {account.user.following.map(followed => (
@@ -39,7 +43,4 @@ const mapStateToProps = state => ({
   account: state.accountReducer
 });
 
-export default connect(
-  mapStateToProps,
-  { closeDropdown }
-)(FollowingDropdown);
+export default connect(mapStateToProps, { closeDropdown })(FollowingDropdown);
