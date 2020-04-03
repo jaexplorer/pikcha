@@ -1,0 +1,214 @@
+// Customise
+// ------------------------------------------------------------------- //
+
+// Customise Product
+// ---------------------------------------- //
+.filter-container {
+  width: calc(100% - 4rem);
+  height: 100%;
+  background: #f4f7fb;
+  box-shadow: 5px 10px 30px -10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin: 2rem;
+  margin-top: 3rem;
+  padding: 3rem;
+
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+
+    .filter-title {
+      font-size: 2rem;
+      font-weight: bold;
+      opacity: 0.6;
+    }
+    .filter-number {
+      font-size: 2rem;
+      opacity: 0.6;
+    }
+  }
+
+  .filter-dropdown-containers {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .filter-dropdown-item {
+      width: 100%;
+      margin-right: 2rem;
+      margin-bottom: 2rem;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1099px) {
+  .filter-container {
+    .filter-dropdown-containers {
+      flex-direction: column;
+
+      .filter-dropdown-item {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}
+
+// Customise Summary
+// ---------------------------------------- //
+.customiseSummary-container {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 4rem);
+  height: 100%;
+  background: #f4f7fb;
+  box-shadow: 5px 15px 30px -10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  margin: 2rem;
+  margin-top: 3rem;
+  padding: 3rem;
+
+  .customiseSummary-content {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .customiseSummary-title {
+      font-size: 2rem;
+      font-weight: bold;
+      opacity: 0.6;
+    }
+
+    .customiseSummary-summary {
+      display: flex;
+      flex-direction: column;
+      opacity: 0.6;
+
+      .summary-photo-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        .photo-name {
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+
+        .photo-number {
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+      }
+
+      .summary-subtitle {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .summary-subtext {
+        margin-top: 0.2rem;
+        font-size: 1.2rem;
+        text-transform: capitalize;
+      }
+    }
+    .customiseSummary-addToCart {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 1rem;
+      border-top: 2px solid #ebebeb;
+      align-items: center;
+
+      .addToCart-total {
+        margin-right: 3rem;
+        text-align: right;
+        font-size: 1.6rem;
+      }
+
+      .addToCart-button {
+        background-image: linear-gradient(
+          45deg,
+          #081c69 0%,
+          #44159b 50%,
+          #770fc6 100%
+        );
+        height: 5rem;
+        width: 12rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        border-radius: 10px;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .customiseSummary-photo {
+    position: relative;
+    background: #1a1a1a;
+    margin-left: 2rem;
+    min-width: 45rem;
+    height: 45rem;
+    border-radius: 10px;
+    overflow: hidden;
+
+    & > img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+
+    .fullscreen-icon {
+      position: absolute;
+      right: 2rem;
+      top: 2rem;
+      img {
+        height: 2.5rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1099px) {
+  .customiseSummary-container {
+    flex-direction: column-reverse;
+    .customiseSummary-content {
+      height: 40rem;
+    }
+    .customiseSummary-photo {
+      width: 100%;
+      height: calc(80vw - 6rem);
+      margin-left: 0rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 699px) {
+  .customiseSummary-container {
+    .customiseSummary-photo {
+      width: 100%;
+      height: calc(100vw - 6rem);
+      margin-left: 0rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+// Small Devices
+// ---------------------------------------- //
+@media screen and (max-width: 699px) {
+  #customise-container {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}

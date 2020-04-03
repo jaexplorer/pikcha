@@ -8,6 +8,7 @@ import modalReducer from "./modalReducer";
 import pikcha100Reducer from "./pikcha100Reducer";
 import artist100Reducer from "./artist100Reducer";
 import profileReducer from "./profileReducer";
+import searchReducer from "./searchReducer";
 
 export default combineReducers({
   galleryReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   modalReducer,
   pikcha100Reducer,
   artist100Reducer,
-  profileReducer
+  profileReducer,
+  searchReducer
 });

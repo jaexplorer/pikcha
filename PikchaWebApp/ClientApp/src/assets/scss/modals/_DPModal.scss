@@ -31,25 +31,19 @@
   .DPModal-header {
     display: flex;
     justify-content: space-between;
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding: 3rem;
     align-items: center;
-    height: 10rem;
-    margin-bottom: 2rem;
-    background-image: linear-gradient(
-      45deg,
-      #081c69 0%,
-      #44159b 50%,
-      #770fc6 100%
-    );
 
     .upload-title {
       font-size: 2rem;
       font-weight: bold;
-      color: white;
+      color: #1a1a1a;
+      opacity: 0.6;
     }
     img {
       height: 1.4rem;
+      mix-blend-mode: difference;
+      opacity: 0.6;
       cursor: pointer;
     }
   }
@@ -57,7 +51,7 @@
   .uploadDP-form {
     display: flex;
     justify-content: space-between;
-    padding: 2rem;
+    padding: 3rem;
 
     .form-buttons {
       display: flex;

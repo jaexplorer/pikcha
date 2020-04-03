@@ -35,6 +35,12 @@ body {
   position: fixed;
 }
 
+.mainview {
+  &.inactive {
+    filter: blur(5px);
+  }
+}
+
 img {
   -webkit-user-drag: none;
   -khtml-user-drag: none;
