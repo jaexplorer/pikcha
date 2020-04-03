@@ -7,7 +7,7 @@ import NavBar from "./layout/navbar/Navbar";
 import Alerts from "./Alerts";
 import Modal from "./layout/modal/Modal";
 import SideMenu from "./layout/account/SideMenu";
-import Routes from "./routes/Routes";
+import Routes from "./Routes/Routes";
 import SmoothScroll from "./SmoothScroll";
 import { authenticate } from "../actions/auth";
 

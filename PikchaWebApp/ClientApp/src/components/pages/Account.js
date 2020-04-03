@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import AccountRoutes from "../routes/subroutes/AccountRoutes";
+import AccountRoutes from "../Routes/subroutes/AccountRoutes";
 import { connect } from "react-redux";
 import Loader from "../Loader";
 
